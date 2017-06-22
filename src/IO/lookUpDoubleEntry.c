@@ -21,17 +21,28 @@ double lookUpDoubleEntry( char* filename, char* entry, double df ) {
 
     // Move over file and check for entry
     char re[100];
-    double aux;
-    
+
+    // Read while valid
     while( fscanf(fp,"%s",re) == 1 ) {
-	
+
+	// Compare with entry. Read if true
 	if (strcmp(entry,re) == 0) {
 
-	    
-	    if(fscanf(fp,"%lf",&aux) != 0) {
+	    // Read next entry
+	    if( fscanf(fp,"%s",re) == 1 ) {
 
-	    	df = aux;
+		// Check for token
+		if(strstr(re,";") != NULL) {
 
+		    // Tokenize
+		    char *token = strtok(re,";");
+
+		    // Convert to double
+		    char *ptr;
+		    df = strtod(token,&ptr);		    
+		    
+		}
+		
 	    }
 	    
 	}
