@@ -1,1 +1,0 @@
-/usr/bin/cc   -Wall -O3 -DNDEBUG   CMakeFiles/test1.dir/test1.c.o  -o ../../../bin/test1  -L/home/ezequiel/multiphaseLB/lib -rdynamic -lio -Wl,-rpath,/home/ezequiel/multiphaseLB/lib 
