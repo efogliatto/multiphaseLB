@@ -6,6 +6,7 @@
 #include <latticeWeights.h>
 #include <latticeReverseDir.h>
 #include <MRTMatrix.h>
+#include <MRTInvMatrix.h>
 
 
 #endif // LATTICEMODEL_H

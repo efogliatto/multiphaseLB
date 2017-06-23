@@ -72,7 +72,27 @@ int main() {
 	printf("\n");
 	
     }
-    printf("\n\n");    
+    printf("\n\n");
+
+
+    
+
+    // MRT Inv Matrix   
+    double** invM = MRTInvMatrix(c);
+
+    printf("\nMRT Inv\n");
+    for( i = 0 ; i < 9 ; i++) {
+
+	for( j = 0 ; j < 9 ; j++) {
+
+	    printf("%f ",invM[i][j]);
+
+	}
+	
+	printf("\n");
+	
+    }
+    printf("\n\n");     
     
     
     return 0;
