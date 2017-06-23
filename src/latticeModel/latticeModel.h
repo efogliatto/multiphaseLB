@@ -3,6 +3,8 @@
 
 
 #include <latticeVelocities.h>
+#include <latticeWeights.h>
+#include <latticeReverseDir.h>
 
 
 #endif // LATTICEMODEL_H

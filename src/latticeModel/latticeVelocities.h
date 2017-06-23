@@ -1,6 +1,8 @@
 #ifndef LATTICEVELOCITIES_H
 #define LATTICEVELOCITIES_H
 
-double** latticeVelocities( char* modelName );
+#include <D2Q9_Vel.h>
+
+int** latticeVelocities( char* modelName );
 
 #endif // LATTICEVELOCITIES_H
