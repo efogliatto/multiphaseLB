@@ -207,7 +207,7 @@ int main(int argc, char** argv) {
     sprintf(bdmap[2],"Y0");
     sprintf(bdmap[3],"Y1");
 
-    int** bmap = matrixIntAlloc(4,nx+ny,0);;
+    int** bmap = matrixIntAlloc(4,nx+ny,0);
     int btid[4];
 
     // Assign points on boundary based on bdType
@@ -267,49 +267,33 @@ int main(int argc, char** argv) {
     
 
 
-    /* // 	    // ******************************************************************** // */
-    /* // 	    //                             VTK Cells                                // */
-    /* // 	    // ******************************************************************** // */
+    // ******************************************************************** //
+    //                             VTK Cells                                //
+    // ******************************************************************** //
 
-    /* // 	    cout << "Creating VTK Cells" << endl << endl; */
+    printf("Creating VTK Cells\n\n");
     
-    /* // 	    vector< vector<uint> > vtkCells; */
+    int** vtkCells = matrixIntAlloc((nx-1)*(ny-1),4,0);
 
-    /* // 	    if(lbm->D() == 2) { */
-
-
-    /* // 	    	// Iterate on points */
-    /* // 	    	for(uint pointId = 0 ; pointId < meshPoints.size() ; pointId++) { */
-    /* // 	    	    // for(uint pointId = 0 ; pointId < 1 ; pointId++) { */
-
-    /* // 	    	    vector<uint> id; */
-    /* // 	    	    id.push_back( pointId ); */
-
-    /* // 	    	    uint pt = pointId; */
-
-    /* // 	    	    for(uint velId = 1 ; velId < 4 ; velId ++) { */
-    /* // 	    		int aux = neigh[pt][lbm->reverse(velId)]; */
-    /* // 	    		if( aux != -1 ) { */
-    /* // 	    		    pt = aux; */
-    /* // 	    		    id.push_back(pt); */
-    /* // 	    		} */
-    /* // 	    	    } */
-
-    /* // 	    	    if (id.size() == 4) { */
-    /* // 	    		uint a = id[3]; */
-    /* // 	    		id[3] = id[2]; */
-    /* // 	    		id[2] = a; */
-    /* // 	    		vtkCells.push_back(id); */
-    /* // 	    	    } */
+    int ncells = 0;
+    
+    for( j = 0 ; j < ny-1 ; j++ ) {
 	
-    /* // 	    	} */
+	for( i = 0 ; i < (nx-1) ; i++ ) {
 
+	    vtkCells[ncells][0] = i + j*nx;
+	    vtkCells[ncells][1] = i + j*nx + 1;
+	    vtkCells[ncells][2] = i + j*nx + nx;
+	    vtkCells[ncells][3] = i + j*nx + nx + 1;
 	
-    /* // 	    } */
+	    ncells++;
 
+	}
 
+    }
+    
 
-
+    
 
 
 
@@ -387,40 +371,18 @@ int main(int argc, char** argv) {
 
 
 
-    /* // 	    // Write VTK cells */
+    // Write VTK cells 
+    outFile = fopen("lattice/vtkCells","w");
+    fprintf(outFile,"%d\n",ncells);
+    for( i = 0 ; i < ncells ; i++ ) {
+	for( j = 0 ; j < 4 ; j++ ) {
+	    fprintf(outFile,"%d ",vtkCells[i][j]);
+	}
+	fprintf(outFile,"\n");
+    }
+    fclose(outFile);
 
-    /* // 	    filename = folder.str() + "vtkCells"; */
-    /* // 	    outFile.open( filename.c_str() ); */
-    /* // 	    if( !outFile.is_open() ){ */
-    /* // 	    	cout << "Cant't open file " << filename << endl; */
-    /* // 	    	exit(1); */
-    /* // 	    } */
-
-    /* // 	    // Total number of cells */
-    /* // 	    outFile << vtkCells.size() << endl; */
-	
-    /* // 	    for(vector< vector<uint> >::const_iterator cell = vtkCells.begin() ; cell != vtkCells.end() ; cell++) { */
-    /* // 	    	outFile << cell->size() << "  "; */
-    /* // 	    	for(uint cellId = 0 ; cellId < cell->size() ; cellId++) { */
-    /* // 	    	    outFile << cell->at(cellId) << "  "; */
-    /* // 	    	} */
-    /* // 	    	outFile << endl; */
-    /* // 	    } */
-	
-    /* // 	    outFile.close();     */
-
-
-
-	
-	    
-	    
-    /* // 	} */
-	
-
-
-
-    /* // } */
-    /* //  */
+    
 
     return 0;
 
