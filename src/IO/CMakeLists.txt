@@ -3,4 +3,5 @@
 # IO library
 add_library(io SHARED
   lookUpDoubleEntry.c
+  lookUpStringEntry.c
   )
