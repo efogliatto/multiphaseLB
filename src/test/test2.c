@@ -53,6 +53,26 @@ int main() {
 	
     }
     printf("\n\n");    
+
+
+
+    // MRT Matrix   
+    double** M = MRTMatrix(c);
+
+    printf("\nMRT\n");
+    int j;
+    for( i = 0 ; i < 9 ; i++) {
+
+	for( j = 0 ; j < 9 ; j++) {
+
+	    printf("%.0f ",M[i][j]);
+
+	}
+	
+	printf("\n");
+	
+    }
+    printf("\n\n");    
     
     
     return 0;
