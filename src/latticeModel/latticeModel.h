@@ -7,6 +7,8 @@
 #include <latticeReverseDir.h>
 #include <MRTMatrix.h>
 #include <MRTInvMatrix.h>
+#include <ppWeights.h>
+#include <cs2.h>
 
 
 #endif // LATTICEMODEL_H

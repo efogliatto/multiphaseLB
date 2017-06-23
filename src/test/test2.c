@@ -94,6 +94,31 @@ int main() {
     }
     printf("\n\n");     
     
+
+
+
+
+
+
+
+
+    // Pseudo pot w
+    double* w = ppWeights(c);
+
+    printf("\nPP W\n");
+    for( i = 0 ; i < 9 ; i++) {
+
+    	printf(" %f\n",w[i]);
+	
+    }
+    printf("\n\n"); 
+
+
+
+
+
+    printf("\ncs2: %f\n\n",cs2(c));
+    
     
     return 0;
 

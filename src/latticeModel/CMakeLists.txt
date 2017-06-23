@@ -7,9 +7,13 @@ add_library(latticemodel SHARED
   latticeReverseDir.c
   MRTMatrix.c
   MRTInvMatrix.c
+  ppWeights.c
+  cs2.c
   D2Q9/D2Q9_Vel.c
   D2Q9/D2Q9_omega.c
   D2Q9/D2Q9_Reverse.c
   D2Q9/D2Q9_MRT.c
   D2Q9/D2Q9_MRTInv.c
+  D2Q9/D2Q9_ppw.c
+  D2Q9/D2Q9_cs2.c
   )
