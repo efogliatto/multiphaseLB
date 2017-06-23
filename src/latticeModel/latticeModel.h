@@ -10,5 +10,7 @@
 #include <ppWeights.h>
 #include <cs2.h>
 
+unsigned int latticeQ( char* modelName );
+
 
 #endif // LATTICEMODEL_H

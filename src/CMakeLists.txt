@@ -4,8 +4,13 @@ add_subdirectory (IO)
 # lattice Models library
 add_subdirectory (latticeModel)
 
-# # Applications
-# add_subdirectory (applications)
+# Basic library
+add_subdirectory (basic)
+
+
+
+# Applications
+add_subdirectory (applications)
 
 # Tests
 add_subdirectory (test)
