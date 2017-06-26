@@ -6,14 +6,9 @@
 
 */
 
-/* #include <periodicX.h> */
-/* #include <periodicY.h> */
-
 #include <io.h>
 #include <latticeModel.h>
 #include <basic.h>
-#include <stdlib.h>
-#include <string.h>
 
 typedef unsigned int uint;
 
@@ -21,6 +16,7 @@ typedef unsigned int uint;
 void periodicX( int** neigh, unsigned int nx, unsigned int ny, unsigned int Q, int** bmap, int* btid );
 void periodicY( int** neigh, unsigned int nx, unsigned int ny, unsigned int Q, int** bmap, int* btid );
 void periodicXY( int** neigh, unsigned int nx, unsigned int ny, unsigned int Q, int** bmap, int* btid );
+void genericBoundary( int** neigh, unsigned int nx, unsigned int ny, unsigned int Q, int** bmap, int* btid );
 
 int main(int argc, char** argv) {
 
@@ -213,7 +209,11 @@ int main(int argc, char** argv) {
     // Assign points on boundary based on bdType
 
     // Generic
-    if( strcmp(bdType,"generic") == 0) { }
+    if( strcmp(bdType,"generic") == 0) {
+
+	genericBoundary( neigh, nx, ny, latticeQ(lbm), bmap, btid );	
+
+    }
 
 
     // periodicX
@@ -311,7 +311,8 @@ int main(int argc, char** argv) {
 
 
     // Write files
-    int status = system( "mkdir -p lattice" );
+    int status = system( "rm -rf lattice" );
+    status = system( "mkdir -p lattice" );
     if(status) {}
 
     
@@ -373,7 +374,7 @@ int main(int argc, char** argv) {
 
     // Write VTK cells 
     outFile = fopen("lattice/vtkCells","w");
-    fprintf(outFile,"%d\n",ncells);
+    fprintf(outFile,"%d 4\n",ncells);
     for( i = 0 ; i < ncells ; i++ ) {
 	for( j = 0 ; j < 4 ; j++ ) {
 	    fprintf(outFile,"%d ",vtkCells[i][j]);

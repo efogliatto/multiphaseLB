@@ -1,15 +1,16 @@
 /*
+
   latticeMeshPartition
+
+  Mesh subdivision for parallel processing
+
  */
 
-/* #include <polyShapes.h> */
-/* #include <LBModelCreator.h> */
-/* #include <map> */
-/* #include <algorithm> */
-/* #include <boost/program_options.hpp> */
-/* #include <IOPatch.h> */
 
-/* using namespace std; */
+#include <io.h>
+#include <latticeModel.h>
+#include <basic.h>
+
 
 int main(int argc, char** argv) {
 
@@ -19,146 +20,128 @@ int main(int argc, char** argv) {
     //                            Program options                           //
     // ******************************************************************** //
 
-    /* // Define and parse the program options   */
-    /* namespace po = boost::program_options;  */
-    /* po::options_description desc("Options");  */
-    /* desc.add_options()  */
-    /* 	("help,h", "Print help messages")  */
-    /* 	("DQmodel,d", po::value<string>()->required(), "LBM model type (D dimensions with Q velocities)") */
-    /* 	("processors,n", po::value<int>()->required(), "number of processors") */
-    /* 	("version,v", po::value<string>()->default_value("new"), "partition version"); */
+    // Total number of processes
+    unsigned int np = 1;
+    {
 
-    /* po::variables_map vm; */
-    /* po::store(po::parse_command_line(argc, argv, desc), vm); */
- 
-    /* // --help option   */
-    /* if ( vm.count("help")  )  */
-    /* {  */
-    /*     cout << endl << "Construction of lattice mesh" << endl << endl */
-    /* 	     << desc << std::endl;  */
-    /*     return 0;  */
-    /* }  */
+    	unsigned int arg;
 
-    
+    	for(arg = 0 ; arg < argc ; arg++) {
 
-    /* cout << endl; */
-    /* cout << "MESH PARTITIONING" << endl << endl; */
-    
-    /* polyShapes figura("properties/latticeProperties"); */
+    	    if( strcmp("--np", argv[arg]) == 0 ) {
 
+    	    	np = atoi( argv[arg+1] );
 
-    
-    
+    	    }
 
-    /* // ******************************************************************** // */
-    /* //                         Points inside geometry                       // */
-    /* // ******************************************************************** // */
-
-    /* cout << "Reading Mesh points" << endl << endl; */
-    
-    /* // string filename = "lattice/points"; */
-    /* string filename = vm["DQmodel"].as<string>() + "_lattice/points"; */
-    /* ifstream inFile;     */
-    /* inFile.open( filename.c_str() ); */
-    /* if( !inFile.is_open() ){ */
-    /* 	cout << "Cant't open file " << filename << endl; */
-    /* 	exit(1); */
-    /* } */
-
-    /* // Number of points */
-    /* uint npoints; */
-    /* inFile >> npoints; */
-
-    /* // Read Mesh points */
-    /* vector<Vector3> meshPoints( npoints ); */
-    /* for(uint i = 0 ; i < npoints ; i++) { */
-    /* 	inFile >> meshPoints[i]; */
-    /* } */
-
-    /* inFile.close(); */
-
-
- 
-
-
-    
-
-
-    /* // ******************************************************************** // */
-    /* //                             Neighbours                               // */
-    /* // ******************************************************************** // */
-
-    /* cout << "Reading Neighbour indices" << endl << endl;     */
-
-    /* LBModelCreator mcreator; */
-    /* basicLBModel* lbm = mcreator.create( vm["DQmodel"].as<string>() ); */
-
-    /* vector<Vector3> velocities = lbm->latticeVel(); */
-    
-    
-    /* // Create and resize neighbour matrix */
-    /* vector< vector<int> > neigh( meshPoints.size() ); */
-    /* for(uint i = 0 ; i < neigh.size() ; i++) { */
-    /* 	neigh[i].resize(lbm->Q(), -1); */
-    /* } */
-
-    /* // Read indices */
-    /* filename = vm["DQmodel"].as<string>() + "_lattice/" + vm["DQmodel"].as<string>() + "_neighbours"; */
-    /* inFile.open( filename.c_str() ); */
-    /* if( !inFile.is_open() ){ */
-    /* 	cout << "Cant't open file " << filename << endl; */
-    /* 	exit(1); */
-    /* } */
-
-    /* for(uint i = 0 ; i < neigh.size() ; i++) { */
-    /* 	for(uint j = 0 ; j < lbm->Q() ; j++) { */
-    /* 	    inFile >> neigh[i][j]; */
-    /* 	} */
-    /* } */
-
-    /* inFile.close(); */
-
-    
-
-
-    
-
-
-    /* // ******************************************************************** // */
-    /* //                             VTK Cells                                // */
-    /* // ******************************************************************** // */
-
-    /* cout << "Reading VTK Cells" << endl << endl; */
-
-    /* // filename = "lattice/vtkCells"; */
-    /* filename = vm["DQmodel"].as<string>() + "_lattice/vtkCells"; */
-    /* inFile.open( filename.c_str() ); */
-    /* if( !inFile.is_open() ){ */
-    /* 	cout << "Cant't open file " << filename << endl; */
-    /* 	exit(1); */
-    /* } */
-
-    /* // Number of cells */
-    /* uint ncells; */
-    /* inFile >> ncells; */
-
-    /* vector< vector<uint> > vtkCells( ncells ); */
-
-
-    /* for(uint i = 0 ; i < ncells ; i++) { */
-
-    /* 	uint npc; */
-    /* 	inFile >> npc; */
-
-    /* 	vtkCells[i].resize( npc ); */
+    	}
 	
-    /* 	for(uint j = 0 ; j < npc ; j++) { */
-    /* 	    inFile >> vtkCells[i][j]; */
-    /* 	} */
-	
-    /* } */
+    }
+    
 
-    /* inFile.close(); */
+
+
+    
+ 
+    printf("\nMESH PARTITIONING\n\n");
+
+    
+    
+
+    // ******************************************************************** //
+    //                         Points inside geometry                       //
+    // ******************************************************************** //
+
+    printf("Reading Mesh points\n\n");
+
+    // Open file
+    /* FILE* inFile; */
+    /* openFile(inFile, "lattice/points", "r"); */
+    FILE* inFile = fopen( "lattice/points", "r" );
+    
+
+    // Number of points
+    uint npoints;
+    fscanf(inFile, "%d", &npoints);
+
+    // Read Mesh points
+    int** meshPoints = matrixIntAlloc(npoints,3,0);
+    uint i,j;
+    for( i = 0 ; i < npoints ; i++ ) {
+
+	fscanf(inFile, "%d", &meshPoints[i][0]);
+	fscanf(inFile, "%d", &meshPoints[i][1]);
+	fscanf(inFile, "%d", &meshPoints[i][2]);
+
+    }
+
+    fclose(inFile);
+
+
+
+    
+
+
+    // ******************************************************************** //
+    //                             Neighbours                               //
+    // ******************************************************************** //
+
+    printf("Reading Neighbour indices\n\n");
+
+    // Open file
+    inFile = fopen( "lattice/neighbours", "r" );
+
+    // Lattice Model
+    char lbm[100];
+    lookUpStringEntry("properties/latticeProperties","LBModel",lbm);
+
+    // Read neighbours
+    int** neigh = matrixIntAlloc(npoints, latticeQ(lbm), -1);
+    for( i = 0 ; i < npoints ; i++ ) {
+
+	for( j = 0 ; j < latticeQ(lbm) ; j++ ) {
+
+	    fscanf(inFile, "%d", &neigh[i][j]);
+
+	}
+
+    }
+
+    fclose(inFile);
+
+
+    
+
+    
+
+
+    // ******************************************************************** //
+    //                             VTK Cells                                //
+    // ******************************************************************** //
+
+    printf("Reading vtkCells\n\n");
+
+    // Open file
+    inFile = fopen( "lattice/vtkCells", "r" );
+
+    // Number of cells and points per cell
+    uint ncells, ctype;
+    fscanf(inFile, "%d", &ncells);
+    fscanf(inFile, "%d", &ctype);
+    
+    // Read cells
+    int** vtkCells = matrixIntAlloc(ncells, ctype, -1);
+    for( i = 0 ; i < ncells ; i++ ) {
+
+	for( j = 0 ; j < ctype ; j++ ) {
+
+	    fscanf(inFile, "%d", &vtkCells[i][j]);
+
+	}
+
+    }
+
+    fclose(inFile);
 
 	
 
