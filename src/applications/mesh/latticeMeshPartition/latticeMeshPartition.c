@@ -12,34 +12,14 @@
 #include <basic.h>
 #include <basicMesh.h>
 
+// Standard decomposition
+void standardDecomp( unsigned int* owner, struct basicMesh* mesh, unsigned int np );
+
+// Local Indexing
+void localIndexing ( struct basicMesh* mesh, int** local, int** nGhosts, uint* owner, uint np);
+
 
 int main(int argc, char** argv) {
-
-
-    
-    // ******************************************************************** //
-    //                            Program options                           //
-    // ******************************************************************** //
-
-    // Total number of processes
-    unsigned int np = 1;
-    {
-
-    	unsigned int arg;
-
-    	for(arg = 0 ; arg < argc ; arg++) {
-
-    	    if( strcmp("--np", argv[arg]) == 0 ) {
-
-    	    	np = atoi( argv[arg+1] );
-
-    	    }
-
-    	}
-	
-    }
-    
-
 
 
     
@@ -51,61 +31,77 @@ int main(int argc, char** argv) {
     struct basicMesh mesh = readBasicMesh();
     
 
+    // Total number of processes
+    uint np = (uint)lookUpDoubleEntry("properties/parallel","numProc",4);
 
+    // Decomposition method
+    char method[100];
+    lookUpStringEntry("properties/parallel","method",method);
 
 
 
     
     
     
-    /* // ******************************************************************** // */
-    /* //                             Processors                               // */
-    /* // ******************************************************************** // */
+    // ******************************************************************** //
+    //                             Processors                               //
+    // ******************************************************************** //
 
 
-    /* printf("Decomposing domain\n\n"); */
+    printf("Decomposing domain\n\n");
 
-    /* uint* procBegin = (uint*)malloc( np * sizeof(uint) ); */
-    /* uint* procEnd   = (uint*)malloc( np * sizeof(uint) ); */
+    // Ownership array
+    uint* owner = (uint*)malloc( mesh.nPoints * sizeof(uint) );
 
-    /* // Split on processors */
-    /* for( i = 0 ; i < np ; i++ ) { */
+    // Choose decomposition method
+    if( strcmp(method, "standard") == 0 ) {
+
+	standardDecomp( owner, &mesh, np );
+
+    }
+
+    else {
+
+	printf("\n\n  [ERROR]  Unable to recognize decomposition method \"%s\"\n\n\n",method);
+
+	exit(1);
+
+    }
+
+
+
+
+
+    // Resize local indices array
+    int** local   = matrixIntAlloc( mesh.nPoints, np, -1);
+    int** nGhosts = matrixIntAlloc( np, 2, -1);
+
+    // Creation of local indexing
+    localIndexing( &mesh, local, nGhosts, owner, np );
+
+
+    /* uint i,j; */
+    /* for( i = 0 ; i < mesh.nPoints ; i++ ) { */
+
+    /* 	printf("%d: ",i); */
 	
-    /* 	if(i != 0) { */
-	    
-    /* 	    procBegin[i] = procEnd[i-1] + 1; */
-    /* 	    procEnd[i] = procBegin[i] + (int)(npoints/np) - 1; */
-	    
+    /* 	for( j = 0 ; j < np ; j++ ) { */
+
+    /* 	    printf(" %d", local[i][j]); */
+
     /* 	} */
-	
-    /* 	else { */
-	    
-    /* 	    procBegin[i] = 0; */
-    /* 	    procEnd[0] = (int)(npoints/np) - 1; */
-	    
-    /* 	} */
-	
+
+    /* 	printf("\n"); */
+
     /* } */
-    
-    /* procEnd[np - 1] = npoints - 1; */
 
     
+    uint j;
+    for( j = 0 ; j < np ; j++ ) {
 
-    
-    /* // Ownership vector */
-    /* uint* owner = (uint*)malloc( npoints * sizeof(uint) ); */
-    
-    /* uint pid; */
-    /* for( pid = 0 ; pid < np ; pid++ ) { */
-	
-    /* 	for( i = procBegin[pid] ; i <= procEnd[pid] ; i++ ) { */
-	    
-    /* 	    owner[i] = pid; */
-	    
-    /* 	} */
-	
-    /* } */
+	printf("%d  %d\n", nGhosts[j][0], nGhosts[j][1]);
 
+    }
 
     
     
