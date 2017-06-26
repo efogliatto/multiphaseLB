@@ -149,56 +149,56 @@ int main(int argc, char** argv) {
     
 
 
-    /* // ******************************************************************** // */
-    /* //                        Reading boundary nodes                        // */
-    /* // ******************************************************************** // */
+    // ******************************************************************** //
+    //                        Reading boundary nodes                        //
+    // ******************************************************************** //
 
-    /* cout << "Reading boundary nodes" << endl << endl; */
+    printf("Reading boundary nodes\n\n");
 
-    /* filename = vm["DQmodel"].as<string>() + "_lattice/boundary"; */
-    /* inFile.open( filename.c_str() ); */
-    /* if( !inFile.is_open() ){ */
-    /* 	cout << "Cant't open file " << filename << endl; */
-    /* 	exit(1); */
-    /* } */
-
-    /* // Boundary map */
-    /* map<string, vector<uint>> globalBmap; */
+    // Open boundary file
+    inFile = fopen( "lattice/boundary", "r" );
     
-    /* // Read total number of boundaries */
-    /* int nBound; */
-    /* inFile >> nBound; */
+    // Number of boundary types
+    uint nbd;
+    fscanf(inFile, "%d\n", &nbd);
 
-    /* // Read boundaries */
-    /* for(int i = 0 ; i < nBound ; i++) { */
+    // Total number of elements per boundary type
+    uint* nbdelem = (uint*)malloc(nbd * sizeof(uint));
 
-    /* 	// Read boundary name */
-    /* 	std::string name, */
-    /* 	    aux; */
-    /* 	inFile >> name; */
+    // Boundary names (max 100 boundaries)
+    char bdNames[100][100];
+    
 
-    /* 	// Read opening brace */
-    /* 	inFile >> aux; */
+    // Elements in boundary
+    uint** bdPoints = (uint**)malloc( nbd * sizeof(uint*) );
+    
 
-    /* 	// Read number of indices per boundary */
-    /* 	int nIdx; */
-    /* 	inFile >> nIdx; */
+    // Read boundary
+    for( i = 0 ; i < nbd ; i++ ) {
 
-    /* 	globalBmap[name].resize( nIdx ); */
+    	// Boundary name
+	fscanf(inFile, "%s", bdNames[i]);
 
-    /* 	for(int j = 0 ; j < nIdx ; j++) { */
+    	// Elements in boundary
+    	fscanf(inFile, "%d", &nbdelem[i]);
 
-    /* 	    // Read indices */
-    /* 	    inFile >> globalBmap[name][j]; */
-	    
-    /* 	} */
-
-    /* 	// Read closing brace */
-    /* 	inFile >> aux;	 */
+    	// Resize bdPoints
+    	bdPoints[i] = (uint*)malloc( nbdelem[i] * sizeof(uint) );
 	
-    /* } */
+    	for( j = 0 ; j < nbdelem[i] ; j++ ) {
 
-    /* inFile.close(); */
+    	    fscanf(inFile, "%d", &bdPoints[i][j]);
+
+    	}
+
+    }
+
+
+
+
+
+    
+
 
 
 
