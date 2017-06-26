@@ -106,6 +106,65 @@ int main(int argc, char** argv) {
 	
 	// Check for shared elements
 
+	uint i;
+	for( i = 0 ; i < mesh.nPoints ; i++ ) {
+
+	    if( local[i][pid] >= nGhosts[pid][0] ) {
+
+		shared[pid][ owner[i] ]++;
+		
+	    }
+
+	}
+
+
+	// Resize index array and copy indices
+
+	localMesh.parallel.shared        = (int*)malloc( np * sizeof(int) );
+	localMesh.parallel.ghostsPerProc = (uint**)malloc( np * sizeof(uint*) );	
+	
+	for( i = 0 ; i < np ; i++ ) {
+
+	    localMesh.parallel.shared[ owner[i] ] = 0;
+	    
+	    localMesh.parallel.ghostsPerProc[i] = (uint*)malloc( shared[pid][i] * sizeof(uint) );	    
+
+	}
+
+
+	
+	// Move again and assign indices
+	for( i = 0 ; i < mesh.nPoints ; i++ ) {
+
+	    if( local[i][pid] >= nGhosts[pid][0] ) {
+
+		localMesh.parallel.ghostsPerProc[ owner[i] ][  localMesh.parallel.shared[ owner[i] ]  ]  =  local[i][pid];
+
+		localMesh.parallel.shared[ owner[i] ]++;
+		
+	    }
+
+	}
+
+
+    /* uint ii,jj; */
+    /* if(pid==1) { */
+    /* for(ii = 0 ; ii < np ; ii++) { */
+
+    /* 	/\* for(jj = 0 ; jj < np ; jj++) { *\/ */
+
+    /* 	/\*     printf("%d ",shared[ii][jj]); *\/ */
+
+    /* 	/\* } *\/ */
+
+    /* 	/\* printf("\n"); *\/ */
+
+    /* 	printf("%d\n",localMesh.parallel.shared[ii]); */
+
+    /* } */
+
+    /* } */
+	
 
     }
 
@@ -115,13 +174,15 @@ int main(int argc, char** argv) {
     /* uint ii,jj; */
     /* for(ii = 0 ; ii < np ; ii++) { */
 
-    /* 	for(jj = 0 ; jj < np ; jj++) { */
+    /* 	/\* for(jj = 0 ; jj < np ; jj++) { *\/ */
 
-    /* 	    printf("%d ",shared[ii][jj]); */
+    /* 	/\*     printf("%d ",shared[ii][jj]); *\/ */
 
-    /* 	} */
+    /* 	/\* } *\/ */
 
-    /* 	printf("\n"); */
+    /* 	/\* printf("\n"); *\/ */
+
+    /* 	printf("%d\n",localMesh.parallel.shared[ii]); */
 
     /* } */
 
