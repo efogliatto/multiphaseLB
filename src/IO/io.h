@@ -7,7 +7,8 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include <readBasicMesh.h>
+#include <writeBasicMesh.h>
 
-void openFile( FILE* fp, char* fileName, char* mode);
 
 #endif // IO_H

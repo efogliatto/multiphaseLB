@@ -1,17 +1,15 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <basicMesh.h>
 
 typedef unsigned int uint;
 
 
-void periodicXY( int** neigh, unsigned int nx, unsigned int ny, unsigned int Q, int** bmap, int* btid ) {
+void periodicXY( struct basicMesh* mesh, unsigned int nx, unsigned int ny ) {
 
 
-    btid[0] = 0;
-    btid[1] = 0;
-    btid[2] = 0;
-    btid[3] = 0;
-
+    mesh->bd.nbd = 0;
+    
 
     int i,
 	j,
@@ -22,17 +20,17 @@ void periodicXY( int** neigh, unsigned int nx, unsigned int ny, unsigned int Q, 
     for( j = 1 ; j < (ny-1) ; j++ ) {
 
     	// Assign periodic neighbours
-    	for( velId = 0 ; velId < Q ; velId++ ) {
+    	for( velId = 0 ; velId < mesh->Q ; velId++ ) {
 
-    	    if(neigh[j*nx][velId] == -1) {
+    	    if(mesh->nb[j*nx][velId] == -1) {
 
-    		neigh[j*nx][velId] = neigh[ nx-1+j*nx  ][velId];
+    		mesh->nb[j*nx][velId] = mesh->nb[ nx-1+j*nx  ][velId];
 
     	    }
 
-    	    if(neigh[nx-1+j*nx][velId] == -1) {
+    	    if(mesh->nb[nx-1+j*nx][velId] == -1) {
 
-    		neigh[nx-1+j*nx][velId] = neigh[j*nx][velId];
+    		mesh->nb[nx-1+j*nx][velId] = mesh->nb[j*nx][velId];
 
     	    }
 	    
@@ -47,17 +45,17 @@ void periodicXY( int** neigh, unsigned int nx, unsigned int ny, unsigned int Q, 
     for( j = 1 ; j < (nx-1) ; j++ ) {
 
     	// Assign periodic neighbours
-    	for( velId = 0 ; velId < Q ; velId++ ) {
+    	for( velId = 0 ; velId < mesh->Q ; velId++ ) {
 
-    	    if(neigh[j][velId] == -1) {
+    	    if(mesh->nb[j][velId] == -1) {
 
-    		neigh[j][velId] = neigh[ j + (nx-1)*ny ][velId];
+    		mesh->nb[j][velId] = mesh->nb[ j + (nx-1)*ny ][velId];
 
     	    }
 
-    	    if(neigh[ j + (nx-1)*ny ][velId] == -1) {
+    	    if(mesh->nb[ j + (nx-1)*ny ][velId] == -1) {
 
-    		neigh[ j + (nx-1)*ny ][velId] = neigh[j][velId];
+    		mesh->nb[ j + (nx-1)*ny ][velId] = mesh->nb[j][velId];
 
     	    }
 	    
@@ -81,11 +79,11 @@ void periodicXY( int** neigh, unsigned int nx, unsigned int ny, unsigned int Q, 
 
 	    if( i!=j )  {
 
-		for( velId = 1 ; velId < Q ; velId++ ) {
+		for( velId = 1 ; velId < mesh->Q ; velId++ ) {
 
-		    if (  ( neigh[ cid[i] ][velId] == -1)  &&  (neigh[ cid[j] ][velId] != -1)  ){
+		    if (  ( mesh->nb[ cid[i] ][velId] == -1)  &&  (mesh->nb[ cid[j] ][velId] != -1)  ){
 
-			neigh[ cid[i] ][velId] = neigh[cid[j] ][velId];
+			mesh->nb[ cid[i] ][velId] = mesh->nb[cid[j] ][velId];
 
 		    }
 		

@@ -10,6 +10,7 @@
 #include <io.h>
 #include <latticeModel.h>
 #include <basic.h>
+#include <basicMesh.h>
 
 
 int main(int argc, char** argv) {
@@ -43,162 +44,12 @@ int main(int argc, char** argv) {
 
     
  
-    printf("\nMESH PARTITIONING\n\n");
+    printf("\n  MESH PARTITIONING\n\n");
 
+
+    // Read full mesh
+    struct basicMesh mesh = readBasicMesh();
     
-    
-
-    // ******************************************************************** //
-    //                         Points inside geometry                       //
-    // ******************************************************************** //
-
-    printf("Reading Mesh points\n\n");
-
-    // Open file
-    /* FILE* inFile; */
-    /* openFile(inFile, "lattice/points", "r"); */
-    FILE* inFile = fopen( "lattice/points", "r" );
-    
-
-    // Number of points
-    uint npoints;
-    fscanf(inFile, "%d", &npoints);
-
-    // Read Mesh points
-    int** meshPoints = matrixIntAlloc(npoints,3,0);
-    uint i,j;
-    for( i = 0 ; i < npoints ; i++ ) {
-
-	fscanf(inFile, "%d", &meshPoints[i][0]);
-	fscanf(inFile, "%d", &meshPoints[i][1]);
-	fscanf(inFile, "%d", &meshPoints[i][2]);
-
-    }
-
-    fclose(inFile);
-
-
-
-    
-
-
-    // ******************************************************************** //
-    //                             Neighbours                               //
-    // ******************************************************************** //
-
-    printf("Reading Neighbour indices\n\n");
-
-    // Open file
-    inFile = fopen( "lattice/neighbours", "r" );
-
-    // Lattice Model
-    char lbm[100];
-    lookUpStringEntry("properties/latticeProperties","LBModel",lbm);
-
-    // Read neighbours
-    int** neigh = matrixIntAlloc(npoints, latticeQ(lbm), -1);
-    for( i = 0 ; i < npoints ; i++ ) {
-
-	for( j = 0 ; j < latticeQ(lbm) ; j++ ) {
-
-	    fscanf(inFile, "%d", &neigh[i][j]);
-
-	}
-
-    }
-
-    fclose(inFile);
-
-
-    
-
-    
-
-
-    // ******************************************************************** //
-    //                             VTK Cells                                //
-    // ******************************************************************** //
-
-    printf("Reading vtkCells\n\n");
-
-    // Open file
-    inFile = fopen( "lattice/vtkCells", "r" );
-
-    // Number of cells and points per cell
-    uint ncells, ctype;
-    fscanf(inFile, "%d", &ncells);
-    fscanf(inFile, "%d", &ctype);
-    
-    // Read cells
-    int** vtkCells = matrixIntAlloc(ncells, ctype, -1);
-    for( i = 0 ; i < ncells ; i++ ) {
-
-	for( j = 0 ; j < ctype ; j++ ) {
-
-	    fscanf(inFile, "%d", &vtkCells[i][j]);
-
-	}
-
-    }
-
-    fclose(inFile);
-
-	
-
-
-    
-
-
-    // ******************************************************************** //
-    //                        Reading boundary nodes                        //
-    // ******************************************************************** //
-
-    printf("Reading boundary nodes\n\n");
-
-    // Open boundary file
-    inFile = fopen( "lattice/boundary", "r" );
-    
-    // Number of boundary types
-    uint nbd;
-    fscanf(inFile, "%d\n", &nbd);
-
-    // Total number of elements per boundary type
-    uint* nbdelem = (uint*)malloc(nbd * sizeof(uint));
-
-    // Boundary names (max 100 boundaries)
-    char bdNames[100][100];
-    
-
-    // Elements in boundary
-    uint** bdPoints = (uint**)malloc( nbd * sizeof(uint*) );
-    
-
-    // Read boundary
-    for( i = 0 ; i < nbd ; i++ ) {
-
-    	// Boundary name
-	fscanf(inFile, "%s", bdNames[i]);
-
-    	// Elements in boundary
-    	fscanf(inFile, "%d", &nbdelem[i]);
-
-    	// Resize bdPoints
-    	bdPoints[i] = (uint*)malloc( nbdelem[i] * sizeof(uint) );
-	
-    	for( j = 0 ; j < nbdelem[i] ; j++ ) {
-
-    	    fscanf(inFile, "%d", &bdPoints[i][j]);
-
-    	}
-
-    }
-
-
-
-
-
-    
-
 
 
 
@@ -212,37 +63,51 @@ int main(int argc, char** argv) {
     /* // ******************************************************************** // */
 
 
-    /* cout << "Decomposing domain" << endl; */
+    /* printf("Decomposing domain\n\n"); */
 
+    /* uint* procBegin = (uint*)malloc( np * sizeof(uint) ); */
+    /* uint* procEnd   = (uint*)malloc( np * sizeof(uint) ); */
 
     /* // Split on processors */
-    /* const uint np = vm["processors"].as<int>(); */
-    /* vector<uint> procBegin(np), */
-    /* 	procEnd(np); */
-
-    /* for(uint i = 0 ; i < np ; i++ ) { */
+    /* for( i = 0 ; i < np ; i++ ) { */
+	
     /* 	if(i != 0) { */
+	    
     /* 	    procBegin[i] = procEnd[i-1] + 1; */
-    /* 	    procEnd[i] = procBegin[i] + (int)(meshPoints.size()/np) - 1; */
+    /* 	    procEnd[i] = procBegin[i] + (int)(npoints/np) - 1; */
+	    
     /* 	} */
+	
     /* 	else { */
+	    
     /* 	    procBegin[i] = 0; */
-    /* 	    procEnd[0] = (int)(meshPoints.size()/np) - 1; */
+    /* 	    procEnd[0] = (int)(npoints/np) - 1; */
+	    
     /* 	} */
+	
     /* } */
-    /* procEnd[np - 1] = meshPoints.size() - 1; */
+    
+    /* procEnd[np - 1] = npoints - 1; */
+
+    
 
     
     /* // Ownership vector */
-    /* vector<uint> owner; */
-    /* owner.resize( meshPoints.size() ); */
-
-    /* for(uint pid = 0 ; pid < np ; pid++) { */
-    /* 	for(uint i = procBegin[pid] ; i <= procEnd[pid] ; i++) { */
+    /* uint* owner = (uint*)malloc( npoints * sizeof(uint) ); */
+    
+    /* uint pid; */
+    /* for( pid = 0 ; pid < np ; pid++ ) { */
+	
+    /* 	for( i = procBegin[pid] ; i <= procEnd[pid] ; i++ ) { */
+	    
     /* 	    owner[i] = pid; */
+	    
     /* 	} */
+	
     /* } */
 
+
+    
     
     /* // Create set of IOPatchs, according to number of processors */
     /* vector< IOPatch<Vector3> > patches; */
