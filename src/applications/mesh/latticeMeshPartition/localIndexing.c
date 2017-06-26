@@ -89,7 +89,7 @@ void localIndexing ( struct basicMesh* mesh, int** local, int** nGhosts, uint* o
 
     }
     
-
+    
     
 
 }

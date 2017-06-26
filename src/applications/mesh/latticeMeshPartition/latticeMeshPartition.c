@@ -10,13 +10,16 @@
 #include <io.h>
 #include <latticeModel.h>
 #include <basic.h>
-#include <basicMesh.h>
+#include <latticeMesh.h>
+
 
 // Standard decomposition
 void standardDecomp( unsigned int* owner, struct basicMesh* mesh, unsigned int np );
 
 // Local Indexing
-void localIndexing ( struct basicMesh* mesh, int** local, int** nGhosts, uint* owner, uint np);
+void localIndexing ( struct basicMesh* mesh, int** local, int** nGhosts, uint* owner, uint np );
+
+
 
 
 int main(int argc, char** argv) {
@@ -75,19 +78,46 @@ int main(int argc, char** argv) {
     // Resize local indices array
     int** local   = matrixIntAlloc( mesh.nPoints, np, -1);
     int** nGhosts = matrixIntAlloc( np, 2, -1);
+    int** shared  = matrixIntAlloc( np, np, 0);
 
+    
     // Creation of local indexing
     localIndexing( &mesh, local, nGhosts, owner, np );
 
 
-    /* uint i,j; */
-    /* for( i = 0 ; i < mesh.nPoints ; i++ ) { */
+    // Local mesh creation
+    uint pid;
+    for( pid = 0 ; pid < np ; pid++) {
 
-    /* 	printf("%d: ",i); */
 	
-    /* 	for( j = 0 ; j < np ; j++ ) { */
+	// Basic info
+	
+	struct latticeMesh localMesh;
 
-    /* 	    printf(" %d", local[i][j]); */
+	localMesh.parallel.pid = pid;
+
+	localMesh.parallel.worldSize = np;
+
+	localMesh.parallel.nlocal = nGhosts[pid][0];
+	
+	localMesh.parallel.nghosts = nGhosts[pid][1];
+
+
+	
+	// Check for shared elements
+
+
+    }
+
+
+
+
+    /* uint ii,jj; */
+    /* for(ii = 0 ; ii < np ; ii++) { */
+
+    /* 	for(jj = 0 ; jj < np ; jj++) { */
+
+    /* 	    printf("%d ",shared[ii][jj]); */
 
     /* 	} */
 
@@ -95,13 +125,10 @@ int main(int argc, char** argv) {
 
     /* } */
 
+
+
     
-    uint j;
-    for( j = 0 ; j < np ; j++ ) {
 
-	printf("%d  %d\n", nGhosts[j][0], nGhosts[j][1]);
-
-    }
 
     
     
