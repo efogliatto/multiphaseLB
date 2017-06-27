@@ -18,24 +18,16 @@ struct mpiInfo {
     unsigned int nlocal;
 
     // Elements shared with other processes
-    int* shared;
+    uint* shared;
 
+    // Receive ghosts
+    unsigned int** recvGhosts;
+
+    // Send ghosts
+    unsigned int** sendGhosts;
     
     
-    /* // Number of ghost processes */
-    /* unsigned int nGProc; */
-
-    /* // Array of ghost processes (size = worldSize) */
-    /* unsigned int* gProc; */
-
-    /* // Number of ghost elements with each processor */
-    /* unsigned int nGhostPerProc; */
-
-    // ghost elements with each processor
-    unsigned int** ghostsPerProc;
-
-    /* // ghost elements with each processor, using only velocity */
-    /* unsigned int** nghostPerProcVel;     */
+    
 
     
 

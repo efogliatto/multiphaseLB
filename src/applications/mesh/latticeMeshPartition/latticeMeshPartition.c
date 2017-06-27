@@ -85,108 +85,155 @@ int main(int argc, char** argv) {
     localIndexing( &mesh, local, nGhosts, owner, np );
 
 
-    // Local mesh creation
-    uint pid;
-    for( pid = 0 ; pid < np ; pid++) {
+    // Total number of shared nodes
+    uint i,
+	 pid;
+    
+    for( i = 0 ; i < mesh.nPoints ; i++ ) {
 
-	
-	// Basic info
-	
-	struct latticeMesh localMesh;
-
-	localMesh.parallel.pid = pid;
-
-	localMesh.parallel.worldSize = np;
-
-	localMesh.parallel.nlocal = nGhosts[pid][0];
-	
-	localMesh.parallel.nghosts = nGhosts[pid][1];
-
-
-	
-	// Check for shared elements
-
-	uint i;
-	for( i = 0 ; i < mesh.nPoints ; i++ ) {
+	for( pid = 0 ; pid < np ; pid++) {
 
 	    if( local[i][pid] >= nGhosts[pid][0] ) {
 
 		shared[pid][ owner[i] ]++;
-		
+
 	    }
 
 	}
 
+    }
 
-	// Resize index array and copy indices
 
-	localMesh.parallel.shared        = (int*)malloc( np * sizeof(int) );
-	localMesh.parallel.ghostsPerProc = (uint**)malloc( np * sizeof(uint*) );	
+    // Local mesh creation
+    struct latticeMesh* localMesh = (struct latticeMesh*)malloc( np * sizeof(struct latticeMesh) );
+
+    // Move over meshes and look for recv ghosts
+    {
+
 	
-	for( i = 0 ; i < np ; i++ ) {
+	uint rpid,spid;
 
-	    localMesh.parallel.shared[ owner[i] ] = 0;
+	// Counter arrays
+	int** gcount = matrixIntAlloc( np, np, 0);
+	
+
+	// Move over recv lattices. Basic info and resize arrays
+	
+	for( rpid = 0 ; rpid < np ; rpid++ ) {
+
+
+	    // Add basic info
 	    
-	    localMesh.parallel.ghostsPerProc[i] = (uint*)malloc( shared[pid][i] * sizeof(uint) );	    
+	    localMesh[rpid].parallel.pid = rpid;
+
+	    localMesh[rpid].parallel.worldSize = np;
+
+	    localMesh[rpid].parallel.nlocal = nGhosts[rpid][0];
+	
+	    localMesh[rpid].parallel.nghosts = nGhosts[rpid][1];
+
+
+
+	    // Add sharing info and resize elements
+	    
+	    localMesh[rpid].parallel.shared = (uint*)malloc( np * sizeof(uint) );
+
+	    for( spid = 0 ; spid < np ; spid++ ) {
+
+		localMesh[rpid].parallel.shared[spid] = shared[rpid][spid];
+
+	    }
+
+
+	    // Resize ghost info
+	    
+	    localMesh[rpid].parallel.recvGhosts = (uint**)malloc( np * sizeof(uint*) );
+
+	    localMesh[rpid].parallel.sendGhosts = (uint**)malloc( np * sizeof(uint*) );
+	    
+	    for( spid = 0 ; spid < np ; spid++ ) {
+
+		localMesh[rpid].parallel.recvGhosts[spid] = (uint*)malloc( shared[rpid][spid] * sizeof(uint) );
+
+		localMesh[rpid].parallel.sendGhosts[spid] = (uint*)malloc( shared[rpid][spid] * sizeof(uint) );
+		
+	    }
+
+
+
+
+	    // Add points. First local, then ghost
+
+	    
+	    
 
 	}
 
 
-	
-	// Move again and assign indices
+
+
+
+
+
+	// Move over local lattices and add parallel info
+
 	for( i = 0 ; i < mesh.nPoints ; i++ ) {
+	
+	    for( rpid = 0 ; rpid < np ; rpid++ ) {
 
-	    if( local[i][pid] >= nGhosts[pid][0] ) {
+		if( local[i][rpid] >= nGhosts[rpid][0] ) {
 
-		localMesh.parallel.ghostsPerProc[ owner[i] ][  localMesh.parallel.shared[ owner[i] ]  ]  =  local[i][pid];
 
-		localMesh.parallel.shared[ owner[i] ]++;
-		
+		    // Add local index as recv ghost
+
+		    spid = owner[i];
+		    
+		    localMesh[rpid].parallel.recvGhosts[ spid ][ gcount[rpid][spid] ]   =  local[i][rpid];
+
+
+		    // Add local index as send ghost
+		    
+		    localMesh[spid].parallel.sendGhosts[ rpid ][ gcount[rpid][spid] ]   =  local[i][spid];
+
+		    gcount[rpid][spid]++;
+
+		}
+	    
 	    }
 
 	}
 
 
-    /* uint ii,jj; */
-    /* if(pid==1) { */
-    /* for(ii = 0 ; ii < np ; ii++) { */
 
-    /* 	/\* for(jj = 0 ; jj < np ; jj++) { *\/ */
+	/* uint ii,jj; */
 
-    /* 	/\*     printf("%d ",shared[ii][jj]); *\/ */
+	/* for(ii = 0 ; ii < np ; ii++) { */
 
-    /* 	/\* } *\/ */
+	/*     for(jj = 0 ; jj < np ; jj++) { */
 
-    /* 	/\* printf("\n"); *\/ */
+	/*         printf("%d ",gcount[ii][jj]); */
 
-    /* 	printf("%d\n",localMesh.parallel.shared[ii]); */
+	/*     } */
 
-    /* } */
+	/*     printf("\n"); */
 
-    /* } */
+
+	/* } */
+
+
+
 	
-
+	
     }
 
 
 
 
-    /* uint ii,jj; */
-    /* for(ii = 0 ; ii < np ; ii++) { */
+    
 
-    /* 	/\* for(jj = 0 ; jj < np ; jj++) { *\/ */
+    
 
-    /* 	/\*     printf("%d ",shared[ii][jj]); *\/ */
-
-    /* 	/\* } *\/ */
-
-    /* 	/\* printf("\n"); *\/ */
-
-    /* 	printf("%d\n",localMesh.parallel.shared[ii]); */
-
-    /* } */
-
-
+    
 
     
 
