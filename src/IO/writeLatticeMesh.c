@@ -82,8 +82,60 @@ void writeLatticeMesh( struct latticeMesh* mesh ) {
 
 
 
-    
 
+    // Recv ghosts
+    
+    sprintf(command,"processor%d/lattice/recvGhosts", mesh->parallel.pid);
+    
+    outFile = fopen(command,"w");
+
+    fprintf(outFile,"%d\n\n",mesh->parallel.worldSize);
+
+    uint pid;
+
+    for( pid = 0 ; pid < mesh->parallel.worldSize ; pid++ ) {
+
+	fprintf(outFile,"%d\n%d\n",pid,mesh->parallel.shared[pid]);
+
+	for( i = 0 ; i < mesh->parallel.shared[pid] ; i++ ) {
+
+	    fprintf(outFile,"%d\n",mesh->parallel.recvGhosts[pid][i]);
+
+	}
+
+	fprintf(outFile,"\n"); 
+
+    }
+
+    fclose(outFile);
+
+
+
+    // Send ghosts
+    
+    sprintf(command,"processor%d/lattice/sendGhosts", mesh->parallel.pid);
+    
+    outFile = fopen(command,"w");
+
+    fprintf(outFile,"%d\n\n",mesh->parallel.worldSize);
+
+    for( pid = 0 ; pid < mesh->parallel.worldSize ; pid++ ) {
+
+	fprintf(outFile,"%d\n%d\n",pid,mesh->parallel.shared[pid]);
+
+	for( i = 0 ; i < mesh->parallel.shared[pid] ; i++ ) {
+
+	    fprintf(outFile,"%d\n",mesh->parallel.sendGhosts[pid][i]);
+
+	}
+
+	fprintf(outFile,"\n"); 
+
+    }
+
+    fclose(outFile);
+
+    
 
     /* // Boundary */
     /* outFile = fopen("lattice/boundary","w"); */
