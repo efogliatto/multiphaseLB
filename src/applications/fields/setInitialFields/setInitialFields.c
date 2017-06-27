@@ -10,8 +10,8 @@
 #include <io.h>
 #include <latticeModel.h>
 #include <basic.h>
+#include <readLatticeMesh.h>
 #include <writeLatticeMesh.h>
-
 
 
 int main(int argc, char** argv) {
@@ -19,30 +19,38 @@ int main(int argc, char** argv) {
 
     
  
-    /* printf("\n  MESH PARTITIONING\n\n"); */
+    printf("\n  SET DISTRIBUTED FIELDS\n\n");
 
 
-    /* // Read full mesh */
-    /* struct basicMesh mesh = readBasicMesh(); */
-    
-
-    /* // Total number of processes */
-    /* uint np = (uint)lookUpDoubleEntry("properties/parallel","numProc",4); */
-
-    /* // Decomposition method */
-    /* char method[100]; */
-    /* lookUpStringEntry("properties/parallel","method",method); */
+    // Total number of processes
+    uint np = (uint)lookUpDoubleEntry("properties/parallel","numProc",4);
 
 
 
     
     
     
-    /* // ******************************************************************** // */
-    /* //                             Processors                               // */
-    /* // ******************************************************************** // */
+    // ******************************************************************** //
+    //                             Processors                               //
+    // ******************************************************************** //
 
 
+
+    // Move over processors
+
+    uint pid;
+    
+    for( pid = 0 ; pid < np ; pid++ ) {
+
+
+	// Read lattice for each processor
+
+	struct latticeMesh mesh = readLatticeMesh(pid);
+	
+
+    }
+
+    
     /* printf("Decomposing domain\n\n"); */
 
     /* // Ownership array */
