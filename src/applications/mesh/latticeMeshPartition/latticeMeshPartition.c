@@ -188,6 +188,8 @@ int main(int argc, char** argv) {
 	    
 	    localMesh[rpid].mesh.nb = matrixIntAlloc( localMesh[rpid].parallel.nlocal, mesh.Q, -1 );
 
+	    localMesh[rpid].mesh.Q = mesh.Q;
+
 	    for( i = 0 ; i < mesh.nPoints ; i++ ) {
 
 		int lid = local[i][rpid];

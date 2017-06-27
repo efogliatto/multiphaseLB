@@ -60,23 +60,25 @@ void writeLatticeMesh( struct latticeMesh* mesh ) {
 
     
     
-    /* // Neighbours */
+    // Neighbours
     
-    /* outFile = fopen("lattice/neighbours","w"); */
+    sprintf(command,"processor%d/lattice/neighbours", mesh->parallel.pid);
+    
+    outFile = fopen(command,"w");
 
-    /* for( i = 0 ; i < mesh->nPoints ; i++ ) { */
+    for( i = 0 ; i < mesh->parallel.nlocal ; i++ ) {
 
-    /* 	for( j = 0 ; j < mesh->Q ; j++ ) { */
+    	for( j = 0 ; j < mesh->mesh.Q ; j++ ) {
 
-    /* 	    fprintf(outFile,"%d ",mesh->nb[i][j]); */
+    	    fprintf(outFile,"%d ",mesh->mesh.nb[i][j]);
 
-    /* 	} */
+    	}
 
-    /* 	fprintf(outFile,"\n"); */
+    	fprintf(outFile,"\n");
 
-    /* } */
+    }
 
-    /* fclose(outFile); */
+    fclose(outFile);
 
 
 
