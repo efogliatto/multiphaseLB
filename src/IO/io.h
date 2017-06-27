@@ -13,4 +13,10 @@
 #include <writeLatticeMesh.h>
 #include <readLatticeMesh.h>
 
+#include <writeMeshToVTK.h>
+#include <writeScalarToVTK.h>
+#include <writeVectorToVTK.h>
+#include <writePdfToVTK.h>
+#include <writeVTKExtra.h>
+
 #endif // IO_H

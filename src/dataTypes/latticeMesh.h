@@ -1,7 +1,7 @@
 #ifndef LATTICEMESH_H
 #define LATTICEMESH_H
 
-/* #include <timeInfo.h> */
+
 /* #include <latticeInfo.h> */
 /* #include <vtkInfo.h> */
 /* #include <bdInfo.h> */
@@ -9,8 +9,12 @@
 
 #include <basicMesh.h>
 #include <mpiInfo.h>
+#include <timeInfo.h>
 
 struct latticeMesh {
+
+    // Time information
+    struct timeInfo time;
 
 
     // Mesh information
@@ -21,8 +25,6 @@ struct latticeMesh {
 
     
 
-    /* // Time information */
-    /* struct timeInfo time; */
 
     /* // DdQq information */
     /* struct latticeInfo lattice; */

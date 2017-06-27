@@ -13,7 +13,7 @@
 #include <readLatticeMesh.h>
 #include <writeLatticeMesh.h>
 #include <dirent.h>
-#include <time.h>
+
 
 int main(int argc, char** argv) {
 
@@ -30,15 +30,14 @@ int main(int argc, char** argv) {
 
     
     // List available fields in start folder
+    struct vtkInfo vtk;
+ 
+    vtk.nscalar = 0;
 
-    uint nScalarFields = 0;
-    char scalarFields[10][100];
+    vtk.nvector = 0;
 
-    uint nVectorFields = 0;
-    char vectorFields[10][100];
+    vtk.npdf = 0;
 
-    uint nPdfFields = 0;
-    char pdfFields[10][100];
     
     
     {
@@ -54,9 +53,9 @@ int main(int argc, char** argv) {
 
 		if(   ( strcmp(dir->d_name,"rho") == 0 )  ||  ( strcmp(dir->d_name,"p")   == 0 )  ||  ( strcmp(dir->d_name,"T")   == 0 )   ) {
 
-		    sprintf(scalarFields[nScalarFields],"%s",dir->d_name);
+		    sprintf(vtk.scalarFields[vtk.nscalar],"%s",dir->d_name);
 		    
-		    nScalarFields++;
+		    vtk.nscalar++;
 		    
 		}
 
@@ -64,9 +63,9 @@ int main(int argc, char** argv) {
 
 		    if(   ( strcmp(dir->d_name,"U") == 0 )   ) {
 
-			sprintf(vectorFields[nVectorFields],"%s",dir->d_name);
+			sprintf(vtk.vectorFields[vtk.nvector],"%s",dir->d_name);
 		    
-			nVectorFields++;
+			vtk.nvector++;
 		    
 		    }
 
@@ -74,9 +73,9 @@ int main(int argc, char** argv) {
 
 			if(   ( strcmp(dir->d_name,"f") == 0 )  ||  ( strcmp(dir->d_name,"g")   == 0 )  ) {
 
-			    sprintf(pdfFields[nPdfFields],"%s",dir->d_name);
+			    sprintf(vtk.pdfFields[vtk.npdf],"%s",dir->d_name);
 		    
-			    nPdfFields++;
+			    vtk.npdf++;
 		    
 			}
 
@@ -116,17 +115,26 @@ int main(int argc, char** argv) {
 
 	struct latticeMesh mesh = readLatticeMesh(pid);
 
+	mesh.time.start = 0;
+
+	mesh.time.current = 0;
+
+
+	// Write mesh in VTK file
+	writeMeshToVTK( &mesh, &vtk );
+	
+
 	
 
 	// Move over scalar fields
 
 	uint fid;
 
-	for( fid = 0 ; fid < nScalarFields ; fid++ ) {
+	for( fid = 0 ; fid < vtk.nscalar ; fid++ ) {
 
 
 	    // Scalar fields: rho, p, T
-	    if(   ( strcmp( scalarFields[fid], "rho" ) == 0 )   ||   ( strcmp( scalarFields[fid], "p" ) == 0 )   ||  ( strcmp( scalarFields[fid], "T" ) == 0 )   ) {
+	    if(   ( strcmp( vtk.scalarFields[fid], "rho" ) == 0 )   ||   ( strcmp( vtk.scalarFields[fid], "p" ) == 0 )   ||  ( strcmp( vtk.scalarFields[fid], "T" ) == 0 )   ) {
 
 
 		// Resize field array
@@ -137,7 +145,7 @@ int main(int argc, char** argv) {
 		char fn[100];
 
 		// Field file name
-		sprintf(fn,"start/%s", scalarFields[fid]);
+		sprintf(fn,"start/%s", vtk.scalarFields[fid]);
 
 		// Internal field distribution
 		lookUpStringEntry(fn,"internalField", intField);
@@ -161,7 +169,7 @@ int main(int argc, char** argv) {
 		
 		
 		// Random
-		if( strcmp(intField, "uniform") == 0 ) {
+		if( strcmp(intField, "random") == 0 ) {
 
 		    double value = lookUpDoubleEntry(fn, "internalValue", 0);
 
@@ -182,6 +190,12 @@ int main(int argc, char** argv) {
 		    }		    
 
 		}
+
+
+
+
+		// Write field
+		writeScalarToVTK( vtk.scalarFields[fid], field, &mesh );
 		
 		
 
@@ -196,11 +210,14 @@ int main(int argc, char** argv) {
 
 	// Move over vector fields
 
-	for( fid = 0 ; fid < nVectorFields ; fid++ ) {
+	for( fid = 0 ; fid < vtk.nvector ; fid++ ) {
 
-	    if(   ( strcmp( vectorFields[fid], "U" ) == 0 )   ) {
+	    if(   ( strcmp( vtk.vectorFields[fid], "U" ) == 0 )   ) {
 
 	    	double** field = matrixDoubleAlloc(  mesh.mesh.nPoints, 3, 0);
+
+		// Write field
+		writeVectorToVTK( vtk.vectorFields[fid], field, &mesh );
 
 	    }
 
@@ -211,11 +228,14 @@ int main(int argc, char** argv) {
 
 	// Move over pdf fields
 
-	for( fid = 0 ; fid < nPdfFields ; fid++ ) {
+	for( fid = 0 ; fid < vtk.npdf ; fid++ ) {
 
-	    if(   ( strcmp( pdfFields[fid], "f" ) == 0 )   ||   ( strcmp( pdfFields[fid], "g" ) == 0 )  ) {
+	    if(   ( strcmp( vtk.pdfFields[fid], "f" ) == 0 )   ||   ( strcmp( vtk.pdfFields[fid], "g" ) == 0 )  ) {
 
 	    	double** field = matrixDoubleAlloc(  mesh.mesh.nPoints, mesh.mesh.Q, 0);
+		
+		// Write field
+		writePdfToVTK( vtk.pdfFields[fid], field, &mesh );
 
 	    }
 
@@ -223,6 +243,13 @@ int main(int argc, char** argv) {
 
 
 
+
+
+
+
+
+	// Write extra terms to vtk file
+	writeVTKExtra( &mesh, &vtk );
 	
 	
 
