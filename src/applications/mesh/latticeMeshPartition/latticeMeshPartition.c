@@ -403,20 +403,6 @@ int main(int argc, char** argv) {
 
 
 
-	/* uint ii,jj; */
-
-	/* for(ii = 0 ; ii < np ; ii++) { */
-
-	/*     for(jj = 0 ; jj < np ; jj++) { */
-
-	/*         printf("%d ",gcount[ii][jj]); */
-
-	/*     } */
-
-	/*     printf("\n"); */
-
-
-	/* } */
 
 
 
