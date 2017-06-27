@@ -7,4 +7,5 @@ add_library(io SHARED
   openFile.c
   readBasicMesh.c
   writeBasicMesh.c
+  writeLatticeMesh.c
   )

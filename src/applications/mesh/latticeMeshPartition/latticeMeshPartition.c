@@ -10,7 +10,7 @@
 #include <io.h>
 #include <latticeModel.h>
 #include <basic.h>
-#include <latticeMesh.h>
+#include <writeLatticeMesh.h>
 
 
 // Standard decomposition
@@ -164,7 +164,58 @@ int main(int argc, char** argv) {
 
 	    // Add points. First local, then ghost
 
+	    localMesh[rpid].mesh.nPoints = localMesh[rpid].parallel.nlocal + localMesh[rpid].parallel.nghosts;
 	    
+	    localMesh[rpid].mesh.points = matrixIntAlloc( localMesh[rpid].mesh.nPoints, 3, 0 );
+
+	    for( i = 0 ; i < mesh.nPoints ; i++ ) {
+
+		int lid = local[i][rpid];
+		
+		if( lid != -1 ) {
+
+		    localMesh[rpid].mesh.points[lid][0] = mesh.points[i][0];
+		    localMesh[rpid].mesh.points[lid][1] = mesh.points[i][1];
+		    localMesh[rpid].mesh.points[lid][2] = mesh.points[i][2];	    
+		    
+		}
+
+	    }
+
+
+
+	    // Add Neighbours.
+	    
+	    localMesh[rpid].mesh.nb = matrixIntAlloc( localMesh[rpid].parallel.nlocal, mesh.Q, -1 );
+
+	    for( i = 0 ; i < mesh.nPoints ; i++ ) {
+
+		int lid = local[i][rpid];
+		
+		if( lid < localMesh[rpid].parallel.nlocal ) {
+
+
+		    // Move over velocities
+
+		    uint velId;
+		    int nbid;
+
+		    for( velId = 0 ; velId < mesh.Q ; velId++ ) {
+
+			nbid = mesh.nb[i][velId];
+
+			if( nbid != -1 ) {
+			    
+			    localMesh[rpid].mesh.nb[lid][velId] = local[nbid][rpid];
+
+			}
+
+		    }
+		    
+		    
+		}
+
+	    }	    
 	    
 
 	}
@@ -231,91 +282,30 @@ int main(int argc, char** argv) {
 
     
 
-    
+
+    // Write lattice meshes
+    {
+
+	int status = system( "rm -rf processor*" );
+
+	if (!status) {
+
+	    for( i = 0 ; i < np ; i++ ) {
+
+		writeLatticeMesh( &localMesh[i] );
+
+	    }
+
+	}
+    }
 
     
 
     
 
 
-    
-    
-    /* // Create set of IOPatchs, according to number of processors */
-    /* vector< IOPatch<Vector3> > patches; */
 
-    /* for(uint pid = 0 ; pid < np ; pid++) */
-    /* 	patches.push_back( IOPatch<Vector3>(lbm) ); */
-
-    /* // Set patch indices */
-    /* for(uint pid = 0 ; pid < np ; pid++) */
-    /* 	patches[pid].setId(pid); */
-
-    /* // Assign neighbours */
-    /* for(vector< IOPatch<Vector3> >::iterator it = patches.begin() ; it != patches.end() ; it++) */
-    /* 	it->setGlobalNeighbours( neigh, owner ); */
-
-    /* // Assign values */
-    /* for(vector< IOPatch<Vector3> >::iterator it = patches.begin() ; it != patches.end() ; it++) */
-    /* 	it->setValues( meshPoints );         */
-
-
-    /* // Set send maps */
-    /* for(uint i = 0 ; i < patches.size() ; i++) { */
-
-    /* 	for(uint j = 0 ; j < patches.size() ; j++) { */
-
-    /* 	    if( i != j ) { */
-
-    /* 		patches[i].setSendMap( patches[j].id(), patches[j].ghostRecvGId( patches[i].id() ) ); */
-		
-    /* 	    } */
-	    
-    /* 	} */
-	
-    /* }     */
-
-
-    /* // Assign boundary elements */
-    /* for(vector< IOPatch<Vector3> >::iterator it = patches.begin() ; it != patches.end() ; it++) */
-    /* 	it->setGlobalBdMap( globalBmap ); */
-    
-    
-
-    /* // Write patch information */
-    /* for(uint pid = 0 ; pid < patches.size() ; pid++) { */
-
-    /* 	cout << "    processor" << pid << endl;  */
-
-    /* 	ostringstream folderName; */
-    /* 	folderName << "processor" << pid << "/" << vm["DQmodel"].as<string>() << "_lattice"; */
-
-    /* 	// Neighbours */
-    /* 	patches[pid].writeNeighboursIds(  "neighbours", folderName.str() ); */
-
-    /* 	// Global Ids, local nodes */
-    /* 	patches[pid].writeGlobalIdLocal(  "globalIds", folderName.str() ); */
-
-    /* 	// Global indices, ghost nodes */
-    /* 	patches[pid].writeGlobalIdGhost(  "globalGhostsIds", folderName.str() );	 */
-
-    /* 	// Recv map indices */
-    /* 	patches[pid].writeRecvMapsIds(  "recvMapIds", folderName.str() ); */
-
-    /* 	// Send map indices */
-    /* 	patches[pid].writeSendMapsIds(  "sendMapIds", folderName.str() ); */
-
-    /* 	// Local and ghost values */
-    /* 	patches[pid].writeAllValues(  "points", folderName.str() ); */
-
-    /* 	// VTK Cells */
-    /* 	patches[pid].writeVTKCells(  "vtkCells", folderName.str(), vtkCells ); */
-
-    /* 	// Boundary elements */
-    /* 	patches[pid].writeBoundariesIds(  "boundary", folderName.str() ); */
-	
-    /* } */
-
-    /* cout << endl << "Finished domain decomposition" << endl << endl; */
+    printf("Finished domain decomposition\n\n");
     
     
     return 0;

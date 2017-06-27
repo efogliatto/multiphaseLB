@@ -28,7 +28,7 @@ void writeBasicMesh( struct basicMesh* mesh ) {
 
     for( i = 0 ; i < mesh->nPoints ; i++ ) {
 
-    	fprintf(outFile,"%d %d %d\n",mesh->points[i][0],mesh->points[i][1],mesh->points[i][0]);
+    	fprintf(outFile,"%d %d %d\n",mesh->points[i][0],mesh->points[i][1],mesh->points[i][2]);
 
     }
     

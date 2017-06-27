@@ -10,5 +10,6 @@
 #include <readBasicMesh.h>
 #include <writeBasicMesh.h>
 
+#include <writeLatticeMesh.h>
 
 #endif // IO_H
