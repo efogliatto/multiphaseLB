@@ -166,25 +166,27 @@ void writeLatticeMesh( struct latticeMesh* mesh ) {
 
 
 
-    /* // Write VTK cells */
+    // Write VTK cells
+
+    sprintf(command,"processor%d/lattice/vtkCells", mesh->parallel.pid);
     
-    /* outFile = fopen("lattice/vtkCells","w"); */
+    outFile = fopen(command,"w");
     
-    /* fprintf(outFile,"%d %d\n", mesh->ncells, mesh->cellType); */
+    fprintf(outFile,"%d %d\n", mesh->mesh.ncells, mesh->mesh.cellType);
     
-    /* for( i = 0 ; i < mesh->ncells ; i++ ) { */
+    for( i = 0 ; i < mesh->mesh.ncells ; i++ ) {
 	
-    /* 	for( j = 0 ; j < mesh->cellType ; j++ ) { */
+    	for( j = 0 ; j < mesh->mesh.cellType ; j++ ) {
 	    
-    /* 	    fprintf(outFile,"%d ",mesh->vtkCells[i][j]); */
+    	    fprintf(outFile,"%d ",mesh->mesh.vtkCells[i][j]);
 	    
-    /* 	} */
+    	}
 	
-    /* 	fprintf(outFile,"\n"); */
+    	fprintf(outFile,"\n");
 	
-    /* } */
+    }
     
-    /* fclose(outFile); */
+    fclose(outFile);
     
 
 

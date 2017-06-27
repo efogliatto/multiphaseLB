@@ -217,7 +217,97 @@ int main(int argc, char** argv) {
 		    
 		}
 
-	    }	    
+	    }
+
+
+
+
+
+
+
+	    // Add vtkCells
+
+	    localMesh[rpid].mesh.ncells = 0;
+	    
+	    for( i = 0 ; i < mesh.ncells ; i++ ) {
+
+		uint cid,
+		     find = 0;
+
+		for( cid = 0 ; cid < mesh.cellType ; cid++ ) {
+
+		    // Check if all members are local
+		    if( local[ mesh.vtkCells[i][cid] ][rpid] == -1 ) {
+
+			find++;
+
+		    }
+
+		}
+
+		if( find == 0 ) {
+
+		    localMesh[rpid].mesh.ncells++;
+
+		}
+
+	    }
+
+
+
+	    // Resize and add
+
+	    localMesh[rpid].mesh.cellType = mesh.cellType;
+	    
+	    localMesh[rpid].mesh.vtkCells = matrixIntAlloc( localMesh[rpid].mesh.ncells, mesh.cellType, -1);
+
+	    uint count = 0;
+	    
+	    for( i = 0 ; i < mesh.ncells ; i++ ) {
+
+		uint cid,
+		     find = 0;
+
+		for( cid = 0 ; cid < mesh.cellType ; cid++ ) {
+
+		    // Check if all members are local
+		    if( local[ mesh.vtkCells[i][cid] ][rpid] == -1 ) {
+
+			find++;
+
+		    }
+
+		}
+
+		if( find == 0 ) {
+
+		    
+		    for( cid = 0 ; cid < mesh.cellType ; cid++ ) {
+
+			localMesh[rpid].mesh.vtkCells[count][cid] = local[ mesh.vtkCells[i][cid] ][rpid];
+
+		    }
+		    
+		    
+		    count++;
+
+		}
+
+	    }
+
+
+
+
+
+
+
+
+	    
+
+
+
+
+	    
 	    
 
 	}
