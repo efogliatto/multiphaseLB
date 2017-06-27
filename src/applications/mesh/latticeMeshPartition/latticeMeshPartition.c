@@ -302,17 +302,72 @@ int main(int argc, char** argv) {
 
 
 
+	    // Boundaries. Assign boundaries from original mesh
+
+	    localMesh[rpid].mesh.bd.nbd = mesh.bd.nbd;
 	    
+	    localMesh[rpid].mesh.bd.nbdelem = (uint*)malloc( mesh.bd.nbd * sizeof(uint) );
+
+	    localMesh[rpid].mesh.bd.bdPoints = (uint**)malloc( mesh.bd.nbd * sizeof(uint*) );
+
+	    for( i = 0 ; i < localMesh[rpid].mesh.bd.nbd ; i++ ) {
+
+		localMesh[rpid].mesh.bd.nbdelem[i] = 0;
+
+		sprintf( localMesh[rpid].mesh.bd.bdNames[i], "%s", mesh.bd.bdNames[i] );
+
+		uint bdpid;
+
+		for( bdpid = 0 ; bdpid < mesh.bd.nbdelem[i] ; bdpid++ ) {
+
+		    if( local[ mesh.bd.bdPoints[i][bdpid] ][rpid] < localMesh[rpid].parallel.nlocal ) {
+
+			localMesh[rpid].mesh.bd.nbdelem[i]++;
+
+		    }
+
+		}
+
+	    }
+
+
+	    
+	    
+	    
+	    for( i = 0 ; i < localMesh[rpid].mesh.bd.nbd ; i++ ) {
+
+		count = 0;
+		
+	    	localMesh[rpid].mesh.bd.bdPoints[i] = (uint*)malloc( localMesh[rpid].mesh.bd.nbdelem[i] * sizeof(uint) );
+
+	    	uint bdpid;
+
+	    	for( bdpid = 0 ; bdpid < mesh.bd.nbdelem[i] ; bdpid++ ) {
+
+	    	    if( local[ mesh.bd.bdPoints[i][bdpid] ][rpid] < localMesh[rpid].parallel.nlocal ) {
+
+	    		localMesh[rpid].mesh.bd.bdPoints[i][count] = local[ mesh.bd.bdPoints[i][bdpid] ][rpid];
+
+	    		count++;
+
+	    	    }
+
+	    	}
+
+	    }
 
 
 
 
+	    
 	    
 	    
 
 	}
 
 
+
+	
 
 
 

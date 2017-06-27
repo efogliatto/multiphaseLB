@@ -137,30 +137,33 @@ void writeLatticeMesh( struct latticeMesh* mesh ) {
 
     
 
-    /* // Boundary */
-    /* outFile = fopen("lattice/boundary","w"); */
+    // Boundary
+
+    sprintf(command,"processor%d/lattice/boundary", mesh->parallel.pid);
+    
+    outFile = fopen(command,"w");
 	
-    /* fprintf(outFile,"%d\n\n", mesh->bd.nbd); */
+    fprintf(outFile,"%d\n\n", mesh->mesh.bd.nbd);
 
-    /* for( i = 0 ; i < mesh->bd.nbd ; i++ ) { */
+    for( i = 0 ; i < mesh->mesh.bd.nbd ; i++ ) {
 
-    /* 	fprintf(outFile,"%s\n",mesh->bd.bdNames[i]); */
+    	fprintf(outFile,"%s\n",mesh->mesh.bd.bdNames[i]);
 	
-    /* 	fprintf(outFile,"%d\n",mesh->bd.nbdelem[i]); */
+    	fprintf(outFile,"%d\n",mesh->mesh.bd.nbdelem[i]);
 
-    /* 	for( j = 0 ; j < mesh->bd.nbdelem[i] ; j++ ) { */
+    	for( j = 0 ; j < mesh->mesh.bd.nbdelem[i] ; j++ ) {
 
-    /* 	    fprintf(outFile,"%d\n",mesh->bd.bdPoints[i][j]); */
+    	    fprintf(outFile,"%d\n",mesh->mesh.bd.bdPoints[i][j]);
 
-    /* 	} */
+    	}
 
-    /* 	fprintf(outFile,"\n"); */
+    	fprintf(outFile,"\n");
 	
 
-    /* } */
+    }
 	
 	
-    /* fclose(outFile); */
+    fclose(outFile);
 
 
 
