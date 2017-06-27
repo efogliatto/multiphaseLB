@@ -12,7 +12,8 @@
 #include <basic.h>
 #include <readLatticeMesh.h>
 #include <writeLatticeMesh.h>
-
+#include <dirent.h>
+#include <time.h>
 
 int main(int argc, char** argv) {
 
@@ -22,11 +23,78 @@ int main(int argc, char** argv) {
     printf("\n  SET DISTRIBUTED FIELDS\n\n");
 
 
+
+    
     // Total number of processes
     uint np = (uint)lookUpDoubleEntry("properties/parallel","numProc",4);
 
+    
+    // List available fields in start folder
+
+    uint nScalarFields = 0;
+    char scalarFields[10][100];
+
+    uint nVectorFields = 0;
+    char vectorFields[10][100];
+
+    uint nPdfFields = 0;
+    char pdfFields[10][100];
+    
+    
+    {
+	DIR           *d;
+	
+	struct dirent *dir;
+	
+	d = opendir("start");
+	
+	if (d)	{
+	    
+	    while ((dir = readdir(d)) != NULL)  {
+
+		if(   ( strcmp(dir->d_name,"rho") == 0 )  ||  ( strcmp(dir->d_name,"p")   == 0 )  ||  ( strcmp(dir->d_name,"T")   == 0 )   ) {
+
+		    sprintf(scalarFields[nScalarFields],"%s",dir->d_name);
+		    
+		    nScalarFields++;
+		    
+		}
+
+		else {
+
+		    if(   ( strcmp(dir->d_name,"U") == 0 )   ) {
+
+			sprintf(vectorFields[nVectorFields],"%s",dir->d_name);
+		    
+			nVectorFields++;
+		    
+		    }
+
+		    else {
+
+			if(   ( strcmp(dir->d_name,"f") == 0 )  ||  ( strcmp(dir->d_name,"g")   == 0 )  ) {
+
+			    sprintf(pdfFields[nPdfFields],"%s",dir->d_name);
+		    
+			    nPdfFields++;
+		    
+			}
+
+		    }
+
+		}
+		
+	    }
+
+	    closedir(d);
+	}
 
 
+
+	
+
+	
+    }
     
     
     
@@ -38,407 +106,129 @@ int main(int argc, char** argv) {
 
     // Move over processors
 
-    uint pid;
+    uint pid, i;
     
     for( pid = 0 ; pid < np ; pid++ ) {
 
 
+	
 	// Read lattice for each processor
 
 	struct latticeMesh mesh = readLatticeMesh(pid);
+
+	
+
+	// Move over scalar fields
+
+	uint fid;
+
+	for( fid = 0 ; fid < nScalarFields ; fid++ ) {
+
+
+	    // Scalar fields: rho, p, T
+	    if(   ( strcmp( scalarFields[fid], "rho" ) == 0 )   ||   ( strcmp( scalarFields[fid], "p" ) == 0 )   ||  ( strcmp( scalarFields[fid], "T" ) == 0 )   ) {
+
+
+		// Resize field array
+		double* field = (double*)malloc( mesh.mesh.nPoints * sizeof(double) );
+
+		// Read type and use function
+		char intField[100];
+		char fn[100];
+
+		// Field file name
+		sprintf(fn,"start/%s", scalarFields[fid]);
+
+		// Internal field distribution
+		lookUpStringEntry(fn,"internalField", intField);
+
+
+
+		
+		// Uniform
+		if( strcmp(intField, "uniform") == 0 ) {
+
+		    double value = lookUpDoubleEntry(fn, "internalValue", 0);
+
+		    for( i = 0 ; i < mesh.mesh.nPoints ; i++ ) {
+
+			field[i] = value;
+		    }
+
+		}
+
+
+		
+		
+		// Random
+		if( strcmp(intField, "uniform") == 0 ) {
+
+		    double value = lookUpDoubleEntry(fn, "internalValue", 0);
+
+		    double pert = lookUpDoubleEntry(fn, "perturbation", 1);
+
+		    // Generate random numbers
+		    srand( time(NULL) );
+
+		    for( i = 0 ; i < mesh.mesh.nPoints ; i++ ) {
+
+			// Random number between 0 and 1
+			double r = (double)rand() / (double)RAND_MAX;
+
+			r = (1.0 - pert/100) + r * ( (1.0 + pert/100) - (1.0 - pert/100) );
+			
+			field[i] = value * r;
+			
+		    }		    
+
+		}
+		
+		
+
+	    }
+
+
+	}
+	
+
+
+
+
+	// Move over vector fields
+
+	for( fid = 0 ; fid < nVectorFields ; fid++ ) {
+
+	    if(   ( strcmp( vectorFields[fid], "U" ) == 0 )   ) {
+
+	    	double** field = matrixDoubleAlloc(  mesh.mesh.nPoints, 3, 0);
+
+	    }
+
+	}
+
+
+
+
+	// Move over pdf fields
+
+	for( fid = 0 ; fid < nPdfFields ; fid++ ) {
+
+	    if(   ( strcmp( pdfFields[fid], "f" ) == 0 )   ||   ( strcmp( pdfFields[fid], "g" ) == 0 )  ) {
+
+	    	double** field = matrixDoubleAlloc(  mesh.mesh.nPoints, mesh.mesh.Q, 0);
+
+	    }
+
+	}
+
+
+
+	
 	
 
     }
 
-    
-    /* printf("Decomposing domain\n\n"); */
 
-    /* // Ownership array */
-    /* uint* owner = (uint*)malloc( mesh.nPoints * sizeof(uint) ); */
-
-    /* // Choose decomposition method */
-    /* if( strcmp(method, "standard") == 0 ) { */
-
-    /* 	standardDecomp( owner, &mesh, np ); */
-
-    /* } */
-
-    /* else { */
-
-    /* 	printf("\n\n  [ERROR]  Unable to recognize decomposition method \"%s\"\n\n\n",method); */
-
-    /* 	exit(1); */
-
-    /* } */
-
-
-
-
-
-    /* // Resize local indices array */
-    /* int** local   = matrixIntAlloc( mesh.nPoints, np, -1); */
-    /* int** nGhosts = matrixIntAlloc( np, 2, -1); */
-    /* int** shared  = matrixIntAlloc( np, np, 0); */
-
-    
-    /* // Creation of local indexing */
-    /* localIndexing( &mesh, local, nGhosts, owner, np ); */
-
-
-    /* // Total number of shared nodes */
-    /* uint i, */
-    /* 	 pid; */
-    
-    /* for( i = 0 ; i < mesh.nPoints ; i++ ) { */
-
-    /* 	for( pid = 0 ; pid < np ; pid++) { */
-
-    /* 	    if( local[i][pid] >= nGhosts[pid][0] ) { */
-
-    /* 		shared[pid][ owner[i] ]++; */
-
-    /* 	    } */
-
-    /* 	} */
-
-    /* } */
-
-
-    /* // Local mesh creation */
-    /* struct latticeMesh* localMesh = (struct latticeMesh*)malloc( np * sizeof(struct latticeMesh) ); */
-
-    /* // Move over meshes and look for recv ghosts */
-    /* { */
-
-	
-    /* 	uint rpid,spid; */
-
-    /* 	// Counter arrays */
-    /* 	int** gcount = matrixIntAlloc( np, np, 0); */
-	
-
-    /* 	// Move over recv lattices. Basic info and resize arrays */
-	
-    /* 	for( rpid = 0 ; rpid < np ; rpid++ ) { */
-
-
-    /* 	    // Add basic info */
-	    
-    /* 	    localMesh[rpid].parallel.pid = rpid; */
-
-    /* 	    localMesh[rpid].parallel.worldSize = np; */
-
-    /* 	    localMesh[rpid].parallel.nlocal = nGhosts[rpid][0]; */
-	
-    /* 	    localMesh[rpid].parallel.nghosts = nGhosts[rpid][1]; */
-
-
-
-    /* 	    // Add sharing info and resize elements */
-	    
-    /* 	    localMesh[rpid].parallel.shared = (uint*)malloc( np * sizeof(uint) ); */
-
-    /* 	    for( spid = 0 ; spid < np ; spid++ ) { */
-
-    /* 		localMesh[rpid].parallel.shared[spid] = shared[rpid][spid]; */
-
-    /* 	    } */
-
-
-    /* 	    // Resize ghost info */
-	    
-    /* 	    localMesh[rpid].parallel.recvGhosts = (uint**)malloc( np * sizeof(uint*) ); */
-
-    /* 	    localMesh[rpid].parallel.sendGhosts = (uint**)malloc( np * sizeof(uint*) ); */
-	    
-    /* 	    for( spid = 0 ; spid < np ; spid++ ) { */
-
-    /* 		localMesh[rpid].parallel.recvGhosts[spid] = (uint*)malloc( shared[rpid][spid] * sizeof(uint) ); */
-
-    /* 		localMesh[rpid].parallel.sendGhosts[spid] = (uint*)malloc( shared[rpid][spid] * sizeof(uint) ); */
-		
-    /* 	    } */
-
-
-
-
-    /* 	    // Add points. First local, then ghost */
-
-    /* 	    localMesh[rpid].mesh.nPoints = localMesh[rpid].parallel.nlocal + localMesh[rpid].parallel.nghosts; */
-	    
-    /* 	    localMesh[rpid].mesh.points = matrixIntAlloc( localMesh[rpid].mesh.nPoints, 3, 0 ); */
-
-    /* 	    for( i = 0 ; i < mesh.nPoints ; i++ ) { */
-
-    /* 		int lid = local[i][rpid]; */
-		
-    /* 		if( lid != -1 ) { */
-
-    /* 		    localMesh[rpid].mesh.points[lid][0] = mesh.points[i][0]; */
-    /* 		    localMesh[rpid].mesh.points[lid][1] = mesh.points[i][1]; */
-    /* 		    localMesh[rpid].mesh.points[lid][2] = mesh.points[i][2];	     */
-		    
-    /* 		} */
-
-    /* 	    } */
-
-
-
-    /* 	    // Add Neighbours. */
-	    
-    /* 	    localMesh[rpid].mesh.nb = matrixIntAlloc( localMesh[rpid].parallel.nlocal, mesh.Q, -1 ); */
-
-    /* 	    localMesh[rpid].mesh.Q = mesh.Q; */
-
-    /* 	    for( i = 0 ; i < mesh.nPoints ; i++ ) { */
-
-    /* 		int lid = local[i][rpid]; */
-		
-    /* 		if( lid < localMesh[rpid].parallel.nlocal ) { */
-
-
-    /* 		    // Move over velocities */
-
-    /* 		    uint velId; */
-    /* 		    int nbid; */
-
-    /* 		    for( velId = 0 ; velId < mesh.Q ; velId++ ) { */
-
-    /* 			nbid = mesh.nb[i][velId]; */
-
-    /* 			if( nbid != -1 ) { */
-			    
-    /* 			    localMesh[rpid].mesh.nb[lid][velId] = local[nbid][rpid]; */
-
-    /* 			} */
-
-    /* 		    } */
-		    
-		    
-    /* 		} */
-
-    /* 	    } */
-
-
-
-
-
-
-
-    /* 	    // Add vtkCells */
-
-    /* 	    localMesh[rpid].mesh.ncells = 0; */
-	    
-    /* 	    for( i = 0 ; i < mesh.ncells ; i++ ) { */
-
-    /* 		uint cid, */
-    /* 		     find = 0; */
-
-    /* 		for( cid = 0 ; cid < mesh.cellType ; cid++ ) { */
-
-    /* 		    // Check if all members are local */
-    /* 		    if( local[ mesh.vtkCells[i][cid] ][rpid] == -1 ) { */
-
-    /* 			find++; */
-
-    /* 		    } */
-
-    /* 		} */
-
-    /* 		if( find == 0 ) { */
-
-    /* 		    localMesh[rpid].mesh.ncells++; */
-
-    /* 		} */
-
-    /* 	    } */
-
-
-
-    /* 	    // Resize and add */
-
-    /* 	    localMesh[rpid].mesh.cellType = mesh.cellType; */
-	    
-    /* 	    localMesh[rpid].mesh.vtkCells = matrixIntAlloc( localMesh[rpid].mesh.ncells, mesh.cellType, -1); */
-
-    /* 	    uint count = 0; */
-	    
-    /* 	    for( i = 0 ; i < mesh.ncells ; i++ ) { */
-
-    /* 		uint cid, */
-    /* 		     find = 0; */
-
-    /* 		for( cid = 0 ; cid < mesh.cellType ; cid++ ) { */
-
-    /* 		    // Check if all members are local */
-    /* 		    if( local[ mesh.vtkCells[i][cid] ][rpid] == -1 ) { */
-
-    /* 			find++; */
-
-    /* 		    } */
-
-    /* 		} */
-
-    /* 		if( find == 0 ) { */
-
-		    
-    /* 		    for( cid = 0 ; cid < mesh.cellType ; cid++ ) { */
-
-    /* 			localMesh[rpid].mesh.vtkCells[count][cid] = local[ mesh.vtkCells[i][cid] ][rpid]; */
-
-    /* 		    } */
-		    
-		    
-    /* 		    count++; */
-
-    /* 		} */
-
-    /* 	    } */
-
-
-
-
-
-
-
-
-    /* 	    // Boundaries. Assign boundaries from original mesh */
-
-    /* 	    localMesh[rpid].mesh.bd.nbd = mesh.bd.nbd; */
-	    
-    /* 	    localMesh[rpid].mesh.bd.nbdelem = (uint*)malloc( mesh.bd.nbd * sizeof(uint) ); */
-
-    /* 	    localMesh[rpid].mesh.bd.bdPoints = (uint**)malloc( mesh.bd.nbd * sizeof(uint*) ); */
-
-    /* 	    for( i = 0 ; i < localMesh[rpid].mesh.bd.nbd ; i++ ) { */
-
-    /* 		localMesh[rpid].mesh.bd.nbdelem[i] = 0; */
-
-    /* 		sprintf( localMesh[rpid].mesh.bd.bdNames[i], "%s", mesh.bd.bdNames[i] ); */
-
-    /* 		uint bdpid; */
-
-    /* 		for( bdpid = 0 ; bdpid < mesh.bd.nbdelem[i] ; bdpid++ ) { */
-
-    /* 		    if( local[ mesh.bd.bdPoints[i][bdpid] ][rpid] < localMesh[rpid].parallel.nlocal ) { */
-
-    /* 			localMesh[rpid].mesh.bd.nbdelem[i]++; */
-
-    /* 		    } */
-
-    /* 		} */
-
-    /* 	    } */
-
-
-	    
-	    
-	    
-    /* 	    for( i = 0 ; i < localMesh[rpid].mesh.bd.nbd ; i++ ) { */
-
-    /* 		count = 0; */
-		
-    /* 	    	localMesh[rpid].mesh.bd.bdPoints[i] = (uint*)malloc( localMesh[rpid].mesh.bd.nbdelem[i] * sizeof(uint) ); */
-
-    /* 	    	uint bdpid; */
-
-    /* 	    	for( bdpid = 0 ; bdpid < mesh.bd.nbdelem[i] ; bdpid++ ) { */
-
-    /* 	    	    if( local[ mesh.bd.bdPoints[i][bdpid] ][rpid] < localMesh[rpid].parallel.nlocal ) { */
-
-    /* 	    		localMesh[rpid].mesh.bd.bdPoints[i][count] = local[ mesh.bd.bdPoints[i][bdpid] ][rpid]; */
-
-    /* 	    		count++; */
-
-    /* 	    	    } */
-
-    /* 	    	} */
-
-    /* 	    } */
-
-
-
-
-	    
-	    
-	    
-
-    /* 	} */
-
-
-
-	
-
-
-
-
-
-    /* 	// Move over local lattices and add parallel info */
-
-    /* 	for( i = 0 ; i < mesh.nPoints ; i++ ) { */
-	
-    /* 	    for( rpid = 0 ; rpid < np ; rpid++ ) { */
-
-    /* 		if( local[i][rpid] >= nGhosts[rpid][0] ) { */
-
-
-    /* 		    // Add local index as recv ghost */
-
-    /* 		    spid = owner[i]; */
-		    
-    /* 		    localMesh[rpid].parallel.recvGhosts[ spid ][ gcount[rpid][spid] ]   =  local[i][rpid]; */
-
-
-    /* 		    // Add local index as send ghost */
-		    
-    /* 		    localMesh[spid].parallel.sendGhosts[ rpid ][ gcount[rpid][spid] ]   =  local[i][spid]; */
-
-    /* 		    gcount[rpid][spid]++; */
-
-    /* 		} */
-	    
-    /* 	    } */
-
-    /* 	} */
-
-
-
-
-
-
-	
-	
-    /* } */
-
-
-
-
-    
-
-
-    /* // Write lattice meshes */
-    /* { */
-
-    /* 	int status = system( "rm -rf processor*" ); */
-
-    /* 	if (!status) { */
-
-    /* 	    for( i = 0 ; i < np ; i++ ) { */
-
-    /* 		writeLatticeMesh( &localMesh[i] ); */
-
-    /* 	    } */
-
-    /* 	} */
-    /* } */
-
-    
-
-    
-
-
-
-    /* printf("Finished domain decomposition\n\n"); */
     
     
     return 0;
