@@ -24,5 +24,6 @@
 #include <entryList.h>
 #include <subEntryList.h>
 #include <singleEntryList.h>
+#include <lookUpEntry.h>
 
 #endif // IO_H

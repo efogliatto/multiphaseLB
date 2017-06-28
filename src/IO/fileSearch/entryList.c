@@ -10,7 +10,7 @@
 #include <tokenize.h>
 
 
-char** entryList( char* fileName, char* entry, uint* lsize ) {
+char** entryList( char* fileName, char* entry, unsigned int* lsize ) {
 
 
     
@@ -37,9 +37,9 @@ char** entryList( char* fileName, char* entry, uint* lsize ) {
     
     // Move until find entry followed by {
 
-    uint find = 0;
+    unsigned int find = 0;
 
-    uint status;
+    unsigned int status;
 
     while( find == 0 ) {
 	
@@ -79,8 +79,8 @@ char** entryList( char* fileName, char* entry, uint* lsize ) {
 
     // bcount++ if { is found.
     // bcount-- if } is found.
-    uint bcount = 1;
-    uint nl = 0;
+    unsigned int bcount = 1;
+    unsigned int nl = 0;
 
     while( bcount != 0 ) {
 
@@ -141,7 +141,7 @@ char** entryList( char* fileName, char* entry, uint* lsize ) {
     char** list = (char**)malloc( nl * sizeof(char*) );
 
 
-    uint i;
+    unsigned int i;
 
     for( i = 0 ; i < nl ; i++ ) {
 

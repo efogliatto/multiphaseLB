@@ -10,12 +10,12 @@
 #include <tokenize.h>
 
 
-char** singleEntryList( char** subEntryList, char* entry, uint* lsize, uint ssize ) {
+char** singleEntryList( char** subEntryList, char* entry, unsigned int* lsize, unsigned int ssize ) {
 
     
     // Move in subEntryList until entry with opening brace
 
-    uint i,
+    unsigned int i,
 	find;
 
     
@@ -41,7 +41,7 @@ char** singleEntryList( char** subEntryList, char* entry, uint* lsize, uint ssiz
 
     // Find ";" token
 
-    uint j = i;
+    unsigned int j = i;
 
     find = 0;
 
@@ -65,7 +65,7 @@ char** singleEntryList( char** subEntryList, char* entry, uint* lsize, uint ssiz
     
     char** subList = (char**)malloc( (j-i) * sizeof(char*) );
 
-    uint k;
+    unsigned int k;
 
     for( k = 0 ; k < (j-i) ; k++ ) {
 

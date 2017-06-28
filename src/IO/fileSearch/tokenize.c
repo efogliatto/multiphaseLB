@@ -3,7 +3,7 @@
 #include <string.h>
 
 
-char** tokenize( char* str2, char token, uint* n ) {
+char** tokenize( char* str2, char token, unsigned int* n ) {
 
 
     uint ntk = 0;

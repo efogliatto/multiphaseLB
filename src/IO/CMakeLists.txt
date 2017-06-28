@@ -19,4 +19,5 @@ add_library(io SHARED
   fileSearch/entryList.c
   fileSearch/subEntryList.c
   fileSearch/singleEntryList.c
+  fileSearch/lookUpEntry.c
   )

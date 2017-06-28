@@ -10,12 +10,12 @@
 #include <tokenize.h>
 
 
-char** subEntryList( char** entryList, char* entry, uint* lsize, uint elsize ) {
+char** subEntryList( char** entryList, char* entry, unsigned int* lsize, unsigned int elsize ) {
 
 
     // Move in entryList until entry with opening brace
 
-    uint i,
+    unsigned int i,
 	find;
 
     
@@ -44,7 +44,7 @@ char** subEntryList( char** entryList, char* entry, uint* lsize, uint elsize ) {
 
     // Find corresponding }
 
-    uint bcount = 1,
+    unsigned int bcount = 1,
 	j = i;
 
     while(   ( j < (elsize-1) )   &&   ( bcount != 0 )   )  {
@@ -82,7 +82,7 @@ char** subEntryList( char** entryList, char* entry, uint* lsize, uint elsize ) {
     
     char** subList = (char**)malloc( (j-i) * sizeof(char*) );
 
-    uint k;
+    unsigned int k;
 
     for( k = 0 ; k < (j-i) ; k++ ) {
 

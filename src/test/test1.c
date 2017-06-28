@@ -15,69 +15,14 @@ int main() {
     printf("\n");
 
 
-    // Tokenize string
 
-    uint i,ntk;
-
-    char** tok = tokenize("DD/EE/FF",'/', &ntk);
-
-    /* for(i = 0 ; i < ntk ; i++) { */
-	
-    /* 	printf("%s\n",tok[i]); */
-	
-    /* } */
-
-    /* printf("\n\n"); */
-
+    // Multiple entries
     
+    uint i,lsize;
 
-    uint nl;
-    char** elist = entryList("input","DD", &nl);
-
-    /* for(i = 0 ; i < nl ; i++) { */
-	
-    /* 	printf("%s\n",elist[i]); */
-	
-    /* } */
-
-    /* printf("\n\n"); */
-
-
-
-    uint nsl;
-    char** subel = subEntryList( elist, "EE", &nsl, nl );
-
-    /* for(i = 0 ; i < nsl ; i++) { */
-	
-    /* 	printf("%s\n",subel[i]); */
-	
-    /* } */
-
-    /* printf("\n\n"); */
-
-
-
-    /* uint nns; */
-
-    subel = subEntryList( subel, "FF", &nsl, nsl );
-
-    /* for(i = 0 ; i < nsl ; i++) { */
-	
-    /* 	printf("%s\n",subel[i]); */
-	
-    /* } */
-
-    /* printf("\n\n"); */
-
-
-
-
+    char** entry = lookUpEntry("input","DD/EE/FF/JJ",&lsize);
     
-    uint esize;
-    char** entry = singleEntryList( subel, "II", &esize, nsl );
-
-   
-    for(i = 0 ; i < esize ; i++) {
+    for(i = 0 ; i < lsize ; i++) {
 	
     	printf("%s\n",entry[i]);
 	
@@ -85,6 +30,17 @@ int main() {
 
     printf("\n\n");
     
+
+
+    entry = lookUpEntry("input","AAA/BBB",&lsize);
+    
+    for(i = 0 ; i < lsize ; i++) {
+	
+    	printf("%s\n",entry[i]);
+	
+    }
+
+    printf("\n\n");
     
     
     return 0;
