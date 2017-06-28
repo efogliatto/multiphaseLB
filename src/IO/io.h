@@ -18,5 +18,6 @@
 #include <writeVectorToVTK.h>
 #include <writePdfToVTK.h>
 #include <writeVTKExtra.h>
+#include <writeMainPvd.h>
 
 #endif // IO_H

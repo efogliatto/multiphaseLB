@@ -26,9 +26,9 @@ void writeVTKExtra( struct latticeMesh* mesh, struct vtkInfo* vtk ) {
 
 
 
-    // Write case.pvd
+    /* // Write case.pvd  */
 
-    /* if( mesh->parallel.pid == 0 ) { */
+    /* if(   ( mesh->parallel.pid == 0 )   &&  ( mesh->time.start != 0 )   ){ */
     
     /* 	// Remove last two lines */
     /* 	char cmd[100]; */

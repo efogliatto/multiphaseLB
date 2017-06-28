@@ -1,3 +1,5 @@
-internalField uniform;
+internalField random;
 
 internalValue 1;
+
+perturbation 1;

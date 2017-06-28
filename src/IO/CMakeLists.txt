@@ -14,4 +14,5 @@ add_library(io SHARED
   writeVectorToVTK.c
   writePdfToVTK.c
   writeVTKExtra.c
+  writeMainPvd.c
   )
