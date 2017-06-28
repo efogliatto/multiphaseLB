@@ -17,4 +17,5 @@ add_library(io SHARED
   writeMainPvd.c
   fileSearch/tokenize.c
   fileSearch/entryList.c
+  fileSearch/subEntryList.c
   )

@@ -13,6 +13,7 @@
 char** entryList( char* fileName, char* entry, uint* lsize ) {
 
 
+    
     // Open file and look for embraced entry
 
     FILE* file = fopen( fileName, "r" );

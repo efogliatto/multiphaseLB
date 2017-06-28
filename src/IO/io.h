@@ -22,5 +22,6 @@
 
 #include <tokenize.h>
 #include <entryList.h>
+#include <subEntryList.h>
 
 #endif // IO_H

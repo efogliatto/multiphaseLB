@@ -42,7 +42,18 @@ int main() {
 
     printf("\n\n");
 
-    
+
+
+    uint nsl;
+    char** subel = subEntryList( elist, "EE", &nsl, nl );
+
+    for(i = 0 ; i < nsl ; i++) {
+	
+    	printf("%s\n",subel[i]);
+	
+    }
+
+    printf("\n\n");
     
     return 0;
 
