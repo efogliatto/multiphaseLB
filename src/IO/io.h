@@ -26,4 +26,8 @@
 #include <singleEntryList.h>
 #include <lookUpEntry.h>
 
+#include <lookUpDouble.h>
+#include <lookUpVector.h>
+#include <lookUpString.h>
+
 #endif // IO_H
