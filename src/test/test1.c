@@ -26,10 +26,23 @@ int main() {
 	printf("%s\n",tok[i]);
 	
     }
+
+    printf("\n\n");
+
     
 
+    uint nl;
+    char** elist = entryList("input","DD", &nl);
 
+    for(i = 0 ; i < nl ; i++) {
+	
+	printf("%s\n",elist[i]);
+	
+    }
 
+    printf("\n\n");
+
+    
     
     return 0;
 

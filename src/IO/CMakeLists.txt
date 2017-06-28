@@ -16,4 +16,5 @@ add_library(io SHARED
   writeVTKExtra.c
   writeMainPvd.c
   fileSearch/tokenize.c
+  fileSearch/entryList.c
   )
