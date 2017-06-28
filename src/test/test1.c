@@ -21,39 +21,71 @@ int main() {
 
     char** tok = tokenize("DD/EE/FF",'/', &ntk);
 
-    for(i = 0 ; i < ntk ; i++) {
+    /* for(i = 0 ; i < ntk ; i++) { */
 	
-	printf("%s\n",tok[i]);
+    /* 	printf("%s\n",tok[i]); */
 	
-    }
+    /* } */
 
-    printf("\n\n");
+    /* printf("\n\n"); */
 
     
 
     uint nl;
     char** elist = entryList("input","DD", &nl);
 
-    for(i = 0 ; i < nl ; i++) {
+    /* for(i = 0 ; i < nl ; i++) { */
 	
-	printf("%s\n",elist[i]);
+    /* 	printf("%s\n",elist[i]); */
 	
-    }
+    /* } */
 
-    printf("\n\n");
+    /* printf("\n\n"); */
 
 
 
     uint nsl;
     char** subel = subEntryList( elist, "EE", &nsl, nl );
 
-    for(i = 0 ; i < nsl ; i++) {
+    /* for(i = 0 ; i < nsl ; i++) { */
 	
-    	printf("%s\n",subel[i]);
+    /* 	printf("%s\n",subel[i]); */
+	
+    /* } */
+
+    /* printf("\n\n"); */
+
+
+
+    /* uint nns; */
+
+    subel = subEntryList( subel, "FF", &nsl, nsl );
+
+    /* for(i = 0 ; i < nsl ; i++) { */
+	
+    /* 	printf("%s\n",subel[i]); */
+	
+    /* } */
+
+    /* printf("\n\n"); */
+
+
+
+
+    
+    uint esize;
+    char** entry = singleEntryList( subel, "II", &esize, nsl );
+
+   
+    for(i = 0 ; i < esize ; i++) {
+	
+    	printf("%s\n",entry[i]);
 	
     }
 
     printf("\n\n");
+    
+    
     
     return 0;
 

@@ -23,5 +23,6 @@
 #include <tokenize.h>
 #include <entryList.h>
 #include <subEntryList.h>
+#include <singleEntryList.h>
 
 #endif // IO_H

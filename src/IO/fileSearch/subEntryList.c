@@ -76,7 +76,7 @@ char** subEntryList( char** entryList, char* entry, uint* lsize, uint elsize ) {
 
 
 
-    // Resize sublista and copy
+    // Resize sublist and copy
 
     *lsize = j - i;
     

@@ -18,4 +18,5 @@ add_library(io SHARED
   fileSearch/tokenize.c
   fileSearch/entryList.c
   fileSearch/subEntryList.c
+  fileSearch/singleEntryList.c
   )
