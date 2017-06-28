@@ -1,6 +1,6 @@
 #------------------ Unit tests ------------------#
 
-set ( PROJECT_LINK_LIBS libio.so liblatticemodel.so)
+set ( PROJECT_LINK_LIBS libio.so libbasic.so liblatticemodel.so ${MPI_LIBRARIES})
 link_directories( ~/multiphaseLB/lib )
 
 

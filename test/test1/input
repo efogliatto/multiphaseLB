@@ -2,7 +2,10 @@ AA  2;
 BB 3;
 CC probando;
 
-AA
+DD
 {
-  DD 4;	
+  EE
+  {
+    FF 4;	
+  }
 }

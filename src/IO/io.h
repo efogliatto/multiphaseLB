@@ -20,4 +20,6 @@
 #include <writeVTKExtra.h>
 #include <writeMainPvd.h>
 
+#include <tokenize.h>
+
 #endif // IO_H

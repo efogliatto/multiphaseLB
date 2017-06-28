@@ -15,4 +15,5 @@ add_library(io SHARED
   writePdfToVTK.c
   writeVTKExtra.c
   writeMainPvd.c
+  fileSearch/tokenize.c
   )

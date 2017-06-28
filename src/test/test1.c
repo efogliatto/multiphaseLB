@@ -13,6 +13,23 @@ int main() {
     printf("b = %f\n",b);
     printf("c = %s\n",c);    
     printf("\n");
+
+
+    // Tokenize string
+
+    uint i,ntk;
+
+    char** tok = tokenize("DD/EE/FF",'/', &ntk);
+
+    for(i = 0 ; i < ntk ; i++) {
+	
+	printf("%s\n",tok[i]);
+	
+    }
+    
+
+
+
     
     return 0;
 
