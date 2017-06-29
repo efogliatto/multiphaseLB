@@ -24,8 +24,8 @@ unsigned int lookUpString( char* fileName, char* entry, char string[] ) {
 
     char aux[10][100];
     
-    status = lookUpEntry( fileName, entry, aux, &ns);
-
+    status = lookUpEntry( fileName, entry, aux, &ns );
+   
     if (status) {
 
 	strcpy(string, aux[0]);

@@ -35,14 +35,35 @@ int main(int argc, char** argv) {
     // Read fields type from file
 
     struct vtkInfo vtk;
+
+    unsigned int status;
+
+    {
+
+	vtk.nscalar = 2;
+
+	sprintf( vtk.scalarFields[0],"rho" );
+
+	sprintf( vtk.scalarFields[1],"T" );
 	
-    /* vtk.scalarFields = lookUpEntry("start/initialFields","scalarFields",&vtk.nscalar); */
+    }
+	
+    /* status = lookUpEntry( "start/initialFields", "scalarFields", vtk.scalarFields, &vtk.nscalar); */
 
-    /* vtk.vectorFields = lookUpEntry("start/initialFields","vectorFields",&vtk.nvector); */
+    /* if( !status ) { vtk.nscalar = 0; } */
 
-    /* vtk.pdfFields = lookUpEntry("start/initialFields","pdfFields",&vtk.npdf); */
+    
+    /* status = lookUpEntry( "start/initialFields", "vectorFields", vtk.vectorFields, &vtk.nvector); */
 
-    /* char* itype = lookUpString("start/initialFields", "U/internalField/type");     */
+    /* if( !status ) { vtk.nvector = 0; } */
+    
+
+    /* status = lookUpEntry( "start/initialFields", "pdfFields", vtk.pdfFields, &vtk.npdf); */
+
+    /* if( !status ) { vtk.npdf = 0; } */
+
+
+
     
 
     
@@ -54,7 +75,9 @@ int main(int argc, char** argv) {
 
     // Move over processors
 
-    uint i, pid;
+    uint pid;
+
+   
     
     for( pid = 0 ; pid < np ; pid++ ) {
 
@@ -80,145 +103,274 @@ int main(int argc, char** argv) {
 
     	uint fid;
 
-    	char fname[100];
+	char itype[100];
 	
+	char fname[100];
+       
 
     	for( fid = 0 ; fid < vtk.nscalar ; fid++ ) {
 
-
-    	    // Scalar fields: rho, p, T
-    	    if(   ( strcmp( vtk.scalarFields[fid], "rho" ) == 0 )   ||   ( strcmp( vtk.scalarFields[fid], "p" ) == 0 )   ||  ( strcmp( vtk.scalarFields[fid], "T" ) == 0 )   ) {
-
-
-    		// Resize field array
-    		double* field = (double*)malloc( mesh.mesh.nPoints * sizeof(double) );
-
-    		// Read type and use function
-    		char intField[100];
-    		char fn[100];
-
-    		// Field file name
-    		sprintf(fn,"start/%s", vtk.scalarFields[fid]);
-
-    		// Internal field distribution
-    		lookUpStringEntry(fn,"internalField", intField);
+	    
+	    double* field;
+	    
+	    double fval;
 
 
 
-		
-    		// Uniform
-    		if( strcmp(intField, "uniform") == 0 ) {
-
-    		    double value = lookUpDoubleEntry(fn, "internalValue", 0);
-
-    		    for( i = 0 ; i < mesh.mesh.nPoints ; i++ ) {
-
-    			field[i] = value;
-    		    }
-
-    		}
+	    
+	    
+    	    // Internal field type
+	   
+    	    sprintf(fname, "%s/internalField/type", vtk.scalarFields[fid] );
+	    
+	    status = lookUpString("start/initialFields", fname, itype);
 
 
+	    /* printf("%s  %s  %d\n\n", fname, itype, status); */
+
+	    
+	   		    
+
+    	    /* // Uniform distribution */
+	    
+    	    /* if( strcmp(itype,"uniform") == 0 ) { */
+
+
+	    /* 	field = (double*)malloc( mesh.mesh.nPoints * sizeof(double) ); */
 		
 		
-    		// Random
-    		if( strcmp(intField, "random") == 0 ) {
+    	    /* 	sprintf(fname, "%s/internalField/value", vtk.scalarFields[fid] ); */
 
-    		    double value = lookUpDoubleEntry(fn, "internalValue", 0);
+	    /* 	status = lookUpDouble("start/initialFields", fname, &fval, 0); */
 
-    		    double pert = lookUpDoubleEntry(fn, "perturbation", 1);
+		
 
-    		    // Generate random numbers
-    		    srand( time(NULL) );
+	    /* 	uint ii; */
 
-    		    for( i = 0 ; i < mesh.mesh.nPoints ; i++ ) {
+	    /* 	for( ii = 0 ; ii < mesh.mesh.nPoints ; ii++ ) { */
 
-    			// Random number between 0 and 1
-    			double r = (double)rand() / (double)RAND_MAX;
+	    /* 	    field[ii] = fval; */
 
-    			r = (1.0 - pert/100) + r * ( (1.0 + pert/100) - (1.0 - pert/100) );
+	    /* 	} */
+
+
+    	    /* } */
+
+
+	    /* else { */
+
+
+	    /* 	if( strcmp(itype,"random") == 0 ) { */
+
+	    /* 	    field = (double*)malloc( mesh.mesh.nPoints * sizeof(double) ); */
+
+	    /* 	    sprintf(fname, "%s/internalField/value", vtk.scalarFields[fid] ); */
+
+	    /* 	    status = lookUpDouble("start/initialFields", fname, &fval, 0); */
+		    
+
+	    /* 	    double pert; */
+
+	    /* 	    sprintf(fname, "%s/internalField/perturbation", vtk.scalarFields[fid] ); */
+
+	    /* 	    status = lookUpDouble("start/initialFields", fname, &pert, 1);		     */
+
+		    
+	    /* 	    // Generate random numbers */
+	    /* 	    srand( time(NULL) ); */
+		    
+
+	    /* 	    uint ii; */
+
+	    /* 	    for( ii = 0 ; ii < mesh.mesh.nPoints ; ii++ ) { */
+
+	    /* 		// Random number between 0 and 1 */
+	    /* 		double r = (double)rand() / (double)RAND_MAX; */
+
+	    /* 		r = (1.0 - pert/100) + r * ( (1.0 + pert/100) - (1.0 - pert/100) ); */
+
 			
-    			field[i] = value * r;
-			
-    		    }
+	    /* 		field[ii] = fval * r; */
 
-    		}
+	    /* 	    } */
 
 
+	    /* 	} */
 
 
-    		// Write field
-    		writeScalarToVTK( vtk.scalarFields[fid], field, &mesh );
+	    /* 	else { */
+
+	    /* 	    printf("\n   [ERROR]  Unrecognized type %s\n\n", itype); */
+
+	    /* 	    exit(1); */
+
+	    /* 	} */
+
+	    /* } */
+
 		
 		
+	    /* // Write field */
+	    /* writeScalarToVTK( vtk.scalarFields[fid], field, &mesh ); */
 
-    	    }
+
+	    /* free(field); */
 
 
+	    
     	}
 	
 
 
 
+	
 
-    	// Move over vector fields
+    	/* // Move over vector fields */
 
-    	for( fid = 0 ; fid < vtk.nvector ; fid++ ) {
+    	/* for( fid = 0 ; fid < vtk.nvector ; fid++ ) { */
 
+
+    	/*     double** field = matrixDoubleAlloc(  mesh.mesh.nPoints, 3, 0); */
+
+	/*     double fval[3]; */
+
+	/*     char itype[100]; */
 	    
-    	    // Internal field type
 	    
-    	    sprintf(fname, "%s/internalField/type", vtk.vectorFields[fid] );
+    	/*     // Internal field type */
+	    
+    	/*     sprintf(fname, "%s/internalField/type", vtk.vectorFields[fid] ); */
+	    
+	/*     status = lookUpString("start/initialFields", fname, itype); */
     
-    	    /* char* itype = lookUpString("start/initialFields", fname); */
-	   
-		    
+	   		    
 
-    	    // Uniform distribution
+    	/*     // Uniform distribution */
 	    
-    	    /* if( strcmp(itype,"uniform") == 0 ) { */
+    	/*     if( strcmp(itype,"uniform") == 0 ) { */
 
-    	    /* 	sprintf(fname, "%s/internalField/value", vtk.vectorFields[fid] ); */
+    	/*     	sprintf(fname, "%s/internalField/value", vtk.vectorFields[fid] ); */
 
-    	    /* 	/\* double* val = lookUpVector("start/initialFields","U/internalField/value", 0, 3); *\/ */
+	/* 	status = lookUpVector("start/initialFields", fname, fval, 3); */
 		
-    	    /* 	/\* double* val = lookUpVector("start/initialFields", fname, 0, 3); *\/ */
 
-    	    /* } */
+	/* 	uint ii,jj; */
+
+	/* 	for( ii = 0 ; ii < mesh.mesh.nPoints ; ii++ ) { */
+
+	/* 	    for( jj = 0 ; jj < 3 ; jj++ ) { */
+
+	/* 		field[ii][jj] = fval[jj]; */
+
+	/* 	    } */
+
+	/* 	} */
+
+
+    	/*     } */
 	    
 
-    	    double** field = matrixDoubleAlloc(  mesh.mesh.nPoints, 3, 0);
 
-    	    // Write field
-    	    writeVectorToVTK( vtk.vectorFields[fid], field, &mesh );
-
-
-    	}
+    	/*     // Write field */
+    	/*     writeVectorToVTK( vtk.vectorFields[fid], field, &mesh ); */
 
 
+	/*     // Deallocate memory */
+	    
+	/*     { */
 
+	/* 	uint jj; */
 
-    	// Move over pdf fields
+	/* 	for( jj = 0 ; jj < mesh.mesh.nPoints ; jj++ ) { */
 
-    	for( fid = 0 ; fid < vtk.npdf ; fid++ ) {
+	/* 	    free( field[jj] ); */
 
-    	    if(   ( strcmp( vtk.pdfFields[fid], "f" ) == 0 )   ||   ( strcmp( vtk.pdfFields[fid], "g" ) == 0 )  ) {
+	/* 	} */
 
-    	    	double** field = matrixDoubleAlloc(  mesh.mesh.nPoints, mesh.mesh.Q, 0);
+	/* 	free(field); */
 		
-    		// Write field
-    		writePdfToVTK( vtk.pdfFields[fid], field, &mesh );
-
-    	    }
-
-    	}
+	/*     } */
 
 
+    	/* } */
+
+
+	
+
+
+    	/* // Move over pdf fields */
+
+    	/* for( fid = 0 ; fid < vtk.npdf ; fid++ ) { */
+
+
+    	/*     double** field = matrixDoubleAlloc(  mesh.mesh.nPoints, mesh.mesh.Q, 0); */
+
+	/*     double fval[20]; */
+
+	/*     char itype[100]; */
+	    
+    	/*     // Internal field type */
+	    
+    	/*     sprintf(fname, "%s/internalField/type", vtk.pdfFields[fid] ); */
+	    
+	/*     status = lookUpString("start/initialFields", fname, itype); */
+    
+	   		    
+
+    	/*     // Uniform distribution */
+	    
+    	/*     if( strcmp(itype,"uniform") == 0 ) { */
+
+    	/*     	sprintf(fname, "%s/internalField/value", vtk.pdfFields[fid] ); */
+
+	/* 	status = lookUpVector("start/initialFields", fname, fval, mesh.mesh.Q); */
+		
+
+	/* 	uint ii,jj; */
+
+	/* 	for( ii = 0 ; ii < mesh.mesh.nPoints ; ii++ ) { */
+
+	/* 	    for( jj = 0 ; jj < mesh.mesh.Q ; jj++ ) { */
+
+	/* 		field[ii][jj] = fval[jj]; */
+
+	/* 	    } */
+
+	/* 	} */
+
+
+    	/*     } */
+	    
+
+
+    	/*     // Write field */
+    	/*     writePdfToVTK( vtk.pdfFields[fid], field, &mesh ); */
+
+
+	/*     // Deallocate memory */
+	    
+	/*     { */
+
+	/* 	uint jj; */
+
+	/* 	for( jj = 0 ; jj < mesh.mesh.nPoints ; jj++ ) { */
+
+	/* 	    free( field[jj] ); */
+
+	/* 	} */
+
+	/* 	free(field); */
+		
+	/*     }	     */
+	    
+
+    	/* } */
+	
 
 
 
 
-
+	
 
     	// Write extra terms to vtk file
     	writeVTKExtra( &mesh, &vtk );

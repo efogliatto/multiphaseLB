@@ -80,6 +80,15 @@ int main() {
     }
 
 
+    
+    char ftype[100];
+    
+    status = lookUpString("initialFields","U/internalField/type",ftype );
+
+    if( status ) {  printf("%s\n",ftype);   }
+
+
+    
     status = lookUpVector("initialFields","U/internalField/value",v, 3);
 
     if( status ) {
@@ -96,17 +105,14 @@ int main() {
     
 
 
-    char ftype[100];
     
-    status = lookUpString("initialFields","U/internalField/type",ftype );
-
-    if( status ) {  printf("%s\n",ftype);   }
-
     status = lookUpString("initialFields","U/internalField/type",ftype );
 
     if( status ) {  printf("%s\n\n\n",ftype);   }    
 
 
+
+    
 
 
     

@@ -3,69 +3,139 @@
 #include <string.h>
 
 
-char** tokenize( char* str2, char token, unsigned int* n ) {
+void tokenize( char* str2, char token, char str1[][100], unsigned int* n ) {
 
 
-    uint ntk = 0;
+    uint ssize = strlen(str2);
 
-    char* next;
-    
-    char* curr = str2;
-
-    char aux[100][100];
-
-    char** str1;
-
+    /* printf("%s  %d\n", str2, ssize); */
 
     
+    uint ntk = 0,
+	i,
+	j;
 
-    // Move between tokens. Find token occurrence and move pointer
+
+    // Move over string
+
+    j = 0;
     
-    while ( (next = strchr(curr, token)) != NULL ) {
+    for( i = 0 ; i < ssize ; i++ ) {
 
-	// Copy to aux array
-	strncpy( aux[ntk], curr, strlen(curr)-strlen(next) );
-	
-	ntk++;
-	
-	// Process curr to next-1
-	curr = next + 1;
-	
+	if( str2[i] == token ) {
+
+	    uint k;
+
+	    for(k = j ; k < i ; k++ ) {
+
+		str1[ntk][k - j] = str2[k];
+		
+		/* printf("%c",str1[ntk][k-j]); */
+
+	    }
+
+	    /* printf("\n"); */
+
+	    j = i+1;
+
+	    ntk++;
+
+	}
+
     }
 
-    
-    // Copy last entry if exists
-    
-    if( strlen(curr) != 0 ) {
-	
-	strcpy( aux[ntk], curr );
+    if(j < ssize) {
 
-	ntk++;
-	
+    	uint k;
+
+    	for(k = j ; k < ssize ; k++ ) {
+
+    	    str1[ntk][k - j] = str2[k];
+		
+    	    /* printf("%c",str1[ntk][k-j]); */
+
+    	}
+
+	/* printf("\n"); */
+    	ntk++;
+
     }
+
 
     *n = ntk;
+    
+
+
+
+
+
+
+
+
+
+
+
+
+    /* uint ntk = 0; */
+
+    /* char* next;     */
+
+    /* char* curr = str2; */
+    
+    /* char aux[100][100]; */
+
+
+   
+
+    /* // Move between tokens. Find token occurrence and move pointer */
+    
+    /* while ( (next = strchr(curr, token)) != NULL ) { */
+
+    /* 	// Copy to aux array */
+    /* 	strncpy( aux[ntk], curr, strlen(curr)-strlen(next) ); */
+	
+    /* 	ntk++; */
+	
+    /* 	// Process curr to next-1 */
+    /* 	curr = next + 1; */
+	
+    /* } */
+
+    
+    /* // Copy last entry if exists */
+    
+    /* if( strlen(curr) != 0 ) { */
+	
+    /* 	strcpy( aux[ntk], curr ); */
+
+    /* 	ntk++; */
+	
+    /* } */
+
+    /* *n = ntk; */
 
 
 
     
-    // Resize str1 and copy aux
+    /* // Resize str1 and copy aux */
 
-    str1 = (char**)malloc( ntk * sizeof(char*) );
+    /* /\* str1 = (char**)malloc( ntk * sizeof(char*) ); *\/ */
 
-    uint i;
+    /* uint i; */
 
-    for( i = 0 ; i < ntk ; i++) {
+    /* for( i = 0 ; i < ntk ; i++) { */
 
-    	str1[i] = (char*)malloc( 100 * sizeof(char) );
+    /* 	/\* str1[i] = (char*)malloc( 100 * sizeof(char) ); *\/ */
 
-    	strcpy( str1[i], aux[i] );
+    /* 	/\* strcpy( str1[i], aux[i] ); *\/ */
 
-    }
+    /* 	sprintf(str1[i],"%s",aux[i]); */
+
+    /* } */
 
 
+   
     
 
-    return str1;
     
 }

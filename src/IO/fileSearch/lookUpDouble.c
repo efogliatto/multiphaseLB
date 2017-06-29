@@ -20,25 +20,34 @@ typedef unsigned int uint;
 
 
 
-double lookUpDouble( char* fileName, char* entry, double df ) {
+unsigned int lookUpDouble( char* fileName, char* entry, double* val, double df ) {
 
+    
+    unsigned int retval = 0,
+	ns,
+	status;
 
-    /* uint lsize; */
+    char aux[10][100];
+    
+    status = lookUpEntry( fileName, entry, aux, &ns );
 
-    double val = df;
+    if (status) {
 
-    /* char** list = lookUpEntry(fileName,entry,&lsize); */
+	*val = atof( aux[0] );
 
+	retval = 1;
 
-    /* if ( lsize != 0 ) { */
+    }
 
-    /* 	char *ptr; */
-	
-    /* 	val = strtod( list[0], &ptr); */
+    else {
 
-    /* } */
+	*val = df;
 
-    return val;
+    }
+    
+    
+    return retval;
+    
     
 
 }

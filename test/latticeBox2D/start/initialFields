@@ -1,7 +1,7 @@
 scalarFields
 {
-  rho
   T
+  rho
 }
 
 vectorFields
@@ -17,6 +17,20 @@ pdfFields
 
 
 
+T
+{
+
+    internalField
+    {
+
+        type uniform;
+
+        value 1;
+
+    }
+
+}
+
 
 rho
 {
@@ -24,30 +38,18 @@ rho
     internalField
     {
 
-	type random;
+        type random;
 
-	value 1;
+        value 1;
 
-	perturbation 1;
-
-    }
-
-}
-
-
-T
-{
-
-    internalField
-    {
-
-	type uniform;
-
-	value 1;
+        perturbation 1;
 
     }
 
 }
+
+
+
 
 
 U

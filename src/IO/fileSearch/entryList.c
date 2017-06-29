@@ -33,6 +33,8 @@ unsigned int entryList( char* fileName, char* entry, char list[][100], unsigned 
     }
 
 
+    // Go to begining
+    rewind(file);
 
 
     // Read file word by word and add to array
@@ -53,6 +55,12 @@ unsigned int entryList( char* fileName, char* entry, char list[][100], unsigned 
     rewind(file);
 
 
+
+
+   
+   
+
+
     char** fileContent = (char**)malloc( fsize * sizeof(char*) );
 
     unsigned int i;
@@ -61,10 +69,8 @@ unsigned int entryList( char* fileName, char* entry, char list[][100], unsigned 
 
 	fileContent[i] = (char*)malloc( 100 * sizeof(char) );
 
-	fscanf(file,"%s",aux);
-
-	sprintf(fileContent[i], "%s", aux);
-
+	fscanf(file,"%s",fileContent[i]);
+	
     }
 
    
@@ -176,7 +182,7 @@ unsigned int entryList( char* fileName, char* entry, char list[][100], unsigned 
 
     for( i = 0 ; i < fsize ; i++ ) {
 
-	free( fileContent[i] );
+    	free( fileContent[i] );
 
     }
 

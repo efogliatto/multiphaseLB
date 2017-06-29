@@ -13,13 +13,13 @@ struct vtkInfo {
     unsigned int npdf;
 
     // Scalar fields
-    char** scalarFields;
+    char scalarFields[10][100];
 
     // Vector fields
-    char** vectorFields;
+    char vectorFields[10][100];
 
     // Pdf fields
-    char** pdfFields;    
+    char pdfFields[10][100];
     
 };
 

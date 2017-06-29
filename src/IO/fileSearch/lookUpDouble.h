@@ -1,6 +1,6 @@
 #ifndef LOOKUPDOUBLE_H
 #define LOOKUPDOUBLE_H
 
-double lookUpDouble( char* fileName, char* entry, double df );
+unsigned int lookUpDouble( char* fileName, char* entry, double* val, double df );
 
 #endif // LOOKUPDOUBLE_H
