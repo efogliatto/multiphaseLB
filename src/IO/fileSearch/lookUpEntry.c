@@ -93,6 +93,21 @@ char** lookUpEntry( char* fileName, char* entry, unsigned int* lsize ) {
     }
 
 
+
+
+    // Single entry (not tokenized)
+    
+    else   {
+
+	uint ne;
+
+	list = entryList(fileName, entry, &ne);
+
+	*lsize = ne;
+
+    }
+
+
     
 
     return list;

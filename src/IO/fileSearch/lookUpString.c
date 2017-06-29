@@ -25,9 +25,10 @@ char* lookUpString( char* fileName, char* entry ) {
 
     uint lsize;
 
+
     char** list = lookUpEntry(fileName,entry,&lsize);
 
-    char* val = (char*)malloc( 100 * sizeof(char) );;
+    char* val = (char*)malloc( 100 * sizeof(char) );
 
     if ( lsize != 0 ) {
 
