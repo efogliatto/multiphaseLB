@@ -11,12 +11,15 @@
 #include <entryList.h>
 #include <subEntryList.h>
 #include <singleEntryList.h>
+#include <stdio.h>
+#include <stdlib.h>
 
 typedef unsigned int uint;
 
 
 char** lookUpEntry( char* fileName, char* entry, unsigned int* lsize ) {
 
+    
     
     // Tokenize entry string
 
@@ -36,58 +39,72 @@ char** lookUpEntry( char* fileName, char* entry, unsigned int* lsize ) {
     if( ntk > 1 ) {
 
 
-	// Search first entry in file
+    	// Search first entry in file
 	
-	uint ne;
+    	uint ne, ii;
 
-	char** elist = entryList(fileName, tok[0], &ne);
-
-	if ( ntk == 2 ) {
-
-	    list = singleEntryList( elist, tok[1], &nl, ne );
-
-	    *lsize = nl;
-
-	}
-
-
-	// Search in intermediate lists
-	
-	else {
+    	char** elist = entryList(fileName, tok[0], &ne);
 
 	
-	    uint i,
-		nsub;
 
-	    char** subEntry;
+    	if ( ntk == 2 ) {
 
-	    for( i = 1 ; i < (ntk-1) ; i++ ) {
+    	    list = singleEntryList( elist, tok[1], &nl, ne );
 
-		if( i == 1) {
+    	    *lsize = nl;
 
-		    subEntry = subEntryList( elist, tok[i], &nsub, ne );
-
-		}
-
-		else {
-
-		    subEntry = subEntryList( subEntry, tok[i], &nsub, nsub );
-
-		}
-
-	    }
+    	}
 
 
+    	// Search in intermediate lists
+	
+    	else {
+
+	
+    	    uint i,
+    		nsub;
+
+    	    char** subEntry;
+
+    	    for( i = 1 ; i < (ntk-1) ; i++ ) {
+
+    		if( i == 1) {
+
+    		    subEntry = subEntryList( elist, tok[i], &nsub, ne );
+
+    		}
+
+    		else {
+
+    		    subEntry = subEntryList( subEntry, tok[i], &nsub, nsub );
+
+    		}
+
+    	    }
 
 
-	    // Search in last entry
-	    list = singleEntryList( subEntry, tok[ntk-1], &nl, nsub );	
 
-	    *lsize = nl;
+
+    	    // Search in last entry
+    	    list = singleEntryList( subEntry, tok[ntk-1], &nl, nsub );
+
+    	    *lsize = nl;
+	    
+    	}
+
+	
+
+
+
+	// Deallocate arrays
+
+	for(ii = 0 ; ii < ne ; ii++) {
+
+	    free( elist[ii] );
 	    
 	}
-
-
+	
+	free(elist);
 	
 
     }
@@ -99,11 +116,11 @@ char** lookUpEntry( char* fileName, char* entry, unsigned int* lsize ) {
     
     else   {
 
-	uint ne;
+    	uint ne;
 
-	list = entryList(fileName, entry, &ne);
+    	list = entryList(fileName, entry, &ne);
 
-	*lsize = ne;
+    	*lsize = ne;
 
     }
 

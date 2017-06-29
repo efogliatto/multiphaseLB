@@ -58,13 +58,13 @@ int main() {
 
     
 
-    /* char* sentry = lookUpString("initialFields","U/internalField/type"); */
+    char* sentry = lookUpString("initialFields","U/internalField/type");
 
-    /* printf("U: %s\n\n", sentry); */
+    printf("U: %s\n\n", sentry);
 
-    /* sentry = lookUpString("initialFields","U/internalField/type"); */
+    sentry = lookUpString("initialFields","U/internalField/type");
 
-    /* printf("U: %s\n\n", sentry); */
+    printf("U: %s\n\n", sentry);
 
 
     
@@ -75,14 +75,35 @@ int main() {
  
     /* double* val2 = lookUpVector("initialFields","U/internalField/value", 0, 3); */
     
-    /* printf("U: %f %f %f\n\n", val2[0], val2[1], val2[2]);    */
+    /* printf("U: %f %f %f\n\n", val2[0], val2[1], val2[2]); */
 
 
 
-    uint ll;
-    char** sentry = lookUpEntry("initialFields","U/internalField", &ll);
-    sentry = lookUpEntry("initialFields","U/internalField", &ll);
-    /* char* sentry = lookUpString("initialFields","U/internalField"); */
+    /* uint ll; */
+    /* char** sentry = lookUpEntry("initialFields","U/internalField/type", &ll); */
+
+    /* uint i; */
+    
+    /* for(i = 0 ; i < ll ; i++) { */
+	
+    /* 	printf("%s\n",sentry[i]); */
+	
+    /* } */
+
+    /* printf("\n\n"); */
+    
+
+
+
+    
+    /* sentry = lookUpEntry("initialFields","U/internalField/type", &ll); */
+
+    /* for(i = 0 ; i < ll ; i++) { */
+	
+    /* 	printf("%s\n",sentry[i]); */
+	
+    /* } */
+
     
     
     return 0;

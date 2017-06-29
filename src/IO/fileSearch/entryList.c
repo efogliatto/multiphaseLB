@@ -25,114 +25,124 @@ char** entryList( char* fileName, char* entry, unsigned int* lsize ) {
 	exit(0);
 
     }
-    
 
-    
-    char auxList[100][100];
+
+
+
+    // Read file word by word and add to array
+    // This is implemented due to initial errors when trying to use this function multiple times
+
+    uint fsize = 0;
 
     char aux[100];
 
+    while( fscanf(file,"%s",aux) == 1 ) {
+	
+	fsize++;
+	
+    }
 
 
-    
+    // Go to begining
+    rewind(file);
+
+
+    char** fileContent = (char**)malloc( fsize * sizeof(char*) );
+
+    unsigned int i;
+
+    for( i = 0 ; i < fsize ; i++ ) {
+
+	fileContent[i] = (char*)malloc( 100 * sizeof(char) );
+
+	fscanf(file,"%s",aux);
+
+	sprintf(fileContent[i], "%s", aux);
+
+    }
+
+   
+
+
+
+
+      
     // Move until find entry followed by {
 
     unsigned int find = 0;
 
-    unsigned int status;
+    i = 0;
+    
+    while(  ( find == 0 )   &&   ( i < (fsize-1))  ) {
 
-    while( find == 0 ) {
 	
-	status = fscanf(file,"%s",aux);
+	// Entry is found
+	
+	if( strcmp(fileContent[i],entry) == 0 ) {
 
-	// Bad reading
-	if(status == 0) {
+	    
+	    // Check if next character is {
+	    
+	    if( strcmp(fileContent[i+1],"{") == 0 ) {
 
-	    find = 1;
+		find = 1;
 
-	}
-
-	else {
-
-	    // Entry is found
-	    if( strcmp(aux,entry) == 0 ) {
-
-		// Check if next character is {
-		status = fscanf(file,"%s",aux);
-
-		if( strcmp(aux,"{") == 0 ) {
-
-		    find = 1;
-
-		}
+		i++;
 
 	    }
 
 	}
 
+	i++;
+
     }
 
-
-
+    
 
     // Read until corresponding } is found
 
     // bcount++ if { is found.
     // bcount-- if } is found.
+
     unsigned int bcount = 1;
+    
     unsigned int nl = 0;
 
-    while( bcount != 0 ) {
+    
+    while(   ( bcount != 0 )   &&   ( (i+nl) < (fsize -1) )   ){
 
-	status = fscanf(file,"%s",aux);
+	if( strcmp( fileContent[i+nl], "{" ) == 0 ) {
 
-	if( status == 0 ) {
-
-	    bcount = 0;
+	    bcount++;
 
 	}
 
 	else {
 
-	    if( strcmp(aux,"{") == 0 ) {
+	    if( strcmp( fileContent[i+nl], "}" ) == 0 ) {
 
-		bcount++;
-
-	    }
-
-	    else {
-
-		if( strcmp(aux,"}") == 0 ) {
-
-		    bcount--;
-
-		}
+		bcount--;
 
 	    }
-
-
-	    if( bcount != 0 ) {
-	    
-		// Copy to list
-		strcpy( auxList[nl], aux );
-
-		nl++;
-
-	    }
-
-	    
 
 	}
+
+
+	if( bcount != 0 ) {
+	    
+	    nl++;
+
+	}	   
 
     }
 
        
     
-    
-
+   
     fclose(file);
 
 
+    
 
     // Copy strings to list
 
@@ -141,17 +151,29 @@ char** entryList( char* fileName, char* entry, unsigned int* lsize ) {
     char** list = (char**)malloc( nl * sizeof(char*) );
 
 
-    unsigned int i;
+    unsigned int j;
 
-    for( i = 0 ; i < nl ; i++ ) {
+    for( j = 0 ; j < nl ; j++ ) {
 
-	list[i] = (char*)malloc( 100 * sizeof(char) );
+    	list[j] = (char*)malloc( 100 * sizeof(char) );
 
-	strcpy( list[i], auxList[i] );
+    	strcpy( list[j], fileContent[i+j] );
 
     }
     
 
+    
+
+
+    // Deallocate arrays
+
+    for( i = 0 ; i < fsize ; i++ ) {
+
+	free( fileContent[i] );
+
+    }
+
+    free( fileContent );
 
     
 
