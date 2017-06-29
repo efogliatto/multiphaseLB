@@ -17,8 +17,10 @@
 typedef unsigned int uint;
 
 
-char** lookUpEntry( char* fileName, char* entry, unsigned int* lsize ) {
+unsigned int lookUpEntry( char* fileName, char* entry, char list[][100], unsigned int* lsize ) {
 
+
+    unsigned int retval = 0;
     
     
     // Tokenize entry string
@@ -28,84 +30,91 @@ char** lookUpEntry( char* fileName, char* entry, unsigned int* lsize ) {
     char** tok = tokenize(entry,'/', &ntk);
 
 
-    uint nl;
-    
-    char** list;
 
-    
 
-    // Use only for tokenized entries (up to now...)
+    char elist[100][100];
+
+    char subEntry[100][100];
+
+    uint elistSize,
+	status,
+	nl;    
+
     
     if( ntk > 1 ) {
 
 
     	// Search first entry in file
-	
-    	uint ne, ii;
 
-    	char** elist = entryList(fileName, tok[0], &ne);
-
-	
-
-    	if ( ntk == 2 ) {
-
-    	    list = singleEntryList( elist, tok[1], &nl, ne );
-
-    	    *lsize = nl;
-
-    	}
+    	status = entryList(fileName, tok[0], elist, &elistSize);
 
 
-    	// Search in intermediate lists
-	
-    	else {
+	if (status) {
 
-	
-    	    uint i,
-    		nsub;
-
-    	    char** subEntry;
-
-    	    for( i = 1 ; i < (ntk-1) ; i++ ) {
-
-    		if( i == 1) {
-
-    		    subEntry = subEntryList( elist, tok[i], &nsub, ne );
-
-    		}
-
-    		else {
-
-    		    subEntry = subEntryList( subEntry, tok[i], &nsub, nsub );
-
-    		}
-
-    	    }
-
-
-
-
-    	    // Search in last entry
-    	    list = singleEntryList( subEntry, tok[ntk-1], &nl, nsub );
-
-    	    *lsize = nl;
 	    
-    	}
+	    if ( ntk == 2 ) {
+
+		status = singleEntryList( elist, elistSize, tok[1], list, &nl );
+
+		if (status) {
+
+		    *lsize = nl;
+		    
+		    retval = 1;
+
+		}
+
+	    }
+
+
+	    
+	    // Search in intermediate lists
+	
+	    else {
 
 	
+		uint i,
+		    nsub;
+
+		for( i = 1 ; i < (ntk-1) ; i++ ) {
+
+		    if( i == 1) {
+
+			status = subEntryList( elist, elistSize, tok[i], subEntry, &nsub );
+
+		    }
+
+		    else {
+
+			status = subEntryList( subEntry, nsub, tok[i], subEntry, &nsub );
+
+		    }
+
+		}
 
 
 
-	// Deallocate arrays
 
-	for(ii = 0 ; ii < ne ; ii++) {
+		// Search in last entry
 
-	    free( elist[ii] );
+		status = singleEntryList( subEntry, nsub, tok[ntk-1], list, &nl );
+
+		if (status) {
+
+		    *lsize = nl;
+
+		    retval = 1;
+
+		}
+
+
+
 	    
+	    }
+
+
+
 	}
-	
-	free(elist);
-	
 
     }
 
@@ -118,16 +127,35 @@ char** lookUpEntry( char* fileName, char* entry, unsigned int* lsize ) {
 
     	uint ne;
 
-    	list = entryList(fileName, entry, &ne);
+	status = entryList(fileName, entry, list, &ne);
 
-    	*lsize = ne;
+	if (status) {
+	
+	    *lsize = ne;
+
+	    retval = 1;
+
+	}
 
     }
 
 
+
+
+
+    uint jj;
+
+    for(jj = 0 ; jj < ntk ; jj++) {
+
+    	free( tok[jj] );
+	    
+    }
+	
+    free( tok );
+	
     
 
-    return list;
+    return retval;
     
 
 }

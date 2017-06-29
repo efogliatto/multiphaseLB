@@ -7,57 +7,54 @@
  */
 
 
-#include <tokenize.h>
-#include <entryList.h>
-#include <subEntryList.h>
-#include <singleEntryList.h>
 #include <lookUpEntry.h>
 #include <string.h>
 #include <stdlib.h>
 #include <stdio.h>
 
-typedef unsigned int uint;
 
 
 
-double* lookUpVector( char* fileName, char* entry, double df, unsigned int vs ) {
+unsigned int lookUpVector( char* fileName, char* entry, double v[], unsigned int vsize ) {
 
 
-    uint lsize;
+    unsigned int retval = 0,
+	ns,
+	status;
 
-    double val = df;
-
-    char** list = lookUpEntry(fileName,entry,&lsize);
-
-
-    double* rval = (double*)malloc( lsize * sizeof(double) );
+    char aux[10][100];
     
-    
-    if ( lsize == vs ) {
+    status = lookUpEntry( fileName, entry, aux, &ns );
 
-	uint i;
+    if (status) {
 
-    	char *ptr;
+	if ( ns == vsize ) {
 
-	for( i = 0 ; i < lsize ; i++ ) {
-	
-	    val = strtod( list[i], &ptr);
+	    uint i;
 
-	    rval[i] = val;
+	    for( i = 0 ; i < ns ; i++ ) {
+
+		v[i] = atof( aux[i] );
+
+	    }
+
+	    retval = 1;
+
+	}
+
+	else {
+
+	    printf("\n   [ERROR]   Ill defined entry %s. Dimension mismatch\n\n", entry);
+
+	    exit(1);
 
 	}
 
     }
+    
 
-    else {
-
-	printf("\n   [ERROR]   Ill defined entry %s. Dimension mismatch\n\n", entry);
-
-	exit(1);
-
-    }
-
-    return rval;
+    
+    return retval;
     
 
 }

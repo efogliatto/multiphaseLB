@@ -23,20 +23,20 @@ typedef unsigned int uint;
 double lookUpDouble( char* fileName, char* entry, double df ) {
 
 
-    uint lsize;
+    /* uint lsize; */
 
     double val = df;
 
-    char** list = lookUpEntry(fileName,entry,&lsize);
+    /* char** list = lookUpEntry(fileName,entry,&lsize); */
 
 
-    if ( lsize != 0 ) {
+    /* if ( lsize != 0 ) { */
 
-    	char *ptr;
+    /* 	char *ptr; */
 	
-    	val = strtod( list[0], &ptr);
+    /* 	val = strtod( list[0], &ptr); */
 
-    }
+    /* } */
 
     return val;
     

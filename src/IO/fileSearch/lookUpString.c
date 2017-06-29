@@ -7,10 +7,6 @@
  */
 
 
-#include <tokenize.h>
-#include <entryList.h>
-#include <subEntryList.h>
-#include <singleEntryList.h>
 #include <lookUpEntry.h>
 #include <string.h>
 #include <stdlib.h>
@@ -19,24 +15,27 @@
 typedef unsigned int uint;
 
 
-
-char* lookUpString( char* fileName, char* entry ) {
-
-
-    uint lsize;
+unsigned int lookUpString( char* fileName, char* entry, char string[] ) {
 
 
-    char** list = lookUpEntry(fileName,entry,&lsize);
+    uint retval = 0,
+	ns,
+	status;
 
-    char* val = (char*)malloc( 100 * sizeof(char) );
+    char aux[10][100];
+    
+    status = lookUpEntry( fileName, entry, aux, &ns);
 
-    if ( lsize != 0 ) {
+    if (status) {
 
-    	strcpy(val, list[0]);
+	strcpy(string, aux[0]);
+
+	retval = 1;
 
     }
-
-    return val;
+    
+    
+    return retval;
     
 
 }

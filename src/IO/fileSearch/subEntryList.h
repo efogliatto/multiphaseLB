@@ -1,6 +1,6 @@
 #ifndef SUBENTRYLIST_H
 #define SUBENTRYLIST_H
 
-char** subEntryList( char** entryList, char* entry, unsigned int* lsize, unsigned int elsize );
+unsigned int subEntryList( char entryList[][100], unsigned int elsize, char* entry, char subList[][100], unsigned int* lsize );
 
 #endif // SUBENTRYLIST_H

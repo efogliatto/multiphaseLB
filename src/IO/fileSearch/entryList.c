@@ -2,6 +2,10 @@
 
   Return entry list from file
 
+  return value
+  0: entry not found
+  1: entry was found
+
  */
 
 #include <stdio.h>
@@ -10,8 +14,10 @@
 #include <tokenize.h>
 
 
-char** entryList( char* fileName, char* entry, unsigned int* lsize ) {
+unsigned int entryList( char* fileName, char* entry, char list[][100], unsigned int* lsize ) {
 
+
+    unsigned int retval = 0;
 
     
     // Open file and look for embraced entry
@@ -132,7 +138,13 @@ char** entryList( char* fileName, char* entry, unsigned int* lsize ) {
 	    
 	    nl++;
 
-	}	   
+	}
+
+	else {
+
+	    retval = 1;
+
+	}
 
     }
 
@@ -148,14 +160,9 @@ char** entryList( char* fileName, char* entry, unsigned int* lsize ) {
 
     *lsize = nl;
     
-    char** list = (char**)malloc( nl * sizeof(char*) );
-
-
     unsigned int j;
 
     for( j = 0 ; j < nl ; j++ ) {
-
-    	list[j] = (char*)malloc( 100 * sizeof(char) );
 
     	strcpy( list[j], fileContent[i+j] );
 
@@ -175,8 +182,12 @@ char** entryList( char* fileName, char* entry, unsigned int* lsize ) {
 
     free( fileContent );
 
-    
 
-    return list;
+
+
+    
+    return retval;
+    
+    
 
 }

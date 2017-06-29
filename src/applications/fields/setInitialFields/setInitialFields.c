@@ -35,24 +35,6 @@ int main(int argc, char** argv) {
     // Read fields type from file
 
     struct vtkInfo vtk;
-    {
-	
-	vtk.nscalar = 2;
-
-	vtk.nvector = 1;
-
-	vtk.npdf    = 2;
-
-	sprintf(vtk.scalarFields[0],"rho");
-
-	sprintf(vtk.scalarFields[1],"T");
-
-	sprintf(vtk.vectorFields[0],"U");
-
-	sprintf(vtk.pdfFields[0],"f");
-
-	sprintf(vtk.pdfFields[1],"g");	
-
 	
     /* vtk.scalarFields = lookUpEntry("start/initialFields","scalarFields",&vtk.nscalar); */
 
@@ -60,9 +42,7 @@ int main(int argc, char** argv) {
 
     /* vtk.pdfFields = lookUpEntry("start/initialFields","pdfFields",&vtk.npdf); */
 
-    }
-    
-	
+    /* char* itype = lookUpString("start/initialFields", "U/internalField/type");     */
     
 
     
@@ -188,26 +168,24 @@ int main(int argc, char** argv) {
 	    
     	    // Internal field type
 	    
-    	    /* sprintf(fname, "%s/internalField/type", vtk.vectorFields[fid] ); */
-
-	    printf("\n\n%d\n\n", pid);
-	    
-    	    char* itype = lookUpString("start/initialFields", "U/internalField/type");
-
-	    
-
-    	    /* printf("%s\n\n", itype); */
+    	    sprintf(fname, "%s/internalField/type", vtk.vectorFields[fid] );
+    
+    	    /* char* itype = lookUpString("start/initialFields", fname); */
+	   
 		    
 
-    	    /* // Uniform distribution */
+    	    // Uniform distribution
 	    
     	    /* if( strcmp(itype,"uniform") == 0 ) { */
 
     	    /* 	sprintf(fname, "%s/internalField/value", vtk.vectorFields[fid] ); */
+
+    	    /* 	/\* double* val = lookUpVector("start/initialFields","U/internalField/value", 0, 3); *\/ */
 		
-    	    /* 	double* val = lookUpVector("start/initialFields", fname, 0, 3); */
+    	    /* 	/\* double* val = lookUpVector("start/initialFields", fname, 0, 3); *\/ */
 
     	    /* } */
+	    
 
     	    double** field = matrixDoubleAlloc(  mesh.mesh.nPoints, 3, 0);
 

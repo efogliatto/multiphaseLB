@@ -1,6 +1,6 @@
 #ifndef LOOKUPSTRING_H
 #define LOOKUPSTRING_H
 
-char* lookUpString( char* fileName, char* entry );
+unsigned int lookUpString( char* fileName, char* entry, char string[] );
 
 #endif // LOOKUPSTRING_H

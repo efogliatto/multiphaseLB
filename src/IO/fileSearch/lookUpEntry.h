@@ -1,6 +1,6 @@
 #ifndef LOOKUPENTRY_H
 #define LOOKUPENTRY_H
 
-char** lookUpEntry( char* fileName, char* entry, unsigned int* lsize );
+unsigned int lookUpEntry( char* fileName, char* entry, char list[][100], unsigned int* lsize );
 
 #endif // LOOKUPENTRY_H

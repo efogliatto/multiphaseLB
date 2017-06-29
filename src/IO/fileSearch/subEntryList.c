@@ -10,14 +10,17 @@
 #include <tokenize.h>
 
 
-char** subEntryList( char** entryList, char* entry, unsigned int* lsize, unsigned int elsize ) {
+unsigned int subEntryList( char entryList[][100], unsigned int elsize, char* entry, char subList[][100], unsigned int* lsize ) {
 
+
+    unsigned int retval = 0;
+    
 
     // Move in entryList until entry with opening brace
 
     unsigned int i,
-	find;
-
+    	find;
+    
     
     i = 0;
 
@@ -25,15 +28,15 @@ char** subEntryList( char** entryList, char* entry, unsigned int* lsize, unsigne
     
     while(   ( i < (elsize-1) )   &&   ( find == 0 )   ) {
 
-	if(   ( strcmp(entryList[i], entry) == 0 )   &&   ( strcmp(entryList[i+1], "{") == 0 )   ) {
+    	if(   ( strcmp(entryList[i], entry) == 0 )   &&   ( strcmp(entryList[i+1], "{") == 0 )   ) {
 
-	    find = 1;
+    	    find = 1;
 
-	    i++;
+    	    i++;
 
-	}
+    	}
 
-	i++;
+    	i++;
 
     }
 
@@ -45,54 +48,58 @@ char** subEntryList( char** entryList, char* entry, unsigned int* lsize, unsigne
     // Find corresponding }
 
     unsigned int bcount = 1,
-	j = i;
+    	j = i;
 
-    while(   ( j < (elsize-1) )   &&   ( bcount != 0 )   )  {
+    while(   ( j < elsize )   &&   ( bcount != 0 )   )  {
 
-	if ( strcmp(entryList[j], "{") == 0 ) {
+    	if ( strcmp(entryList[j], "{") == 0 ) {
 
-	    bcount++;
+    	    bcount++;
 
-	}
+    	}
 
-	else {
+    	else {
 
-	    if ( strcmp(entryList[j], "}") == 0 ) {
+    	    if ( strcmp(entryList[j], "}") == 0 ) {
 
-		bcount--;
+    		bcount--;
 
-	    }
+    	    }
 
-	}
+    	}
 
-	j++;
+    	j++;
 
     }
 
 
-
-
+    j--;
+    
     
 
 
 
     // Resize sublist and copy
 
-    *lsize = j - i;
+    if( bcount == 0 ) {
     
-    char** subList = (char**)malloc( (j-i) * sizeof(char*) );
+	*lsize = j - i;
 
-    unsigned int k;
+	unsigned int k;
 
-    for( k = 0 ; k < (j-i) ; k++ ) {
+	for( k = 0 ; k < (j-i) ; k++ ) {
 
-    	subList[k] = (char*)malloc( 100 * sizeof(char) );
+	    strcpy( subList[k], entryList[i + k] );
 
-    	strcpy( subList[k], entryList[i + k] );
+	}
+
+	retval = 1;
 
     }
 
+
     
-    return subList;
+    
+    return retval;
 
 }

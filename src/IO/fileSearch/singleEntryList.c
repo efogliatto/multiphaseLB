@@ -10,13 +10,16 @@
 #include <tokenize.h>
 
 
-char** singleEntryList( char** subEntryList, char* entry, unsigned int* lsize, unsigned int ssize ) {
+unsigned int singleEntryList( char subEntryList[][100], unsigned int ssize, char* entry, char subList[][100], unsigned int* lsize ) {
 
+
+    unsigned int retval = 0;
+    
     
     // Move in subEntryList until entry with opening brace
 
     unsigned int i,
-	find;
+    	find;
 
     
     i = 0;
@@ -25,13 +28,13 @@ char** singleEntryList( char** subEntryList, char* entry, unsigned int* lsize, u
     
     while(   ( i < (ssize-1) )   &&   ( find == 0 )   ) {
 
-	if(   ( strcmp(subEntryList[i], entry) == 0 )   ) {
+    	if(   ( strcmp(subEntryList[i], entry) == 0 )   ) {
 
-	    find = 1;
+    	    find = 1;
 
-	}
+    	}
 
-	i++;
+    	i++;
 
     }
 
@@ -47,45 +50,56 @@ char** singleEntryList( char** subEntryList, char* entry, unsigned int* lsize, u
 
     while(   ( j < ssize )   &&   ( find == 0 )   ) {
 
-	if( strchr(subEntryList[j],';') != NULL ) {
+    	if( strchr(subEntryList[j],';') != NULL ) {
 
-	    find = 1;
+    	    find = 1;
 	    
-	}
+    	}
 	
-	j++;
-
-    }    
-
-
-
-    // Resize sublist and copy
-
-    *lsize = j - i;
-    
-    char** subList = (char**)malloc( (j-i) * sizeof(char*) );
-
-    unsigned int k;
-
-    for( k = 0 ; k < (j-i) ; k++ ) {
-
-    	subList[k] = (char*)malloc( 100 * sizeof(char) );
-
-
-	// Remove extra characters	
-
-    	strcpy( subList[k], subEntryList[i + k] );
-
-	subList[k] = strtok( subList[k], ";" );
-
-	subList[k] = strtok( subList[k], "(" );
-
-	subList[k] = strtok( subList[k], ")" );
+    	j++;
 
     }
 
+
     
-    return subList;
+    // Resize sublist and copy
+    
+    if( find == 1 ) {    
+
+	*lsize = j - i;
+    
+	unsigned int k;
+
+	char* aux = (char*)malloc( 100 * sizeof(char) );
+	
+	for( k = 0 ; k < (j-i) ; k++ ) {
+
+	    
+	    // Remove extra characters
+	    
+	    strcpy( aux, subEntryList[i + k] );
+
+	    aux = strtok( aux, ";" );
+
+	    aux = strtok( aux, "(" );
+
+	    aux = strtok( aux, ")" );
+
+	    
+	    strcpy( subList[k], aux );
+	    
+	}
+
+	retval = 1;
+
+	/* free( aux ); */
+
+    }
+
+
+
+    
+    return retval;
     
     
     
