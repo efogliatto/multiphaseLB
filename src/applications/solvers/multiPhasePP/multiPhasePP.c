@@ -150,13 +150,41 @@ int main( int argc, char **argv ) {
     
 
 
-    /* // LBE fields */
+    // LBE fields
 
-    /* // Navier-Stokes field */
-    /* struct lbeField f = readLbeField("f", &mesh.lattice, &mesh.parallel, &mesh.time); */
+    // Navier-Stokes field
+
+    if(pid == 0) {  printf("\nReading field f\n");  }
+
+    struct lbeField f;
     
-    /* // Energy field */
-    /* struct lbeField g = readLbeField("g", &mesh.lattice, &mesh.parallel, &mesh.time); */
+    status = readLbeField( &mesh, &f, "f");
+
+    if( status == 0 ) {
+
+    	printf("\n   [ERROR]  Unable to read field f\n\n");
+
+    	exit(1);
+
+    }
+
+    
+    // Energy field
+
+    if(pid == 0) {  printf("\nReading field g\n");  }
+
+    struct lbeField g;
+    
+    status = readLbeField( &mesh, &g, "g");
+
+    if( status == 0 ) {
+
+    	printf("\n   [ERROR]  Unable to read field g\n\n");
+
+    	exit(1);
+
+    }
+    
     
 
     /* // Initial equilibrium distribution */
@@ -190,6 +218,8 @@ int main( int argc, char **argv ) {
     writeScalarToVTK( "T", mfields.T, &mesh );
 
     writeVectorToVTK( "U", mfields.U, &mesh );
+
+    writePdfToVTK( "f", f.value, &mesh );
     
     writeVTKExtra( &mesh, &vtk );
 

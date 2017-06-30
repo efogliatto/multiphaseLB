@@ -2,7 +2,7 @@
 #include <basic.h>
 #include <readVectorField.h>
 
-unsigned int readLbeField( struct latticeMesh* mesh, struct lbeField* field, unsigned int vsize, char* fname ) {
+unsigned int readLbeField( struct latticeMesh* mesh, struct lbeField* field, char* fname ) {
 
     
     
@@ -21,46 +21,48 @@ unsigned int readLbeField( struct latticeMesh* mesh, struct lbeField* field, uns
     // Collision model
     
     char cmodel[100];
-
+    
     char prop[100];
+
 
     sprintf( prop, "%s/Collision", fname);
 
     status = lookUpString("properties/macroProperties", prop, cmodel);
 
 
+
     
     if( strcmp(cmodel,"liMRT") == 0 ) {
 
 	
-	field->colId = 0;
+    	field->colId = 0;
 
 
-	// Relaxation time
+    	// Relaxation time
 	
-	sprintf( prop, "%s/Lambda", fname);
+    	sprintf( prop, "%s/Lambda", fname);
 
-	double v[20];
+    	double v[20];
 
-	status = lookUpVector("properties/macroProperties", prop, v, mesh->mesh.Q);
+    	status = lookUpVector("properties/macroProperties", prop, v, mesh->mesh.Q);
 
-	field->Lambda = (double*)malloc( mesh->mesh.Q * sizeof(double) );
+    	field->Lambda = (double*)malloc( mesh->mesh.Q * sizeof(double) );
 	
-	unsigned int ii;
+    	unsigned int ii;
 
-	for( ii = 0 ; ii < mesh->mesh.Q ; ii++ ) {
+    	for( ii = 0 ; ii < mesh->mesh.Q ; ii++ ) {
 
-	    field->Lambda[ii] = v[ii];
+    	    field->Lambda[ii] = v[ii];
 
-	}
+    	}
 
 
 
-	// Sigma constant
+    	// Sigma constant
 
-	sprintf( prop, "%s/sigma", fname);
+    	sprintf( prop, "%s/sigma", fname);
 	
-	status = lookUpDouble("properties/macroProperties", prop, &field->sigma, 0 );
+    	status = lookUpDouble("properties/macroProperties", prop, &field->sigma, 0 );
 	
 
     }
@@ -69,46 +71,47 @@ unsigned int readLbeField( struct latticeMesh* mesh, struct lbeField* field, uns
     else {
 
 	
-	if( strcmp(cmodel,"liSRT") == 0 ) {
-
-	    field->colId = 1;
-
-
-	    // Relaxation time
-
-	    sprintf( prop, "%s/tau", fname);
-
-	    status = lookUpDouble("properties/macroProperties", prop, &field->tau, 1 );
-
-
-	    // Sigma constant
-
-	    sprintf( prop, "%s/sigma", fname);
-	
-	    status = lookUpDouble("properties/macroProperties", prop, &field->sigma, 0 );	    
-	    
-
-	}
-
-	
-	else {
+    	if( strcmp(cmodel,"liSRT") == 0 ) {
 
 	    
-	    if( strcmp(cmodel,"liTemp") == 0 ) {
+    	    field->colId = 1;
 
-		field->colId = 2;
+
+    	    // Relaxation time
+
+    	    sprintf( prop, "%s/tau", fname);
+
+    	    status = lookUpDouble("properties/macroProperties", prop, &field->tau, 1 );
+
+
+    	    // Sigma constant
+
+    	    sprintf( prop, "%s/sigma", fname);
+	
+    	    status = lookUpDouble("properties/macroProperties", prop, &field->sigma, 0 );
+	    
+
+    	}
+
+	
+    	else {
+
+	    
+    	    if( strcmp(cmodel,"liTemp") == 0 ) {
+
+    		field->colId = 2;
 
 		
-		// Relaxation time
+    		// Relaxation time
 
-		sprintf( prop, "%s/tau", fname);
+    		sprintf( prop, "%s/tau", fname);
 
-		status = lookUpDouble("properties/macroProperties", prop, &field->tau, 1 );
+    		status = lookUpDouble("properties/macroProperties", prop, &field->tau, 1 );
 		
 
-	    }
+    	    }
 
-	}
+    	}
 
     }
 
@@ -121,37 +124,40 @@ unsigned int readLbeField( struct latticeMesh* mesh, struct lbeField* field, uns
     sprintf( prop, "%s/tauModel", fname);
 
     char tm[100];
+
+    field->tauModel = 0;
 	
     status = lookUpString("properties/macroProperties", prop, tm );
 
+    if( status ) {
 
-    if( strcmp(tm,"constant") == 0 ) {
+    	if( strcmp(tm,"constant") == 0 ) {
 
-	field->tauModel = 0;
+    	    field->tauModel = 0;
 
+    	}
+
+    	else {
+    
+    	    if( strcmp(tm,"constantMu") == 0 ) {
+
+    		field->tauModel = 1;
+
+    	    }
+
+    	    else {
+    
+    		if( strcmp(tm,"constantLambda") == 0 ) {
+
+    		    field->tauModel = 2;
+
+    		}
+
+    	    }
+
+    	}
+    
     }
-
-    else {
-    
-	if( strcmp(tm,"constantMu") == 0 ) {
-
-	    field->tauModel = 1;
-
-	}
-
-	else {
-    
-	    if( strcmp(tm,"constantLambda") == 0 ) {
-
-		field->tauModel = 2;
-
-	    }
-
-	}	
-
-    }
-    
-
     
     
     return status;

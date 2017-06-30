@@ -172,6 +172,8 @@ unsigned int entryList( char* fileName, char* entry, char list[][100], unsigned 
 
     	strcpy( list[j], fileContent[i+j] );
 
+	retval = 1 ;
+
     }
     
 

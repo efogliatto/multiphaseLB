@@ -54,7 +54,11 @@ struct lbeField {
     double lambda;
 
     // Relaxation time model
+    // 0: constant
+    // 1: constantMu
+    // 2: constantLambda
     unsigned int tauModel;
+    
     
 };
 

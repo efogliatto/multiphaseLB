@@ -4,6 +4,6 @@
 #include <latticeMesh.h>
 #include <lbeField.h>
 
-unsigned int readLbeField( struct latticeMesh* mesh, struct lbeField* field, unsigned int vsize, char* fname );
+unsigned int readLbeField( struct latticeMesh* mesh, struct lbeField* field, char* fname );
 
 #endif // READLBEFIELD_H

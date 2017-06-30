@@ -55,10 +55,7 @@ unsigned int lookUpEntry( char* fileName, char* entry, char list[][100], unsigne
     tokenize(entry, '/', tok, &ntk);
 
 
-    
-
-
-    
+      
 
 
     char elist[100][100];
@@ -77,12 +74,14 @@ unsigned int lookUpEntry( char* fileName, char* entry, char list[][100], unsigne
 
     	status = entryList(fileName, tok[0], elist, &elistSize);
 
+	
+
 	if (status) {
 
 	    
 	    if ( ntk == 2 ) {
 
-		status = singleEntryList( elist, elistSize, tok[1], list, &nl );
+		status = singleEntryList( elist, elistSize, tok[1], list, &nl );	       
 
 		if (status) {
 
