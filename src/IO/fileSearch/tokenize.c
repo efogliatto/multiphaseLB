@@ -7,10 +7,7 @@ void tokenize( char* str2, char token, char str1[][100], unsigned int* n ) {
 
 
     uint ssize = strlen(str2);
-
-    /* printf("%s  %d\n", str2, ssize); */
-
-    
+   
     uint ntk = 0,
 	i,
 	j;
@@ -29,12 +26,9 @@ void tokenize( char* str2, char token, char str1[][100], unsigned int* n ) {
 	    for(k = j ; k < i ; k++ ) {
 
 		str1[ntk][k - j] = str2[k];
-		
-		/* printf("%c",str1[ntk][k-j]); */
 
 	    }
 
-	    /* printf("\n"); */
 
 	    j = i+1;
 
@@ -51,12 +45,9 @@ void tokenize( char* str2, char token, char str1[][100], unsigned int* n ) {
     	for(k = j ; k < ssize ; k++ ) {
 
     	    str1[ntk][k - j] = str2[k];
-		
-    	    /* printf("%c",str1[ntk][k-j]); */
 
     	}
 
-	/* printf("\n"); */
     	ntk++;
 
     }
