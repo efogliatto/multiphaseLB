@@ -8,6 +8,8 @@
 
 struct latticeMesh readLatticeMesh( unsigned int pid ) {
 
+    
+    
     struct latticeMesh mesh;
 
     uint i,j,status;
@@ -22,6 +24,10 @@ struct latticeMesh readLatticeMesh( unsigned int pid ) {
     // Basic information
 
     mesh.parallel.pid = pid;
+
+
+    // Time information
+    readTimeInfo( &mesh );
 
     
 

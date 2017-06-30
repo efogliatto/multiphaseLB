@@ -2,10 +2,11 @@
 #define IO_H
 
 #include <stdio.h>
-#include <lookUpDoubleEntry.h>
-#include <lookUpStringEntry.h>
 #include <stdlib.h>
 #include <string.h>
+
+#include <lookUpDoubleEntry.h>
+#include <lookUpStringEntry.h>
 
 #include <readBasicMesh.h>
 #include <writeBasicMesh.h>
@@ -29,5 +30,10 @@
 #include <lookUpDouble.h>
 #include <lookUpVector.h>
 #include <lookUpString.h>
+
+#include <readTimeInfo.h>
+
+#include <readScalarField.h>
+#include <readVTKInfo.h>
 
 #endif // IO_H

@@ -13,8 +13,11 @@ add_library(io SHARED
   writeScalarToVTK.c
   writeVectorToVTK.c
   writePdfToVTK.c
+  readVTKInfo.c
   writeVTKExtra.c
   writeMainPvd.c
+  readTimeInfo.c
+  readScalarField.c
   fileSearch/tokenize.c
   fileSearch/entryList.c
   fileSearch/subEntryList.c

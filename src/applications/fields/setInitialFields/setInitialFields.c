@@ -10,9 +10,6 @@
 #include <io.h>
 #include <latticeModel.h>
 #include <basic.h>
-#include <readLatticeMesh.h>
-#include <writeLatticeMesh.h>
-#include <dirent.h>
 
 
 int main(int argc, char** argv) {
@@ -21,7 +18,6 @@ int main(int argc, char** argv) {
     
  
     printf("\n  SET DISTRIBUTED FIELDS\n\n");
-
 
 
     
@@ -34,25 +30,9 @@ int main(int argc, char** argv) {
 
     // Read fields type from file
 
-    struct vtkInfo vtk;
+    struct vtkInfo vtk = readVTKInfo();
 
-    unsigned int status;
-
-	
-    status = lookUpEntry( "start/initialFields", "scalarFields", vtk.scalarFields, &vtk.nscalar);
-
-    if( !status ) { vtk.nscalar = 0; }
-
-    
-    status = lookUpEntry( "start/initialFields", "vectorFields", vtk.vectorFields, &vtk.nvector);
-
-    if( !status ) { vtk.nvector = 0; }
-    
-
-    status = lookUpEntry( "start/initialFields", "pdfFields", vtk.pdfFields, &vtk.npdf);
-
-    if( !status ) { vtk.npdf = 0; }
-
+    unsigned int status = 0;
 
 
     
