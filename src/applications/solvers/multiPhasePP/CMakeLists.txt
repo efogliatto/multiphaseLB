@@ -1,6 +1,6 @@
 #------------------ Pseudopotential Solver with Heat Transfer ------------------#
 
-set ( PROJECT_LINK_LIBS libio.so libbasic.so liblatticemodel.so ${MPI_LIBRARIES})
+set ( PROJECT_LINK_LIBS libio.so libbasic.so liblatticemodel.so libgenerallbe.so ${MPI_LIBRARIES})
 link_directories( ~/multiphaseLB/lib )
 
 

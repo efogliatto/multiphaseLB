@@ -14,7 +14,7 @@
 /* #include <lbstream.h> */
 
 
-/* #include <equilibrium.h> */
+
 
 
 
@@ -25,6 +25,7 @@
 #include <mpi.h>
 #include <macroFields.h>
 #include <vtkInfo.h>
+#include <equilibrium.h>
 
 
 int main( int argc, char **argv ) {
@@ -79,6 +80,8 @@ int main( int argc, char **argv ) {
     // Simulation properties
     
     struct latticeMesh mesh = readLatticeMesh( pid );
+
+    mesh.lattice = setLatticeInfo();
 
     struct vtkInfo vtk = readVTKInfo();
     
@@ -188,22 +191,16 @@ int main( int argc, char **argv ) {
     
 
     /* // Initial equilibrium distribution */
-    /* { */
 
-    /* 	unsigned int id; */
-
-    /* 	for( id = 0 ; id < mesh.lattice.nlocal ; id++ ) { */
-
-    /* 	    // f */
-    /* 	    equilibrium(&mesh, &mfields, &f, id); */
+    /* // f */
+    
+    /* equilibrium(&mesh, &mfields, &f); */
 
 	    
-    /* 	    // g */
-    /* 	    if( ht != 0 ) {  equilibrium(&mesh, &mfields, &g, id); } */
+    /* // g */
+    
+    /* if( ht != 0 ) {  equilibrium(&mesh, &mfields, &g); } */
 
-    /* 	} */
-	
-    /* } */
 
 
 
@@ -220,6 +217,8 @@ int main( int argc, char **argv ) {
     writeVectorToVTK( "U", mfields.U, &mesh );
 
     writePdfToVTK( "f", f.value, &mesh );
+
+    writePdfToVTK( "g", g.value, &mesh );    
     
     writeVTKExtra( &mesh, &vtk );
 

@@ -1,0 +1,1 @@
+../src/dataTypes/latticeInfo.h

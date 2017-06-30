@@ -17,4 +17,5 @@ add_library(latticemodel SHARED
   D2Q9/D2Q9_MRTInv.c
   D2Q9/D2Q9_ppw.c
   D2Q9/D2Q9_cs2.c
+  setLatticeInfo.c
   )

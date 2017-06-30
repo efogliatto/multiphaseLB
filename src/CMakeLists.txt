@@ -4,8 +4,11 @@ add_subdirectory (IO)
 # lattice Models library
 add_subdirectory (latticeModel)
 
-# Basic library
+# Basic library. C operations
 add_subdirectory (basic)
+
+# Lattice-Boltzmann equations and models
+add_subdirectory (lbEquation)
 
 
 

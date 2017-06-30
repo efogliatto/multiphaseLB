@@ -10,36 +10,36 @@
 #include <basicMesh.h>
 #include <mpiInfo.h>
 #include <timeInfo.h>
+#include <latticeInfo.h>
 
 struct latticeMesh {
 
+
+    
     // Time information
+    
     struct timeInfo time;
 
 
+    
     // Mesh information
+    
     struct basicMesh mesh;
 
+
+    
     // Parallel structure
+    
     struct mpiInfo parallel;
 
+
+    
+    // DdQq model information
+    struct latticeInfo lattice;
     
 
 
-    /* // DdQq information */
-    /* struct latticeInfo lattice; */
 
-    /* // Parallel structure */
-    /* struct mpiInfo parallel; */
-
-    /* // Neighbour indexing */
-    /* int** nb; */
-
-    /* // VTK properties */
-    /* struct vtkInfo vtk; */
-
-    /* // Boundary elements */
-    /* struct bdInfo bdElements; */
 
     /* // EOS information */
     /* struct EOSInfo EOS; */

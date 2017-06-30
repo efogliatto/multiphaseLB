@@ -1,0 +1,1 @@
+../src/lbEquation/general/lbgkEquilibrium.h
