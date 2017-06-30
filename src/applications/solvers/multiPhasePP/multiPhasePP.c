@@ -115,9 +115,20 @@ int main( int argc, char **argv ) {
 
 
     
-    /* // Velocity */
-    /* mfields.U = readVectorField("U", &mesh.lattice, &mesh.parallel, &mesh.time); */
-    /* if(pid == 0) { printf("\nReading field U\n");  } */
+    // Velocity
+
+    if(pid == 0) {  printf("\nReading field U\n");  }
+    
+    status = readVectorField( &mesh, &mfields.U, 3, "U");
+
+    if( status == 0 ) {
+
+    	printf("\n   [ERROR]  Unable to read field U\n\n");
+
+    	exit(1);
+
+    }
+    
 
     
     // Temperature
@@ -178,6 +189,8 @@ int main( int argc, char **argv ) {
 
     writeScalarToVTK( "T", mfields.T, &mesh );
 
+    writeVectorToVTK( "U", mfields.U, &mesh );
+    
     writeVTKExtra( &mesh, &vtk );
 
     writeMainPvd();

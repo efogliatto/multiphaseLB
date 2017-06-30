@@ -18,6 +18,7 @@ add_library(io SHARED
   writeMainPvd.c
   readTimeInfo.c
   readScalarField.c
+  readVectorField.c
   fileSearch/tokenize.c
   fileSearch/entryList.c
   fileSearch/subEntryList.c

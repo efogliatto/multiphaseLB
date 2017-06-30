@@ -34,6 +34,7 @@
 #include <readTimeInfo.h>
 
 #include <readScalarField.h>
+#include <readVectorField.h>
 #include <readVTKInfo.h>
 
 #endif // IO_H
