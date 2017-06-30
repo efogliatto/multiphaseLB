@@ -19,6 +19,7 @@ add_library(io SHARED
   readTimeInfo.c
   readScalarField.c
   readVectorField.c
+  readLbeField.c
   fileSearch/tokenize.c
   fileSearch/entryList.c
   fileSearch/subEntryList.c

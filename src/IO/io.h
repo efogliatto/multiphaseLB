@@ -35,6 +35,8 @@
 
 #include <readScalarField.h>
 #include <readVectorField.h>
+#include <readLbeField.h>
+
 #include <readVTKInfo.h>
 
 #endif // IO_H
