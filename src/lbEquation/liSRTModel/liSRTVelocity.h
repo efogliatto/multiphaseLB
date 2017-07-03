@@ -5,6 +5,6 @@
 #include <macroFields.h>
 #include <lbeField.h>
 
-void liSRTVelocity( struct latticeMesh* mesh, struct macroFields* mfields, struct lbeField* field, double v[3], unsigned int id );
+void liSRTVelocity( struct latticeMesh* mesh, struct macroFields* mfields, struct lbeField* field, double** v, unsigned int id );
 
 #endif // LISRTVELOCITY_H

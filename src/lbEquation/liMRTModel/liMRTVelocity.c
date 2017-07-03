@@ -4,7 +4,7 @@
 #include <pseudoPot.h>
 
 
-void liMRTVelocity( struct latticeMesh* mesh, struct macroFields* mfields, struct lbeField* field, double v[3], unsigned int id ) {
+void liMRTVelocity( struct latticeMesh* mesh, struct macroFields* mfields, struct lbeField* field, double** v, unsigned int id ) {
 
     unsigned int j, k;
 
@@ -19,7 +19,7 @@ void liMRTVelocity( struct latticeMesh* mesh, struct macroFields* mfields, struc
     // Initialize velocities
     for(k = 0 ; k < 3 ; k++) {
 	
-	v[k] = 0;
+	v[id][k] = 0;
 	
     }	
 	
@@ -31,7 +31,7 @@ void liMRTVelocity( struct latticeMesh* mesh, struct macroFields* mfields, struc
 	// Move over model velocities
 	for(k = 0 ; k < mesh->lattice.Q ; k++) {
 
-	    v[j] += mesh->lattice.vel[k][j] * field->value[id][k];
+	    v[id][j] += mesh->lattice.vel[k][j] * field->value[id][k];
 		    
 	}
 	    
@@ -41,7 +41,7 @@ void liMRTVelocity( struct latticeMesh* mesh, struct macroFields* mfields, struc
     // Add interaction force and divide by density
     for( j = 0 ; j < 3 ; j++ ) {
 
-	v[j] = ( v[j]   +   F[j] * 0.5  ) / mfields->rho[id];
+	v[id][j] = ( v[id][j]   +   F[j] * 0.5  ) / mfields->rho[id];
 
     }
 	

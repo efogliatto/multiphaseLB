@@ -1,7 +1,7 @@
 #ifndef MACRODENSITY_H
 #define MACRODENSITY_H
 
-#include <liModelInfo.h>
+#include <latticeMesh.h>
 #include <macroFields.h>
 #include <lbeField.h>
 

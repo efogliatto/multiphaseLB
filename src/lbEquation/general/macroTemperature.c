@@ -1,20 +1,36 @@
-#include <macroTemperature.h>
-#include <pseudoPotTemperature.h>
 #include <stdlib.h>
+
+#include <latticeMesh.h>
+#include <macroFields.h>
+#include <lbeField.h>
+
+#include <liMRTModel.h>
+#include <liSRTModel.h>
+#include <liTempModel.h>
+
 
 void macroTemperature( struct latticeMesh* mesh, struct macroFields* mfields, struct lbeField* field ) {
 
+
+    unsigned int id;    
     
     // Apply collision model
     switch(field->colId) {
 
     // Li SRT Model
+	
     case 2:
-	pseudoPotTemperature( mesh, mfields, field );
+
+	for( id = 0 ; id < mesh->mesh.nPoints ; id++) {
+
+	    mfields->T[id] = liTempTemperature( mesh, mfields, field, id );
+
+	}
+	
 	break;
 	
     default:
-	if(mesh->parallel.pid==0){ printf("\n\n[ERROR]  Unable to compute macroscopic temperature with field %s \n\n", field->name); }
+	printf("\n   [ERROR]  Unable to compute macroscopic temperature\n\n");
 	exit(1);
 	break;	
 	
