@@ -15,3 +15,29 @@ g
 
   tau 0.8;
 }
+
+
+
+EOS
+{    
+
+    model vanDerWaals;
+
+    a 0.5;
+
+    b 4;
+
+    R 1;
+
+    M 1;
+
+    G -1;
+
+    g (0 -1.234567e-07 0);
+
+    rho_0 0;
+
+    // Specific heat
+    Cv 1;
+    
+}

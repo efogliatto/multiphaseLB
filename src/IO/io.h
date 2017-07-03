@@ -41,5 +41,6 @@
 
 #include <timeOptions.h>
 
+#include <readEOSInfo.h>
 
 #endif // IO_H

@@ -84,9 +84,12 @@ int main( int argc, char **argv ) {
 
     mesh.lattice = setLatticeInfo();
 
+    mesh.EOS = readEOSInfo();
+
     struct vtkInfo vtk = readVTKInfo();
     
 
+    
     
 
     // Macroscopic fields
@@ -94,11 +97,6 @@ int main( int argc, char **argv ) {
     struct macroFields mfields;
 
     uint status;
-
-    status = lookUpDouble("properties/macroProperties", "EOS/Cv", &mfields.Cv, 1);
-    
-    
-
     
 
     
