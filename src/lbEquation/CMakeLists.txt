@@ -6,3 +6,6 @@ add_subdirectory (pseudoPot)
 
 # Li MRT Model
 add_subdirectory (liMRTModel)
+
+# Li SRT Model
+add_subdirectory (liSRTModel)
