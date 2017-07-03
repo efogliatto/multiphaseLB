@@ -1,0 +1,1 @@
+../src/lbEquation/pseudoPot/pseudoPot.h

@@ -9,11 +9,13 @@
 /* #include <updateLambda.h> */
 
 
+#include <basic.h>
+
 #include <latticeMesh.h>
 #include <macroFields.h>
 #include <lbeField.h>
 
-#include <basic.h>
+#include <liMRTForce.h>
 
 
 void liMRTCollision( struct latticeMesh* mesh, struct macroFields* mfields, struct lbeField* field ) {
@@ -51,6 +53,7 @@ void liMRTCollision( struct latticeMesh* mesh, struct macroFields* mfields, stru
 
 	
     	// Compute equilibrium in momentum space
+	
     	m_eq[0] = mfields->rho[id];
     	m_eq[1] = mfields->rho[id] * (-2 + 3*umag);
     	m_eq[2] = mfields->rho[id] * (1 - 3*umag);
@@ -60,26 +63,35 @@ void liMRTCollision( struct latticeMesh* mesh, struct macroFields* mfields, stru
     	m_eq[6] = mfields->rho[id] * (-mfields->U[id][1]);
     	m_eq[7] = mfields->rho[id] * (mfields->U[id][0]*mfields->U[id][0] - mfields->U[id][1]*mfields->U[id][1]);
     	m_eq[8] = mfields->rho[id] * mfields->U[id][0] * mfields->U[id][1];
+
 	
 
 	
     	// Distribution in momentum space
+
     	matVecMult(mesh->lattice.M, field->value[id], m, mesh->lattice.Q);
 
-    /* 	// Total Force */
-    /* 	liMRTForce( mesh, mfields, field, S, id); */
+	
+    	// Total Force
+	
+    	liMRTForce( mesh, mfields, field, S, id);
+
 
 	
-    /* 	// Collision in momentum space */
-    /* 	for( k = 0 ; k < mesh->lattice.Q ; k++ ) { */
+    	// Collision in momentum space
+	
+    	for( k = 0 ; k < mesh->lattice.Q ; k++ ) {
 
-    /* 	    m[k] = m[k]  -  field->Lambda[k]*( m[k] - m_eq[k] )  + mesh->time.tstep * ( 1 - 0.5*field->Lambda[k] ) * S[k]; */
+    	    m[k] = m[k]  -  field->Lambda[k]*( m[k] - m_eq[k] )  +  ( 1 - 0.5*field->Lambda[k] ) * S[k];
 	    
-    /* 	} */
+    	}
 
 	
-    /* 	// Back to phase space */
-    /* 	matVecMult(mesh->lattice.invM, m, field->value[id], mesh->lattice.Q); */
+	
+    	// Back to phase space
+	
+    	matVecMult(mesh->lattice.invM, m, field->value[id], mesh->lattice.Q);
+
 	
     }
 

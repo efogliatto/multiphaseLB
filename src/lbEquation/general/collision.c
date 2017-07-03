@@ -11,6 +11,7 @@
 #include <macroFields.h>
 #include <lbeField.h>
 
+#include <liMRTModel.h>
 
 
 void collision( struct latticeMesh* mesh, struct macroFields* mfields, struct lbeField* field ) {
@@ -21,7 +22,7 @@ void collision( struct latticeMesh* mesh, struct macroFields* mfields, struct lb
 
     // Li MRT Model
     case 0:
-    	/* liMRTCollision( mesh, mfields, field ); */
+    	liMRTCollision( mesh, mfields, field );
     	break;
 
 
