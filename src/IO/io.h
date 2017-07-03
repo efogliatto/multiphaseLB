@@ -39,4 +39,7 @@
 
 #include <readVTKInfo.h>
 
+#include <timeOptions.h>
+
+
 #endif // IO_H

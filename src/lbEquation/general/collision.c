@@ -4,11 +4,14 @@
 /* #include <guoSRTCollision.h> */
 /* #include <testSRTCollision.h> */
 /* #include <temperatureCollision.h> */
+
 #include <stdlib.h>
 
 #include <latticeMesh.h>
 #include <macroFields.h>
 #include <lbeField.h>
+
+
 
 void collision( struct latticeMesh* mesh, struct macroFields* mfields, struct lbeField* field ) {
 

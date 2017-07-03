@@ -4,4 +4,5 @@
 add_library(basic SHARED 
   matrixDoubleAlloc.c
   matrixIntAlloc.c
+  matVecMult.c
   )

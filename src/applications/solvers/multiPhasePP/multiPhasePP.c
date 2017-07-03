@@ -25,7 +25,8 @@
 #include <mpi.h>
 #include <macroFields.h>
 #include <vtkInfo.h>
-#include <equilibrium.h>
+#include <generalLbe.h>
+
 
 
 int main( int argc, char **argv ) {
@@ -195,7 +196,7 @@ int main( int argc, char **argv ) {
 
     // f
     
-    equilibrium(&mesh, &mfields, &f);
+    if( frozen != 0 ) {  equilibrium(&mesh, &mfields, &f); }
 
 	    
     // g
@@ -207,23 +208,6 @@ int main( int argc, char **argv ) {
 
 
 
-    mesh.time.current++;
-
-    writeMeshToVTK( &mesh, &vtk );
-
-    writeScalarToVTK( "rho", mfields.rho, &mesh );
-
-    writeScalarToVTK( "T", mfields.T, &mesh );
-
-    writeVectorToVTK( "U", mfields.U, &mesh );
-
-    writePdfToVTK( "f", f.value, &mesh );
-
-    writePdfToVTK( "g", g.value, &mesh );    
-    
-    writeVTKExtra( &mesh, &vtk );
-
-    writeMainPvd();
     
    
     /* // Synchronize initial fields */
@@ -233,7 +217,7 @@ int main( int argc, char **argv ) {
     /* syncPdfField(&mesh.parallel, f.value, mesh.lattice.Q ); */
     /* syncPdfField(&mesh.parallel, g.value, mesh.lattice.Q ); */
 
-    /* if(pid == 0){printf("\n\n");} */
+    if(pid == 0){printf("\n\n");}
 
 
 
@@ -243,32 +227,22 @@ int main( int argc, char **argv ) {
 
 
     
-    /* // Advance in time. Collide, stream, update and write */
-    /* while( updateTime(&mesh.time) ) { */
+    // Advance in time. Collide, stream, update and write
+    
+    while( updateTime(&mesh.time) ) {
 
 	
-    /* 	// Collide f (Navier-Stokes) */
-    /* 	if( frozen != 0 ) {  collision( &mesh, &mfields, &f );  } */
+    	// Collide f (Navier-Stokes)
+
+	if( frozen != 0 ) {  collision( &mesh, &mfields, &f );  }
 	
 
-    /* 	// Collide g (Temperature) */
-    /* 	if( ht != 0 ) { */
+	
+    	// Collide g (Temperature)
 
-    /* 	    /\* if( frozen != 0 ) { *\/ */
+	if( ht != 0 ) {  collision( &mesh, &mfields, &g );  }
 
-    /* 	    /\* 	// Update macroscopic density *\/ */
-    /* 	    /\* 	macroDensity( &mesh, &mfields, &f ); *\/ */
-		
-    /* 	    /\* 	// Update macroscopic velocity *\/ */
-    /* 	    /\* 	macroVelocity( &mesh, &mfields, &f ); *\/ */
-
-    /* 	    /\* } *\/ */
-
-    /* 	    collision( &mesh, &mfields, &g ); */
-
-    /* 	} */
-
-
+	
 
 	
     /* 	// Stream f */
@@ -316,34 +290,45 @@ int main( int argc, char **argv ) {
 	
 
 	
-    /* 	// Write fields */
-    /* 	if( writeFlag(&mesh.time) ) { */
-	    
-    /* 	    if(pid == 0) { */
-    /* 		printf("Time = %.2f (%d)\n", (double)mesh.time.current * mesh.time.tstep, mesh.time.current); */
-    /* 		printf("Elapsed time = %.2f seconds\n\n", elapsed(&mesh.time) ); */
-    /* 	    } */
+    	// Write fields
+	
+    	if( writeFlag(&mesh.time) ) {
 
+	    
+    	    if(pid == 0) {
+		
+    		printf( "Time = %d\n", mesh.time.current );
+		
+    		printf("Elapsed time = %.2f seconds\n\n", elapsed(&mesh.time) );
+		
+    	    }
+
+
+	    
+    	    // VTK files
+	    
+	    writeMeshToVTK( &mesh, &vtk );
+
+	    writeScalarToVTK( "rho", mfields.rho, &mesh );
+
+	    writeScalarToVTK( "T", mfields.T, &mesh );
+
+	    writeVectorToVTK( "U", mfields.U, &mesh );
+
+	    writePdfToVTK( "f", f.value, &mesh );
+
+	    writePdfToVTK( "g", g.value, &mesh );    
     
-    	    /* // VTK files */
-    	    /* writeVTKFile(&mesh.vtk, &mesh.parallel, &mesh.lattice, &mesh.time); */
+	    writeVTKExtra( &mesh, &vtk );
+
+	    writeMainPvd();
+
 	    
-    	    /* writeScalarToVTK("rho", mfields.rho, &mesh.lattice, &mesh.parallel, &mesh.time); */
-
-    	    /* writeScalarToVTK("T", mfields.T, &mesh.lattice, &mesh.parallel, &mesh.time); */
-
-    /* 	    writeVectorToVTK("U", mfields.U, &mesh.lattice, &mesh.parallel, &mesh.time); */
-
-    /* 	    writePdfToVTK("f", f.value, &mesh.lattice, &mesh.parallel, &mesh.time); */
-
-    /* 	    writePdfToVTK("g", g.value, &mesh.lattice, &mesh.parallel, &mesh.time); */
-
-    /* 	    writeVTKExtra(&mesh.vtk, &mesh.parallel, &mesh.time); */
-	    
-    /* 	} */
+    	}
 	
 
-    /* } */
+    }
+
 
 
     
