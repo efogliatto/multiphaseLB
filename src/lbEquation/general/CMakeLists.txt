@@ -8,7 +8,9 @@ add_library(generallbe SHARED
   macroDensity.c
   macroVelocity.c
   macroTemperature.c
-  # updateBoundaries.c
+  updateBoundaries.c
+  boundary/bounceBack.c
+  boundary/fixedT.c
   # updateBoundaryElements.c
   # updateLambda.c
   # updateTau.c

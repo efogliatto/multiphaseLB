@@ -1,0 +1,55 @@
+f
+{
+
+    X0
+    {
+        type bounceBack;
+    }
+
+    X1
+    {
+        type bounceBack;
+    }
+
+    Y0
+    {
+        type bounceBack;
+    }
+
+    Y1
+    {
+        type bounceBack;
+    }
+
+}
+
+
+
+g
+{
+
+    X0
+    {
+        type fixedT;
+	value  1;
+    }
+
+    X1
+    {
+        type fixedT;
+	value  1;
+    }
+
+    Y0
+    {
+        type fixedT;
+	value  1;
+    }
+
+    Y1
+    {
+        type fixedT;
+	value  1;
+    }
+
+}

@@ -13,4 +13,6 @@
 
 #include <macroTemperature.h>
 
+#include <updateBoundaries.h>
+
 #endif // GENERALLBE_H

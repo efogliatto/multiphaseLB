@@ -265,22 +265,22 @@ int main( int argc, char **argv ) {
     	    macroVelocity( &mesh, &mfields, &f );
 
     	}
+
+
 	
     	// Update macroscopic temperature
 	
     	if( ht != 0 ) {	    macroTemperature( &mesh, &mfields, &g );    }
 
-	
 
 	
-    /* 	// Apply boundary conditions */
-    /* 	if( frozen != 0 ) {  updateBoundaries( &mesh, &mfields, &f );  } */
-    /* 	if( ht != 0 )     {  updateBoundaries( &mesh, &mfields, &g );  } */
+    	// Apply boundary conditions
+	
+    	if( frozen != 0 ) {  updateBoundaries( &mesh, &mfields, &f );  }
+	
+    	if( ht != 0 )     {  updateBoundaries( &mesh, &mfields, &g );  }
 
-    /* 	// Update macro values at boundary elements */
-    /* 	if( frozen != 0 ) {  updateBoundaryElements( &mesh, &mfields, &f );  } */
-    /* 	if( ht != 0 )     {  updateBoundaryElements( &mesh, &mfields, &g );	} */
-
+	
 
 
 
@@ -338,7 +338,7 @@ int main( int argc, char **argv ) {
     // Print info
     if(pid == 0) {
 	
-    	/* printf("\n  Finished in %.2f seconds \n\n", elapsed(&mesh.time) ); */
+    	printf("\n  Finished in %.2f seconds \n\n", elapsed(&mesh.time) );
 	
     }
 

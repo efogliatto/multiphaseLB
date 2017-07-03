@@ -1,75 +1,128 @@
-#include <updateBoundaries.h>
+#include <lbeField.h>
+#include <macroFields.h>
+#include <latticeMesh.h>
+#include <bounceBack.h>
+#include <fixedT.h>
 #include <stdlib.h>
-#include <string.h>
+
+#include <liMRTModel.h>
+#include <liSRTModel.h>
+#include <liTempModel.h>
+
 
 void updateBoundaries( struct latticeMesh* mesh, struct macroFields* mfields, struct lbeField* field ) {
 
-    unsigned int fid = 0,
-	bndId;
-
-
-    // Select field index an apply BC
-    unsigned int i;
-    for( i = 0 ; i < mesh->bdElements._nf ; i++ ) {
-
-	if( strcmp(field->name, mesh->bdElements._fields[i]) == 0 ) {
-
-	    fid = i;
-
-	}
-	
-    }
-
+    
+    unsigned int bndId;
 
     
     // Move over boundaries and apply condition
     
-    for( bndId = 0 ; bndId < mesh->bdElements._nb ; bndId++ ) {
+    for( bndId = 0 ; bndId < mesh->mesh.bd.nbd ; bndId++ ) {
+	
 
-	switch( mesh->bdElements._bc[fid][bndId] ) {
+    	switch( field->boundary[bndId].bdType ) {
 
-        // none - periodic
-	case 0:
-	    break;
+
+	// none - periodic
+    	case 0:
+    	    break;
 	    
         // bounceBack
-	case 1:
-	    bounceBack( &mesh->bdElements, field, &mesh->lattice, mesh->nb, bndId, mfields );
-	    break;
-
-        // fixedU
-	case 2:
-	    fixedU( &mesh->bdElements, field, &mesh->lattice, mfields, mesh->nb, fid, bndId );
-	    break;
+    	case 1:
+	    bounceBack( mesh, mfields, field, bndId );
+    	    break;
 	    
         // fixedT
-	case 4:
-	    fixedT( &mesh->bdElements, field, &mesh->lattice, mfields, mesh->nb, fid, bndId );
-	    break;
-
-        // adiabatic
-	case 5:
-	    adiabatic( &mesh->bdElements, field, &mesh->lattice, mfields, mesh->nb, fid, bndId );
-	    break;
-	
-        // randomT
-	case 6:
-	    randomT( &mesh->bdElements, field, &mesh->lattice, mfields, mesh->nb, fid, bndId );
-	    break;
-
-        // tSpot
-	case 7:
-	    tSpot( &mesh->bdElements, field, &mesh->lattice, mfields, mesh->nb, fid, bndId );
-	    break;
+    	case 3:
+    	    fixedT( mesh, mfields, field, bndId );
+    	    break;
     
-	default:
-	    printf("\n[ERROR]  Unrecognized boundary condition \n\n\n");
-	    exit(1);
+    	default:
+    	    printf("\n  [ERROR]  Unrecognized boundary condition \n\n\n");
+    	    exit(1);
 	    
 
+    	}
+
+	
+    }
+
+
+
+
+
+
+
+    // Move over boundaries and update boundary elements
+    
+    for( bndId = 0 ; bndId < mesh->mesh.bd.nbd ; bndId++ ) {
+	
+
+	unsigned i,j;
+	
+
+	// Apply collision model
+	switch(field->colId) {
+
+	// Li MRT Model
+	case 0:
+	    
+	    for( i = 0 ; i < mesh->mesh.bd.nbdelem[bndId] ; i++ ) {
+
+		j = mesh->mesh.bd.bdPoints[bndId][i];
+
+		mfields->rho[j] = liMRTDensity( mesh, field->value[j] );
+
+		liMRTVelocity( mesh, mfields, field, mfields->U, j );
+
+	    }	    
+	    
+	    break;
+
+
+	// Li SRT Model
+	case 1:
+
+	    for( i = 0 ; i < mesh->mesh.bd.nbdelem[bndId] ; i++ ) {
+
+		j = mesh->mesh.bd.bdPoints[bndId][i];
+
+		mfields->rho[j] = liSRTDensity( mesh, field->value[j] );
+
+		liSRTVelocity( mesh, mfields, field, mfields->U, j );
+
+	    }
+	    
+	    break;
+
+	
+	// Li SRT Model. Temperature
+	case 2:
+
+	    for( i = 0 ; i < mesh->mesh.bd.nbdelem[bndId] ; i++ ) {
+
+		j = mesh->mesh.bd.bdPoints[bndId][i];
+
+		mfields->T[j] = liTempTemperature( mesh, mfields, field, j );
+
+	    }
+	    
+	    break;
+	
+	
+	default:
+	    printf("\n   [ERROR]  Collision model is not yet implemented\n\n");
+	    exit(1);
+	    break;
+	
 	}
 
+	
+
+	
     }
+    
 
     
 }

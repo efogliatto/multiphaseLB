@@ -159,6 +159,98 @@ unsigned int readLbeField( struct latticeMesh* mesh, struct lbeField* field, cha
     
     }
     
+
+
+
+
+    // Read boundary conditions
+
+    field->boundary = (struct bdField*)malloc( mesh->mesh.bd.nbd * sizeof(struct bdField) );
+    
+    unsigned int i;
+
+    for( i = 0 ; i < mesh->mesh.bd.nbd ; i++ ) {
+
+
+	char bdType[100];
+
+	uint jj = 0;
+
+	for( jj = 0 ; jj < 100 ; jj++ ) {
+
+	    bdType[jj] = '\0';
+
+	    prop[jj] = '\0';
+
+	    cmodel[jj] = '\0';
+
+	}
+
+
+	sprintf(prop,"%s/%s/type",fname,mesh->mesh.bd.bdNames[i]);
+
+	sprintf(cmodel,"%s/%s/value",fname,mesh->mesh.bd.bdNames[i]);
+
+	
+	status = lookUpString("start/boundaries", prop, bdType);
+
+	if( strcmp(bdType, "periodic") == 0 ) {
+
+	    field->boundary[i].bdType = 0;
+
+	}
+
+	else {
+
+	    if( strcmp(bdType, "bounceBack") == 0 ) {
+
+		field->boundary[i].bdType = 1;
+
+	    }
+
+	    else {
+
+		if( strcmp(bdType, "fixedU") == 0 ) {
+
+		    field->boundary[i].bdType = 2;
+
+		    double v[3];
+		    
+		    status = lookUpVector("start/boundaries", cmodel, v, 3);
+
+		    for( jj = 0 ; jj < 3 ; jj++ ) {
+
+			field->boundary[i].vectorVal[jj] = v[jj];
+
+		    }
+
+		}
+
+		else {
+
+		    if( strcmp(bdType, "fixedT") == 0 ) {
+
+			field->boundary[i].bdType = 3;
+
+			status = lookUpDouble("start/boundaries", cmodel, &field->boundary[i].scalarVal, 0);
+
+		    }
+
+		    else {
+
+
+
+		    }
+
+		}
+
+	    }
+
+	}
+	
+
+    }
+
     
     return status;
 

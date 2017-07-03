@@ -3,6 +3,25 @@
 
 #include <stdio.h>
 
+// Boundary information
+
+struct bdField {
+
+    // Boundary condition index
+    // 0: periodic
+    // 1: bounceBack
+    // 2: fixedU
+    // 3: fixedT
+    unsigned int bdType;
+    
+    double scalarVal;
+
+    double vectorVal[3];
+
+};
+    
+
+    
 struct lbeField {
 
     
@@ -27,26 +46,6 @@ struct lbeField {
     // Multiple relaxation times
     double* Lambda;
 
-
-
-    /* // Pointers to relaxation times. Allocation depends on colId */
-    /* // Relaxation times depend linearly on other parameters, e.g. density, temperature */
-    /* // e.g.    tau = tau_A + tau_B * p */
-    
-    /* // Single relaxation times */
-    /* double tau_A; */
-    /* double tau_B; */
-
-
-    /* // Multiple relaxation times. Inverse values for linear interpolation */
-    /* double* Lambda_A; */
-    /* double* Lambda_B; */
-
-    /* // Reference values */
-    /* double kappa_A; */
-    /* double kappa_B; */
-    
-
     // Force coefficient
     double sigma;
 
@@ -58,6 +57,10 @@ struct lbeField {
     // 1: constantMu
     // 2: constantLambda
     unsigned int tauModel;
+
+
+    // Boundary info. Related to basicBoundary in basicMesh
+    struct bdField* boundary;
     
     
 };
