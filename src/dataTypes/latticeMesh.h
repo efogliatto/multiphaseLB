@@ -11,6 +11,7 @@
 #include <mpiInfo.h>
 #include <timeInfo.h>
 #include <latticeInfo.h>
+#include <EOSInfo.h>
 
 struct latticeMesh {
 
@@ -35,14 +36,15 @@ struct latticeMesh {
 
     
     // DdQq model information
+
     struct latticeInfo lattice;
     
 
 
+    // EOS information
 
-
-    /* // EOS information */
-    /* struct EOSInfo EOS; */
+    struct EOSInfo EOS;
+    
 };
 
 

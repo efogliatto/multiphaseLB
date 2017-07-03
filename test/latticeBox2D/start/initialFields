@@ -38,7 +38,7 @@ rho
     internalField
     {
 
-        type random;
+        type uniform;
 
         value 1;
 

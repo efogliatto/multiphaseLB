@@ -85,7 +85,7 @@ int main( int argc, char **argv ) {
 
     struct vtkInfo vtk = readVTKInfo();
     
-   
+
     
 
     // Macroscopic fields
@@ -93,9 +93,9 @@ int main( int argc, char **argv ) {
     struct macroFields mfields;
 
     uint status;
-    
-    /* mfields.Cv = readScalarEntry("properties/macroscopicProperties", "EOS/Cv"); */
 
+    status = lookUpDouble("properties/macroProperties", "EOS/Cv", &mfields.Cv, 1);
+    
     
 
     
@@ -171,6 +171,7 @@ int main( int argc, char **argv ) {
 
     }
 
+
     
     // Energy field
 
@@ -190,16 +191,16 @@ int main( int argc, char **argv ) {
     
     
 
-    /* // Initial equilibrium distribution */
+    // Initial equilibrium distribution
 
-    /* // f */
+    // f
     
-    /* equilibrium(&mesh, &mfields, &f); */
+    equilibrium(&mesh, &mfields, &f);
 
 	    
-    /* // g */
+    // g
     
-    /* if( ht != 0 ) {  equilibrium(&mesh, &mfields, &g); } */
+    if( ht != 0 ) {  equilibrium(&mesh, &mfields, &g); }
 
 
 
