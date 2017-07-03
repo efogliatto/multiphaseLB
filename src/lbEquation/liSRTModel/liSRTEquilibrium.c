@@ -1,6 +1,6 @@
-#include <lbgkEquilibrium.h>
+#include <latticeInfo.h>
 
-void lbgkEquilibrium( struct latticeInfo* lattice, double rho, double v[3], double* f ) {
+void liSRTEquilibrium( struct latticeInfo* lattice, double rho, double v[3], double* f ) {
 
     unsigned int k, j;
 

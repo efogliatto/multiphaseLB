@@ -1,5 +1,5 @@
 #include <liSRTCollision.h>
-#include <lbgkEquilibrium.h>
+#include <liSRTEquilibrium.h>
 #include <pseudoPot.h>
 
 #include <stdlib.h>
@@ -33,7 +33,7 @@ void liSRTCollision( struct latticeMesh* mesh, struct macroFields* mfields, stru
 
 	// Compute equilibrium
 	
-	lbgkEquilibrium( &mesh->lattice, mfields->rho[id], mfields->U[id], feq );
+	liSRTEquilibrium( &mesh->lattice, mfields->rho[id], mfields->U[id], feq );
 	
 
 	

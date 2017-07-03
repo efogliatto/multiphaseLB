@@ -1,9 +1,8 @@
 #------------------ Generacion de bibliotecas ------------------#
  
 # Basic lattice-Boltzmann Equation library. Li model
-add_library(lisrtmodel SHARED
-  liSRTCollision.c
-  liSRTDensity.c
-  liSRTVelocity.c
-  liSRTEquilibrium.c
+add_library(litempmodel SHARED
+  liTempCollision.c
+  liTempEquilibrium.c
+  liTempTemperature.c
   )

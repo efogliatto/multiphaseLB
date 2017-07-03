@@ -3,8 +3,6 @@
 
 #include <equilibrium.h>
 
-#include <lbgkEquilibrium.h>
-
 #include <collision.h>
 
 #endif // GENERALLBE_H

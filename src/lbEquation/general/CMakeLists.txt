@@ -4,7 +4,6 @@
 add_library(generallbe SHARED
   equilibrium.c
   collision.c
-  lbgkEquilibrium.c
   # macroDensity.c
   # macroVelocity.c
   # macroTemperature.c

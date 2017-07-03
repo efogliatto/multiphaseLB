@@ -9,3 +9,6 @@ add_subdirectory (liMRTModel)
 
 # Li SRT Model
 add_subdirectory (liSRTModel)
+
+# Li Temperature Model
+add_subdirectory (liTempModel)

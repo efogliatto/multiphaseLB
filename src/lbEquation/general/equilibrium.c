@@ -4,7 +4,10 @@
 #include <macroFields.h>
 #include <lbeField.h>
 
-#include <lbgkEquilibrium.h>
+#include <liMRTModel.h>
+#include <liSRTModel.h>
+#include <liTempModel.h>
+
 
 void equilibrium( struct latticeMesh* mesh, struct macroFields* mfields, struct lbeField* field ) {
 
@@ -22,7 +25,7 @@ void equilibrium( struct latticeMesh* mesh, struct macroFields* mfields, struct 
 	
 	for( id = 0 ; id < mesh->mesh.nPoints ; id++) {
 
-	    lbgkEquilibrium( &mesh->lattice, mfields->rho[id], mfields->U[id], field->value[id] );
+	    liMRTEquilibrium( &mesh->lattice, mfields->rho[id], mfields->U[id], field->value[id] );
 
 	}
 	
@@ -35,7 +38,7 @@ void equilibrium( struct latticeMesh* mesh, struct macroFields* mfields, struct 
 	
 	for( id = 0 ; id < mesh->mesh.nPoints ; id++) {
 
-	    lbgkEquilibrium( &mesh->lattice, mfields->rho[id], mfields->U[id], field->value[id] );
+	    liSRTEquilibrium( &mesh->lattice, mfields->rho[id], mfields->U[id], field->value[id] );
 
 	}
 	
@@ -49,7 +52,7 @@ void equilibrium( struct latticeMesh* mesh, struct macroFields* mfields, struct 
 	
 	for( id = 0 ; id < mesh->mesh.nPoints ; id++) {
 
-	    lbgkEquilibrium( &mesh->lattice, mfields->rho[id], mfields->U[id], field->value[id] );
+	    liTempEquilibrium( &mesh->lattice, mfields->rho[id], mfields->U[id], field->value[id] );
 
 	    unsigned int k;
 

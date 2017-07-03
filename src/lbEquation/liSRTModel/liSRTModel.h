@@ -3,4 +3,10 @@
 
 #include <liSRTCollision.h>
 
+#include <liSRTDensity.h>
+
+#include <liSRTVelocity.h>
+
+#include <liSRTEquilibrium.h>
+
 #endif // LISRTMODEL_H
