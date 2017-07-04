@@ -128,6 +128,8 @@ struct latticeMesh readLatticeMesh( unsigned int pid ) {
 
     mesh.mesh.Q = latticeQ( mesh.mesh.lbm );
 
+    mesh.lattice.Q = mesh.mesh.Q;
+
     mesh.mesh.nb = matrixIntAlloc( mesh.parallel.nlocal, mesh.mesh.Q, -1 );
 
     

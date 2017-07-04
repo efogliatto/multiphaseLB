@@ -195,13 +195,6 @@ int main( int argc, char **argv ) {
 
     
    
-    /* // Synchronize initial fields */
-    /* syncScalarField(&mesh.parallel, mfields.rho ); */
-    /* syncScalarField(&mesh.parallel, mfields.T ); */
-    /* syncPdfField(&mesh.parallel, mfields.U, 3 ); */
-    /* syncPdfField(&mesh.parallel, f.value, mesh.lattice.Q ); */
-    /* syncPdfField(&mesh.parallel, g.value, mesh.lattice.Q ); */
-
     if(pid == 0){printf("\n\n");}
 
 
@@ -259,6 +252,7 @@ int main( int argc, char **argv ) {
 	
     	if( ht != 0 ) {	    macroTemperature( &mesh, &mfields, &g );    }
 
+	
 
 
 	
@@ -268,16 +262,6 @@ int main( int argc, char **argv ) {
 	
     	if( ht != 0 )     {  updateBoundaries( &mesh, &mfields, &g );  }
 
-	
-
-
-
-    /* 	// Sync fields */
-    /* 	syncScalarField(&mesh.parallel, mfields.rho ); */
-    /* 	syncScalarField(&mesh.parallel, mfields.T ); */
-    /* 	syncPdfField(&mesh.parallel, mfields.U, 3 ); */
-    /* 	syncPdfField(&mesh.parallel, f.value, mesh.lattice.Q ); */
-    /* 	syncPdfField(&mesh.parallel, g.value, mesh.lattice.Q ); */
 	
 
 	

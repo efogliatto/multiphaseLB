@@ -1,0 +1,8 @@
+#!/bin/bash
+
+echo Cleaning case
+
+rm -rf lattice/
+rm -rf [0-9]*
+rm -rf processor*
+rm -rf case.pvd

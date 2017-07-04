@@ -21,6 +21,7 @@ void totalForce( struct latticeMesh* mesh, double F[3], double* rho, double* T, 
     	F[i] +=  (rho[id] - mesh->EOS.rho_0) * mesh->EOS._g[i];
 	
     }
+
     
     
 }

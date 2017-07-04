@@ -5,6 +5,10 @@
 
 void writePdfToVTK( char* fname, double** field, struct latticeMesh* mesh ) {
 
+	    
+
+    
+    
     FILE *outFile;
 
     char fileName[100];
@@ -21,11 +25,17 @@ void writePdfToVTK( char* fname, double** field, struct latticeMesh* mesh ) {
 
     // Print field
     unsigned int i,j;
+    
     for( i = 0 ; i < mesh->mesh.nPoints ; i++ ) {
+	
 	fprintf(outFile, "          ");
+	
 	for( j = 0 ; j < mesh->mesh.Q ; j++ ) {
+	    
 	    fprintf(outFile, "%g ", field[i][j]);
+	    
 	}
+	
 	fprintf(outFile, "\n");
     }
 
@@ -54,7 +64,7 @@ void writePdfToVTK( char* fname, double** field, struct latticeMesh* mesh ) {
     
 	for( ii = 0 ; ii < mesh->mesh.nPoints ; ii++ ) {
 
-	    for( jj = 0 ; jj < mesh->lattice.Q ; jj++ ) {
+	    for( jj = 0 ; jj < mesh->mesh.Q ; jj++ ) {
 	
 		fprintf(outFile, "%g ", field[ii][jj]);
 

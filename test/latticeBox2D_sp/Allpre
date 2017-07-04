@@ -3,8 +3,6 @@
 # Compute lattice
 latticeBox2D
 
-cp D2Q9_neighbours lattice/neighbours
-
 # Lattice partitioning
 latticeMeshPartition
 

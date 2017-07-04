@@ -29,7 +29,7 @@ void liMRTVelocity( struct latticeMesh* mesh, struct macroFields* mfields, struc
     for( j = 0 ; j < 3 ; j++ ) {
 
 	// Move over model velocities
-	for(k = 0 ; k < mesh->lattice.Q ; k++) {
+	for(k = 0 ; k < mesh->mesh.Q ; k++) {
 
 	    v[id][j] += mesh->lattice.vel[k][j] * field->value[id][k];
 		    

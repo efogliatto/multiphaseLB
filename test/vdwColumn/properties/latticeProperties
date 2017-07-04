@@ -4,4 +4,4 @@ Ny 300;
 
 LBModel D2Q9;
 
-boundaryType periodicX;
+boundaryType generic;

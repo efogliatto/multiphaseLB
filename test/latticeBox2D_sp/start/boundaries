@@ -30,7 +30,7 @@ g
 
     X0
     {
-        type periodic;    
+        type periodic;
     }
 
     X1

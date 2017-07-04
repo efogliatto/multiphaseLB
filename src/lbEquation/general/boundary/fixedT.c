@@ -16,7 +16,7 @@ void fixedT( struct latticeMesh* mesh, struct macroFields* mfields, struct lbeFi
 	
 	unsigned int i, k;
 
-	double* f_eq_nb = (double*)malloc( mesh->lattice.Q * sizeof(double) );
+	double* f_eq_nb = (double*)malloc( mesh->mesh.Q * sizeof(double) );
 
 	double eq_bnd = 0;
 	
@@ -31,12 +31,11 @@ void fixedT( struct latticeMesh* mesh, struct macroFields* mfields, struct lbeFi
 	
 	    unsigned int id = mesh->mesh.bd.bdPoints[bid][i];
 
-	    /* unsigned int noneigh = 0; */
 	
 	
 	    // Move over lattice velocities
 	    
-	    for( k = 0 ; k < mesh->lattice.Q ; k++ ) {
+	    for( k = 0 ; k < mesh->mesh.Q ; k++ ) {
 
 
 		if ( mesh->mesh.nb[id][k] == -1 ) {
@@ -44,9 +43,7 @@ void fixedT( struct latticeMesh* mesh, struct macroFields* mfields, struct lbeFi
 
 		    // Need density and velocity at neighbour (reverse) node
 		    
-		    int nbid = mesh->mesh.nb[id][ mesh->lattice.reverse[k] ];
-
-		    
+		    int nbid = mesh->mesh.nb[id][ mesh->lattice.reverse[k] ];		    
 		    
 		    if( nbid != -1 ) {
 
@@ -75,6 +72,8 @@ void fixedT( struct latticeMesh* mesh, struct macroFields* mfields, struct lbeFi
 		}
 
 	    }
+
+
 
 
 	    /* // Apply correction for corners */

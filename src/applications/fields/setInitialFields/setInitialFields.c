@@ -94,6 +94,8 @@ int main(int argc, char** argv) {
 	    
 	    status = lookUpString("start/initialFields", fname, itype);
 
+	    if(status) {}
+
 	    
 	   		    
 
@@ -115,6 +117,8 @@ int main(int argc, char** argv) {
 	    	for( ii = 0 ; ii < mesh.mesh.nPoints ; ii++ ) {
 
 	    	    field[ii] = fval;
+
+		    if((ii < 6)  &&  (strcmp(vtk.scalarFields[fid],"rho")==0) ){field[ii]=0.1;}
 
 	    	}
 
@@ -146,6 +150,7 @@ int main(int argc, char** argv) {
 	    	    // Generate random numbers
 
 	    	    srand( time(NULL) );
+		    /* srand( fval ); */
 
 	    	    uint ii;
 
@@ -290,10 +295,9 @@ int main(int argc, char** argv) {
 
     	    	sprintf(fname, "%s/internalField/value", vtk.pdfFields[fid] );
 
-		status = lookUpVector("start/initialFields", fname, fval, mesh.mesh.Q);
+		status = lookUpVector("start/initialFields", fname, fval, mesh.mesh.Q);	       
 		
-
-		uint ii,jj;
+		uint ii,jj;		
 
 		for( ii = 0 ; ii < mesh.mesh.nPoints ; ii++ ) {
 
@@ -307,8 +311,8 @@ int main(int argc, char** argv) {
 
 
     	    }
-	    
 
+	    
 
     	    // Write field
     	    writePdfToVTK( vtk.pdfFields[fid], field, &mesh );
