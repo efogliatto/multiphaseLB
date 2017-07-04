@@ -29,7 +29,14 @@ void liTempCollision( struct latticeMesh* mesh, struct macroFields* mfields, str
 
 
 	// Update real tau
-	field->tau = 0.5 + field->lambda / (mesh->lattice.cs2 * mfields->rho[id] * mesh->EOS._Cv);
+
+	// Constant Lambda
+	
+	if( field->tauModel == 2 ) {
+	
+	    field->tau = 0.5 + field->lambda / (mesh->lattice.cs2 * mfields->rho[id] * mesh->EOS._Cv);
+
+	}
 
 	
 	// Compute momentum equilibrium

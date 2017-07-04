@@ -151,6 +151,10 @@ unsigned int readLbeField( struct latticeMesh* mesh, struct lbeField* field, cha
 
     		    field->tauModel = 2;
 
+		    sprintf( prop, "%s/lambda", fname);
+		    
+		    status = lookUpDouble("properties/macroProperties", prop, &field->lambda, 1);
+
     		}
 
     	    }

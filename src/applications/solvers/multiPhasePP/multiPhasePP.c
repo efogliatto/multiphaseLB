@@ -217,55 +217,56 @@ int main( int argc, char **argv ) {
     while( updateTime(&mesh.time) ) {
 
 	
-    	/* // Collide f (Navier-Stokes) */
+    	// Collide f (Navier-Stokes)
 
-	/* if( frozen != 0 ) {  collision( &mesh, &mfields, &f );  } */
+	if( frozen != 0 ) {  collision( &mesh, &mfields, &f );  }
 	
-
-	
-    	/* // Collide g (Temperature) */
-
-	/* if( ht != 0 ) {  collision( &mesh, &mfields, &g );  } */
 
 	
+    	// Collide g (Temperature)
+
+	if( ht != 0 ) {  collision( &mesh, &mfields, &g );  }
+
 	
-    	/* // Stream f */
 	
-    	/* if( frozen != 0 ) {  lbstream( &mesh, &f );  } */
+    	// Stream f
+	
+    	if( frozen != 0 ) {  lbstream( &mesh, &f );  }
 
 
 	
-    	/* // Stream g */
+    	// Stream g
 	
-    	/* if( ht != 0 ) {  lbstream( &mesh, &g );  } */
+    	if( ht != 0 ) {  lbstream( &mesh, &g );  }
 
 	
 
-	/* // Update macroscopic fields */
+	// Update macroscopic fields
 	
-    	/* if( frozen != 0 ) { */
+    	if( frozen != 0 ) {
 	    
-    	/*     // Update macroscopic density */
-    	/*     macroDensity( &mesh, &mfields, &f ); */
+    	    // Update macroscopic density
+    	    macroDensity( &mesh, &mfields, &f );
 		
-    	/*     // Update macroscopic velocity */
-    	/*     macroVelocity( &mesh, &mfields, &f ); */
+    	    // Update macroscopic velocity
+    	    macroVelocity( &mesh, &mfields, &f );
 
-    	/* } */
-
-
-	
-    	/* // Update macroscopic temperature */
-	
-    	/* if( ht != 0 ) {	    macroTemperature( &mesh, &mfields, &g );    } */
+    	}
 
 
 	
-    	/* // Apply boundary conditions */
+    	// Update macroscopic temperature
 	
-    	/* if( frozen != 0 ) {  updateBoundaries( &mesh, &mfields, &f );  } */
+    	if( ht != 0 ) {	    macroTemperature( &mesh, &mfields, &g );    }
+
+
+
 	
-    	/* if( ht != 0 )     {  updateBoundaries( &mesh, &mfields, &g );  } */
+    	// Apply boundary conditions
+	
+    	if( frozen != 0 ) {  updateBoundaries( &mesh, &mfields, &f );  }
+	
+    	if( ht != 0 )     {  updateBoundaries( &mesh, &mfields, &g );  }
 
 	
 
