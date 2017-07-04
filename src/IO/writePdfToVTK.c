@@ -24,7 +24,7 @@ void writePdfToVTK( char* fname, double** field, struct latticeMesh* mesh ) {
     for( i = 0 ; i < mesh->mesh.nPoints ; i++ ) {
 	fprintf(outFile, "          ");
 	for( j = 0 ; j < mesh->mesh.Q ; j++ ) {
-	    fprintf(outFile, "%f ", field[i][j]);
+	    fprintf(outFile, "%g ", field[i][j]);
 	}
 	fprintf(outFile, "\n");
     }

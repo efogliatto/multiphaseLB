@@ -23,7 +23,7 @@ void writeScalarToVTK( char* fname, double* field, struct latticeMesh* mesh ) {
     
     for( i = 0 ; i < mesh->mesh.nPoints ; i++ ) {
 	
-	fprintf(outFile, "          %f\n", field[i]);
+	fprintf(outFile, "          %g\n", field[i]);
 	
     }
 

@@ -25,7 +25,7 @@ T
 
         type uniform;
 
-        value 2.5;
+        value 0.036667;
 
     }
 
@@ -40,7 +40,7 @@ rho
 
         type uniform;
 
-        value 1;
+        value 0.083;
 
         perturbation 1;
 
@@ -60,7 +60,7 @@ U
 
 	type uniform;
 
-	value (0 1 2);
+	value (0 0 0);
 
     }
 
@@ -75,7 +75,7 @@ f
 
 	type uniform;
 
-	value (0 1 2 3 4 5 6 7 8);
+	value (0 0 0 0 0 0 0 0 0);
 
     }
 
@@ -90,7 +90,7 @@ g
 
 	type uniform;
 
-	value (8 7 6 5 4 3 2 1 0);
+	value (0 0 0 0 0 0 0 0 0);
 
     }
 

@@ -3,12 +3,12 @@ f
 
     X0
     {
-        type bounceBack;
+        type periodic;
     }
 
     X1
     {
-        type bounceBack;
+        type periodic;
     }
 
     Y0
@@ -30,26 +30,24 @@ g
 
     X0
     {
-        type fixedT;
-	value  1;
+        type periodic;
     }
 
     X1
     {
-        type fixedT;
-	value  1;
+        type periodic;
     }
 
     Y0
     {
         type fixedT;
-	value  1;
+	value  0.036667;
     }
 
     Y1
     {
         type fixedT;
-	value  1;
+	value  0.036667;
     }
 
 }

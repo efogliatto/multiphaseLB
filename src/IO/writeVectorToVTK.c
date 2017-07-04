@@ -24,7 +24,7 @@ void writeVectorToVTK( char* fname, double** field, struct latticeMesh* mesh ) {
     
     for( i = 0 ; i < mesh->mesh.nPoints ; i++ ) {
 	
-	fprintf(outFile, "          %f %f %f\n", field[i][0], field[i][1], field[i][2]);
+	fprintf(outFile, "          %g %g %g\n", field[i][0], field[i][1], field[i][2]);
 	
     }
 

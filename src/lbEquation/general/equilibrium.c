@@ -58,7 +58,7 @@ void equilibrium( struct latticeMesh* mesh, struct macroFields* mfields, struct 
 
 	    for( k = 0 ; k < mesh->lattice.Q ; k++ ) {
 
-		field->value[id][k] = field->value[id][k] * mfields->Cv * mfields->T[id];
+		field->value[id][k] = field->value[id][k] * mesh->EOS._Cv * mfields->T[id];
 	    
 	    }
 	    
@@ -70,6 +70,11 @@ void equilibrium( struct latticeMesh* mesh, struct macroFields* mfields, struct 
 
 
     default:
+
+	printf("\n   [ERROR]  Unrecognized collision model\n\n");
+
+	exit(1);
+	
 	break;
 	
     }
