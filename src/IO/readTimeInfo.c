@@ -39,6 +39,22 @@ void readTimeInfo( struct latticeMesh* mesh ) {
     mesh->time.st = time( NULL );
 
     gettimeofday( &mesh->time.stt, NULL );
+
+
+
+    // Debug flag
+
+    char debug[100];
+
+    mesh->time.debug = 0;
+    
+    lookUpStringEntry("properties/simulation","writeDebug", debug);
+
+    if( strcmp(debug,"yes") == 0 ) {
+    
+	mesh->time.debug = 1;
+
+    }
     
 
 }

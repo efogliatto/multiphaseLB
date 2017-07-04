@@ -33,4 +33,35 @@ void writeScalarToVTK( char* fname, double* field, struct latticeMesh* mesh ) {
 
     fclose(outFile);
 
+
+    
+
+
+    // Write debug info
+
+    if( mesh->time.debug != 0 ) {
+
+
+	sprintf(fileName, "processor%d/%d/%s", mesh->parallel.pid, mesh->time.current, fname);
+
+	outFile = fopen(fileName, "w");
+    
+	fprintf(outFile, "%d\n", mesh->mesh.nPoints);
+
+
+	
+	unsigned int ii;
+    
+	for( ii = 0 ; ii < mesh->mesh.nPoints ; ii++ ) {
+	
+	    fprintf(outFile, "%g\n", field[ii]);
+	
+	}
+
+
+	fclose(outFile);
+
+
+    }
+
 }

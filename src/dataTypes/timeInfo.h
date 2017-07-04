@@ -27,6 +27,9 @@ struct timeInfo {
 
     // Time step (inside write intrval)
     unsigned int stp;
+
+    // Debug flag
+    unsigned int debug;
     
     
 };

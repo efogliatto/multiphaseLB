@@ -35,4 +35,40 @@ void writePdfToVTK( char* fname, double** field, struct latticeMesh* mesh ) {
     fclose(outFile);
 
 
+
+
+    // Write debug info
+
+    if( mesh->time.debug != 0 ) {
+
+
+	sprintf(fileName, "processor%d/%d/%s", mesh->parallel.pid, mesh->time.current, fname);
+
+	outFile = fopen(fileName, "w");
+    
+	fprintf(outFile, "%d\n", mesh->mesh.nPoints);
+
+
+	
+	unsigned int ii, jj;
+    
+	for( ii = 0 ; ii < mesh->mesh.nPoints ; ii++ ) {
+
+	    for( jj = 0 ; jj < mesh->lattice.Q ; jj++ ) {
+	
+		fprintf(outFile, "%g ", field[ii][jj]);
+
+	    }
+
+	    fprintf(outFile,"\n");
+	
+	}
+
+
+	fclose(outFile);
+
+
+    }
+    
+
 }

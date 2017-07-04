@@ -35,4 +35,35 @@ void writeVectorToVTK( char* fname, double** field, struct latticeMesh* mesh ) {
     fclose(outFile);
 
 
+
+    // Write debug info
+
+    if( mesh->time.debug != 0 ) {
+
+
+	sprintf(fileName, "processor%d/%d/%s", mesh->parallel.pid, mesh->time.current, fname);
+
+	outFile = fopen(fileName, "w");
+    
+	fprintf(outFile, "%d\n", mesh->mesh.nPoints);
+
+
+	
+	unsigned int ii;
+    
+	for( ii = 0 ; ii < mesh->mesh.nPoints ; ii++ ) {
+
+	    fprintf(outFile, "%g %g %g", field[ii][0], field[ii][1], field[ii][2]);
+	    
+	    fprintf(outFile,"\n");
+	
+	}
+
+
+	fclose(outFile);
+
+
+    }    
+
+
 }
