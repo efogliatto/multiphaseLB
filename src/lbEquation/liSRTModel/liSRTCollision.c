@@ -23,8 +23,9 @@ void liSRTCollision( struct latticeMesh* mesh, struct macroFields* mfields, stru
     double Vprime[3];
     
 
-    // Move over points
-    for( id = 0 ; id < mesh->parallel.nlocal ; id++ ) {
+    // Move over ALL points
+    /* for( id = 0 ; id < mesh->parallel.nlocal ; id++ ) { */
+    for( id = 0 ; id < mesh->mesh.nPoints ; id++ ) {
 
 	
 	/* // Update tau value */

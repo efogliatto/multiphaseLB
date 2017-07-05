@@ -195,9 +195,11 @@ int main( int argc, char **argv ) {
 
     // Update macroscopic interaction force
 
-    mfields.Fi = matrixDoubleAlloc( mesh.parallel.nlocal, 3, 0 );
+    mfields.Fi = matrixDoubleAlloc( mesh.mesh.nPoints, 3, -1 );
     
     interForce( &mesh, &mfields );
+    
+    syncVectorField( &mesh, mfields.Fi );
     
 
     
@@ -219,13 +221,14 @@ int main( int argc, char **argv ) {
 	
     	// Collide f (Navier-Stokes)
 
-	if( frozen != 0 ) {  collision( &mesh, &mfields, &f );  }
+    	if( frozen != 0 ) {  collision( &mesh, &mfields, &f );  }
 	
 
 	
     	// Collide g (Temperature)
 
-	if( ht != 0 ) {  collision( &mesh, &mfields, &g );  }
+    	if( ht != 0 ) {  collision( &mesh, &mfields, &g );  }
+
 
 	
 	
@@ -239,13 +242,19 @@ int main( int argc, char **argv ) {
 	
     	if( ht != 0 ) {  lbstream( &mesh, &g );  }
 
-	
 
 
 	
+    	// Sync fields
+
+    	syncPdfField( &mesh, f.value );
+
+    	syncPdfField( &mesh, g.value );
+
+	
 
 
-	// Update macroscopic density
+    	// Update macroscopic density
 	
     	if( frozen != 0 ) {  macroDensity( &mesh, &mfields, &f ); }
 	
@@ -254,8 +263,12 @@ int main( int argc, char **argv ) {
 	
     	if( ht != 0 )     {  macroTemperature( &mesh, &mfields, &g );    }
 
+
+	// Update force
 	
-	interForce( &mesh, &mfields );
+    	interForce( &mesh, &mfields );
+
+	syncVectorField( &mesh, mfields.Fi );
 	
 	
     	// Update macroscopic velocity
@@ -274,12 +287,18 @@ int main( int argc, char **argv ) {
 	
     	if( ht != 0 )     {  updateBoundaries( &mesh, &mfields, &g );  }
 
+
+    	syncPdfField( &mesh, f.value );
+
+    	syncPdfField( &mesh, g.value );
+
+	
     	if( frozen != 0 ) {  updateBdElements( &mesh, &mfields, &f );  }
 	
     	if( ht != 0 )     {  updateBdElements( &mesh, &mfields, &g );  }
 
 
-	/* updateBdForce( &mesh, &mfields ); */
+    	/* updateBdForce( &mesh, &mfields ); */
 
 
 	
@@ -301,21 +320,21 @@ int main( int argc, char **argv ) {
 	    
     	    // VTK files
 	    
-	    writeMeshToVTK( &mesh, &vtk );
+    	    writeMeshToVTK( &mesh, &vtk );
 
-	    writeScalarToVTK( "rho", mfields.rho, &mesh );
+    	    writeScalarToVTK( "rho", mfields.rho, &mesh );
 
-	    writeScalarToVTK( "T", mfields.T, &mesh );
+    	    writeScalarToVTK( "T", mfields.T, &mesh );
 
-	    writeVectorToVTK( "U", mfields.U, &mesh );
+    	    writeVectorToVTK( "U", mfields.U, &mesh );
 
-	    writePdfToVTK( "f", f.value, &mesh );
+    	    writePdfToVTK( "f", f.value, &mesh );
 
-	    writePdfToVTK( "g", g.value, &mesh );    
+    	    writePdfToVTK( "g", g.value, &mesh );
     
-	    writeVTKExtra( &mesh, &vtk );
+    	    writeVTKExtra( &mesh, &vtk );
 
-	    writeMainPvd();
+    	    writeMainPvd();
 
 	    
     	}

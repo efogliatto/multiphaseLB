@@ -43,6 +43,11 @@ struct mpiInfo {
     double** sbuf;
     
     double** rbuf;
+
+    double** vsbuf;
+    
+    double** vrbuf;    
+    
     
 };
 

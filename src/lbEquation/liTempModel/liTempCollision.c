@@ -23,11 +23,12 @@ void liTempCollision( struct latticeMesh* mesh, struct macroFields* mfields, str
 
 
     
-    // Move over points
+    // Move over ALL points
     
-    for( id = 0 ; id < mesh->parallel.nlocal ; id++ ) {
+    /* for( id = 0 ; id < mesh->parallel.nlocal ; id++ ) { */
+    for( id = 0 ; id < mesh->mesh.nPoints ; id++ ) {
 
-
+	
 	// Update real tau
 
 	// Constant Lambda

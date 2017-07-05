@@ -35,9 +35,10 @@ void liMRTCollision( struct latticeMesh* mesh, struct macroFields* mfields, stru
 
     
     
-    // Move over points
+    // Move over ALL points
     
-    for( id = 0 ; id < mesh->parallel.nlocal ; id++ ) {
+    for( id = 0 ; id < mesh->mesh.nPoints ; id++ ) {
+    /* for( id = 0 ; id < mesh->parallel.nlocal ; id++ ) { */
 	
 
     /* 	// Update Lambda values */
@@ -100,10 +101,6 @@ void liMRTCollision( struct latticeMesh* mesh, struct macroFields* mfields, stru
     free(m);
     free(m_eq);
     free(S);
-
-
-    /* // Synchronize field */
-    /* syncPdfField( &mesh->parallel, field->value, mesh->lattice.Q ); */
 
 
     

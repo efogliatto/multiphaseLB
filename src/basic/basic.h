@@ -11,4 +11,6 @@ int** matrixIntAlloc(unsigned int nrow, unsigned int ncol, int df);
 
 #include <syncPdfField.h>
 
+#include <syncVectorField.h>
+
 #endif // BASIC_H
