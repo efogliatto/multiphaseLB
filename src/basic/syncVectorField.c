@@ -55,11 +55,14 @@ void syncVectorField( struct latticeMesh* mesh, double** fld ) {
 
 	// Move over send ghosts. Send data
 
+	/* MPI_Request request; */
+
 	for( pid = 0 ; pid < mesh->parallel.worldSize ; pid++ ) {
 
 	    if( mesh->parallel.shared[pid] > 0 ) {
 	    
 		MPI_Send (&mesh->parallel.vsbuf[pid][0], mesh->parallel.shared[pid] * 3, MPI_DOUBLE, pid, mesh->parallel.pid, MPI_COMM_WORLD);
+		/* MPI_Isend (&mesh->parallel.vsbuf[pid][0], mesh->parallel.shared[pid] * 3, MPI_DOUBLE, pid, mesh->parallel.pid, MPI_COMM_WORLD, &request); */
 
 	    }
 	}
@@ -79,12 +82,13 @@ void syncVectorField( struct latticeMesh* mesh, double** fld ) {
 	    if( mesh->parallel.shared[pid] > 0 ) {
 	    
 		MPI_Recv (mesh->parallel.vrbuf[pid], mesh->parallel.shared[pid] * 3, MPI_DOUBLE, pid, pid, MPI_COMM_WORLD, &status);
-
+		/* MPI_Irecv (mesh->parallel.vrbuf[pid], mesh->parallel.shared[pid] * 3, MPI_DOUBLE, pid, pid, MPI_COMM_WORLD, &request); */
+		
 	    }
 	}
 
 
-
+	/* MPI_Wait(&request, &status); */
 
 
 	// Copy new data back to ghost nodes

@@ -15,8 +15,7 @@ void syncPdfField( struct latticeMesh* mesh, double** fld ) {
 
 	
     	// Send information
-
-    	/* MPI_Request request; */
+    	
     	MPI_Status status;
 
 
@@ -53,6 +52,9 @@ void syncPdfField( struct latticeMesh* mesh, double** fld ) {
 
 
 
+
+	/* MPI_Request request; */
+	
 	// Move over send ghosts. Send data
 
 	for( pid = 0 ; pid < mesh->parallel.worldSize ; pid++ ) {
@@ -60,6 +62,7 @@ void syncPdfField( struct latticeMesh* mesh, double** fld ) {
 	    if( mesh->parallel.shared[pid] > 0 ) {
 	    
 		MPI_Send (&mesh->parallel.sbuf[pid][0], mesh->parallel.shared[pid] * mesh->mesh.Q, MPI_DOUBLE, pid, mesh->parallel.pid, MPI_COMM_WORLD);
+		/* MPI_Isend (&mesh->parallel.sbuf[pid][0], mesh->parallel.shared[pid] * mesh->mesh.Q, MPI_DOUBLE, pid, mesh->parallel.pid, MPI_COMM_WORLD, &request); */
 
 	    }
 	}
@@ -79,12 +82,14 @@ void syncPdfField( struct latticeMesh* mesh, double** fld ) {
 	    if( mesh->parallel.shared[pid] > 0 ) {
 	    
 		MPI_Recv (mesh->parallel.rbuf[pid], mesh->parallel.shared[pid] * mesh->mesh.Q, MPI_DOUBLE, pid, pid, MPI_COMM_WORLD, &status);
+		/* MPI_Irecv (mesh->parallel.rbuf[pid], mesh->parallel.shared[pid] * mesh->mesh.Q, MPI_DOUBLE, pid, pid, MPI_COMM_WORLD, &request);		 */
 
 	    }
 	}
 
 
-
+	/* MPI_Wait(&request, &status); */
+	
 
 
 	// Copy new data back to ghost nodes
