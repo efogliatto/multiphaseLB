@@ -118,7 +118,7 @@ int main(int argc, char** argv) {
 
 	    	    field[ii] = fval;
 
-		    if(  (ii < 6)  &&  ( strcmp(vtk.scalarFields[fid], "rho" ) == 0 )  ) { field[ii] = 0.1; }
+		    /* if(  (ii < 6)  &&  ( strcmp(vtk.scalarFields[fid], "rho" ) == 0 )  ) { field[ii] = 0.1; } */
 
 	    	}
 

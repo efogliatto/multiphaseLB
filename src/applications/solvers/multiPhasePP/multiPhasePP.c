@@ -266,6 +266,7 @@ int main( int argc, char **argv ) {
 	
     	if( ht != 0 )     {  updateBdElements( &mesh, &mfields, &g );  }
 
+
 	
 
 	

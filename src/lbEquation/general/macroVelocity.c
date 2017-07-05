@@ -1,4 +1,5 @@
 #include <stdlib.h>
+#include <stdio.h>
 
 #include <latticeMesh.h>
 #include <macroFields.h>

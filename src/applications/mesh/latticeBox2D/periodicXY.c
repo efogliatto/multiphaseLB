@@ -49,13 +49,13 @@ void periodicXY( struct basicMesh* mesh, unsigned int nx, unsigned int ny ) {
 
     	    if(mesh->nb[j][velId] == -1) {
 
-    		mesh->nb[j][velId] = mesh->nb[ j + (nx-1)*ny ][velId];
+    		mesh->nb[j][velId] = mesh->nb[ j + (ny-1)*nx ][velId];
 
     	    }
 
-    	    if(mesh->nb[ j + (nx-1)*ny ][velId] == -1) {
+    	    if(mesh->nb[ j + (ny-1)*nx ][velId] == -1) {
 
-    		mesh->nb[ j + (nx-1)*ny ][velId] = mesh->nb[j][velId];
+    		mesh->nb[ j + (ny-1)*nx ][velId] = mesh->nb[j][velId];
 
     	    }
 	    

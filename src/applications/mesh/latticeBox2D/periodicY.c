@@ -44,7 +44,7 @@ void periodicY( struct basicMesh* mesh, unsigned int nx, unsigned int ny ) {
 
     	mesh->bd.bdPoints[2][j] = j;
 	
-    	mesh->bd.bdPoints[3][j] = j + (nx-1)*ny;
+    	mesh->bd.bdPoints[3][j] = j + (ny-1)*nx;
 
 
     	// Assign periodic neighbours
