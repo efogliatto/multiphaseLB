@@ -53,7 +53,6 @@ void fixedT( struct latticeMesh* mesh, struct macroFields* mfields, struct lbeFi
 			    
 			eq_nb  = mesh->EOS._Cv * mfields->T[nbid] * f_eq_nb[k];
 
-
 			
 			// Update distribution
 			

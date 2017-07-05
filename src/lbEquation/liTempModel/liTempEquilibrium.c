@@ -1,4 +1,5 @@
 #include <latticeInfo.h>
+#include <stdio.h>
 
 void liTempEquilibrium( struct latticeInfo* lattice, double rho, double v[3], double* f ) {
 

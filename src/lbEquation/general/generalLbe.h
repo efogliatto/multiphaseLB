@@ -15,4 +15,6 @@
 
 #include <updateBoundaries.h>
 
+#include <updateBdElements.h>
+
 #endif // GENERALLBE_H

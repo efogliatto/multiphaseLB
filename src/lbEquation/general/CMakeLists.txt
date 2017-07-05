@@ -9,9 +9,9 @@ add_library(generallbe SHARED
   macroVelocity.c
   macroTemperature.c
   updateBoundaries.c
+  updateBdElements.c
   boundary/bounceBack.c
   boundary/fixedT.c
-  # updateBoundaryElements.c
   # updateLambda.c
   # updateTau.c
   )

@@ -262,6 +262,10 @@ int main( int argc, char **argv ) {
 	
     	if( ht != 0 )     {  updateBoundaries( &mesh, &mfields, &g );  }
 
+    	if( frozen != 0 ) {  updateBdElements( &mesh, &mfields, &f );  }
+	
+    	if( ht != 0 )     {  updateBdElements( &mesh, &mfields, &g );  }
+
 	
 
 	

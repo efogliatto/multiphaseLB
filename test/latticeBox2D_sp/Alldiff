@@ -1,0 +1,8 @@
+#!/bin/bash
+
+for i in f g U T rho
+do
+   echo $i
+   diff processor0/$1/$i ~/LBM_run/test_sp/processor0/$1/$i
+   echo
+done

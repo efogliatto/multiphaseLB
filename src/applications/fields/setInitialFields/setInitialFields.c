@@ -118,10 +118,44 @@ int main(int argc, char** argv) {
 
 	    	    field[ii] = fval;
 
-		    if((ii < 6)  &&  (strcmp(vtk.scalarFields[fid],"rho")==0) ){field[ii]=0.1;}
+		    if(  (ii < 6)  &&  ( strcmp(vtk.scalarFields[fid], "rho" ) == 0 )  ) { field[ii] = 0.1; }
 
 	    	}
 
+
+
+		/* // Boundary conditions */
+
+		/* uint bid; */
+
+		/* for( bid = 0 ; bid < mesh.mesh.bd.nbd ; bid++ ) { */
+
+
+		/*     // Boundary definition */
+
+		/*     char bdname[100]; */
+
+		/*     double bdval; */
+
+		/*     sprintf(bdname, "%s/%s", vtk.scalarFields[fid], mesh.mesh.bd.bdNames[bid] ); */
+
+		/*     status = lookUpDouble("start/initialFields", bdname, &bdval, fval); */
+
+		/*     if(   ( status != 0 )   ){ */
+
+		/* 	printf("\n%s  %lf\n\n",bdname, bdval);		    */
+
+		/* 	/\* for( ii = 0 ; ii < mesh.mesh.bd.nbdelem[bid] ; ii++ ) { *\/ */
+
+		/* 	/\* 	field[ mesh.mesh.bd.bdPoints[bid][ii] ] = bdval; *\/ */
+
+		/* 	/\* } *\/ */
+
+		/*     } */
+		
+
+		/* } */
+		
 
     	    }
 
@@ -150,7 +184,6 @@ int main(int argc, char** argv) {
 	    	    // Generate random numbers
 
 	    	    srand( time(NULL) );
-		    /* srand( fval ); */
 
 	    	    uint ii;
 
@@ -180,6 +213,9 @@ int main(int argc, char** argv) {
 
 	    }
 
+
+
+	    
 		
 		
 	    // Write field
