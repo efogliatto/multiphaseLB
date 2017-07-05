@@ -13,8 +13,17 @@ void liSRTVelocity( struct latticeMesh* mesh, struct macroFields* mfields, struc
 
 	
     // Compute interaction force
-    totalForce( mesh, F, mfields->rho, mfields->T, id );
+    /* totalForce( mesh, F, mfields->rho, mfields->T, id ); */
 
+    unsigned int jj;
+	
+    for( jj = 0 ; jj < 3 ; jj++ ) {
+
+	F[jj] = mfields->Fi[id][jj]  +   (mfields->rho[id] - mesh->EOS.rho_0) * mesh->EOS._g[jj];
+
+    }
+
+    
 	
     // Initialize velocities
     for(k = 0 ; k < 3 ; k++) {

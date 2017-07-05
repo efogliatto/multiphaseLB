@@ -13,6 +13,7 @@
 #include <macroFields.h>
 #include <vtkInfo.h>
 #include <generalLbe.h>
+#include <pseudoPot.h>
 
 
 
@@ -192,6 +193,12 @@ int main( int argc, char **argv ) {
 
 
 
+    // Update macroscopic interaction force
+
+    mfields.Fi = matrixDoubleAlloc( mesh.parallel.nlocal, 3, 0 );
+    
+    interForce( &mesh, &mfields );
+    
 
     
    
@@ -234,26 +241,31 @@ int main( int argc, char **argv ) {
 
 	
 
-	// Update macroscopic fields
+
 	
-    	if( frozen != 0 ) {
-	    
-    	    // Update macroscopic density
-    	    macroDensity( &mesh, &mfields, &f );
-		
-    	    // Update macroscopic velocity
-    	    macroVelocity( &mesh, &mfields, &f );
-
-    	}
 
 
+	// Update macroscopic density
+	
+    	if( frozen != 0 ) {  macroDensity( &mesh, &mfields, &f ); }
+	
 	
     	// Update macroscopic temperature
 	
-    	if( ht != 0 ) {	    macroTemperature( &mesh, &mfields, &g );    }
+    	if( ht != 0 )     {  macroTemperature( &mesh, &mfields, &g );    }
+
+	
+	interForce( &mesh, &mfields );
+	
+	
+    	// Update macroscopic velocity
+	
+    	if( frozen != 0 ) {  macroVelocity( &mesh, &mfields, &f ); }
+	
 
 	
 
+	
 
 	
     	// Apply boundary conditions

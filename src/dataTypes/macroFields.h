@@ -17,10 +17,13 @@ struct macroFields {
 
 
 
-    // Constants
+    // Interaction force
+    double** Fi;
 
-    // Specific heat
-    double Cv;
+    /* // Constants */
+
+    /* // Specific heat */
+    /* double Cv; */
     
 };
 

@@ -6,4 +6,5 @@ add_library(pseudopot SHARED
   potential.c
   interactionForce.c
   totalForce.c
+  interForce.c
   )
