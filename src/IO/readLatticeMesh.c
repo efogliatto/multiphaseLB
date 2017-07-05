@@ -284,6 +284,15 @@ struct latticeMesh readLatticeMesh( unsigned int pid ) {
 
 
 
+    // Resize mpi recv buffer
+
+    mesh.parallel.rbuf = (double**)malloc( mesh.parallel.worldSize * sizeof(double*) );
+    
+    for( i = 0 ; i < mesh.parallel.worldSize ; i++ ) {
+
+	mesh.parallel.rbuf[i] = (double*)malloc( mesh.parallel.shared[i] * mesh.mesh.Q * sizeof(double) );
+
+    }
 
 
 
@@ -330,6 +339,17 @@ struct latticeMesh readLatticeMesh( unsigned int pid ) {
     
     fclose(inFile);
 
+
+
+    // Resize mpi send buffer
+
+    mesh.parallel.sbuf = (double**)malloc( mesh.parallel.worldSize * sizeof(double*) );
+    
+    for( i = 0 ; i < mesh.parallel.worldSize ; i++ ) {
+
+	mesh.parallel.sbuf[i] = (double*)malloc( mesh.parallel.shared[i] * mesh.mesh.Q * sizeof(double) );
+
+    }
 
     
 

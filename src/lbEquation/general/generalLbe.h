@@ -17,4 +17,6 @@
 
 #include <updateBdElements.h>
 
+#include <updateBdForce.h>
+
 #endif // GENERALLBE_H

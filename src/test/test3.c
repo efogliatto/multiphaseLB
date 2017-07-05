@@ -21,28 +21,6 @@ int main( int argc, char **argv ) {
 
 
 
-    // Check for arguments
-    unsigned int ht = 1, frozen = 1;
-    {
-	unsigned int arg;
-	for( arg = 0 ; arg < argc ; arg++) {
-
-	    if ( strcmp("--noHeatTransfer", argv[arg]) == 0 ) {
-		ht = 0;
-	    }
-
-	    else {
-
-		if ( strcmp("--frozenFlow", argv[arg]) == 0 ) {
-		    frozen = 0;
-		}
-		
-	    }
-	    
-	}
-    }
-
-
     
 
     int pid, world;
@@ -178,35 +156,29 @@ int main( int argc, char **argv ) {
     
     
 
-    // Initial equilibrium distribution
-
-    // f
-    
-    if( frozen != 0 ) {  equilibrium(&mesh, &mfields, &f); }
-
-	    
-    // g
-    
-    if( ht != 0 ) {  equilibrium(&mesh, &mfields, &g); }
-
-
-
-
-
-    // Update macroscopic interaction force
-
-    mfields.Fi = matrixDoubleAlloc( mesh.parallel.nlocal, 3, 0 );
-    
-    interForce( &mesh, &mfields );
-    
-
-    
+   
    
     if(pid == 0){printf("\n\n");}
 
 
 
 
+    {
+
+	unsigned int i, j;
+
+	for( i = 0 ; i < mesh.parallel.nlocal ; i++) {
+
+	    for( j = 0 ; j < mesh.mesh.Q ; j++ ) {
+
+		f.value[i][j] = i;
+
+	    }
+
+	}
+	
+    }
+    
 
 
 
@@ -217,70 +189,62 @@ int main( int argc, char **argv ) {
     while( updateTime(&mesh.time) ) {
 
 	
-    	// Collide f (Navier-Stokes)
-
-	if( frozen != 0 ) {  collision( &mesh, &mfields, &f );  }
-	
+	syncPdfField( &mesh, f.value );
 
 	
-    	// Collide g (Temperature)
+	/* if( pid == 1 ) { */
 
-	if( ht != 0 ) {  collision( &mesh, &mfields, &g );  }
+	/*     unsigned int ii, jj, kk, id; */
 
-	
-	
-    	// Stream f
-	
-    	if( frozen != 0 ) {  lbstream( &mesh, &f );  }
+	/*     for( jj = 0 ; jj < world ; jj++ ) { */
 
+	/* 	printf("%d  ",jj); */
 
-	
-    	// Stream g
-	
-    	if( ht != 0 ) {  lbstream( &mesh, &g );  }
+	/* 	for( ii = 0 ; ii < mesh.parallel.shared[jj] ; ii++) { */
 
-	
+	/* 	    for( kk = 0 ; kk < mesh.mesh.Q ; kk++ ) { */
 
+	/* 		id = ii*mesh.mesh.Q + kk; */
+			
+	/* 		printf(" %.0f", mesh.parallel.sbuf[jj][id]); */
 
-	
+	/* 	    } */
 
+		    
 
-	// Update macroscopic density
-	
-    	if( frozen != 0 ) {  macroDensity( &mesh, &mfields, &f ); }
-	
-	
-    	// Update macroscopic temperature
-	
-    	if( ht != 0 )     {  macroTemperature( &mesh, &mfields, &g );    }
+	/* 	} */
 
-	
-	interForce( &mesh, &mfields );
-	
-	
-    	// Update macroscopic velocity
-	
-    	if( frozen != 0 ) {  macroVelocity( &mesh, &mfields, &f ); }
-	
+	/* 	printf("\n"); */
 
-	
-
-	
-
-	
-    	// Apply boundary conditions
-	
-    	if( frozen != 0 ) {  updateBoundaries( &mesh, &mfields, &f );  }
-	
-    	if( ht != 0 )     {  updateBoundaries( &mesh, &mfields, &g );  }
-
-    	if( frozen != 0 ) {  updateBdElements( &mesh, &mfields, &f );  }
-	
-    	if( ht != 0 )     {  updateBdElements( &mesh, &mfields, &g );  }
+	/*     } */
 
 
-	/* updateBdForce( &mesh, &mfields ); */
+	/*     printf("\n\n"); */
+	    
 
+	/*     for( jj = 0 ; jj < world ; jj++ ) { */
+
+	/* 	printf("%d  ",jj); */
+
+	/* 	for( ii = 0 ; ii < mesh.parallel.shared[jj] ; ii++) { */
+
+	/* 	    for( kk = 0 ; kk < mesh.mesh.Q ; kk++ ) { */
+
+	/* 		id = ii*mesh.mesh.Q + kk; */
+			
+	/* 		printf(" %.0f", mesh.parallel.rbuf[jj][id]); */
+
+	/* 	    } */
+
+		    
+
+	/* 	} */
+
+	/* 	printf("\n"); */
+
+	/*     } */
+
+	/* } */
 
 	
 	
@@ -288,17 +252,7 @@ int main( int argc, char **argv ) {
 	
     	if( writeFlag(&mesh.time) ) {
 
-	    
-    	    if(pid == 0) {
-		
-    		printf( "Time = %d\n", mesh.time.current );
-		
-    		printf("Elapsed time = %.2f seconds\n\n", elapsed(&mesh.time) );
-		
-    	    }
-
-
-	    
+	        
     	    // VTK files
 	    
 	    writeMeshToVTK( &mesh, &vtk );
@@ -326,12 +280,6 @@ int main( int argc, char **argv ) {
 
 
     
-    // Print info
-    if(pid == 0) {
-	
-    	printf("\n  Finished in %.2f seconds \n\n", elapsed(&mesh.time) );
-	
-    }
 
 
     

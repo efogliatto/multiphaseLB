@@ -1,6 +1,7 @@
 #------------------ Unit tests ------------------#
 
-set ( PROJECT_LINK_LIBS libio.so libbasic.so liblatticemodel.so ${MPI_LIBRARIES})
+# set ( PROJECT_LINK_LIBS libio.so libbasic.so liblatticemodel.so ${MPI_LIBRARIES})
+set ( PROJECT_LINK_LIBS libio.so libbasic.so liblatticemodel.so libgenerallbe.so libpseudopot.so liblimrtmodel.so liblisrtmodel.so liblitempmodel.so ${MPI_LIBRARIES})
 link_directories( ~/multiphaseLB/lib )
 
 
@@ -11,3 +12,7 @@ target_link_libraries(test1 ${PROJECT_LINK_LIBS})
 # Test 2. lattice Model properties
 add_executable(test2 "test2.c")
 target_link_libraries(test2 ${PROJECT_LINK_LIBS})
+
+# Test 3. mpi sync
+add_executable(test3 "test3.c")
+target_link_libraries(test3 ${PROJECT_LINK_LIBS})

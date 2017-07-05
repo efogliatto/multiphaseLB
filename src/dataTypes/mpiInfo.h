@@ -32,8 +32,7 @@ struct mpiInfo {
     
 
     
-
-    /* // Buffers */
+    // Buffers
 
     /* // Scalars */
     /* double* scalarSendBuff; */
@@ -41,8 +40,9 @@ struct mpiInfo {
     /* int* sendScalarBlocks; */
     /* int* recvScalarBlocks; */
 
-    /* double** ssbuf; */
-    /* double** srbuf; */
+    double** sbuf;
+    
+    double** rbuf;
     
 };
 
