@@ -14,11 +14,6 @@ void syncVectorField( struct latticeMesh* mesh, double** fld ) {
     	MPI_Barrier(MPI_COMM_WORLD);
 
 	
-    	// Send information
-
-    	/* MPI_Request request; */
-    	MPI_Status status;
-
 
 	// Move over send ghosts. Copy data to buffer
 
@@ -53,43 +48,104 @@ void syncVectorField( struct latticeMesh* mesh, double** fld ) {
 
 
 
-	// Move over send ghosts. Send data
 
-	/* MPI_Request request; */
+    	// Send information
+    	
+    	MPI_Status status[100];
+
+	MPI_Request request[100];
+
+	int nreq = 0;
+
+	
+	// Move over send ghosts. Send data
 
 	for( pid = 0 ; pid < mesh->parallel.worldSize ; pid++ ) {
 
 	    if( mesh->parallel.shared[pid] > 0 ) {
 	    
-		MPI_Send (&mesh->parallel.vsbuf[pid][0], mesh->parallel.shared[pid] * 3, MPI_DOUBLE, pid, mesh->parallel.pid, MPI_COMM_WORLD);
-		/* MPI_Isend (&mesh->parallel.vsbuf[pid][0], mesh->parallel.shared[pid] * 3, MPI_DOUBLE, pid, mesh->parallel.pid, MPI_COMM_WORLD, &request); */
+		MPI_Isend (&mesh->parallel.vsbuf[pid][0], mesh->parallel.shared[pid] * 3, MPI_DOUBLE, pid, mesh->parallel.pid, MPI_COMM_WORLD, &request[nreq]);
+
+		nreq++;
 
 	    }
 	}
 
 
 
-	// Wait for everyone
-	
-	MPI_Barrier(MPI_COMM_WORLD);
-	
-
-	
 	// Move over recv ghosts. Receive data
 
 	for( pid = 0 ; pid < mesh->parallel.worldSize ; pid++ ) {
 
 	    if( mesh->parallel.shared[pid] > 0 ) {
 	    
-		MPI_Recv (mesh->parallel.vrbuf[pid], mesh->parallel.shared[pid] * 3, MPI_DOUBLE, pid, pid, MPI_COMM_WORLD, &status);
-		/* MPI_Irecv (mesh->parallel.vrbuf[pid], mesh->parallel.shared[pid] * 3, MPI_DOUBLE, pid, pid, MPI_COMM_WORLD, &request); */
-		
+		MPI_Irecv (mesh->parallel.vrbuf[pid], mesh->parallel.shared[pid] * 3, MPI_DOUBLE, pid, pid, MPI_COMM_WORLD, &request[nreq]);
+
+		nreq++;
+
 	    }
 	}
 
 
-	/* MPI_Wait(&request, &status); */
+	
+	// Wait for everyone
 
+	MPI_Waitall(nreq, request, status);
+
+
+
+
+	
+	/* // Blocking communications */
+
+	/* // Move over send ghosts. Send data */
+
+    	/* MPI_Status status; */
+
+	/* for( pid = 0 ; pid < mesh->parallel.worldSize ; pid++ ) { */
+
+	/*     if( mesh->parallel.shared[pid] > 0 ) { */
+	    
+	/* 	MPI_Send (&mesh->parallel.vsbuf[pid][0], mesh->parallel.shared[pid] * 3, MPI_DOUBLE, pid, mesh->parallel.pid, MPI_COMM_WORLD); */
+
+	/*     } */
+	/* } */
+
+
+
+	/* // Wait for everyone */
+	
+	/* MPI_Barrier(MPI_COMM_WORLD); */
+	
+
+	
+	/* // Move over recv ghosts. Receive data */
+
+	/* for( pid = 0 ; pid < mesh->parallel.worldSize ; pid++ ) { */
+
+	/*     if( mesh->parallel.shared[pid] > 0 ) { */
+	    
+	/* 	MPI_Recv (mesh->parallel.vrbuf[pid], mesh->parallel.shared[pid] * 3, MPI_DOUBLE, pid, pid, MPI_COMM_WORLD, &status); */
+		
+	/*     } */
+	/* } */
+
+
+
+	/* // Wait for everyone */
+	
+	/* MPI_Barrier(MPI_COMM_WORLD); */
+
+	
+
+
+
+
+
+
+
+
+	
 
 	// Copy new data back to ghost nodes
 
