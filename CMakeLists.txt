@@ -18,5 +18,14 @@ include_directories(include ${MPI_INCLUDE_PATH})
 SET( CMAKE_C_FLAGS  "${CMAKE_C_FLAGS} -Wall" )
 
 
+# Optional metis decomposition
+option(WITH_METIS "Compile with METIS" OFF)
+
+if(WITH_METIS)
+  add_definitions(-DUSE_METIS)
+endif()
+
+
+
 # Directorio con fuentes
 add_subdirectory (src)

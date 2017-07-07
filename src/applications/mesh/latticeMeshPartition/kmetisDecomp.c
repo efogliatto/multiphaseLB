@@ -2,8 +2,9 @@
 #include <stdio.h>
 #include <basicMesh.h>
 
-/* #include <metis.h> */
+#ifdef USE_METIS
 
+#include <metis.h>
 
 void kmetisDecomp( unsigned int* owner, struct basicMesh* mesh, unsigned int np )  {
 
@@ -144,6 +145,39 @@ void kmetisDecomp( unsigned int* owner, struct basicMesh* mesh, unsigned int np 
     
 
 }
+
+
+#endif
+
+
+
+
+
+#ifndef USE_METIS
+
+void kmetisDecomp( unsigned int* owner, struct basicMesh* mesh, unsigned int np )  {
+
+    printf("\n   [ERROR]  METIS library not included\n\n");
+
+    exit(1);
+
+}
+
+#endif
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
