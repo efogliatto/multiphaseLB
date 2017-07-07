@@ -242,7 +242,11 @@ unsigned int readLbeField( struct latticeMesh* mesh, struct lbeField* field, cha
 
 		    else {
 
+			if( strcmp(bdType, "outflow") == 0 ) {
 
+			    field->boundary[i].bdType = 4;
+
+			}
 
 		    }
 

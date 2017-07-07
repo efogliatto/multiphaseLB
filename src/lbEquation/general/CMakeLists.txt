@@ -13,4 +13,5 @@ add_library(generallbe SHARED
   updateBdForce.c
   boundary/bounceBack.c
   boundary/fixedT.c
+  boundary/outflow.c
   )

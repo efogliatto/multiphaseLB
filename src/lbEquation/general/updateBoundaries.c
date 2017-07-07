@@ -3,6 +3,8 @@
 #include <latticeMesh.h>
 #include <bounceBack.h>
 #include <fixedT.h>
+#include <outflow.h>
+
 #include <stdlib.h>
 
 #include <liMRTModel.h>
@@ -37,6 +39,10 @@ void updateBoundaries( struct latticeMesh* mesh, struct macroFields* mfields, st
     	case 3:
     	    fixedT( mesh, mfields, field, bndId );
     	    break;
+
+	case 4:
+	    outflow( mesh, mfields, field, bndId );
+	    break;
     
     	default:
     	    printf("\n  [ERROR]  Unrecognized boundary condition \n\n\n");
