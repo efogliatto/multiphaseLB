@@ -247,9 +247,10 @@ int main( int argc, char **argv ) {
 	
     	// Sync fields
 
-    	syncPdfField( &mesh, f.value );
+    	if( frozen != 0 ) {  syncPdfField( &mesh, f.value );  }
 
-    	syncPdfField( &mesh, g.value );
+    	if( ht != 0 ) {  syncPdfField( &mesh, g.value );  }
+
 
 	
 
@@ -268,7 +269,7 @@ int main( int argc, char **argv ) {
 	
     	interForce( &mesh, &mfields );
 
-	syncVectorField( &mesh, mfields.Fi );
+	syncVectorField( &mesh, mfields.Fi ); 
 	
 	
     	// Update macroscopic velocity
@@ -288,9 +289,11 @@ int main( int argc, char **argv ) {
     	if( ht != 0 )     {  updateBoundaries( &mesh, &mfields, &g );  }
 
 
-    	syncPdfField( &mesh, f.value );
+	// F is not sync yet. Boundary conditions that are already implemented don't need another sync.
+	// Remember that ghost nodes at boundary are updated
+    	/* syncPdfField( &mesh, f.value ); */
 
-    	syncPdfField( &mesh, g.value );
+    	if( ht != 0 ) {  syncPdfField( &mesh, g.value );  }
 
 	
     	if( frozen != 0 ) {  updateBdElements( &mesh, &mfields, &f );  }
