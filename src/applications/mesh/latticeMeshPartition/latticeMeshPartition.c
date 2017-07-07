@@ -105,7 +105,7 @@ int main(int argc, char** argv) {
     for( i = 0 ; i < mesh.nPoints ; i++ ) {
 
 	for( pid = 0 ; pid < np ; pid++) {
-
+	    
 	    if( local[i][pid] >= nGhosts[pid][0] ) {
 
 		shared[pid][ owner[i] ]++;
@@ -117,6 +117,8 @@ int main(int argc, char** argv) {
     }
 
 
+    
+    
     // Local mesh creation
     struct latticeMesh* localMesh = (struct latticeMesh*)malloc( np * sizeof(struct latticeMesh) );
 

@@ -3,5 +3,6 @@ lattice/
 processor*/
 [0-9]*/
 *.pvd
+log.*
 # Except this file
 !.gitignore
