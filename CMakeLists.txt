@@ -11,6 +11,7 @@ set(LIBRARY_OUTPUT_PATH ${CMAKE_SOURCE_DIR}/lib)
 # Bibliotecas externas: MPI
 find_package(MPI REQUIRED)
 
+
 # Bring the headers
 include_directories(include ${MPI_INCLUDE_PATH})
 

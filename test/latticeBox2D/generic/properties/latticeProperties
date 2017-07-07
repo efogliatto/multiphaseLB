@@ -1,6 +1,6 @@
-Nx 6;
+Nx 300;
 
-Ny 6;
+Ny 300;
 
 LBModel D2Q9;
 
