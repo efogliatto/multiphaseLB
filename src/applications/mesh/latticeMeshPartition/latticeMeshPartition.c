@@ -16,6 +16,9 @@
 // Standard decomposition
 void standardDecomp( unsigned int* owner, struct basicMesh* mesh, unsigned int np );
 
+// kmetis decomposition
+void kmetisDecomp( unsigned int* owner, struct basicMesh* mesh, unsigned int np );
+
 // Local Indexing
 void localIndexing ( struct basicMesh* mesh, int** local, int** nGhosts, uint* owner, uint np );
 
@@ -65,9 +68,19 @@ int main(int argc, char** argv) {
 
     else {
 
-	printf("\n\n  [ERROR]  Unable to recognize decomposition method \"%s\"\n\n\n",method);
+	if( strcmp(method, "kmetis") == 0 ) {
 
-	exit(1);
+	    kmetisDecomp( owner, &mesh, np );
+	
+	}
+
+	else {
+
+	    printf("\n\n  [ERROR]  Unable to recognize decomposition method \"%s\"\n\n\n",method);
+
+	    exit(1);
+
+	}
 
     }
 
