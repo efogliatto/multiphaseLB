@@ -16,7 +16,6 @@
 #include <pseudoPot.h>
 
 
-
 int main( int argc, char **argv ) {
 
 
@@ -265,11 +264,11 @@ int main( int argc, char **argv ) {
     	if( ht != 0 )     {  macroTemperature( &mesh, &mfields, &g );    }
 
 
-	// Update force
+    	// Update force
 	
     	interForce( &mesh, &mfields );
 
-	syncVectorField( &mesh, mfields.Fi ); 
+    	syncVectorField( &mesh, mfields.Fi );
 	
 	
     	// Update macroscopic velocity
@@ -289,8 +288,8 @@ int main( int argc, char **argv ) {
     	if( ht != 0 )     {  updateBoundaries( &mesh, &mfields, &g );  }
 
 
-	// F is not sync yet. Boundary conditions that are already implemented don't need another sync.
-	// Remember that ghost nodes at boundary are updated
+    	// F is not sync yet. Boundary conditions that are already implemented don't need another sync.
+    	// Remember that ghost nodes at boundary are updated
     	/* syncPdfField( &mesh, f.value ); */
 
     	if( ht != 0 ) {  syncPdfField( &mesh, g.value );  }

@@ -27,6 +27,11 @@ struct mpiInfo {
     unsigned int** sendGhosts;
     
     
+    // Receive ghosts
+    unsigned int* nrg;
+
+    // Send ghosts
+    unsigned int* nsg;
     
 
     

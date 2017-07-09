@@ -95,9 +95,9 @@ void writeLatticeMesh( struct latticeMesh* mesh ) {
 
     for( pid = 0 ; pid < mesh->parallel.worldSize ; pid++ ) {
 
-	fprintf(outFile,"%d\n%d\n",pid,mesh->parallel.shared[pid]);
+	fprintf(outFile,"%d\n%d\n",pid,mesh->parallel.nrg[pid]);
 
-	for( i = 0 ; i < mesh->parallel.shared[pid] ; i++ ) {
+	for( i = 0 ; i < mesh->parallel.nrg[pid] ; i++ ) {
 
 	    fprintf(outFile,"%d\n",mesh->parallel.recvGhosts[pid][i]);
 
@@ -121,9 +121,9 @@ void writeLatticeMesh( struct latticeMesh* mesh ) {
 
     for( pid = 0 ; pid < mesh->parallel.worldSize ; pid++ ) {
 
-	fprintf(outFile,"%d\n%d\n",pid,mesh->parallel.shared[pid]);
+	fprintf(outFile,"%d\n%d\n",pid,mesh->parallel.nsg[pid]);
 
-	for( i = 0 ; i < mesh->parallel.shared[pid] ; i++ ) {
+	for( i = 0 ; i < mesh->parallel.nsg[pid] ; i++ ) {
 
 	    fprintf(outFile,"%d\n",mesh->parallel.sendGhosts[pid][i]);
 

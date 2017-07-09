@@ -91,7 +91,9 @@ int main(int argc, char** argv) {
     // Resize local indices array
     int** local   = matrixIntAlloc( mesh.nPoints, np, -1);
     int** nGhosts = matrixIntAlloc( np, 2, -1);
-    int** shared  = matrixIntAlloc( np, np, 0);
+    /* int** shared  = matrixIntAlloc( np, np, 0); */
+    int** nrecv  = matrixIntAlloc( np, np, 0);
+    int** nsend  = matrixIntAlloc( np, np, 0);
 
     
     // Creation of local indexing
@@ -102,13 +104,37 @@ int main(int argc, char** argv) {
     uint i,
 	 pid;
     
+    /* for( i = 0 ; i < mesh.nPoints ; i++ ) { */
+
+    /* 	for( pid = 0 ; pid < np ; pid++) { */
+	    
+    /* 	    if( local[i][pid] >= nGhosts[pid][0] ) { */
+
+    /* 		shared[pid][ owner[i] ]++; */
+
+    /* 	    } */
+
+    /* 	} */
+
+    /* } */
+
+
+
+    // Individual send and receive ghosts
+
     for( i = 0 ; i < mesh.nPoints ; i++ ) {
 
 	for( pid = 0 ; pid < np ; pid++) {
 	    
 	    if( local[i][pid] >= nGhosts[pid][0] ) {
 
-		shared[pid][ owner[i] ]++;
+
+		uint jj = owner[i];
+
+		nrecv[jj][pid]++;
+
+		nsend[pid][jj]++;
+		
 
 	    }
 
@@ -117,6 +143,34 @@ int main(int argc, char** argv) {
     }
 
 
+
+
+    /* for( i = 0 ; i < np ; i++ ) { */
+
+    /* 	for( pid = 0 ; pid < np ; pid++) { */
+
+    /* 	    printf("%d ", nrecv[i][pid]); */
+
+    /* 	} */
+
+    /* 	printf("\n"); */
+
+    /* } */
+    
+    /* printf("\n\n"); */
+    
+    /* for( i = 0 ; i < np ; i++ ) { */
+
+    /* 	for( pid = 0 ; pid < np ; pid++) { */
+
+    /* 	    printf("%d ", nsend[i][pid]); */
+
+    /* 	} */
+
+    /* 	printf("\n"); */
+
+    /* } */
+    
     
     
     // Local mesh creation
@@ -149,15 +203,30 @@ int main(int argc, char** argv) {
 
 
 
+	    /* // Add sharing info and resize elements */
+	    
+	    /* localMesh[rpid].parallel.shared = (uint*)malloc( np * sizeof(uint) ); */
+
+	    /* for( spid = 0 ; spid < np ; spid++ ) { */
+
+	    /* 	localMesh[rpid].parallel.shared[spid] = shared[rpid][spid]; */
+
+	    /* } */
+
+
 	    // Add sharing info and resize elements
 	    
-	    localMesh[rpid].parallel.shared = (uint*)malloc( np * sizeof(uint) );
+	    localMesh[rpid].parallel.nrg = (uint*)malloc( np * sizeof(uint) );
+
+	    localMesh[rpid].parallel.nsg = (uint*)malloc( np * sizeof(uint) );
 
 	    for( spid = 0 ; spid < np ; spid++ ) {
 
-		localMesh[rpid].parallel.shared[spid] = shared[rpid][spid];
+		localMesh[rpid].parallel.nrg[spid] = nrecv[spid][rpid];
 
-	    }
+		localMesh[rpid].parallel.nsg[spid] = nsend[spid][rpid];		
+
+	    }	    
 
 
 	    // Resize ghost info
@@ -168,9 +237,9 @@ int main(int argc, char** argv) {
 	    
 	    for( spid = 0 ; spid < np ; spid++ ) {
 
-		localMesh[rpid].parallel.recvGhosts[spid] = (uint*)malloc( shared[rpid][spid] * sizeof(uint) );
+		localMesh[rpid].parallel.recvGhosts[spid] = (uint*)malloc( nrecv[spid][rpid] * sizeof(uint) );
 
-		localMesh[rpid].parallel.sendGhosts[spid] = (uint*)malloc( shared[rpid][spid] * sizeof(uint) );
+		localMesh[rpid].parallel.sendGhosts[spid] = (uint*)malloc( nsend[spid][rpid] * sizeof(uint) );
 		
 	    }
 
@@ -395,7 +464,7 @@ int main(int argc, char** argv) {
 	    for( rpid = 0 ; rpid < np ; rpid++ ) {
 
 		if( local[i][rpid] >= nGhosts[rpid][0] ) {
-
+		    
 
 		    // Add local index as recv ghost
 
@@ -434,17 +503,17 @@ int main(int argc, char** argv) {
     // Write lattice meshes
     {
 
-	int status = system( "rm -rf processor*" );
+    	int status = system( "rm -rf processor*" );
 
-	if (!status) {
+    	if (!status) {
 
-	    for( i = 0 ; i < np ; i++ ) {
+    	    for( i = 0 ; i < np ; i++ ) {
 
-		writeLatticeMesh( &localMesh[i] );
+    		writeLatticeMesh( &localMesh[i] );
 
-	    }
+    	    }
 
-	}
+    	}
     }
 
     

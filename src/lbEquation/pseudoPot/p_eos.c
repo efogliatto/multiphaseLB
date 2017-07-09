@@ -1,5 +1,6 @@
 #include <p_eos.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <math.h>
 
 double p_eos( struct EOSInfo* info, double rho, double T ) {

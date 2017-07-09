@@ -6,5 +6,5 @@ latticeBox2D
 # Lattice partitioning
 latticeMeshPartition
 
-# Field partitioning
-setInitialFields
+# # Field partitioning
+# setInitialFields

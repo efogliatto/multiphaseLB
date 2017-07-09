@@ -2,6 +2,7 @@
 #include <p_eos.h>
 #include <math.h>
 #include <stdio.h>
+#include <stdlib.h>
 
 double potential( struct latticeMesh* mesh, double rho, double T ) {
     
