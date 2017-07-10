@@ -1,12 +1,11 @@
 #ifndef FIXEDU_H
 #define FIXEDU_H
 
-#include <bdInfo.h>
-#include <latticeInfo.h>
-#include <macroFields.h>
+#include <latticeMesh.h>
 #include <lbeField.h>
+#include <macroFields.h>
 
-void fixedU( struct bdInfo* bdElements, struct lbeField* field, struct latticeInfo* lattice, struct macroFields* mfields, int** nb, int fid, int bndId );
+void fixedU( struct latticeMesh* mesh, struct macroFields* mfields, struct lbeField* field, unsigned int bid );
 
 
 #endif // FIXEDU_H

@@ -1,72 +1,63 @@
-#include <fixedU.h>
-#include <stdlib.h>
 #include <stdio.h>
-#include <lbgkEquilibrium_id.h>
+#include <stdlib.h>
+#include <latticeMesh.h>
+#include <lbeField.h>
+#include <macroFields.h>
+#include <liTempEquilibrium.h>
+#include <liMRTEquilibrium.h>
 
 
-void fixedU( struct bdInfo* bdElements, struct lbeField* field, struct latticeInfo* lattice, struct macroFields* mfields, int** nb, int fid, int bndId ) {
+void fixedU( struct latticeMesh* mesh, struct macroFields* mfields, struct lbeField* field, unsigned int bid ) {
 
     
     unsigned int i, k;
 
+    double* f_eq_nb = (double*)malloc( mesh->mesh.Q * sizeof(double) );
+
+    double* f_eq_bnd  = (double*)malloc( mesh->mesh.Q * sizeof(double) );
+	
+
     
     // Velocity at boundary
+
     double Uw[3];
-    Uw[0] = bdElements->_value[fid][bndId][0];
-    Uw[1] = bdElements->_value[fid][bndId][1];
-    Uw[2] = bdElements->_value[fid][bndId][2];
+    Uw[0] = field->boundary[bid].vectorVal[0];
+    Uw[1] = field->boundary[bid].vectorVal[1];
+    Uw[2] = field->boundary[bid].vectorVal[2];
     
     
     // Move over boundary elements
-    for( i = 0 ; i < bdElements->_nbel[bndId] ; i++ ) {
+
+    for( i = 0 ; i < mesh->mesh.bd.nbdelem[bid] ; i++ ) {
 
 	
-	// Boundary element id
-	int id = bdElements->_idx[bndId][i];
+	unsigned int id = mesh->mesh.bd.bdPoints[bid][i];
+
 	
 	
 	// Move over lattice velocities
-	for( k = 0 ; k < lattice->Q ; k++ ) {
+	    
+	for( k = 0 ; k < mesh->mesh.Q ; k++ ) {
 
 
-	    if ( nb[id][k] == -1 ) {
+	    if ( mesh->mesh.nb[id][k] == -1 ) {
 
-
+		
 		// Need density and velocity at neighbour (reverse) node
-		int nbid = nb[id][ lattice->reverse[k] ];
+		    
+		int nbid = mesh->mesh.nb[id][ mesh->lattice.reverse[k] ];		    
+
 
 		if( nbid != -1 ) {
 
+		    liMRTEquilibrium( &mesh->lattice, mfields->rho[nbid], mfields->U[nbid], f_eq_nb );
 
-		    // Compute equilibrium according to model
-		    switch(field->colId) {
+		    liMRTEquilibrium( &mesh->lattice, mfields->rho[nbid], Uw, f_eq_bnd );
+		    
 
-		    // MRT Li
-		    case 0: {
-			field->value[id][k] = lbgkEquilibrium_id(lattice, mfields->rho[nbid], Uw, k)
-			    + field->value[nbid][k]
-			    - lbgkEquilibrium_id(lattice, mfields->rho[nbid], mfields->U[nbid], k);
-			break;
-		    }
-
-		    // SRT Li
-		    case 1: {
-			field->value[id][k] = lbgkEquilibrium_id(lattice, mfields->rho[nbid], Uw, k)
-			    + field->value[nbid][k]
-			    - lbgkEquilibrium_id(lattice, mfields->rho[nbid], mfields->U[nbid], k);
-			break;
-		    }			
-
-		    default:
-			printf("\n\n\n[ERROR]  Unable to update U for field %s\n\n\n",field->name);
-			exit(1);
-			break;
-
-
-		    }
-
-
-
+		    // Update distribution
+			
+		    field->value[id][k] = f_eq_bnd[k] + (field->value[nbid][k] - f_eq_nb[k] );		    
 
 		}
 		

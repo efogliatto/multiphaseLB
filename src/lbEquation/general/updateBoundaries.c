@@ -3,6 +3,7 @@
 #include <latticeMesh.h>
 #include <bounceBack.h>
 #include <fixedT.h>
+#include <fixedU.h>
 #include <outflow.h>
 
 #include <stdlib.h>
@@ -34,6 +35,11 @@ void updateBoundaries( struct latticeMesh* mesh, struct macroFields* mfields, st
     	case 1:
 	    bounceBack( mesh, mfields, field, bndId );
     	    break;
+
+        // fixedU
+    	case 2:
+    	    fixedU( mesh, mfields, field, bndId );
+    	    break;	    
 	    
         // fixedT
     	case 3:
