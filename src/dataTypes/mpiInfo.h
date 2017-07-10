@@ -17,8 +17,8 @@ struct mpiInfo {
     // Local elements
     unsigned int nlocal;
 
-    // Elements shared with other processes
-    unsigned int* shared;
+    /* // Elements shared with other processes */
+    /* unsigned int* shared; */
 
     // Receive ghosts
     unsigned int** recvGhosts;

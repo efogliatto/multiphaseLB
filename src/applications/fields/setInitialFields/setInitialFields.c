@@ -62,6 +62,8 @@ int main(int argc, char** argv) {
 
     	mesh.time.current = 0;
 
+
+	writeLatticeMesh( &mesh );
 	
 
     	// Write mesh in VTK file
@@ -331,9 +333,9 @@ int main(int argc, char** argv) {
 
     	    	sprintf(fname, "%s/internalField/value", vtk.pdfFields[fid] );
 
-		status = lookUpVector("start/initialFields", fname, fval, mesh.mesh.Q);	       
+		status = lookUpVector("start/initialFields", fname, fval, mesh.mesh.Q);
 		
-		uint ii,jj;		
+		uint ii,jj;
 
 		for( ii = 0 ; ii < mesh.mesh.nPoints ; ii++ ) {
 

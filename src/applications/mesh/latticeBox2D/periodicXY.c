@@ -66,36 +66,36 @@ void periodicXY( struct basicMesh* mesh, unsigned int nx, unsigned int ny ) {
 
     
 
-    /* // Resolve for corners */
+    // Resolve for corners
 
-    /* unsigned int i; */
+    unsigned int i;
     
-    /* int cid[4]; */
-    /* cid[0] = 0; */
-    /* cid[1] = nx-1; */
-    /* cid[2] = nx*(ny-1); */
-    /* cid[3] = nx*ny -1; */
+    int cid[4];
+    cid[0] = 0;
+    cid[1] = nx-1;
+    cid[2] = nx*(ny-1);
+    cid[3] = nx*ny -1;
 
-    /* for( i = 0 ; i < 4 ; i++ ) { */
+    for( i = 0 ; i < 4 ; i++ ) {
 
-    /* 	for( j = 0 ; j < 4 ; j++ ) { */
+    	for( j = 0 ; j < 4 ; j++ ) {
 
-    /* 	    if( i!=j )  { */
+    	    if( i!=j )  {
 
-    /* 		for( velId = 1 ; velId < mesh->Q ; velId++ ) { */
+    		for( velId = 1 ; velId < mesh->Q ; velId++ ) {
 
-    /* 		    if (  ( mesh->nb[ cid[i] ][velId] == -1)  &&  (mesh->nb[ cid[j] ][velId] != -1)  ){ */
+    		    if (  ( mesh->nb[ cid[i] ][velId] == -1)  &&  (mesh->nb[ cid[j] ][velId] != -1)  ){
 
-    /* 			mesh->nb[ cid[i] ][velId] = mesh->nb[cid[j] ][velId]; */
+    			mesh->nb[ cid[i] ][velId] = mesh->nb[cid[j] ][velId];
 
-    /* 		    } */
+    		    }
 		
-    /* 		} */
-    /* 	    } */
+    		}
+    	    }
 	    
-    /* 	} */
+    	}
 
-    /* } */
+    }
 
     
 

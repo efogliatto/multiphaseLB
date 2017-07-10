@@ -254,7 +254,7 @@ struct latticeMesh readLatticeMesh( unsigned int pid ) {
   
     status = fscanf(inFile, "%d\n", &mesh.parallel.worldSize);
 
-    mesh.parallel.shared     = (uint*)malloc( mesh.parallel.worldSize * sizeof(uint) );
+    mesh.parallel.nrg        = (uint*)malloc( mesh.parallel.worldSize * sizeof(uint) );
 
     mesh.parallel.recvGhosts = (uint**)malloc( mesh.parallel.worldSize * sizeof(uint*) );
     
@@ -262,19 +262,26 @@ struct latticeMesh readLatticeMesh( unsigned int pid ) {
     
     for( i = 0 ; i < mesh.parallel.worldSize ; i++ ) {
 
+    	uint auxPid;
 	
-    	status = fscanf(inFile, "%d", &mesh.parallel.shared[i] );
+    	status = fscanf(inFile, "%d", &auxPid );
 
-	status = fscanf(inFile, "%d", &mesh.parallel.shared[i] );
+
+    	if( auxPid == i ) {
 	
 
-	mesh.parallel.recvGhosts[i] = (uint*)malloc( mesh.parallel.shared[i] * sizeof(uint) );
+    	    status = fscanf(inFile, "%d", &mesh.parallel.nrg[i] );
+	
+    	    mesh.parallel.recvGhosts[i] = (uint*)malloc( mesh.parallel.nrg[i] * sizeof(uint) );
 
 	
-    	for( j = 0 ; j < mesh.parallel.shared[i] ; j++ ) {
+    	    for( j = 0 ; j < mesh.parallel.nrg[i] ; j++ ) {
 
-    	    status = fscanf( inFile, "%d", &mesh.parallel.recvGhosts[i][j] );
+    		status = fscanf( inFile, "%d", &mesh.parallel.recvGhosts[i][j] );
 
+    	    }
+
+	    
     	}
 
     }
@@ -292,9 +299,9 @@ struct latticeMesh readLatticeMesh( unsigned int pid ) {
     
     for( i = 0 ; i < mesh.parallel.worldSize ; i++ ) {
 
-	mesh.parallel.rbuf[i] = (double*)malloc( mesh.parallel.shared[i] * mesh.mesh.Q * sizeof(double) );
+    	mesh.parallel.rbuf[i] = (double*)malloc( mesh.parallel.nrg[i] * mesh.mesh.Q * sizeof(double) );
 
-	mesh.parallel.vrbuf[i] = (double*)malloc( mesh.parallel.shared[i] * 3 * sizeof(double) );
+    	mesh.parallel.vrbuf[i] = (double*)malloc( mesh.parallel.nrg[i] * 3 * sizeof(double) );
 
     }
 
@@ -317,24 +324,31 @@ struct latticeMesh readLatticeMesh( unsigned int pid ) {
   
     status = fscanf(inFile, "%d\n", &mesh.parallel.worldSize);
 
+    mesh.parallel.nsg        = (uint*)malloc( mesh.parallel.worldSize * sizeof(uint) );
+    
     mesh.parallel.sendGhosts = (uint**)malloc( mesh.parallel.worldSize * sizeof(uint*) );
     
    
     
     for( i = 0 ; i < mesh.parallel.worldSize ; i++ ) {
 
+    	uint auxPid;
 	
-    	status = fscanf(inFile, "%d", &mesh.parallel.shared[i] );
+    	status = fscanf(inFile, "%d", &auxPid );
 
-	status = fscanf(inFile, "%d", &mesh.parallel.shared[i] );
+
+    	if( auxPid == i ) {
+
+    	    status = fscanf(inFile, "%d", &mesh.parallel.nsg[i] );
 	
-
-	mesh.parallel.sendGhosts[i] = (uint*)malloc( mesh.parallel.shared[i] * sizeof(uint) );
+    	    mesh.parallel.sendGhosts[i] = (uint*)malloc( mesh.parallel.nsg[i] * sizeof(uint) );
 
 	
-    	for( j = 0 ; j < mesh.parallel.shared[i] ; j++ ) {
+    	    for( j = 0 ; j < mesh.parallel.nsg[i] ; j++ ) {
 
-    	    status = fscanf( inFile, "%d", &mesh.parallel.sendGhosts[i][j] );
+    		status = fscanf( inFile, "%d", &mesh.parallel.sendGhosts[i][j] );
+
+    	    }
 
     	}
 
@@ -353,9 +367,9 @@ struct latticeMesh readLatticeMesh( unsigned int pid ) {
     
     for( i = 0 ; i < mesh.parallel.worldSize ; i++ ) {
 
-	mesh.parallel.sbuf[i] = (double*)malloc( mesh.parallel.shared[i] * mesh.mesh.Q * sizeof(double) );
+    	mesh.parallel.sbuf[i] = (double*)malloc( mesh.parallel.nsg[i] * mesh.mesh.Q * sizeof(double) );
 
-	mesh.parallel.vsbuf[i] = (double*)malloc( mesh.parallel.shared[i] * 3 * sizeof(double) );
+    	mesh.parallel.vsbuf[i] = (double*)malloc( mesh.parallel.nsg[i] * 3 * sizeof(double) );
 
     }
 

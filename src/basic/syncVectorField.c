@@ -24,7 +24,7 @@ void syncVectorField( struct latticeMesh* mesh, double** fld ) {
 
 	    unsigned int i, k, id;
 
-	    for( i = 0 ; i < mesh->parallel.shared[pid] ; i++) {
+	    for( i = 0 ; i < mesh->parallel.nsg[pid] ; i++) {
 
 		for( k = 0 ; k < 3 ; k++ ) {
 
@@ -62,9 +62,9 @@ void syncVectorField( struct latticeMesh* mesh, double** fld ) {
 
 	for( pid = 0 ; pid < mesh->parallel.worldSize ; pid++ ) {
 
-	    if( mesh->parallel.shared[pid] > 0 ) {
+	    if( mesh->parallel.nsg[pid] > 0 ) {
 	    
-		MPI_Isend (&mesh->parallel.vsbuf[pid][0], mesh->parallel.shared[pid] * 3, MPI_DOUBLE, pid, mesh->parallel.pid, MPI_COMM_WORLD, &request[nreq]);
+		MPI_Isend (&mesh->parallel.vsbuf[pid][0], mesh->parallel.nsg[pid] * 3, MPI_DOUBLE, pid, mesh->parallel.pid, MPI_COMM_WORLD, &request[nreq]);
 
 		nreq++;
 
@@ -77,9 +77,9 @@ void syncVectorField( struct latticeMesh* mesh, double** fld ) {
 
 	for( pid = 0 ; pid < mesh->parallel.worldSize ; pid++ ) {
 
-	    if( mesh->parallel.shared[pid] > 0 ) {
+	    if( mesh->parallel.nrg[pid] > 0 ) {
 	    
-		MPI_Irecv (mesh->parallel.vrbuf[pid], mesh->parallel.shared[pid] * 3, MPI_DOUBLE, pid, pid, MPI_COMM_WORLD, &request[nreq]);
+		MPI_Irecv (mesh->parallel.vrbuf[pid], mesh->parallel.nrg[pid] * 3, MPI_DOUBLE, pid, pid, MPI_COMM_WORLD, &request[nreq]);
 
 		nreq++;
 
@@ -154,7 +154,7 @@ void syncVectorField( struct latticeMesh* mesh, double** fld ) {
 	    
 	    unsigned int i, k, id;
 
-	    for( i = 0 ; i < mesh->parallel.shared[pid] ; i++) {
+	    for( i = 0 ; i < mesh->parallel.nrg[pid] ; i++) {
 
 		for( k = 0 ; k < 3 ; k++ ) {
 

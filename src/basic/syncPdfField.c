@@ -23,7 +23,7 @@ void syncPdfField( struct latticeMesh* mesh, double** fld ) {
 
 	    unsigned int i, k, id;
 
-	    for( i = 0 ; i < mesh->parallel.shared[pid] ; i++) {
+	    for( i = 0 ; i < mesh->parallel.nsg[pid] ; i++) {
 
 		for( k = 0 ; k < mesh->mesh.Q ; k++ ) {
 
@@ -61,9 +61,9 @@ void syncPdfField( struct latticeMesh* mesh, double** fld ) {
 
 	for( pid = 0 ; pid < mesh->parallel.worldSize ; pid++ ) {
 
-	    if( mesh->parallel.shared[pid] > 0 ) {
+	    if( mesh->parallel.nsg[pid] > 0 ) {
 	    
-		MPI_Isend (&mesh->parallel.sbuf[pid][0], mesh->parallel.shared[pid] * mesh->mesh.Q, MPI_DOUBLE, pid, mesh->parallel.pid, MPI_COMM_WORLD, &request[nreq]);
+		MPI_Isend (&mesh->parallel.sbuf[pid][0], mesh->parallel.nsg[pid] * mesh->mesh.Q, MPI_DOUBLE, pid, mesh->parallel.pid, MPI_COMM_WORLD, &request[nreq]);
 
 		nreq++;
 
@@ -76,9 +76,9 @@ void syncPdfField( struct latticeMesh* mesh, double** fld ) {
 
 	for( pid = 0 ; pid < mesh->parallel.worldSize ; pid++ ) {
 
-	    if( mesh->parallel.shared[pid] > 0 ) {
+	    if( mesh->parallel.nrg[pid] > 0 ) {
 	    
-		MPI_Irecv (mesh->parallel.rbuf[pid], mesh->parallel.shared[pid] * mesh->mesh.Q, MPI_DOUBLE, pid, pid, MPI_COMM_WORLD, &request[nreq]);
+		MPI_Irecv (mesh->parallel.rbuf[pid], mesh->parallel.nrg[pid] * mesh->mesh.Q, MPI_DOUBLE, pid, pid, MPI_COMM_WORLD, &request[nreq]);
 
 		nreq++;
 
@@ -148,7 +148,7 @@ void syncPdfField( struct latticeMesh* mesh, double** fld ) {
 	    
 	    unsigned int i, k, id;
 
-	    for( i = 0 ; i < mesh->parallel.shared[pid] ; i++) {
+	    for( i = 0 ; i < mesh->parallel.nrg[pid] ; i++) {
 
 		for( k = 0 ; k < mesh->mesh.Q ; k++ ) {
 
