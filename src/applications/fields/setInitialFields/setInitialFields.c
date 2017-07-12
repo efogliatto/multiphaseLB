@@ -12,6 +12,13 @@
 #include <basic.h>
 
 
+void uniformScalarField( struct latticeMesh* mesh, double** field, char* fname );
+
+void randomScalarField( struct latticeMesh* mesh, double** field, char* fname );
+
+void boxBoundedScalarField( struct latticeMesh* mesh, double** field, char* fname );
+    
+
 int main(int argc, char** argv) {
 
 
@@ -84,9 +91,7 @@ int main(int argc, char** argv) {
     	for( fid = 0 ; fid < vtk.nscalar ; fid++ ) {
 
 	    
-	    double* field;
-	    
-	    double fval;
+	    double* field;	   
 
     
 	    
@@ -105,59 +110,7 @@ int main(int argc, char** argv) {
 	    
     	    if( strcmp(itype,"uniform") == 0 ) {
 
-
-	    	field = (double*)malloc( mesh.mesh.nPoints * sizeof(double) );
-		
-		
-    	    	sprintf(fname, "%s/internalField/value", vtk.scalarFields[fid] );
-
-	    	status = lookUpDouble("start/initialFields", fname, &fval, 0);
-
-
-	    	uint ii;
-
-	    	for( ii = 0 ; ii < mesh.mesh.nPoints ; ii++ ) {
-
-	    	    field[ii] = fval;
-
-		    /* if(  (ii < 6)  &&  ( strcmp(vtk.scalarFields[fid], "rho" ) == 0 )  ) { field[ii] = 0.1; } */
-
-	    	}
-
-
-
-		/* // Boundary conditions */
-
-		/* uint bid; */
-
-		/* for( bid = 0 ; bid < mesh.mesh.bd.nbd ; bid++ ) { */
-
-
-		/*     // Boundary definition */
-
-		/*     char bdname[100]; */
-
-		/*     double bdval; */
-
-		/*     sprintf(bdname, "%s/%s", vtk.scalarFields[fid], mesh.mesh.bd.bdNames[bid] ); */
-
-		/*     status = lookUpDouble("start/initialFields", bdname, &bdval, fval); */
-
-		/*     if(   ( status != 0 )   ){ */
-
-		/* 	printf("\n%s  %lf\n\n",bdname, bdval);		    */
-
-		/* 	/\* for( ii = 0 ; ii < mesh.mesh.bd.nbdelem[bid] ; ii++ ) { *\/ */
-
-		/* 	/\* 	field[ mesh.mesh.bd.bdPoints[bid][ii] ] = bdval; *\/ */
-
-		/* 	/\* } *\/ */
-
-		/*     } */
-		
-
-		/* } */
-		
+		uniformScalarField( &mesh, &field, vtk.scalarFields[fid] );		
 
     	    }
 
@@ -165,57 +118,39 @@ int main(int argc, char** argv) {
 	    else {
 
 
+		// Random distribution
+		
 	    	if( strcmp(itype,"random") == 0 ) {
 
-		    
-	    	    field = (double*)malloc( mesh.mesh.nPoints * sizeof(double) );
-
-	    	    sprintf(fname, "%s/internalField/value", vtk.scalarFields[fid] );
-
-	    	    status = lookUpDouble("start/initialFields", fname, &fval, 0);
-		    
-
-	    	    double pert;
-
-	    	    sprintf(fname, "%s/internalField/perturbation", vtk.scalarFields[fid] );
-
-	    	    status = lookUpDouble("start/initialFields", fname, &pert, 1);
-
-
-		    
-	    	    // Generate random numbers
-
-	    	    srand( time(NULL) );
-
-	    	    uint ii;
-
-	    	    for( ii = 0 ; ii < mesh.mesh.nPoints ; ii++ ) {
-
-	    		// Random number between 0 and 1
-
-	    		double r = (double)rand() / (double)RAND_MAX;
-
-	    		r = (1.0 - pert/100) + r * ( (1.0 + pert/100) - (1.0 - pert/100) );
-			
-	    		field[ii] = fval * r;
-
-	    	    }
-
+		    randomScalarField( &mesh, &field, vtk.scalarFields[fid] );
 
 	    	}
 
 
 	    	else {
 
-	    	    printf("\n   [ERROR]  Unrecognized type %s\n\n", itype);
 
-	    	    exit(1);
+		    // Box bounded
+		
+		    if( strcmp(itype,"box") == 0 ) {
+
+			boxBoundedScalarField( &mesh, &field, vtk.scalarFields[fid] );
+
+		    }
+
+
+		    else {
+
+			printf("\n   [ERROR]  Unrecognized type %s\n\n", itype);
+
+			exit(1);
+
+		    }
+
 
 	    	}
 
 	    }
-
-
 
 	    
 		
