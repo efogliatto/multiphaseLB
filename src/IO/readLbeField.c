@@ -234,9 +234,17 @@ unsigned int readLbeField( struct latticeMesh* mesh, struct lbeField* field, cha
 
 		    if( strcmp(bdType, "fixedT") == 0 ) {
 
+			
 			field->boundary[i].bdType = 3;
 
 			status = lookUpDouble("start/boundaries", cmodel, &field->boundary[i].scalarVal, 0);
+
+			
+			char aux[100];
+
+			sprintf(aux,"%s/%s/perturbation",fname,mesh->mesh.bd.bdNames[i]);
+
+			status = lookUpDouble("start/boundaries", aux, &field->boundary[i].vectorVal[0], 0);
 
 		    }
 
