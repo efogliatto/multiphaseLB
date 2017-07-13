@@ -6,7 +6,7 @@
 
 double** MRTMatrix( char* modelName ) {
 
-    double** M;
+    double** M = NULL;
 
     if ( strcmp(modelName,"D2Q9") == 0 ) {
 

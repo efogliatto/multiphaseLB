@@ -16,20 +16,20 @@ void interactionForce( struct latticeMesh* mesh, double F[3], double* rho, doubl
 
     }
 
-    srand( time(NULL) * id );
+    /* srand( time(NULL) * id ); */
     
     double r = 1.0;
 
     
-    // Add temperature perturbation in first layer
+    /* // Add temperature perturbation in first layer */
 	
-    if( mesh->mesh.points[id][1] == 1 ) {
+    /* if( mesh->mesh.points[id][1] == 1 ) { */
 
-	r = (double)rand() / (double)RAND_MAX;
+    /* 	r = (double)rand() / (double)RAND_MAX; */
 
-	r = 0.99 + r * 0.02;
+    /* 	r = 0.99 + r * 0.02; */
 
-    }
+    /* } */
     
     
     // Move over neighbours

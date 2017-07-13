@@ -30,7 +30,7 @@ unsigned int readScalarField( struct latticeMesh* mesh, double** field, char* fn
     
     while( strcmp(aux, "<PointData") != 0 ) {
 
-    	fscanf(file, "%s", aux);
+    	status = fscanf(file, "%s", aux);
 
     }
 
@@ -46,7 +46,7 @@ unsigned int readScalarField( struct latticeMesh* mesh, double** field, char* fn
 	
     	while( strcmp(aux, "<DataArray") != 0 ) {
 
-    	    fscanf(file, "%s", aux);
+    	    status = fscanf(file, "%s", aux);
 
     	}
 
@@ -54,9 +54,9 @@ unsigned int readScalarField( struct latticeMesh* mesh, double** field, char* fn
     
     	// Read Name=""
     
-    	fscanf(file, "%s", aux);
+    	status = fscanf(file, "%s", aux);
 
-    	fscanf(file, "%s", aux);
+    	status = fscanf(file, "%s", aux);
 
 
 	
@@ -73,7 +73,7 @@ unsigned int readScalarField( struct latticeMesh* mesh, double** field, char* fn
     	if ( strcmp(auxName, aux) == 0 ) {
 
 
-    	    fscanf(file, "%s", aux);
+    	    status = fscanf(file, "%s", aux);
 
     	    unsigned int i;
 
@@ -81,7 +81,7 @@ unsigned int readScalarField( struct latticeMesh* mesh, double** field, char* fn
 
     	    for ( i = 0 ; i < mesh->mesh.nPoints ; i++ ) {
 		
-    	    	fscanf(file, "%lf", &value);
+    	    	status = fscanf(file, "%lf", &value);
 		
 		field[0][i] = value;
 

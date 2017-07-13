@@ -6,7 +6,7 @@
 
 double* ppWeights( char* modelName ) {
 
-    double* w;
+    double* w = NULL;
 
     if ( strcmp(modelName,"D2Q9") == 0 ) {
 

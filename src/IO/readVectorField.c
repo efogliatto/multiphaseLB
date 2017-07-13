@@ -30,7 +30,7 @@ unsigned int readVectorField( struct latticeMesh* mesh, double*** field, unsigne
     
     while( strcmp(aux, "<PointData") != 0 ) {
 
-    	fscanf(file, "%s", aux);
+    	status = fscanf(file, "%s", aux);
 
     }
 
@@ -46,7 +46,7 @@ unsigned int readVectorField( struct latticeMesh* mesh, double*** field, unsigne
 	
     	while( strcmp(aux, "<DataArray") != 0 ) {
 
-    	    fscanf(file, "%s", aux);
+    	    status = fscanf(file, "%s", aux);
 
     	}
 
@@ -54,9 +54,9 @@ unsigned int readVectorField( struct latticeMesh* mesh, double*** field, unsigne
     
     	// Read Name=""
     
-    	fscanf(file, "%s", aux);
+    	status = fscanf(file, "%s", aux);
 
-    	fscanf(file, "%s", aux);
+    	status = fscanf(file, "%s", aux);
 
 
 	
@@ -73,9 +73,9 @@ unsigned int readVectorField( struct latticeMesh* mesh, double*** field, unsigne
     	if ( strcmp(auxName, aux) == 0 ) {
 
 
-    	    fscanf(file, "%s", aux);
+    	    status = fscanf(file, "%s", aux);
 
-	    fscanf(file, "%s", aux);
+	    status = fscanf(file, "%s", aux);
 
     	    unsigned int i,j;
 
@@ -85,7 +85,7 @@ unsigned int readVectorField( struct latticeMesh* mesh, double*** field, unsigne
 
 		for ( j = 0 ; j < vsize ; j++ ) {
 		
-		    fscanf(file, "%lf", &value);
+		    status = fscanf(file, "%lf", &value);
 		
 		    field[0][i][j] = value;
 

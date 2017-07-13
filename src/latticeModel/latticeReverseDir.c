@@ -6,7 +6,7 @@
 
 int* latticeReverseDir( char* modelName ) {
 
-    int* vel;
+    int* vel = NULL;
 
     if ( strcmp(modelName,"D2Q9") == 0 ) {
 

@@ -6,7 +6,7 @@
 
 double** MRTInvMatrix( char* modelName ) {
 
-    double** invM;
+    double** invM = NULL;
 
     if ( strcmp(modelName,"D2Q9") == 0 ) {
 

@@ -6,4 +6,4 @@ link_directories( ~/multiphaseLB/lib )
 
 # multiPhasePP
 add_executable( multiPhasePP "multiPhasePP.c" )
-target_link_libraries(multiPhasePP ${PROJECT_LINK_LIBS} ${PROJECT_LINK_LIBS} ${MPI_LIBRARIES})
+target_link_libraries(multiPhasePP ${PROJECT_LINK_LIBS} ${PROJECT_LINK_LIBS} ${MPI_LIBRARIES} -lm)

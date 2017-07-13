@@ -90,7 +90,7 @@ void kmetisDecomp( unsigned int* owner, struct basicMesh* mesh, unsigned int np 
 	
 	    for( i = 0 ; i < mesh->nPoints ; i++ ) {
 
-		fscanf(gfile,"%d",&owner[i]);
+		status = fscanf(gfile,"%d",&owner[i]);
 
 	    }
 	

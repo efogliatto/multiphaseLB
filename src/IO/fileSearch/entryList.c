@@ -63,17 +63,18 @@ unsigned int entryList( char* fileName, char* entry, char list[][100], unsigned 
 
     char** fileContent = (char**)malloc( fsize * sizeof(char*) );
 
-    unsigned int i;
+    unsigned int i,
+	status;
 
     for( i = 0 ; i < fsize ; i++ ) {
 
 	fileContent[i] = (char*)malloc( 100 * sizeof(char) );
 
-	fscanf(file,"%s",fileContent[i]);
+	status = fscanf(file,"%s",fileContent[i]);
 	
     }
 
-   
+    if(status) {}
 
 
 
