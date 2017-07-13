@@ -56,9 +56,18 @@ struct lbeField {
     // 0: constant
     // 1: constantMu
     // 2: constantLambda
+    // 3: rho-dependent nu
+    // 4: rho-dependent lambda
     unsigned int tauModel;
 
 
+    // Extra constants used for tau dependency
+    double ra;
+    double rb;
+    double na;
+    double nb;
+
+    
     // Boundary info. Related to basicBoundary in basicMesh
     struct bdField* boundary;
     

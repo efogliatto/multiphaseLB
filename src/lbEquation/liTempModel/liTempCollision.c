@@ -39,6 +39,22 @@ void liTempCollision( struct latticeMesh* mesh, struct macroFields* mfields, str
 
 	}
 
+	else {
+
+	    if( field->tauModel == 4 ) {
+
+		double a = (field->nb - field->na) / (field->rb - field->ra);
+
+		double b = field->na  -  a * field->ra;
+
+		double lambda = a * mfields->rho[id] + b;
+
+		field->tau = 0.5 + lambda / (mesh->lattice.cs2 * mfields->rho[id] * mesh->EOS._Cv);
+
+	    }
+
+	}
+
 	
 	// Compute momentum equilibrium
 	liTempEquilibrium(&mesh->lattice, mfields->rho[id], mfields->U[id], f_eq);	

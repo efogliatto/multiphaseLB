@@ -41,8 +41,24 @@ void liMRTCollision( struct latticeMesh* mesh, struct macroFields* mfields, stru
     /* for( id = 0 ; id < mesh->parallel.nlocal ; id++ ) { */
 	
 
-    /* 	// Update Lambda values */
-    /* 	updateLambda(field, mfields->rho[id], mesh->lattice.Q); */
+    	// Update Lambda values
+
+	if( field->tauModel == 3 ) {
+
+	    double a = (field->nb - field->na) / (field->rb - field->ra);
+
+	    double b = field->na  -  a * field->ra;
+
+	    double nu = a * mfields->rho[id] + b;
+
+	    double tau = nu / mesh->lattice.cs2 + 0.5;
+
+	    field->Lambda[7] = 1/tau;
+
+	    field->Lambda[8] = 1/tau;
+
+	}
+
 
 	double umag = 0;
 	

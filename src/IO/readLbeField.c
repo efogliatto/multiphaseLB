@@ -157,6 +157,68 @@ unsigned int readLbeField( struct latticeMesh* mesh, struct lbeField* field, cha
 
     		}
 
+		else {
+    
+		    if( strcmp(tm,"nuLinearRho") == 0 ) {
+
+		    	field->tauModel = 3;
+
+		    	char aux[100];
+
+		    	sprintf( aux, "%s/ra", fname);
+		    
+		    	status = lookUpDouble("properties/macroProperties", aux, &field->ra, 1);
+
+			
+		    	sprintf( aux, "%s/rb", fname);
+		    
+		    	status = lookUpDouble("properties/macroProperties", aux, &field->rb, 1);
+
+			
+		    	sprintf( aux, "%s/na", fname);
+		    
+		    	status = lookUpDouble("properties/macroProperties", aux, &field->na, 1);
+
+
+		    	sprintf( aux, "%s/nb", fname);
+		    
+		    	status = lookUpDouble("properties/macroProperties", aux, &field->nb, 1);
+
+		    }
+
+		    else {
+
+			if( strcmp(tm,"lambdaLinearRho") == 0 ) {
+
+			    field->tauModel = 4;
+
+			    char aux[100];
+
+			    sprintf( aux, "%s/ra", fname);
+		    
+			    status = lookUpDouble("properties/macroProperties", aux, &field->ra, 1);
+
+			
+			    sprintf( aux, "%s/rb", fname);
+		    
+			    status = lookUpDouble("properties/macroProperties", aux, &field->rb, 1);
+
+			
+			    sprintf( aux, "%s/na", fname);
+		    
+			    status = lookUpDouble("properties/macroProperties", aux, &field->na, 1);
+
+
+			    sprintf( aux, "%s/nb", fname);
+		    
+			    status = lookUpDouble("properties/macroProperties", aux, &field->nb, 1);
+
+			}
+
+		    }
+
+		}		
+
     	    }
 
     	}
