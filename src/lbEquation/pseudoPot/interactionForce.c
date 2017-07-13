@@ -16,6 +16,21 @@ void interactionForce( struct latticeMesh* mesh, double F[3], double* rho, doubl
 
     }
 
+    srand( time(NULL) * id );
+    
+    double r = 1.0;
+
+    
+    // Add temperature perturbation in first layer
+	
+    if( mesh->mesh.points[id][1] == 1 ) {
+
+	r = (double)rand() / (double)RAND_MAX;
+
+	r = 0.99 + r * 0.02;
+
+    }
+    
     
     // Move over neighbours
     for( k = 0 ; k < mesh->lattice.Q ; k++ ) {
@@ -32,8 +47,8 @@ void interactionForce( struct latticeMesh* mesh, double F[3], double* rho, doubl
 	
     	// Do not use unexisting neighbour
     	if(  ( neighId != -1 )  &&  (noneigh == 0)  ) {
-
-    	    double alpha = mesh->lattice.weights[k] * potential(mesh, rho[neighId], T[neighId]);
+	    
+    	    double alpha = mesh->lattice.weights[k] * potential(mesh, rho[neighId], T[neighId]*r);
 	    
     	    for( i = 0 ; i < 3 ; i++ ) {
 
@@ -51,7 +66,7 @@ void interactionForce( struct latticeMesh* mesh, double F[3], double* rho, doubl
     if(noneigh == 0) {
 	
 	// Extra constant
-	double beta = -mesh->EOS._G * potential(mesh, rho[id], T[id]);
+	double beta = -mesh->EOS._G * potential(mesh, rho[id], T[id]*r);
     
 	for( i = 0 ; i < 3 ; i++) {
 	

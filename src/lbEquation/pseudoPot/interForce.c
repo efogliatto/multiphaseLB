@@ -16,7 +16,7 @@ void interForce( struct latticeMesh* mesh, struct macroFields* mfields ) {
     // Move over points
 
     for( id = 0 ; id < mesh->parallel.nlocal ; id++ ) {
-
+	
 	interactionForce( mesh, F, mfields->rho, mfields->T, id );
 
 	for( j = 0 ; j < 3 ; j++ ) {
