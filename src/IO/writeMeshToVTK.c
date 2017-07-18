@@ -32,13 +32,13 @@ void writeMeshToVTK( struct latticeMesh* mesh, struct vtkInfo* vtk ) {
     fprintf(outFile, "  <UnstructuredGrid>\n");
     fprintf(outFile, "    <Piece NumberOfPoints=\"%d\" NumberOfCells=\"%d\">\n", mesh->mesh.nPoints, mesh->mesh.ncells);
     fprintf(outFile, "      <Points>\n");
-    fprintf(outFile, "        <DataArray type=\"Int32\" NumberOfComponents=\"3\" format=\"ascii\">\n");
+    fprintf(outFile, "        <DataArray type=\"Float32\" NumberOfComponents=\"3\" format=\"ascii\">\n");
 
     
     // Write points
     unsigned int i;
     for( i = 0 ; i < mesh->mesh.nPoints ; i++ ) {
-    	fprintf(outFile, "          %d %d %d\n", mesh->mesh.points[i][0], mesh->mesh.points[i][1], mesh->mesh.points[i][2]);
+    	fprintf(outFile, "          %.1f %.1f %.1f\n", (float)mesh->mesh.points[i][0], (float)mesh->mesh.points[i][1], (float)mesh->mesh.points[i][2]);
     }
     
 
@@ -191,7 +191,7 @@ void writeMeshToVTK( struct latticeMesh* mesh, struct vtkInfo* vtk ) {
 
 	fprintf(outFile, "    </PPointData>\n");
 	fprintf(outFile, "    <PPoints>\n");
-	fprintf(outFile, "      <PDataArray type=\"Int32\" NumberOfComponents=\"3\"/>\n");
+	fprintf(outFile, "      <PDataArray type=\"Float32\" NumberOfComponents=\"3\"/>\n");
 	fprintf(outFile, "    </PPoints>\n");
 	for (i = 0 ; i < mesh->parallel.worldSize ; i++) {
 	    fprintf(outFile, "    <Piece Source=\"../processor%d/%d/fields.vtu\"/>\n", i, mesh->time.current);
