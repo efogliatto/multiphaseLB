@@ -37,33 +37,33 @@ void uniformScalarField( struct latticeMesh* mesh, double** field, char* fname )
 
 
 
-    // Read boundary information
+    /* // Read boundary information */
 
 
-    // Move over boundary names
+    /* // Move over boundary names */
 
-    char bd[100];
+    /* char bd[100]; */
     
-    unsigned int bid;
+    /* unsigned int bid; */
 
-    double bdval = fval;
+    /* double bdval = fval; */
 
-    for( bid = 0 ; bid < mesh->mesh.bd.nbd ; bid++ ) {
+    /* for( bid = 0 ; bid < mesh->mesh.bd.nbd ; bid++ ) { */
 
-	sprintf(bd, "%s/boundaryField/%s", fname, mesh->mesh.bd.bdNames[bid]);
+    /* 	sprintf(bd, "%s/boundaryField/%s", fname, mesh->mesh.bd.bdNames[bid]); */
 
-	status = lookUpDouble("start/initialFields", bd, &bdval, fval);
+    /* 	status = lookUpDouble("start/initialFields", bd, &bdval, fval); */
 
 
-	unsigned int j;
+    /* 	unsigned int j; */
 
-	for( j = 0 ; j < mesh->mesh.bd.nbdelem[bid] ; j++ ) {
+    /* 	for( j = 0 ; j < mesh->mesh.bd.nbdelem[bid] ; j++ ) { */
 
-	    field[0][ mesh->mesh.bd.bdPoints[bid][j] ] = bdval;
+    /* 	    field[0][ mesh->mesh.bd.bdPoints[bid][j] ] = bdval; */
 
-	}
+    /* 	} */
 
-    }
+    /* } */
 
 
 
