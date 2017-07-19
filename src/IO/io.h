@@ -43,4 +43,6 @@
 
 #include <readEOSInfo.h>
 
+#include <entryIsPresent.h>
+
 #endif // IO_H

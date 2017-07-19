@@ -28,6 +28,7 @@ add_library(io SHARED
   fileSearch/lookUpDouble.c
   fileSearch/lookUpVector.c
   fileSearch/lookUpString.c
+  fileSearch/entryIsPresent.c
   time/timeOptions.c
   basicInfo/readEOSInfo.c
   )

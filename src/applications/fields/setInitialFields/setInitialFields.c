@@ -110,7 +110,7 @@ int main(int argc, char** argv) {
 	    
     	    if( strcmp(itype,"uniform") == 0 ) {
 
-		uniformScalarField( &mesh, &field, vtk.scalarFields[fid] );		
+		uniformScalarField( &mesh, &field, vtk.scalarFields[fid] );	
 
     	    }
 
