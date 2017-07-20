@@ -13,7 +13,7 @@ void liTempCollision( struct latticeMesh* mesh, struct macroFields* mfields, str
     unsigned int id, k, j;
     
     // Dot product for correction term    
-    double kappa, dot, M;//, phi;
+    double kappa, dot, M, phi;
 
     // Interaction force
     double F[3];
@@ -73,8 +73,8 @@ void liTempCollision( struct latticeMesh* mesh, struct macroFields* mfields, str
 
 
 	
-	/* // Parameter for compression work */
-	/* phi = -mfields->T[id] * (p_eos(&mesh->EOS, mfields->rho[id], mfields->T[id]*1.1) - p_eos(&mesh->EOS, mfields->rho[id], mfields->T[id]*0.9)) / ( 2 * mfields->T[id]); */
+	// Parameter for compression work
+	phi = -mfields->T[id] * (p_eos(&mesh->EOS, mfields->rho[id], mfields->T[id]*1.1) - p_eos(&mesh->EOS, mfields->rho[id], mfields->T[id]*0.9)) / ( 2 * mfields->T[id]);
 
 
 
@@ -101,14 +101,17 @@ void liTempCollision( struct latticeMesh* mesh, struct macroFields* mfields, str
 
 	    
 
-	    /* // Compresion work */
+	    // Compresion work
 	    
-	    /* dot = 0; */
-	    /* for( j = 0 ; j < 3 ; j++) { */
-	    /* 	dot += mesh->lattice.c * mesh->lattice.vel[k][j] * mfields->U[id][j]; */
-	    /* } */
+	    dot = 0;
+	    
+	    for( j = 0 ; j < 3 ; j++) {
+		
+	    	dot += mesh->lattice.vel[k][j] * mfields->U[id][j];
+		
+	    }
 
-	    /* M = M - phi * mesh->lattice.omega[k] * dot / (field->tau * mesh->time.tstep * mesh->lattice.cs2); */
+	    M = M - phi * mesh->lattice.omega[k] * dot / (field->tau * mesh->lattice.cs2);
 
 
 	    
