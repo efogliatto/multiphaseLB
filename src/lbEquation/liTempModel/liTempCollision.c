@@ -141,7 +141,4 @@ void liTempCollision( struct latticeMesh* mesh, struct macroFields* mfields, str
     free(f_eq);
 
 
-    /* // Synchronize field */
-    /* syncPdfField( &mesh->parallel, field->value, mesh->lattice.Q ); */
-
 }
