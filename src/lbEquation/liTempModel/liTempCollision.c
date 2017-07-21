@@ -60,8 +60,6 @@ void liTempCollision( struct latticeMesh* mesh, struct macroFields* mfields, str
 	liTempEquilibrium(&mesh->lattice, mfields->rho[id], mfields->U[id], f_eq);	
 
 		
-	/* // Interaction force */
-	/* totalForce( mesh, F, mfields->rho, mfields->T, id); */
 
 	unsigned int jj;
 	
@@ -74,7 +72,18 @@ void liTempCollision( struct latticeMesh* mesh, struct macroFields* mfields, str
 
 	
 	// Parameter for compression work
-	phi = -mfields->T[id] * (p_eos(&mesh->EOS, mfields->rho[id], mfields->T[id]*1.1) - p_eos(&mesh->EOS, mfields->rho[id], mfields->T[id]*0.9)) / ( 2 * mfields->T[id]);
+
+	if( mesh->EOS._eosIdx == 3 ) {
+
+	    phi = -mfields->T[id] * mfields->rho[id] * mesh->EOS._R / ( mesh->EOS._M - mesh->EOS._b * mfields->rho[id] );
+
+	}
+
+	else {	    
+	
+	    phi = -mfields->T[id] * (p_eos(&mesh->EOS, mfields->rho[id], mfields->T[id]*1.1) - p_eos(&mesh->EOS, mfields->rho[id], mfields->T[id]*0.9)) / ( 2 * mfields->T[id]);
+
+	}
 
 
 
