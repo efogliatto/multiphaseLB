@@ -4,6 +4,7 @@
 #include <liTempEquilibrium.h>
 #include <stdlib.h>
 #include <pseudoPot.h>
+#include <vectorDivergence.h>
 
 
 void liTempCollision( struct latticeMesh* mesh, struct macroFields* mfields, struct lbeField* field ) {
@@ -86,7 +87,10 @@ void liTempCollision( struct latticeMesh* mesh, struct macroFields* mfields, str
 	}
 
 
+	/* double divU = vectorDivergence( mesh, mfields->U, id ); */
+	
 
+	
 	
 	// Collide g
 	for( k = 0 ; k < mesh->lattice.Q ; k++ ) {
@@ -124,11 +128,13 @@ void liTempCollision( struct latticeMesh* mesh, struct macroFields* mfields, str
 
 
 	    
+	    /* M = M + phi * mesh->lattice.omega[k] * divU; */
+	    
 	    
 	    // Collision
 	    field->value[id][k] = field->value[id][k]  -
 		       (  field->value[id][k]  -  mesh->EOS._Cv * mfields->T[id] * f_eq[k]  ) / field->tau   +
-		        M;
+		M;
 
 	    
 	}
