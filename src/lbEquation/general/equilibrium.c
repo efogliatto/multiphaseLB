@@ -7,6 +7,7 @@
 #include <liMRTModel.h>
 #include <liSRTModel.h>
 #include <liTempModel.h>
+#include <newTempModel.h>
 
 
 void equilibrium( struct latticeMesh* mesh, struct macroFields* mfields, struct lbeField* field ) {
@@ -53,6 +54,29 @@ void equilibrium( struct latticeMesh* mesh, struct macroFields* mfields, struct 
 	for( id = 0 ; id < mesh->mesh.nPoints ; id++) {
 
 	    liTempEquilibrium( &mesh->lattice, mfields->rho[id], mfields->U[id], field->value[id] );
+
+	    unsigned int k;
+
+	    for( k = 0 ; k < mesh->lattice.Q ; k++ ) {
+
+		field->value[id][k] = field->value[id][k] * mesh->EOS._Cv * mfields->T[id];
+	    
+	    }
+	    
+	}
+
+	
+	break;
+
+
+
+    // new model. Temperature
+	
+    case 3:
+	
+	for( id = 0 ; id < mesh->mesh.nPoints ; id++) {
+
+	    newTempEquilibrium( &mesh->lattice, mfields->rho[id], mfields->U[id], field->value[id] );
 
 	    unsigned int k;
 

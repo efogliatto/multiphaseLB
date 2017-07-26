@@ -38,6 +38,7 @@ struct lbeField {
     // 0: Li MRT 
     // 1: Li SRT
     // 2: Li SRT for temperature
+    // 3: new SRT for temperature
     unsigned int colId;
     
     // Single relaxation time

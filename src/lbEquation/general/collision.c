@@ -7,6 +7,7 @@
 #include <liMRTModel.h>
 #include <liSRTModel.h>
 #include <liTempModel.h>
+#include <newTempModel.h>
 
 
 void collision( struct latticeMesh* mesh, struct macroFields* mfields, struct lbeField* field ) {
@@ -31,7 +32,13 @@ void collision( struct latticeMesh* mesh, struct macroFields* mfields, struct lb
     case 2:
     	liTempCollision( mesh, mfields, field );
     	break;
-	
+
+
+    // new Temperature SRT model
+    case 3:
+    	newTempCollision( mesh, mfields, field );
+    	break;	
+
 	
     default:
     	printf("\n   [ERROR]  Collision model is not yet implemented\n\n");

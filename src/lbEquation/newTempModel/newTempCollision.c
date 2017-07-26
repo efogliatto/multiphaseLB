@@ -129,15 +129,39 @@ void newTempCollision( struct latticeMesh* mesh, struct macroFields* mfields, st
 	    M = M + ( 1 - 0.5 / field->tau) * A * mesh->lattice.omega[k] * dot / mesh->lattice.cs2;
 
 
+
+	    
+	    /* // Wrong */
+	    
+	    /* M = M - phi * mesh->lattice.omega[k] * dot / (mesh->lattice.cs2 * field->tau); */
+
+
 	    
 
 	    
 	    
 	    // Collision
+
+	    // Neighbour value is needed
+
+	    int nid = mesh->mesh.nb[id][ mesh->lattice.reverse[k] ];
+
+	    double ANeigh = 0;
+
+	    if ( nid != -1 ) {
+
+		double phiNeigh = -mfields->T[nid] * mfields->rho[nid] * mesh->EOS._R / ( mesh->EOS._M - mesh->EOS._b * mfields->rho[nid] );
+
+		double divUNeigh = vectorDivergence( mesh, mfields->U, nid );		
+
+		ANeigh = phiNeigh * divUNeigh;
+
+	    }
+
+	    
 	    field->value[id][k] = field->value[id][k]  -
 		       (  field->value[id][k]  -  mesh->EOS._Cv * mfields->T[id] * f_eq[k]  ) / field->tau   +
-		M +
-		mesh->lattice.omega[k] * A;
+		M + 0.5 * mesh->lattice.omega[k] * (A + ANeigh) ;
 
 	    
 	}

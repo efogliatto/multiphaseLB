@@ -8,6 +8,7 @@
 #include <liMRTModel.h>
 #include <liSRTModel.h>
 #include <liTempModel.h>
+#include <newTempModel.h>
 
 
 void updateBdElements( struct latticeMesh* mesh, struct macroFields* mfields, struct lbeField* field ) {
@@ -74,7 +75,22 @@ void updateBdElements( struct latticeMesh* mesh, struct macroFields* mfields, st
     		}
 	    
     		break;
-	
+
+		
+    		// new SRT Model. Temperature
+		
+    	    case 3:
+
+    		for( i = 0 ; i < mesh->mesh.bd.nbdelem[bndId] ; i++ ) {
+
+    		    j = mesh->mesh.bd.bdPoints[bndId][i];
+
+    		    mfields->T[j] = newTempTemperature( mesh, mfields, field, j );
+
+    		}
+	    
+    		break;
+		
 	
     	    default:
     		printf("\n   [ERROR]  Collision model is not yet implemented\n\n");

@@ -7,6 +7,7 @@
 #include <liMRTModel.h>
 #include <liSRTModel.h>
 #include <liTempModel.h>
+#include <newTempModel.h>
 
 
 void macroTemperature( struct latticeMesh* mesh, struct macroFields* mfields, struct lbeField* field ) {
@@ -28,6 +29,18 @@ void macroTemperature( struct latticeMesh* mesh, struct macroFields* mfields, st
 	}
 	
 	break;
+
+
+    case 3:
+
+	for( id = 0 ; id < mesh->mesh.nPoints ; id++) {
+
+	    mfields->T[id] = newTempTemperature( mesh, mfields, field, id );
+
+	}
+	
+	break;
+
 	
     default:
 	printf("\n   [ERROR]  Unable to compute macroscopic temperature\n\n");

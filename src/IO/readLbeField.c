@@ -111,6 +111,26 @@ unsigned int readLbeField( struct latticeMesh* mesh, struct lbeField* field, cha
 
     	    }
 
+	    else {
+
+	    
+		if( strcmp(cmodel,"newTemp") == 0 ) {
+
+		    field->colId = 3;
+
+		
+		    // Relaxation time
+
+		    sprintf( prop, "%s/tau", fname);
+
+		    status = lookUpDouble("properties/macroProperties", prop, &field->tau, 1 );
+		
+
+		}
+
+	    }
+	    
+
     	}
 
     }
