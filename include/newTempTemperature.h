@@ -1,0 +1,1 @@
+../src/lbEquation/newTempModel/newTempTemperature.h

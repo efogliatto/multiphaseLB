@@ -1,19 +1,20 @@
 #include <latticeMesh.h>
 #include <macroFields.h>
 #include <lbeField.h>
-#include <liTempEquilibrium.h>
+#include <newTempEquilibrium.h>
 #include <stdlib.h>
 #include <pseudoPot.h>
+#include <vectorDivergence.h>
 
 
-void liTempCollision( struct latticeMesh* mesh, struct macroFields* mfields, struct lbeField* field ) {
+void newTempCollision( struct latticeMesh* mesh, struct macroFields* mfields, struct lbeField* field ) {
 
 
     // Indices
     unsigned int id, k, j;
     
     // Dot product for correction term    
-    double kappa, dot, M;
+    double kappa, dot, M, phi;
 
     // Interaction force
     double F[3];
@@ -57,7 +58,7 @@ void liTempCollision( struct latticeMesh* mesh, struct macroFields* mfields, str
 
 	
 	// Compute momentum equilibrium
-	liTempEquilibrium(&mesh->lattice, mfields->rho[id], mfields->U[id], f_eq);	
+	newTempEquilibrium(&mesh->lattice, mfields->rho[id], mfields->U[id], f_eq);	
 
 		
 
@@ -69,6 +70,26 @@ void liTempCollision( struct latticeMesh* mesh, struct macroFields* mfields, str
 
 	}
 
+
+	
+	// Parameter for compression work
+
+	if( mesh->EOS._eosIdx == 3 ) {
+
+	    phi = -mfields->T[id] * mfields->rho[id] * mesh->EOS._R / ( mesh->EOS._M - mesh->EOS._b * mfields->rho[id] );
+
+	}
+
+	else {	    
+	
+	    phi = -mfields->T[id] * (p_eos(&mesh->EOS, mfields->rho[id], mfields->T[id]*1.1) - p_eos(&mesh->EOS, mfields->rho[id], mfields->T[id]*0.9)) / ( 2 * mfields->T[id]);
+
+	}
+
+
+	double divU = vectorDivergence( mesh, mfields->U, id );
+
+	double A = phi * divU;
 	
 
 	
@@ -92,12 +113,31 @@ void liTempCollision( struct latticeMesh* mesh, struct macroFields* mfields, str
 
 	    M = kappa * dot;
 
+
+	    
+
+	    // Compresion work
+	    
+	    dot = 0;
+	    
+	    for( j = 0 ; j < 3 ; j++) {
+		
+	    	dot += mesh->lattice.vel[k][j] * mfields->U[id][j];
+		
+	    }
+
+	    M = M + ( 1 - 0.5 / field->tau) * A * mesh->lattice.omega[k] * dot / mesh->lattice.cs2;
+
+
+	    
+
 	    
 	    
 	    // Collision
 	    field->value[id][k] = field->value[id][k]  -
 		       (  field->value[id][k]  -  mesh->EOS._Cv * mfields->T[id] * f_eq[k]  ) / field->tau   +
-		M;
+		M +
+		mesh->lattice.omega[k] * A;
 
 	    
 	}

@@ -5,5 +5,4 @@ add_library(litempmodel SHARED
   liTempCollision.c
   liTempEquilibrium.c
   liTempTemperature.c
-  vectorDivergence.c
   )
