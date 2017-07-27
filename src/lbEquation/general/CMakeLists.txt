@@ -11,6 +11,8 @@ add_library(generallbe SHARED
   updateBoundaries.c
   updateBdElements.c
   updateBdForce.c
+  vectorDivergence.c
+  compWork.c
   boundary/bounceBack.c
   boundary/fixedT.c
   boundary/fixedU.c

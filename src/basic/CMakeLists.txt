@@ -7,4 +7,5 @@ add_library(basic SHARED
   matVecMult.c
   syncPdfField.c
   syncVectorField.c
+  syncScalarField.c
   )

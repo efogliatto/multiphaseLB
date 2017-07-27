@@ -1,1 +1,1 @@
-../src/lbEquation/newTempModel/vectorDivergence.h
+../src/lbEquation/general/vectorDivergence.h

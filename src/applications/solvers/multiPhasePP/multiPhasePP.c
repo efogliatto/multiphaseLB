@@ -199,8 +199,30 @@ int main( int argc, char **argv ) {
     interForce( &mesh, &mfields );
     
     syncVectorField( &mesh, mfields.Fi );
-    
 
+
+    
+    // Update macroscopic compression work
+
+    if( ( frozen != 0 )  &&  (g.colId == 3) ) {
+    
+	mfields.phiDivU = (double*)malloc(mesh.mesh.nPoints * sizeof(double));
+
+
+	unsigned int ii;
+
+	for( ii = 0 ; ii < mesh.mesh.nPoints ; ii++ ) {
+
+	    mfields.phiDivU[ii] = 0;
+
+	}
+	
+    
+	compWork( &mesh, &mfields );
+    
+	syncScalarField( &mesh, mfields.phiDivU );    
+    
+    }
     
    
     if(pid == 0){printf("\n\n");}
@@ -274,6 +296,18 @@ int main( int argc, char **argv ) {
     	// Update macroscopic velocity
 	
     	if( frozen != 0 ) {  macroVelocity( &mesh, &mfields, &f ); }
+
+
+    	// Update compression work
+
+	if( ( frozen != 0 )  &&  (g.colId == 3) ) {
+
+	    compWork( &mesh, &mfields );
+
+	    syncScalarField( &mesh, mfields.phiDivU );
+	    
+	}
+	
 	
 
 	

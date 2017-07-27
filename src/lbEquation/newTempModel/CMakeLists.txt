@@ -5,5 +5,4 @@ add_library(newtempmodel SHARED
   newTempCollision.c
   newTempEquilibrium.c
   newTempTemperature.c
-  vectorDivergence.c
   )

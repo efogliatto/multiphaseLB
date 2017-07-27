@@ -20,6 +20,9 @@ struct macroFields {
     // Interaction force
     double** Fi;
 
+    // Compresion work
+    double* phiDivU;
+    
     /* // Constants */
 
     /* // Specific heat */

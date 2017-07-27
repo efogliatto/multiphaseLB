@@ -19,4 +19,6 @@
 
 #include <updateBdForce.h>
 
+#include <compWork.h>
+
 #endif // GENERALLBE_H
