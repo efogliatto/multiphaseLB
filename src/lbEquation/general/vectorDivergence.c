@@ -16,7 +16,7 @@ double vectorDivergence( struct latticeMesh* mesh, double** v, unsigned int id )
     for( k = 1 ; k < 5 ; k++ ) {
 
 
-	nb = mesh->mesh.nb[id][k];
+	nb = mesh->mesh.nb[id][ mesh->lattice.reverse[k] ];
 
 	if ( nb != -1 ) {
 
@@ -24,7 +24,7 @@ double vectorDivergence( struct latticeMesh* mesh, double** v, unsigned int id )
 	    
 	    for( j = 0 ; j < 2 ; j++ ) {
 
-		dot += v[id][j] * mesh->lattice.vel[k][j];
+		dot += v[nb][j] * mesh->lattice.vel[k][j];
 
 	    }
 

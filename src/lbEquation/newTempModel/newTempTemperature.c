@@ -21,7 +21,7 @@ double newTempTemperature( struct latticeMesh* mesh, struct macroFields* mfields
 
 
     // Compute T
-    T = (T - 0.5 * mfields->phiDivU[id]) / (mfields->rho[id] * mesh->EOS._Cv);
+    T = (T + 0.5 * mfields->phiDivU[id]) / (mfields->rho[id] * mesh->EOS._Cv);
 
 
     return T;
