@@ -6,6 +6,7 @@
 #include <fixedEOSp.h>
 #include <fixedU.h>
 #include <outflow.h>
+#include <uniformHeatFlux.h>
 
 #include <stdlib.h>
 
@@ -55,6 +56,11 @@ void updateBoundaries( struct latticeMesh* mesh, struct macroFields* mfields, st
 	// Fixed EOS pressure
 	case 5:
 	    fixedEOSp( mesh, mfields, field, bndId );
+	    break;
+
+	// Fixed heat flux
+	case 6:
+	    uniformHeatFlux( mesh, mfields, field, bndId );
 	    break;
 	    
     	default:

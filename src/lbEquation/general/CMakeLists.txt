@@ -16,6 +16,7 @@ add_library(generallbe SHARED
   boundary/bounceBack.c
   boundary/fixedT.c
   boundary/fixedU.c
+  boundary/uniformHeatFlux.c
   boundary/fixedEOSp.c
   boundary/outflow.c
   )

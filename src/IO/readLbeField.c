@@ -359,6 +359,38 @@ unsigned int readLbeField( struct latticeMesh* mesh, struct lbeField* field, cha
 
 			    }
 
+
+			    else {
+
+				if( strcmp(bdType, "uniformHeatFlux") == 0 ) {
+
+			
+				    field->boundary[i].bdType = 6;
+
+				    status = lookUpDouble("start/boundaries", cmodel, &field->boundary[i].scalarVal, 0);
+				    
+				    
+			
+				    char aux[100];
+
+				    sprintf(aux,"%s/%s/direction",fname,mesh->mesh.bd.bdNames[i]);
+
+
+				    double v[3];
+		    
+				    status = lookUpVector("start/boundaries", aux, v, 3);
+
+				    for( jj = 0 ; jj < 3 ; jj++ ) {
+
+					field->boundary[i].vectorVal[jj] = v[jj];
+
+				    }
+				    
+
+				}
+
+			    }			    
+
 			}
 
 		    }
