@@ -3,6 +3,8 @@
 
 #include <p_eos.h>
 
+#include <T_eos.h>
+
 #include <potential.h>
 
 #include <totalForce.h>

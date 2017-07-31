@@ -3,6 +3,7 @@
 #include <latticeMesh.h>
 #include <bounceBack.h>
 #include <fixedT.h>
+#include <fixedEOSp.h>
 #include <fixedU.h>
 #include <outflow.h>
 
@@ -46,10 +47,16 @@ void updateBoundaries( struct latticeMesh* mesh, struct macroFields* mfields, st
     	    fixedT( mesh, mfields, field, bndId );
     	    break;
 
+        // Outflow
 	case 4:
 	    outflow( mesh, mfields, field, bndId );
 	    break;
-    
+
+	// Fixed EOS pressure
+	case 5:
+	    fixedEOSp( mesh, mfields, field, bndId );
+	    break;
+	    
     	default:
     	    printf("\n  [ERROR]  Unrecognized boundary condition \n\n\n");
     	    exit(1);

@@ -338,6 +338,29 @@ unsigned int readLbeField( struct latticeMesh* mesh, struct lbeField* field, cha
 
 			}
 
+			else {
+
+			    if( strcmp(bdType, "fixedEOSp") == 0 ) {
+
+			
+				field->boundary[i].bdType = 5;
+
+			
+				char aux[100];
+
+				sprintf(aux,"%s/%s/rho_EOS",fname,mesh->mesh.bd.bdNames[i]);
+
+				status = lookUpDouble("start/boundaries", aux, &field->boundary[i].vectorVal[0], 0);
+
+
+				sprintf(aux,"%s/%s/T_EOS",fname,mesh->mesh.bd.bdNames[i]);
+
+				status = lookUpDouble("start/boundaries", aux, &field->boundary[i].vectorVal[1], 0);				
+
+			    }
+
+			}
+
 		    }
 
 		}
