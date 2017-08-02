@@ -33,9 +33,9 @@ void uniformHeatFlux( struct latticeMesh* mesh, struct macroFields* mfields, str
 	    unsigned int id = mesh->mesh.bd.bdPoints[bid][i];
 
 
-	    /* // Compute thermal conductivity */
+	    // Compute thermal conductivity
 
-	    /* double lambda = ( field->tau - 0.5 ) * mfields->rho[id] * mesh->lattice.cs2 * mesh->EOS._Cv; */
+	    double lambda = ( field->tau - 0.5 ) * mfields->rho[id] * mesh->lattice.cs2 * mesh->EOS._Cv;
 
 
 
@@ -56,8 +56,8 @@ void uniformHeatFlux( struct latticeMesh* mesh, struct macroFields* mfields, str
 
 		    if( nbid != -1 ) {
 
-			/* t_bd = mfields->T[nbid] + field->boundary[bid].scalarVal / lambda; */
-			t_bd = mfields->T[nbid] + field->boundary[bid].scalarVal;			
+			t_bd = mfields->T[nbid] + field->boundary[bid].scalarVal / lambda;
+			/* t_bd = mfields->T[nbid] + field->boundary[bid].scalarVal;			 */
 
 		    }
 
@@ -65,8 +65,8 @@ void uniformHeatFlux( struct latticeMesh* mesh, struct macroFields* mfields, str
 
 			nbid = mesh->mesh.nb[id][k];
 
-			/* t_bd = mfields->T[nbid] - field->boundary[bid].scalarVal / lambda; */
-			t_bd = mfields->T[nbid] - field->boundary[bid].scalarVal;			
+			t_bd = mfields->T[nbid] - field->boundary[bid].scalarVal / lambda;
+			/* t_bd = mfields->T[nbid] - field->boundary[bid].scalarVal;			 */
 
 		    }
 
