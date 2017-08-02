@@ -337,6 +337,30 @@ int main( int argc, char **argv ) {
     	/* updateBdForce( &mesh, &mfields ); */
 
 
+
+
+
+
+
+
+    	// Sync macro fields (only for boundaries. this MUST be corrected)
+
+	if( frozen != 0 ) {
+
+	    syncScalarField( &mesh, mfields.rho );
+
+	    syncVectorField( &mesh, mfields.U );	    
+	    
+	}
+
+
+	if( ht != 0 ) {
+
+	    syncScalarField( &mesh, mfields.T );
+
+	}
+
+	
 	
 	
     	// Write fields
