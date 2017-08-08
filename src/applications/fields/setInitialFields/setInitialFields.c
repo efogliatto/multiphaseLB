@@ -17,6 +17,8 @@ void uniformScalarField( struct latticeMesh* mesh, double** field, char* fname )
 void randomScalarField( struct latticeMesh* mesh, double** field, char* fname );
 
 void boxBoundedScalarField( struct latticeMesh* mesh, double** field, char* fname );
+
+void sphereBoundedScalarField( struct latticeMesh* mesh, double** field, char* fname );
     
 
 int main(int argc, char** argv) {
@@ -141,9 +143,24 @@ int main(int argc, char** argv) {
 
 		    else {
 
-			printf("\n   [ERROR]  Unrecognized type %s\n\n", itype);
+			
+			// Sphere bounded
+		
+			if( strcmp(itype,"sphere") == 0 ) {
 
-			exit(1);
+			    sphereBoundedScalarField( &mesh, &field, vtk.scalarFields[fid] );
+
+			}
+
+
+			else {
+
+			    printf("\n   [ERROR]  Unrecognized type %s\n\n", itype);
+
+			    exit(1);
+
+			}
+
 
 		    }
 
