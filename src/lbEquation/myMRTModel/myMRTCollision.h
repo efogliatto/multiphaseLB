@@ -1,10 +1,10 @@
-#ifndef LIMRTCOLLISION_H
-#define LIMRTCOLLISION_H
+#ifndef MYMRTCOLLISION_H
+#define MYMRTCOLLISION_H
 
 #include <macroFields.h>
 #include <lbeField.h>
 #include <latticeMesh.h>
 
-void liMRTCollision( struct latticeMesh* mesh, struct macroFields* mfields, struct lbeField* field );
+void myMRTCollision( struct latticeMesh* mesh, struct macroFields* mfields, struct lbeField* field );
 
-#endif // LIMRTCOLLISION_H
+#endif // MYMRTCOLLISION_H
