@@ -28,31 +28,25 @@ void myMRTCollision( struct latticeMesh* mesh, struct macroFields* mfields, stru
     double* GammaHat = (double*)malloc( mesh->lattice.Q * sizeof(double) );   // Source in population space
 
     
+
     
     // Move over ALL points
     
     for( id = 0 ; id < mesh->mesh.nPoints ; id++ ) {
-    /* for( id = 0 ; id < mesh->parallel.nlocal ; id++ ) { */
+
+
+	// Update real tau
+
+	// Constant Lambda
 	
-
-    	/* // Update Lambda values */
-
-	/* if( field->tauModel == 3 ) { */
-
-	/*     double a = (field->nb - field->na) / (field->rb - field->ra); */
-
-	/*     double b = field->na  -  a * field->ra; */
-
-	/*     double nu = a * mfields->rho[id] + b; */
-
-	/*     double tau = nu / mesh->lattice.cs2 + 0.5; */
-
-	/*     field->Lambda[7] = 1/tau; */
+	if( field->tauModel == 2 ) {
 	
-	/*     field->Lambda[8] = 1/tau; */
+	    field->Lambda[3] = 0.5 * (mesh->lattice.cs2 * mfields->rho[id] * mesh->EOS._Cv) / field->lambda;
 
-	/* } */
+	    field->Lambda[5] = 0.5 * (mesh->lattice.cs2 * mfields->rho[id] * mesh->EOS._Cv) / field->lambda;
 
+	}
+	
 	
 
 	// Equilibrium distribution in moment space
