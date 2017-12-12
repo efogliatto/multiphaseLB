@@ -8,6 +8,7 @@
 #include <liSRTModel.h>
 #include <liTempModel.h>
 #include <newTempModel.h>
+#include <myMRTModel.h>
 
 
 void collision( struct latticeMesh* mesh, struct macroFields* mfields, struct lbeField* field ) {
@@ -37,7 +38,13 @@ void collision( struct latticeMesh* mesh, struct macroFields* mfields, struct lb
     // new Temperature SRT model
     case 3:
     	newTempCollision( mesh, mfields, field );
-    	break;	
+    	break;
+
+	
+    // new Temperature MRT model
+    case 4:
+    	myMRTCollision( mesh, mfields, field );
+    	break;		
 
 	
     default:

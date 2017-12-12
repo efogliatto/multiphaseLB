@@ -1,14 +1,14 @@
-#ifndef LIMRTMODEL_H
-#define LIMRTMODEL_H
+#ifndef MYMRTMODEL_H
+#define MYMRTMODEL_H
 
-#include <liMRTCollision.h>
+#include <myMRTCollision.h>
 
-#include <liMRTDensity.h>
+#include <myMRTTemperature.h>
 
-#include <liMRTVelocity.h>
+#include <myMRTEquilibrium.h>
 
-#include <liMRTForce.h>
+#include <myMRTEquilibriumMS.h>
 
-#include <liMRTEquilibrium.h>
+#include <myMRTSource.h>
 
-#endif // LIMRTMODEL_H
+#endif // MYMRTMODEL_H
