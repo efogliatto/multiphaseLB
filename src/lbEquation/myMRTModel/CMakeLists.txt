@@ -6,4 +6,5 @@ add_library(mymrtmodel SHARED
   myMRTTemperature.c
   myMRTEquilibrium.c
   myMRTSource.c
+  myMRTEquilibriumMS.c  
   )

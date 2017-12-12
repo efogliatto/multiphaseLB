@@ -5,6 +5,7 @@
 #include <lbeField.h>
 
 #include <myMRTSource.h>
+#include <myMRTEquilibriumMS.h>
 
 
 void myMRTCollision( struct latticeMesh* mesh, struct macroFields* mfields, struct lbeField* field ) {
@@ -19,8 +20,11 @@ void myMRTCollision( struct latticeMesh* mesh, struct macroFields* mfields, stru
     // Partial distributions
     
     double* n     = (double*)malloc( mesh->lattice.Q * sizeof(double) );   // m:  momentum space
+    
     double* n_eq  = (double*)malloc( mesh->lattice.Q * sizeof(double) );   // meq: equilibrium in momentum space
+    
     double* Gamma = (double*)malloc( mesh->lattice.Q * sizeof(double) );   // Source in population space
+    
     double* GammaHat = (double*)malloc( mesh->lattice.Q * sizeof(double) );   // Source in population space
 
     
@@ -49,30 +53,12 @@ void myMRTCollision( struct latticeMesh* mesh, struct macroFields* mfields, stru
 
 	/* } */
 
-
-	double umag = 0;
-	
-	for( k = 0 ; k < 3 ; k++ ) {
-	
-	    umag += mfields->U[id][k] * mfields->U[id][k];
-
-	}
-
-	
-    	// Compute equilibrium in momentum space
-	
-    	n_eq[0] = mfields->T[id] * mesh->EOS._Cv * mfields->rho[id];
-    	n_eq[1] = mfields->T[id] * mesh->EOS._Cv * mfields->rho[id] * (-2 + 3*umag);
-    	n_eq[2] = mfields->T[id] * mesh->EOS._Cv * mfields->rho[id] * (1 - 3*umag);
-    	n_eq[3] = mfields->T[id] * mesh->EOS._Cv * mfields->rho[id] * mfields->U[id][0];
-    	n_eq[4] = mfields->T[id] * mesh->EOS._Cv * mfields->rho[id] * (-mfields->U[id][0]);
-    	n_eq[5] = mfields->T[id] * mesh->EOS._Cv * mfields->rho[id] * mfields->U[id][1];
-    	n_eq[6] = mfields->T[id] * mesh->EOS._Cv * mfields->rho[id] * (-mfields->U[id][1]);
-    	n_eq[7] = mfields->T[id] * mesh->EOS._Cv * mfields->rho[id] * (mfields->U[id][0]*mfields->U[id][0] - mfields->U[id][1]*mfields->U[id][1]);
-    	n_eq[8] = mfields->T[id] * mesh->EOS._Cv * mfields->rho[id] * mfields->U[id][0] * mfields->U[id][1];
-
 	
 
+	// Equilibrium distribution in moment space
+
+	myMRTEquilibriumMS( mesh, mfields, n_eq, id );
+	
 	
     	// Distribution in momentum space
 
@@ -94,23 +80,27 @@ void myMRTCollision( struct latticeMesh* mesh, struct macroFields* mfields, stru
 	
     	for( k = 0 ; k < mesh->lattice.Q ; k++ ) {
 
-    	    m[k] = m[k]  -  field->Lambda[k]*( m[k] - m_eq[k] )  +  ( 1 - 0.5*field->Lambda[k] ) * S[k];
+    	    n[k] = n[k]  -  field->Lambda[k]*( n[k] - n_eq[k] )  +  ( 1 - 0.5*field->Lambda[k] ) * GammaHat[k];
 	    
     	}
 
 	
 	
-    	/* // Back to phase space */
+    	// Back to population space
 	
-    	/* matVecMult(mesh->lattice.invM, m, field->value[id], mesh->lattice.Q); */
+    	matVecMult(mesh->lattice.invM, n, field->value[id], mesh->lattice.Q);
 
 	
     }
 
+    
 
     // Deallocate memory
+
     free(n);
+
     free(n_eq);
+
     free(Gamma);
 
 

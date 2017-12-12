@@ -8,4 +8,5 @@ add_library(basic SHARED
   syncPdfField.c
   syncVectorField.c
   syncScalarField.c
+  vectorMag2.c
   )

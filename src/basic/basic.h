@@ -15,4 +15,6 @@ int** matrixIntAlloc(unsigned int nrow, unsigned int ncol, int df);
 
 #include <syncScalarField.h>
 
+#include <vectorMag2.h>
+
 #endif // BASIC_H

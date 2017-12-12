@@ -1,0 +1,1 @@
+../src/lbEquation/myMRTModel/myMRTEquilibriumMS.h
