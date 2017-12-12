@@ -9,6 +9,7 @@
 #include <liSRTModel.h>
 #include <liTempModel.h>
 #include <newTempModel.h>
+#include <myMRTModel.h>
 
 
 void updateBdElements( struct latticeMesh* mesh, struct macroFields* mfields, struct lbeField* field ) {
@@ -90,6 +91,21 @@ void updateBdElements( struct latticeMesh* mesh, struct macroFields* mfields, st
     		}
 	    
     		break;
+
+
+    		// new SRT Model. Temperature
+		
+    	    case 4:
+
+    		for( i = 0 ; i < mesh->mesh.bd.nbdelem[bndId] ; i++ ) {
+
+    		    j = mesh->mesh.bd.bdPoints[bndId][i];
+
+    		    mfields->T[j] = myMRTTemperature( mesh, mfields, field, j );
+
+    		}
+	    
+    		break;		
 		
 	
     	    default:

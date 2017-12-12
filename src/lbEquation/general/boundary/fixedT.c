@@ -11,7 +11,7 @@ void fixedT( struct latticeMesh* mesh, struct macroFields* mfields, struct lbeFi
 
     // Apply only if collision model is liTemp
 
-    if(  ( field->colId == 2 ) ||  ( field->colId == 3 )  ){
+    if(  ( field->colId == 2 )  ||  ( field->colId == 3 )  ||  ( field->colId == 4 )  ){
 
 	
 	unsigned int i, k;

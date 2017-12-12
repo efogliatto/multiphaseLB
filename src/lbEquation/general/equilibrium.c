@@ -8,6 +8,7 @@
 #include <liSRTModel.h>
 #include <liTempModel.h>
 #include <newTempModel.h>
+#include <myMRTModel.h>
 
 
 void equilibrium( struct latticeMesh* mesh, struct macroFields* mfields, struct lbeField* field ) {
@@ -92,6 +93,29 @@ void equilibrium( struct latticeMesh* mesh, struct macroFields* mfields, struct 
 	break;
 	
 
+
+
+    // new MRT model. Temperature
+	
+    case 4:
+	
+	for( id = 0 ; id < mesh->mesh.nPoints ; id++) {
+
+	    myMRTEquilibrium( &mesh->lattice, mfields->rho[id], mfields->U[id], field->value[id] );
+
+	    unsigned int k;
+
+	    for( k = 0 ; k < mesh->lattice.Q ; k++ ) {
+
+		field->value[id][k] = field->value[id][k] * mesh->EOS._Cv * mfields->T[id];
+	    
+	    }
+	    
+	}
+
+	
+	break;
+	
 
     default:
 
