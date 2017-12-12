@@ -2,6 +2,7 @@
 
 cmake_minimum_required(VERSION 2.8.9)
 project(multiphaseLB)
+set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake")
 set(CMAKE_BUILD_TYPE Release)
 set(CMAKE_BINARY_DIR ${CMAKE_SOURCE_DIR}/build)
 set(EXECUTABLE_OUTPUT_PATH ${CMAKE_SOURCE_DIR}/bin)
@@ -11,6 +12,8 @@ set(LIBRARY_OUTPUT_PATH ${CMAKE_SOURCE_DIR}/lib)
 # Bibliotecas externas: MPI
 find_package(MPI REQUIRED)
 
+# Bibliotecas externas: Sphinx
+# find_package(Sphinx REQUIRED)
 
 # Bring the headers
 include_directories(include ${MPI_INCLUDE_PATH})
@@ -30,3 +33,6 @@ endif()
 
 # Directorio con fuentes
 add_subdirectory (src)
+
+# Documentation
+add_subdirectory (docs)
