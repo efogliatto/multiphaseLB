@@ -128,6 +128,38 @@ unsigned int readLbeField( struct latticeMesh* mesh, struct lbeField* field, cha
 
 		}
 
+
+		else {
+
+		    if( strcmp(cmodel,"myMRT") == 0 ) {
+
+	
+			field->colId = 4;
+
+
+			// Relaxation time
+	
+			sprintf( prop, "%s/Lambda", fname);
+
+			double v[20];
+
+			status = lookUpVector("properties/macroProperties", prop, v, mesh->mesh.Q);
+
+			field->Lambda = (double*)malloc( mesh->mesh.Q * sizeof(double) );
+	
+			unsigned int ii;
+
+			for( ii = 0 ; ii < mesh->mesh.Q ; ii++ ) {
+
+			    field->Lambda[ii] = v[ii];
+
+			}
+	
+
+		    }
+
+		}
+
 	    }
 	    
 
