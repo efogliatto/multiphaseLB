@@ -12,8 +12,6 @@ set(LIBRARY_OUTPUT_PATH ${CMAKE_SOURCE_DIR}/lib)
 # Bibliotecas externas: MPI
 find_package(MPI REQUIRED)
 
-# Bibliotecas externas: Sphinx
-# find_package(Sphinx REQUIRED)
 
 # Bring the headers
 include_directories(include ${MPI_INCLUDE_PATH})
@@ -31,8 +29,19 @@ endif()
 
 
 
+
+
 # Directorio con fuentes
 add_subdirectory (src)
 
-# Documentation
-add_subdirectory (docs)
+
+
+# Optional documentation compilation
+option(BUILD_DOCS "Build documentation" OFF)
+
+if(BUILD_DOCS)
+  
+  add_subdirectory (docs)
+  
+endif()
+  

@@ -1,0 +1,5 @@
+# Ignore everything in this directory
+doxyhtml/
+doxyxml/
+# Except this file
+!.gitignore

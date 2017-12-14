@@ -1,9 +1,9 @@
 .. multiphaseLB documentation master file, created by
-   sphinx-quickstart on Tue Dec 12 10:08:24 2017.
+   sphinx-quickstart on Thu Dec 14 11:17:11 2017.
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to multiphaseLB's documentation!
+multiphaseLB
 ========================================
 
 Contents:
@@ -11,7 +11,7 @@ Contents:
 .. toctree::
    :maxdepth: 2
 
-
+   equations
 
 Indices and tables
 ==================
@@ -19,7 +19,4 @@ Indices and tables
 * :ref:`genindex`
 * :ref:`modindex`
 * :ref:`search`
-
-
-
 

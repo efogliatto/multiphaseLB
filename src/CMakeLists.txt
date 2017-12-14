@@ -15,5 +15,5 @@ add_subdirectory (lbEquation)
 # Applications
 add_subdirectory (applications)
 
-# Tests
-add_subdirectory (test)
+# # Tests
+# add_subdirectory (test)
