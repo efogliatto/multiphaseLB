@@ -6,6 +6,18 @@
 multiphaseLB
 ========================================
 
+Lattice-Boltzmann solver for multiphase flows with heat transfer
+
+.. image:: _static/D2Q9.jpg
+   :width: 40%
+   :align: left
+
+.. image:: _static/Maxwell.jpg
+   :width: 40%
+   :align: center
+
+
+
 Contents:
 
 .. toctree::
