@@ -6,7 +6,7 @@
 multiphaseLB
 ========================================
 
-Lattice-Boltzmann solver for multiphase flows with heat transfer
+Lattice-Boltzmann simulation of multiphase flows with heat transfer
 
 .. image:: _static/D2Q9.jpg
    :width: 40%
