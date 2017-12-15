@@ -19,7 +19,7 @@
 # import os
 import sys
 # sys.path.insert(0, os.path.abspath('.'))
-sys.path.append( "~/multiphaseLB/docs/breathe/" )
+sys.path.append( "~/multiphaseLB/build/docs/breathe/" )
 
 # -- General configuration ------------------------------------------------
 
@@ -34,7 +34,8 @@ extensions = [
     'sphinx.ext.mathjax', 'breathe'
 ]
 
-breathe_projects = { "multiphaseLB": "/users/fogliate/multiphaseLB/docs/doxyxml/" }
+breathe_projects = { "multiphaseLB": "/users/fogliate/multiphaseLB/build/docs/doxyxml/" }
+# breathe_projects = { "multiphaseLB": "$HOME/multiphaseLB/build/docs/doxyxml/" }
 
 breathe_default_project = "multiphaseLB"
 

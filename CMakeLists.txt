@@ -35,13 +35,5 @@ endif()
 add_subdirectory (src)
 
 
-
-# Optional documentation compilation
-option(BUILD_DOCS "Build documentation" OFF)
-
-if(BUILD_DOCS)
-  
-  add_subdirectory (docs)
-  
-endif()
-  
+# Documentation. make docs
+add_subdirectory (docs)

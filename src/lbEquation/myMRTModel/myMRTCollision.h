@@ -22,7 +22,7 @@
  * The post collision process produces
  * \f$ \mathbf{g^*}(\mathbf{x},t) = \mathbf{M}^{-1} \left[ \mathbf{n}(\mathbf{x},t) - \mathbf{Q}(\mathbf{n} - \mathbf{n}^{(eq)})_{(\mathbf{x},t)} + \left( \mathbf{I} - \frac{1}{2}\mathbf{Q} \right) \mathbf{\hat{\Gamma}} \right] \f$
  * @param mesh Lattice mesh struct.
- * @param mfield Macroscopic fields struct.
+ * @param mfields Macroscopic fields struct.
  * @param field Population field to be collided
  * @return Nothing. Updates @p field with post-collision field
  */
