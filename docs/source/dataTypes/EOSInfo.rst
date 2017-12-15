@@ -1,0 +1,5 @@
+EOSInfo
+=========
+
+.. doxygenstruct:: EOSInfo
+   :members:

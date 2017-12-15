@@ -1,25 +1,32 @@
 #ifndef VTKINFO_H
 #define VTKINFO_H
 
+/**
+ * @file vtkInfo.h
+ * @author Ezequiel O. Fogliatto
+ * @date 15 Dic 2017
+ * @brief VTK output information
+ */
+
+/**
+ * @brief VTK output information
+ *
+ * Information related to VTK uotput
+ */
+
 struct vtkInfo {
 
-    // Total number of scalar fields
-    unsigned int nscalar;
+    unsigned int nscalar;   /**< Total number of scalar fields */
+    
+    unsigned int nvector;   /**< Total number of vector fields */
+    
+    unsigned int npdf;   /**< Total number of pdf fields */
+    
+    char scalarFields[10][100];   /**< Scalar fields names*/
 
-    // Total number of vector fields
-    unsigned int nvector;
+    char vectorFields[10][100];   /**< Vector fields names*/
 
-    // Total number of pdf fields
-    unsigned int npdf;
-
-    // Scalar fields
-    char scalarFields[10][100];
-
-    // Vector fields
-    char vectorFields[10][100];
-
-    // Pdf fields
-    char pdfFields[10][100];
+    char pdfFields[10][100];   /**< Pdf fields names*/
     
 };
 

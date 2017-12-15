@@ -1,42 +1,40 @@
 #ifndef MPIINFO_H
 #define MPIINFO_H
 
-#define MPI_BUFF_SIZE 100
+#define MPI_BUFF_SIZE 100  /**< MPI buffer size */
+
+/**
+ * @file mpiInfo.h
+ * @author Ezequiel O. Fogliatto
+ * @date 15 Dic 2017
+ * @brief Struct containing mpi information
+ */
+
+/**
+ * @brief Struct containing mpi information
+ *
+ * This struct contains information related to mpi communications
+ */
 
 struct mpiInfo {
-
-    // Process id
-    unsigned int pid;
-
-    // Total number of processes
-    unsigned int worldSize;    
-
-    // Total number of ghosts
-    unsigned int nghosts;
-
-    // Local elements
-    unsigned int nlocal;
-
-    /* // Elements shared with other processes */
-    /* unsigned int* shared; */
-
-    // Receive ghosts
-    unsigned int** recvGhosts;
-
-    // Send ghosts
-    unsigned int** sendGhosts;
     
+    unsigned int pid;   /**< Process id */
     
-    // Receive ghosts
-    unsigned int* nrg;
-
-    // Send ghosts
-    unsigned int* nsg;
+    unsigned int worldSize;   /**< Total number of processes */
+    
+    unsigned int nghosts;   /**< Total number of ghosts */
+    
+    unsigned int nlocal;   /**< Number of local elements */
+    
+    unsigned int** recvGhosts;   /**< Receive ghosts indices*/
+    
+    unsigned int** sendGhosts;   /**< Send ghosts indices*/        
+    
+    unsigned int* nrg;   /**< Number of receive ghosts */
+    
+    unsigned int* nsg;   /**< Number of send ghosts */
     
 
-    
-
-    
     // Buffers
 
     /* // Scalars */
@@ -45,13 +43,13 @@ struct mpiInfo {
     /* int* sendScalarBlocks; */
     /* int* recvScalarBlocks; */
 
-    double** sbuf;
+    double** sbuf;   /**< Scalar send buffer */
     
-    double** rbuf;
+    double** rbuf;   /**< Scalar receive buffer */
 
-    double** vsbuf;
+    double** vsbuf;   /**< Vector send buffer */
     
-    double** vrbuf;    
+    double** vrbuf;   /**< Vector receive buffer */
     
     
 };

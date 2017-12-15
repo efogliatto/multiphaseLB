@@ -1,43 +1,66 @@
 #ifndef BASICMESH_H
 #define BASICMESH_H
 
+/**
+ * @file basicMesh.h
+ * @author Ezequiel O. Fogliatto
+ * @date 15 Dic 2017
+ * @brief Mesh information
+ */
+
+
+
+/**
+ * @brief Boundary information
+ *
+ * Information about boundary elements
+ */
 
 struct basicBoundary {
-
-    // Number of boundary types
-    unsigned int nbd;
-
-    // Total number of elements per boundary type
-    unsigned int* nbdelem;
-
-    // Boundary names (max 100 boundaries)
-    char bdNames[100][100];
-
-    // Elements in boundary
-    unsigned int** bdPoints;    
+    
+    unsigned int nbd;         /**< Number of boundary types */
+    
+    unsigned int* nbdelem;    /**< Total number of elements per boundary type */
+    
+    char bdNames[100][100];   /**< Boundary names (max 100 boundaries) */
+    
+    unsigned int** bdPoints;  /**< Elements in boundary */
 
 };
 
 
+
+/**
+ * @brief Basic lattice information
+ *
+ * Lattice information
+ */
+
 struct basicMesh {
 
     
-    // Points
-    unsigned int nPoints;
-    int** points;
+    unsigned int nPoints;   /**< Total number of points per patch */
+    
+    int** points;   /**< Points coordinates array */
+    
 
-    // Neighbours
-    unsigned int Q;
-    char lbm[100];
-    int** nb;
+    
+    unsigned int Q;   /**< Total number of neighbours */
+    
+    char lbm[100];   /**< LB lattice model (DdQq type) */
+    
+    int** nb;   /**< Neighbour indices array */
 
-    // Boundary
-    struct basicBoundary bd;
 
-    // VTK Cells
-    unsigned int ncells;
-    unsigned int cellType;
-    int** vtkCells;
+    
+    struct basicBoundary bd;   /**< Boundary information */
+
+    
+    unsigned int ncells;   /**< Number of VTK cells per patch */
+    
+    unsigned int cellType;   /**< VTK cell type */
+    
+    int** vtkCells;   /**< VTK cell indices array */
 
 };
 

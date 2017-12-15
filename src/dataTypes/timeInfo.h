@@ -4,33 +4,36 @@
 #include <time.h>
 #include <sys/time.h>
 
+/**
+ * @file timeInfo.h
+ * @author Ezequiel O. Fogliatto
+ * @date 15 Dic 2017
+ * @brief Struct containing simulation parameters
+ */
+
+/**
+ * @brief Struct containing simulation parameters
+ *
+ * This struct contains information related to global simulation 
+ */
+
 struct timeInfo {
 
-    // Simulation parameters
+    unsigned int start;   /**< Start time */
 
-    // Start time
-    unsigned int start;
+    unsigned int end;   /**< End time */
 
-    // End time
-    unsigned int end;
+    unsigned int current;   /**< Current time */
 
-    // Current time
-    unsigned int current;
+    unsigned int writeInterval;   /**< Write interval (write every writeInterval steps) */
 
-
-    // Write interval (write every writeInterval steps)
-    unsigned int writeInterval;
-
-    // Start time (time measurement)
-    time_t st;
-    struct timeval stt;
-
-    // Time step (inside write intrval)
-    unsigned int stp;
-
-    // Debug flag
-    unsigned int debug;
+    time_t st;   /**< Start time (cpu time measurement) */
     
+    struct timeval stt;   /**< Time struct (cpu time measurement) */
+
+    unsigned int stp;   /**< Time step inside write intrval */
+
+    unsigned int debug;   /**< Debug flag. If true, write fields in raw format */   
     
 };
 

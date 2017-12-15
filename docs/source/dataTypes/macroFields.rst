@@ -1,0 +1,5 @@
+macroFields
+===========
+
+.. doxygenstruct:: macroFields
+   :members:

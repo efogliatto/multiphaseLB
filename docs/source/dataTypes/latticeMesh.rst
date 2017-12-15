@@ -1,0 +1,5 @@
+latticeMesh
+===========
+
+.. doxygenstruct:: latticeMesh
+   :members:

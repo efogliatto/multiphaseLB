@@ -1,27 +1,32 @@
 #ifndef MACROFIELDS_H
 #define MACROFIELDS_H
 
+/**
+ * @file macroFields.h
+ * @author Ezequiel O. Fogliatto
+ * @date 15 Dic 2017
+ * @brief Struct containing arrays for macroscopic fields
+ */
+
+/**
+ * @brief Struct containing arrays for macroscopic fields
+ *
+ * This struct contains arrays for all macroscopic fields, wether they are used or not.
+ */
+
 struct macroFields {
 
-    // Density
-    double* rho;
+    double* rho; /**< Macroscopic density field */
 
-    // Pressure
-    double* p;
+    double* p;  /**< Macroscopic pressure field */
 
-    // Velocity
-    double** U;
+    double** U;  /**< Macroscopic velocity field */
 
-    // Temperature
-    double* T;
+    double* T;  /**< Macroscopic temperature field */
 
+    double** Fi; /**< Macroscopic interaction force field */
 
-
-    // Interaction force
-    double** Fi;
-
-    // Compresion work
-    double* phiDivU;
+    double* phiDivU; /**< Macroscopic compression work field */
     
     /* // Constants */
 

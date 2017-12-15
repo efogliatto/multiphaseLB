@@ -13,37 +13,31 @@
 #include <latticeInfo.h>
 #include <EOSInfo.h>
 
+/**
+ * @file latticeMesh.h
+ * @author Ezequiel O. Fogliatto
+ * @date 15 Dic 2017
+ * @brief Full mesh information
+ */
+
+/**
+ * @brief Full mesh information
+ *
+ * Full mesh information
+ */
+
 struct latticeMesh {
 
-
     
-    // Time information
+    struct timeInfo time;          /**< Time information */
     
-    struct timeInfo time;
-
-
+    struct basicMesh mesh;         /**< Mesh information */
     
-    // Mesh information
-    
-    struct basicMesh mesh;
+    struct mpiInfo parallel;       /**< Parallel structure */
 
+    struct latticeInfo lattice;    /**< DdQq model information */
 
-    
-    // Parallel structure
-    
-    struct mpiInfo parallel;
-
-
-    
-    // DdQq model information
-
-    struct latticeInfo lattice;
-    
-
-
-    // EOS information
-
-    struct EOSInfo EOS;
+    struct EOSInfo EOS;            /**< EOS information */
     
 };
 

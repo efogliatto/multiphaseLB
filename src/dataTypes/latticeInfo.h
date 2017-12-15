@@ -3,33 +3,38 @@
 
 // Basically, DdQq model info
 
+/**
+ * @file latticeInfo.h
+ * @author Ezequiel O. Fogliatto
+ * @date 15 Dic 2017
+ * @brief Lattice model parameters
+ */
+
+/**
+ * @brief Lattice model parameters
+ *
+ * Lattice model parameters
+ */
+
 struct latticeInfo {
 
-    // Sound speed
-    double cs2;
+    double cs2;    /**< Sound speed */
 
-    // Dimension
-    int d;
+    int d;    /**< Dimension */
 
-    // Number of discrete velocities
-    int Q;
+    int Q;    /**< Number of discrete velocities */
 
-    // DdQq model velocities
-    int** vel;
+    int** vel;    /**< DdQq model velocities */
 
-    // DdQq model reverse indices
-    int* reverse;
+    int* reverse;    /**< DdQq model reverse indices */
     
-    // DdQq model weights
-    double* omega;
+    double* omega;    /**< DdQq model weights */
 
-    // Interaction force weights
-    double* weights;
+    double* weights;    /**< Interaction force weights */
 
-    // MRT matrices
-    double** M;
+    double** M;    /**< MRT transformation matrix */
 
-    double** invM;
+    double** invM;    /**< MRT inverse of transformation matrix */
     
 };
 

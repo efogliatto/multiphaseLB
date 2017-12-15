@@ -1,32 +1,56 @@
 #ifndef EOSINFO_H
 #define EOSINFO_H
 
+/**
+ * @file EOSInfo.h
+ * @author Ezequiel O. Fogliatto
+ * @date 15 Dic 2017
+ * @brief Equation Of State parameters
+ */
+
+/**
+ * @brief Equation Of State parameters
+ *
+ * Constants used in the selecter EOS
+ */
+
 struct EOSInfo {
 
-    // EOS index
-    // 0 : ideal gas
-    // 1 : Carnahan-Starling
-    // 2 : Peng-Robinson
-    // 3 : van der Waals
+    /** EOS identifier
+     *- 0 : ideal gas
+     *- 1 : Carnahan-Starling
+     *- 2 : Peng-Robinson
+     *- 3 : van der Waals 
+     */
     unsigned int _eosIdx;
 
 
-    // Coefficients
-    double _a;
-    double _b;
-    double _R;
-    double _G;
-    double _M;
-    double _omega;
 
-    // Constant specific heat
-    double _Cv;
+    double _a;    /**< EOS constant */
 
-    // Gravity vector
-    double _g[3];
 
-    // Reference density
-    double rho_0;    
+    double _b;    /**< EOS constant */
+
+
+    double _R;    /**< Gas constant */
+
+
+    double _G;    /**< Interaction strength */
+
+
+    double _M;    /**< Molar mass */
+
+
+    double _omega;    /**< EOS constant */
+
+
+    double _Cv;    /**< Constant specific heat */
+
+    
+    double _g[3];   /**< Gravity vector */
+
+    
+    double rho_0;  /**< Reference density (buoyant force) */
     
 };
 

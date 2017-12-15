@@ -9,10 +9,12 @@ multiphaseLB
 Contents:
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 1
 
+   dataTypes <dataTypes/dataTypes>
    equations
 
+   
 Indices and tables
 ==================
 

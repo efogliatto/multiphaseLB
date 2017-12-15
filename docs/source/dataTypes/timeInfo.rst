@@ -1,0 +1,5 @@
+timeInfo
+========
+
+.. doxygenstruct:: timeInfo
+   :members:

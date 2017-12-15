@@ -1,0 +1,5 @@
+mpiInfo
+=========
+
+.. doxygenstruct:: mpiInfo
+   :members:

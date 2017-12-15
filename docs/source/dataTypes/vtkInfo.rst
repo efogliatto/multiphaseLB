@@ -1,0 +1,5 @@
+vtkInfo
+=========
+
+.. doxygenstruct:: vtkInfo
+   :members:
