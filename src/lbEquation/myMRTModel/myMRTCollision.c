@@ -41,9 +41,9 @@ void myMRTCollision( struct latticeMesh* mesh, struct macroFields* mfields, stru
 	
 	if( field->tauModel == 2 ) {
 	
-	    field->Lambda[3] = 0.5 * (mesh->lattice.cs2 * mfields->rho[id] * mesh->EOS._Cv) / field->lambda;
-
-	    field->Lambda[5] = 0.5 * (mesh->lattice.cs2 * mfields->rho[id] * mesh->EOS._Cv) / field->lambda;
+	    field->Lambda[3] = 1.0   /   (  field->lambda / (mfields->rho[id] * mesh->lattice.cs2 * mesh->EOS._Cv)  +  0.5 );
+	    
+	    field->Lambda[5] = field->Lambda[3];  
 
 	}
 	

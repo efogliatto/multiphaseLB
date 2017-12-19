@@ -24,7 +24,7 @@
  * @param mesh Lattice mesh struct.
  * @param mfields Macroscopic fields struct.
  * @param field Population field to be collided
- * @return Nothing. Updates @p field with post-collision field
+ * @return Nothing. Updates @p field with post-collision values
  */
 
 void myMRTCollision( struct latticeMesh* mesh, struct macroFields* mfields, struct lbeField* field );
