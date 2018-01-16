@@ -8,92 +8,92 @@ void scalarGradient( double* grad, double* field, struct latticeMesh* mesh, unsi
     // Neighbours
     int a;
     int b;
-
+  
 
     // D2Q9 model
 
     if(   ( mesh->lattice.d == 2 )  &&  ( mesh->lattice.Q == 9 )   )  {
     
 
-	// X - derivative
+    	// X - derivative
 
-	a = mesh->mesh.nb[id][3];
-	b = mesh->mesh.nb[id][1];
+    	a = mesh->mesh.nb[id][3];
+    	b = mesh->mesh.nb[id][1];
     
-	if(  (a != -1)  &&  (b != -1)  ) {
+    	if(  (a != -1)  &&  (b != -1)  ) {
     
-	    grad[0] = 0.5 * (field[a] - field[b]);
+    	    grad[0] = 0.5 * (field[a] - field[b]);
 
-	}
+    	}
 
-	else {
+    	else {
 
-	    if(  (a == -1)  &&  (b != -1)  ) {
+    	    if(  (a == -1)  &&  (b != -1)  ) {
     
-		grad[0] = (field[id] - field[b]);
+    		grad[0] = (field[id] - field[b]);
 
-	    }
+    	    }
 
-	    else {
+    	    else {
 
-		if(  (a != -1)  &&  (b == -1)  ) {
+    		if(  (a != -1)  &&  (b == -1)  ) {
     
-		    grad[0] = (field[a] - field[id]);
+    		    grad[0] = (field[a] - field[id]);
 
-		}
+    		}
 
-		else {
+    		else {
 
-		    grad[0] = 0;
+    		    grad[0] = 0;
 
-		}
+    		}
 
-	    }	
+    	    }
 
-	}
-
-
+    	}
 
 
-	// Y - derivative
 
-	a = mesh->mesh.nb[id][4];
-	b = mesh->mesh.nb[id][2];
+
+    	// Y - derivative
+
+    	a = mesh->mesh.nb[id][4];
+    	b = mesh->mesh.nb[id][2];
     
-	if(  (a != -1)  &&  (b != -1)  ) {
+    	if(  (a != -1)  &&  (b != -1)  ) {
     
-	    grad[1] = 0.5 * (field[a] - field[b]);
+    	    grad[1] = 0.5 * (field[a] - field[b]);
 
-	}
+    	}
 
-	else {
+    	else {
 
-	    if(  (a == -1)  &&  (b != -1)  ) {
+    	    if(  (a == -1)  &&  (b != -1)  ) {
     
-		grad[1] = (field[id] - field[b]);
+    		grad[1] = (field[id] - field[b]);
 
-	    }
+    	    }
 
-	    else {
+    	    else {
 
-		if(  (a != -1)  &&  (b == -1)  ) {
+    		if(  (a != -1)  &&  (b == -1)  ) {
     
-		    grad[1] = (field[a] - field[id]);
+    		    grad[1] = (field[a] - field[id]);
 
-		}
+    		}
 
-		else {
+    		else {
 
-		    grad[0] = 0;
+    		    grad[0] = 0;
 
-		}
+    		}
 
-	    }	
+    	    }
 
-	}    
+    	}
     
 
-	grad[2] = 0.0;
+    	grad[2] = 0.0;
 
 
     }
@@ -103,9 +103,9 @@ void scalarGradient( double* grad, double* field, struct latticeMesh* mesh, unsi
     
     else {
 
-	printf("\n  [ERROR]  Gradient function not defined\n\n");
+    	printf("\n  [ERROR]  Gradient function not defined\n\n");
 
-	exit(0);
+    	exit(0);
 
     }
 

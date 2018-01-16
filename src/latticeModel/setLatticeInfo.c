@@ -11,6 +11,8 @@
 
 unsigned int latticeQ( char* modelName );
 
+unsigned int latticeD( char* modelName );
+
 
 struct latticeInfo setLatticeInfo( ) {
 
@@ -43,6 +45,8 @@ struct latticeInfo setLatticeInfo( ) {
     info.cs2 = cs2( modelName );
 
     info.Q = latticeQ( modelName );
+
+    info.d = latticeD( modelName );
 
     info.vel = latticeVelocities( modelName );
 

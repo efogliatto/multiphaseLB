@@ -14,5 +14,7 @@
 
 unsigned int latticeQ( char* modelName );
 
+unsigned int latticeD( char* modelName );
+
 
 #endif // LATTICEMODEL_H

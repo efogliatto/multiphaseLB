@@ -6,6 +6,7 @@ add_library(latticemodel SHARED
   latticeWeights.c
   latticeReverseDir.c
   latticeQ.c
+  latticeD.c
   MRTMatrix.c
   MRTInvMatrix.c
   ppWeights.c
