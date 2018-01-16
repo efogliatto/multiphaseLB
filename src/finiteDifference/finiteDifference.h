@@ -3,4 +3,6 @@
 
 #include <scalarGradient.h>
 
+#include <vectorDivergence.h>
+
 #endif // FINITEDIFFERENCE_H

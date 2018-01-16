@@ -123,20 +123,22 @@ int main( int argc, char **argv ) {
 
 	for( i = 0 ; i < mesh.parallel.nlocal ; i++ ) {
 
-	    scalarGradient( mfields.U[i], mfields.rho, &mesh, i); 
+	    /* scalarGradient( mfields.U[i], mfields.rho, &mesh, i);  */
+
+	    mfields.U[i][0] = mesh.mesh.points[i][0];
+	    
+	    mfields.U[i][1] = mesh.mesh.points[i][1];
 
 	}
 
 
 	// Compute divergence of vector field
 
-	/* unsigned int i; */
+	for( i = 0 ; i < mesh.parallel.nlocal ; i++ ) {
 
-	/* for( i = 0 ; i < mesh.parallel.nlocal ; i++ ) { */
+	    mfields.T[i] = vectorDivergence( mfields.U, &mesh, i );
 
-	/*     scalarGradient( mfields.U[i], mfields.rho, &mesh, i);  */
-
-	/* }	 */
+	}
 
 	
 	
