@@ -13,7 +13,7 @@ void myMRTCollision( struct latticeMesh* mesh, struct macroFields* mfields, stru
 
     // Indices
     
-    unsigned int id, k;
+    unsigned int id, j, k;
 
 
     
@@ -21,37 +21,70 @@ void myMRTCollision( struct latticeMesh* mesh, struct macroFields* mfields, stru
     
     double* n     = (double*)malloc( mesh->lattice.Q * sizeof(double) );   // m:  momentum space
     
-    double* n_eq  = (double*)malloc( mesh->lattice.Q * sizeof(double) );   // meq: equilibrium in momentum space
-    
-    double* Gamma = (double*)malloc( mesh->lattice.Q * sizeof(double) );   // Source in population space
+    double* n_eq  = (double*)malloc( mesh->lattice.Q * sizeof(double) );   // meq: equilibrium in momentum space   
     
     double* GammaHat = (double*)malloc( mesh->lattice.Q * sizeof(double) );   // Source in population space
 
+    double* aux_1  = (double*)malloc( mesh->lattice.Q * sizeof(double) );
+
+    double* aux_2  = (double*)malloc( mesh->lattice.Q * sizeof(double) );
     
 
+    
+    // Non-diagonal Q
+
+    double** Q = matrixDoubleAlloc( mesh->lattice.Q, mesh->lattice.Q, 0 );
+
+    double** Q_aux = matrixDoubleAlloc( mesh->lattice.Q, mesh->lattice.Q, 0 );  // Q_aux = I  -  0.5 * Q
+
+    for( k = 0 ; k < mesh->lattice.Q ; k++ ) {
+
+	Q[k][k] = field->Lambda[k];
+
+    }
+
+
+    if( mesh->lattice.Q == 9 ) {
+
+	Q[3][4] = Q[4][4]  *  ( Q[3][3]/2.0  - 1.0 );
+
+	Q[5][6] = Q[6][6]  *  ( Q[5][5]/2.0  - 1.0 );
+
+    }
+
+
+    for( j = 0 ; j < mesh->lattice.Q ; j++ ) {
+
+	for( k = 0 ; k < mesh->lattice.Q ; k++ ) {
+
+	    Q_aux[j][k] = -0.5 * Q[j][k];
+
+	    if( j == k ) {
+
+		Q_aux[j][k] = 1.0 + Q_aux[j][k];
+
+	    }
+
+	}
+
+    }
+
+
+    
+    
+    
+
+    
     
     // Move over ALL points
     
     for( id = 0 ; id < mesh->mesh.nPoints ; id++ ) {
 
-
-	// Update real tau
-
-	// Constant Lambda
-	
-	if( field->tauModel == 2 ) {
-	
-	    field->Lambda[3] = 1.0   /   (  field->lambda / (mfields->rho[id] * mesh->lattice.cs2 * mesh->EOS._Cv)  +  0.5 );
-	    
-	    field->Lambda[5] = field->Lambda[3];  
-
-	}
-	
 	
 
 	// Equilibrium distribution in moment space
 
-	myMRTEquilibriumMS( mesh, mfields, n_eq, id );
+	myMRTEquilibriumMS( mesh, mfields, n_eq, field->alpha_1, field->alpha_2, id );
 	
 	
     	// Distribution in momentum space
@@ -59,22 +92,40 @@ void myMRTCollision( struct latticeMesh* mesh, struct macroFields* mfields, stru
     	matVecMult(mesh->lattice.M, field->value[id], n, mesh->lattice.Q);
 
 
-	// Source in population space (heat sink, compression work and correction terms)
+	// Source in momentum space (heat sink, compression work and correction terms)
 
-	myMRTSource(mesh, mfields, Gamma, id);
+	myMRTSource(mesh, mfields, GammaHat, id);
+
+	
 
 
-	// Source in momentum space
+	// First auxiliary distribution: n - n_eq
 
-	matVecMult(mesh->lattice.M, Gamma, GammaHat, mesh->lattice.Q);
+	for( k = 0 ; k < mesh->lattice.Q ; k++ ) {
 
+	    aux_2[k] = n[k] - n_eq[k];
+
+	}
+
+
+	// aux_1 = Q * (n - n_eq)
+
+	matVecMult(Q, aux_2, aux_1, mesh->lattice.Q);
+
+
+
+	// Second auxiliary distribution: (I  -  0.5 * Q) * GammaHat
+	
+	matVecMult(Q_aux, GammaHat, aux_2, mesh->lattice.Q);
+
+	
 	
 	
     	// Collision in momentum space
 	
     	for( k = 0 ; k < mesh->lattice.Q ; k++ ) {
 
-    	    n[k] = n[k]  -  field->Lambda[k]*( n[k] - n_eq[k] )  +  ( 1 - 0.5*field->Lambda[k] ) * GammaHat[k];
+    	    n[k] = n[k] - aux_1[k] + aux_2[k];
 	    
     	}
 
@@ -95,7 +146,20 @@ void myMRTCollision( struct latticeMesh* mesh, struct macroFields* mfields, stru
 
     free(n_eq);
 
-    free(Gamma);
+    free(GammaHat);
+
+    free(aux_1);
+
+    free(aux_2);
+
+    
+    for( k = 0 ; k < mesh->lattice.Q ; k++ ) {
+
+	free( Q[k] );
+
+    }
+
+    free(Q);
 
 
     

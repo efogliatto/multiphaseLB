@@ -100,6 +100,14 @@ struct lbeField {
     double nb;
 
     
+    /** Extra constants used for equilibrium distributions in moment space (myMRTModel) */
+
+    double alpha_1;
+
+    double alpha_2;
+    
+
+    
     /** Boundary info. Related to basicBoundary in basicMesh */
     struct bdField* boundary;
     

@@ -11,6 +11,7 @@ set ( PROJECT_LINK_LIBS
   liblitempmodel.so
   libnewtempmodel.so
   libmymrtmodel.so
+  libfinitedifference.so
   ${MPI_LIBRARIES})
 
 link_directories( ~/multiphaseLB/lib )

@@ -154,6 +154,19 @@ unsigned int readLbeField( struct latticeMesh* mesh, struct lbeField* field, cha
 			    field->Lambda[ii] = v[ii];
 
 			}
+
+
+
+			// Extra constants
+
+			sprintf( prop, "%s/alpha_1", fname);
+
+			status = lookUpDouble("properties/macroProperties", prop, &field->alpha_1, 1 );
+
+
+			sprintf( prop, "%s/alpha_2", fname);
+
+			status = lookUpDouble("properties/macroProperties", prop, &field->alpha_2, 1 );			
 	
 
 		    }

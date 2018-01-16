@@ -13,11 +13,11 @@ double myMRTTemperature( struct latticeMesh* mesh, struct macroFields* mfields, 
     double T = 0;
 
     
-    /* // Implicit source term */
+    // Implicit source term
     
-    /* double* Gamma = (double*)malloc( mesh->lattice.Q * sizeof(double) ); */
+    double* Gamma = (double*)malloc( mesh->lattice.Q * sizeof(double) );
 
-    /* myMRTSource(mesh, mfields, Gamma, id); */
+    myMRTSource(mesh, mfields, Gamma, id);
 
 
     
@@ -25,13 +25,9 @@ double myMRTTemperature( struct latticeMesh* mesh, struct macroFields* mfields, 
 
     for(k = 0 ; k < mesh->lattice.Q ; k++) {
 
-	T += field->value[id][k] /* - 0.5 * Gamma[k] */;
+	T += field->value[id][k] - 0.5 * Gamma[k];
 		    
     }
-
-
-    // Compute T
-    T = T / (mfields->rho[id] * mesh->EOS._Cv);
 
 
     return T;
