@@ -17,7 +17,7 @@ void compWork( struct latticeMesh* mesh, struct macroFields* mfields ) {
 
 	// Compute divergence of velocity field
 
-	divU = vectorDivergence( mesh, mfields->U, id );
+	divU = vectorDivergence( mfields->U, mesh, id );
 
 	
 

@@ -3,6 +3,6 @@
 
 #include <latticeMesh.h>
 
-double vectorDivergence( struct latticeMesh* mesh, double** v, unsigned int id );
+double vectorDivergence( double** field, struct latticeMesh* mesh, unsigned int id );
 
 #endif // VECTORDIVERGENCE_H

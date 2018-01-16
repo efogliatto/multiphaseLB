@@ -1,1 +1,1 @@
-../src/lbEquation/general/vectorDivergence.h
+../src/finiteDifference/vectorDivergence.h
