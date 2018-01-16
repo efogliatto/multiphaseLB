@@ -127,6 +127,17 @@ int main( int argc, char **argv ) {
 
 	}
 
+
+	// Compute divergence of vector field
+
+	/* unsigned int i; */
+
+	/* for( i = 0 ; i < mesh.parallel.nlocal ; i++ ) { */
+
+	/*     scalarGradient( mfields.U[i], mfields.rho, &mesh, i);  */
+
+	/* }	 */
+
 	
 	
     	// Write fields
