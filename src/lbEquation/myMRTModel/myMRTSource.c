@@ -11,8 +11,8 @@ void myMRTSource( struct latticeMesh* mesh, struct macroFields* mfields, struct 
 
     double lambda = 1.0,
 	dot = 0.0,
-	divU,
-	dpdT;
+	divU = 0.0,
+	dpdT = 0.0;
 
     double gradT[3],
 	gradRho[3];
@@ -29,14 +29,14 @@ void myMRTSource( struct latticeMesh* mesh, struct macroFields* mfields, struct 
     lambda = mfields->rho[id] * mesh->EOS._Cv * (1/field->Lambda[3] - 0.5) * (4.0 + 3.0 * field->alpha_1 + 2.0 * field->alpha_2) / 6.0;
     
 
-    /* // Temperature gradient */
+    // Temperature gradient
     
-    /* scalarGradient( gradT, mfields->T, mesh, id ); */
+    scalarGradient( gradT, mfields->T, mesh, id );
 
 
-    /* // 1/rho gradient */
+    // 1/rho gradient
     
-    /* invScalarGradient( gradRho, mfields->rho, mesh, id ); */
+    invScalarGradient( gradRho, mfields->rho, mesh, id );
 
 
     /* // Velocity divergence */
@@ -45,11 +45,11 @@ void myMRTSource( struct latticeMesh* mesh, struct macroFields* mfields, struct 
 
 
 
-    /* for( i = 0 ; i < mesh->lattice.Q ; i++ ) { */
+    for( i = 0 ; i < mesh->lattice.Q ; i++ ) {
 
-    /* 	dot += gradT[i] * gradRho[i]; */
+    	dot += gradT[i] * gradRho[i];
 	
-    /* } */
+    }
 
 
 
@@ -58,6 +58,6 @@ void myMRTSource( struct latticeMesh* mesh, struct macroFields* mfields, struct 
 
     /* dpdT = dpdT / (0.2*mfields->T[id]); */
     
-    /* Gamma[0] = -lambda * dot / mesh->EOS._Cv   +   divU * mfields->T[id]*( 1.0 - dpdT/(mfields->rho[id]*mesh->EOS._Cv) ); */
+    Gamma[0] = -lambda * dot / mesh->EOS._Cv   +   divU * mfields->T[id]*( 1.0 - dpdT/(mfields->rho[id]*mesh->EOS._Cv) );
 
 }
