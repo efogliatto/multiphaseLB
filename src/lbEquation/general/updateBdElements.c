@@ -93,7 +93,7 @@ void updateBdElements( struct latticeMesh* mesh, struct macroFields* mfields, st
     		break;
 
 
-    		// new SRT Model. Temperature
+    		// my MRT Model. Temperature
 		
     	    case 4:
 

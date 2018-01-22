@@ -4,12 +4,13 @@
 #include <lbeField.h>
 #include <macroFields.h>
 #include <liTempEquilibrium.h>
+#include <myMRTEquilibrium.h>
 
 
 void fixedT( struct latticeMesh* mesh, struct macroFields* mfields, struct lbeField* field, unsigned int bid ) {
 
 
-    // Apply only if collision model is liTemp
+    // Apply only if collision model is liTemp or myMRT
 
     if(  ( field->colId == 2 )  ||  ( field->colId == 3 )  ||  ( field->colId == 4 )  ){
 
@@ -49,10 +50,21 @@ void fixedT( struct latticeMesh* mesh, struct macroFields* mfields, struct lbeFi
 		    
 		    if( nbid != -1 ) {
 
+
+			if( field->colId == 4 ) {
 			
-			liTempEquilibrium( &mesh->lattice, mfields->rho[nbid], mfields->U[nbid], f_eq_nb );
+			    myMRTEquilibrium( &mesh->lattice, mfields->T[nbid], mfields->U[nbid], field->alpha_1, field->alpha_2, f_eq_nb );
+
+			}
+
+			else {
+
+			    liTempEquilibrium( &mesh->lattice, mfields->rho[nbid], mfields->U[nbid], f_eq_nb );
+			    
+			}
 
 
+			
 			// Use perturbations
 
 			double r = 1;
@@ -62,12 +74,28 @@ void fixedT( struct latticeMesh* mesh, struct macroFields* mfields, struct lbeFi
 			    r = (double)rand() / (double)RAND_MAX;
 
 			    r = (1.0 - field->boundary[bid].vectorVal[0]/100) + r * ( (1.0 + field->boundary[bid].vectorVal[0]/100) - (1.0 - field->boundary[bid].vectorVal[0]/100) );		    
+			}
+
+
+
+			if( field->colId == 4 ) {
+
+			    eq_bnd = r * f_eq_nb[k];
+			    
+			    eq_nb  = f_eq_nb[k];
 
 			}
+
+			else {
 			
-			eq_bnd = mesh->EOS._Cv * field->boundary[bid].scalarVal * r * f_eq_nb[k];
+			    eq_bnd = mesh->EOS._Cv * field->boundary[bid].scalarVal * r * f_eq_nb[k];
 			    
-			eq_nb  = mesh->EOS._Cv * mfields->T[nbid] * f_eq_nb[k];
+			    eq_nb  = mesh->EOS._Cv * mfields->T[nbid] * f_eq_nb[k];
+
+			}
+
+
+
 
 			
 			// Update distribution
