@@ -16,17 +16,34 @@
 
 struct macroFields {
 
-    double* rho; /**< Macroscopic density field */
+    /** Macroscopic density field */
+    
+    double* rho; 
 
-    double* p;  /**< Macroscopic pressure field */
+    
+    /** Macroscopic pressure field */
+    
+    double* p;  
 
-    double** U;  /**< Macroscopic velocity field */
 
-    double* T;  /**< Macroscopic temperature field */
+    /** Macroscopic velocity field */
+    
+    double** U;  
 
-    double** Fi; /**< Macroscopic interaction force field */
+    
+    /** Macroscopic temperature field */
+    
+    double* T;  
 
-    double* phiDivU; /**< Macroscopic compression work field */
+
+    /** Macroscopic interaction force field */
+    
+    double** Fi; 
+
+    
+    /** Macroscopic scalar source term */
+    
+    double* scalarSource; 
     
     /* // Constants */
 

@@ -13,8 +13,8 @@ add_subdirectory (liSRTModel)
 # Li Temperature Model
 add_subdirectory (liTempModel)
 
-# new Temperature Model
-add_subdirectory (newTempModel)
+# # new Temperature Model
+# add_subdirectory (newTempModel)
 
 # new MRT Temperature model
 add_subdirectory (myMRTModel)

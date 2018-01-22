@@ -202,27 +202,27 @@ int main( int argc, char **argv ) {
 
 
     
-    // Update macroscopic compression work
+    /* // Update macroscopic compression work */
 
-    if( ( frozen != 0 )  &&  (g.colId == 3) ) {
+    /* if( ( frozen != 0 )  &&  (g.colId == 3) ) { */
     
-	mfields.phiDivU = (double*)malloc(mesh.mesh.nPoints * sizeof(double));
+    /* 	mfields.phiDivU = (double*)malloc(mesh.mesh.nPoints * sizeof(double)); */
 
 
-	unsigned int ii;
+    /* 	unsigned int ii; */
 
-	for( ii = 0 ; ii < mesh.mesh.nPoints ; ii++ ) {
+    /* 	for( ii = 0 ; ii < mesh.mesh.nPoints ; ii++ ) { */
 
-	    mfields.phiDivU[ii] = 0;
+    /* 	    mfields.phiDivU[ii] = 0; */
 
-	}
+    /* 	} */
 	
     
-	compWork( &mesh, &mfields );
+    /* 	compWork( &mesh, &mfields ); */
     
-	syncScalarField( &mesh, mfields.phiDivU );    
+    /* 	syncScalarField( &mesh, mfields.phiDivU );     */
     
-    }
+    /* } */
     
    
     if(pid == 0){printf("\n\n");}
@@ -298,15 +298,15 @@ int main( int argc, char **argv ) {
     	if( frozen != 0 ) {  macroVelocity( &mesh, &mfields, &f ); }
 
 
-    	// Update compression work
+    	/* // Update compression work */
 
-	if( ( frozen != 0 )  &&  (g.colId == 3) ) {
+	/* if( ( frozen != 0 )  &&  (g.colId == 3) ) { */
 
-	    compWork( &mesh, &mfields );
+	/*     compWork( &mesh, &mfields ); */
 
-	    syncScalarField( &mesh, mfields.phiDivU );
+	/*     syncScalarField( &mesh, mfields.phiDivU ); */
 	    
-	}
+	/* } */
 	
 	
 
