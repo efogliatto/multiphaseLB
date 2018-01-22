@@ -17,7 +17,7 @@ double myMRTTemperature( struct latticeMesh* mesh, struct macroFields* mfields, 
     
     double* Gamma = (double*)malloc( mesh->lattice.Q * sizeof(double) );
 
-    myMRTSource(mesh, mfields, Gamma, id);
+    myMRTSource(mesh, mfields, field, Gamma, id);
 
 
     
@@ -28,6 +28,10 @@ double myMRTTemperature( struct latticeMesh* mesh, struct macroFields* mfields, 
 	T += field->value[id][k] - 0.5 * Gamma[k];
 		    
     }
+
+
+    
+    free(Gamma);
 
 
     return T;

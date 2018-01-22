@@ -94,7 +94,7 @@ void myMRTCollision( struct latticeMesh* mesh, struct macroFields* mfields, stru
 
 	// Source in momentum space (heat sink, compression work and correction terms)
 
-	myMRTSource(mesh, mfields, GammaHat, id);
+	myMRTSource(mesh, mfields, field, GammaHat, id);
 
 	
 
@@ -157,9 +157,13 @@ void myMRTCollision( struct latticeMesh* mesh, struct macroFields* mfields, stru
 
 	free( Q[k] );
 
+	free( Q_aux[k] );
+
     }
 
     free(Q);
+
+    free(Q_aux);
 
 
     
