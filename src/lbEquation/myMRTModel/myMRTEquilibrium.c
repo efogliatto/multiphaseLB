@@ -35,7 +35,6 @@ void myMRTEquilibrium( struct latticeInfo* lattice, double T, double U[3], doubl
 	// Equilibrium in population space
 
 	matVecMult(lattice->invM, n_eq, f, lattice->Q);
-
 	
 
     }

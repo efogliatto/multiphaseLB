@@ -46,9 +46,9 @@ void myMRTCollision( struct latticeMesh* mesh, struct macroFields* mfields, stru
 
     if( mesh->lattice.Q == 9 ) {
 
-	Q[3][4] = Q[4][4]  *  ( Q[3][3]/2.0  - 1.0 );
+    	Q[3][4] = Q[4][4]  *  ( Q[3][3]/2.0  - 1.0 );
 
-	Q[5][6] = Q[6][6]  *  ( Q[5][5]/2.0  - 1.0 );
+    	Q[5][6] = Q[6][6]  *  ( Q[5][5]/2.0  - 1.0 );
 
     }
 

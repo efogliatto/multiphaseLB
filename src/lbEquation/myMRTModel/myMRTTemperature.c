@@ -25,9 +25,11 @@ double myMRTTemperature( struct latticeMesh* mesh, struct macroFields* mfields, 
 
     for(k = 0 ; k < mesh->lattice.Q ; k++) {
 
-	T += field->value[id][k] - 0.5 * Gamma[k];
+	T += field->value[id][k];
 		    
     }
+
+    T = T + 0.5 * Gamma[0];
 
 
     
