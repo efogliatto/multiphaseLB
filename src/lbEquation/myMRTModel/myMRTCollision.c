@@ -8,6 +8,7 @@
 #include <myMRTEquilibriumMS.h>
 
 
+
 void myMRTCollision( struct latticeMesh* mesh, struct macroFields* mfields, struct lbeField* field ) {
 
 
