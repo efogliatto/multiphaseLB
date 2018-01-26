@@ -81,6 +81,31 @@ void myMRTCollision( struct latticeMesh* mesh, struct macroFields* mfields, stru
     
     for( id = 0 ; id < mesh->mesh.nPoints ; id++ ) {
 
+
+
+	// Constant Lambda
+	
+	if( field->tauModel == 2 ) {
+	    
+	    Q[3][3] = 1 / ( 6.0 * field->lambda / (mfields->rho[id] * mesh->EOS._Cv * (4.0 + 3.0 * field->alpha_1 + 2.0 * field->alpha_2))  +  0.5);
+
+	    Q[5][5] = Q[3][3];
+
+	    Q[3][4] = Q[4][4]  *  ( Q[3][3]/2.0  - 1.0 );
+
+	    Q[5][6] = Q[6][6]  *  ( Q[5][5]/2.0  - 1.0 );
+
+
+	    Q_aux[3][3] = 1.0 - 0.5 * Q[3][3];
+
+	    Q_aux[5][5] = 1.0 - 0.5 * Q[5][5];
+
+	    Q_aux[3][4] = -0.5 * Q[3][4];
+
+	    Q_aux[5][6] = -0.5 * Q[5][6];
+
+	}
+	
 	
 
 	// Equilibrium distribution in moment space
