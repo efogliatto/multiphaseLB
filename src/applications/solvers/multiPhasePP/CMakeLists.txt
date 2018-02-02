@@ -9,7 +9,6 @@ set ( PROJECT_LINK_LIBS
   liblimrtmodel.so
   liblisrtmodel.so
   liblitempmodel.so
-  libnewtempmodel.so
   libmymrtmodel.so
   libfinitedifference.so
   ${MPI_LIBRARIES})

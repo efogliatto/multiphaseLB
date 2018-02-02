@@ -32,15 +32,15 @@ void macroTemperature( struct latticeMesh* mesh, struct macroFields* mfields, st
 	break;
 
 
-    case 3:
+    /* case 3: */
 
-	for( id = 0 ; id < mesh->mesh.nPoints ; id++) {
+    /* 	for( id = 0 ; id < mesh->mesh.nPoints ; id++) { */
 
-	    mfields->T[id] = newTempTemperature( mesh, mfields, field, id );
+    /* 	    mfields->T[id] = newTempTemperature( mesh, mfields, field, id ); */
 
-	}
+    /* 	} */
 	
-	break;
+    /* 	break; */
 
 
     case 4:
