@@ -13,5 +13,6 @@
 
 #include <interForce.h>
 
+#include <rhoFromEOS.h>
 
 #endif // PSEUDOPOT_H

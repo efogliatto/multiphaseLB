@@ -8,4 +8,5 @@ add_library(pseudopot SHARED
   interactionForce.c
   totalForce.c
   interForce.c
+  rhoFromEOS.c
   )
