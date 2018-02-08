@@ -71,26 +71,26 @@ void equilibrium( struct latticeMesh* mesh, struct macroFields* mfields, struct 
 
 
 
-    // new model. Temperature
+    /* // new model. Temperature */
 	
-    case 3:
+    /* case 3: */
 	
-	for( id = 0 ; id < mesh->mesh.nPoints ; id++) {
+    /* 	for( id = 0 ; id < mesh->mesh.nPoints ; id++) { */
 
-	    newTempEquilibrium( &mesh->lattice, mfields->rho[id], mfields->U[id], field->value[id] );
+    /* 	    newTempEquilibrium( &mesh->lattice, mfields->rho[id], mfields->U[id], field->value[id] ); */
 
-	    unsigned int k;
+    /* 	    unsigned int k; */
 
-	    for( k = 0 ; k < mesh->lattice.Q ; k++ ) {
+    /* 	    for( k = 0 ; k < mesh->lattice.Q ; k++ ) { */
 
-		field->value[id][k] = field->value[id][k] * mesh->EOS._Cv * mfields->T[id];
+    /* 		field->value[id][k] = field->value[id][k] * mesh->EOS._Cv * mfields->T[id]; */
 	    
-	    }
+    /* 	    } */
 	    
-	}
+    /* 	} */
 
 	
-	break;
+    /* 	break; */
 	
 
 

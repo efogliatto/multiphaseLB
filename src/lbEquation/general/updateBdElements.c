@@ -80,17 +80,17 @@ void updateBdElements( struct latticeMesh* mesh, struct macroFields* mfields, st
 		
     		// new SRT Model. Temperature
 		
-    	    case 3:
+    	    /* case 3: */
 
-    		for( i = 0 ; i < mesh->mesh.bd.nbdelem[bndId] ; i++ ) {
+    	    /* 	for( i = 0 ; i < mesh->mesh.bd.nbdelem[bndId] ; i++ ) { */
 
-    		    j = mesh->mesh.bd.bdPoints[bndId][i];
+    	    /* 	    j = mesh->mesh.bd.bdPoints[bndId][i]; */
 
-    		    mfields->T[j] = newTempTemperature( mesh, mfields, field, j );
+    	    /* 	    mfields->T[j] = newTempTemperature( mesh, mfields, field, j ); */
 
-    		}
+    	    /* 	} */
 	    
-    		break;
+    	    /* 	break; */
 
 
     		// my MRT Model. Temperature

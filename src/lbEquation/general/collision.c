@@ -35,10 +35,10 @@ void collision( struct latticeMesh* mesh, struct macroFields* mfields, struct lb
     	break;
 
 
-    // new Temperature SRT model
-    case 3:
-    	newTempCollision( mesh, mfields, field );
-    	break;
+    /* // new Temperature SRT model */
+    /* case 3: */
+    /* 	newTempCollision( mesh, mfields, field ); */
+    /* 	break; */
 
 	
     // new Temperature MRT model
