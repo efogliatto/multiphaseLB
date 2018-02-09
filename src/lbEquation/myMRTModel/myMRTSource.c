@@ -39,9 +39,9 @@ void myMRTSource( struct latticeMesh* mesh, struct macroFields* mfields, struct 
     invScalarGradient( gradRho, mfields->rho, mesh, id );
 
 
-    /* // Velocity divergence */
+    // Velocity divergence
 
-    /* divU = vectorDivergence( mfields->U, mesh, id ); */
+    divU = vectorDivergence( mfields->U, mesh, id );
 
 
 
@@ -54,9 +54,9 @@ void myMRTSource( struct latticeMesh* mesh, struct macroFields* mfields, struct 
 
 
     
-    /* dpdT = p_eos(&mesh->EOS, mfields->rho[id], 1.1*mfields->T[id]) - p_eos(&mesh->EOS, mfields->rho[id], 0.9*mfields->T[id]); */
+    dpdT = p_eos(&mesh->EOS, mfields->rho[id], 1.1*mfields->T[id]) - p_eos(&mesh->EOS, mfields->rho[id], 0.9*mfields->T[id]);
 
-    /* dpdT = dpdT / (0.2*mfields->T[id]); */
+    dpdT = dpdT / (0.2*mfields->T[id]);
     
     Gamma[0] = -lambda * dot / mesh->EOS._Cv   +   divU * mfields->T[id]*( 1.0 - dpdT/(mfields->rho[id]*mesh->EOS._Cv) );
 
