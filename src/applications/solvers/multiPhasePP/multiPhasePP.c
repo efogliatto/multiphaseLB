@@ -248,7 +248,13 @@ int main( int argc, char **argv ) {
 	
     	// Collide g (Temperature)
 
-    	if( ht != 0 ) {  collision( &mesh, &mfields, &g );  }
+    	if( ht != 0 ) {
+
+	    collision( &mesh, &mfields, &g );
+
+	    syncPdfField( &mesh, g.value );
+
+	}
 
 
 	
@@ -283,7 +289,13 @@ int main( int argc, char **argv ) {
 	
     	// Update macroscopic temperature
 	
-    	if( ht != 0 )     {  macroTemperature( &mesh, &mfields, &g );    }
+    	if( ht != 0 )     {
+
+	    macroTemperature( &mesh, &mfields, &g );
+
+	    syncScalarField( &mesh, mfields.T );
+
+	}
 
 
     	// Update force
@@ -331,7 +343,12 @@ int main( int argc, char **argv ) {
 	
     	if( frozen != 0 ) {  updateBdElements( &mesh, &mfields, &f );  }
 	
-    	if( ht != 0 )     {  updateBdElements( &mesh, &mfields, &g );  }
+    	if( ht != 0 )     {
+
+	    updateBdElements( &mesh, &mfields, &g );
+
+	    syncScalarField( &mesh, mfields.T );
+	}
 
 
     	/* updateBdForce( &mesh, &mfields ); */
@@ -354,11 +371,11 @@ int main( int argc, char **argv ) {
 	}
 
 
-	if( ht != 0 ) {
+	/* if( ht != 0 ) { */
 
-	    syncScalarField( &mesh, mfields.T );
+	/*     syncScalarField( &mesh, mfields.T ); */
 
-	}
+	/* } */
 
 	
 	

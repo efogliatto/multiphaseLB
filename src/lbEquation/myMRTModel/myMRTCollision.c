@@ -79,7 +79,8 @@ void myMRTCollision( struct latticeMesh* mesh, struct macroFields* mfields, stru
     
     // Move over ALL points
     
-    for( id = 0 ; id < mesh->mesh.nPoints ; id++ ) {
+    /* for( id = 0 ; id < mesh->mesh.nPoints ; id++ ) { */
+    for( id = 0 ; id < mesh->parallel.nlocal ; id++ ) {
 
 
 

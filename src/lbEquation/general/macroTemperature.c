@@ -45,7 +45,8 @@ void macroTemperature( struct latticeMesh* mesh, struct macroFields* mfields, st
 
     case 4:
 
-	for( id = 0 ; id < mesh->mesh.nPoints ; id++) {
+	/* for( id = 0 ; id < mesh->mesh.nPoints ; id++) { */
+	for( id = 0 ; id < mesh->parallel.nlocal ; id++) {
 
 	    mfields->T[id] = myMRTTemperature( mesh, mfields, field, id );
 
