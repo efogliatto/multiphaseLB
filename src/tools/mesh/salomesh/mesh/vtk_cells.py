@@ -31,7 +31,7 @@ def vtk_cells(geompy, nb):
 
 
                 
-        if len(cell) is 4:
+        if len(cell) == 4:
 
             a = cell[3]
 

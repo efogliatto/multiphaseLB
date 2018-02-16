@@ -31,7 +31,7 @@ def lattice_boundaries(geompy, shape, ftList, points, nb):
         
         for k in range( len(nb[id]) ):
 
-            if nb[id][k] is -1:
+            if nb[id][k] == -1:
 
                 bd = True
 
