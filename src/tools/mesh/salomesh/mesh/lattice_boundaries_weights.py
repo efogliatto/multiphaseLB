@@ -7,19 +7,21 @@ import numpy as np
 from salome.geom import geomtools
 
 
-def lattice_boundaries_weights(geompy, shape, ftList, points, nb, bdWeights):
+def lattice_boundaries_weights(geompy, shape, GroupList, points, nb, bdWeights):
 
-    
+
+            
 
     # Initialize boundary dictionary
     
     bdDict = {}
 
-    for ft in ftList:
+    for ft in GroupList.keys():
 
-        bdDict[ ft.GetName() ] = []
+        bdDict[ ft ] = []
         
     count = 0
+
 
     
     # Move over points. If some neighbour is -1, look for closest edge/face
@@ -32,26 +34,27 @@ def lattice_boundaries_weights(geompy, shape, ftList, points, nb, bdWeights):
         
         for k in range( len(nb[id]) ):
 
-            if nb[id][k] is -1:
+            if nb[id][k] == -1:
 
                 bd = True
-
 
 
        # Look for closest boundary.
        # Preference for periodic boundaries
 
-        if bd is True:
+        if bd == True:
 
             
             dist = []
-            
-        
-            for ft in ftList:
+                    
+            for group in GroupList.keys():
 
-                distAux = geompy.MinDistance( ft, points[id] )
+                for ft in GroupList[group]:
 
-                dist.append( (ft.GetName(), distAux) )
+                    distAux = geompy.MinDistance( ft, points[id] )
+
+                    dist.append( (group, distAux) )
+
 
 
                 
@@ -64,7 +67,7 @@ def lattice_boundaries_weights(geompy, shape, ftList, points, nb, bdWeights):
             
             # First check if two features have same distance. Then assign priority for boundary elements
 
-            if numpy.isclose( sortedDist[0][1], sortedDist[1][1], rtol=1e-05, atol=1e-08, equal_nan=False) == True:
+            if np.isclose( sortedDist[0][1], sortedDist[1][1], rtol=1e-05, atol=1e-08, equal_nan=False) == True:
 
                 if bdWeights[ sortedDist[0][0] ] < bdWeights[ sortedDist[1][0] ]:
                     
