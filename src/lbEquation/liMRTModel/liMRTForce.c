@@ -25,7 +25,6 @@ void liMRTForce( struct latticeMesh* mesh, struct macroFields* mfields, struct l
 
 	}
 
-	
 
 	// Potential
 	

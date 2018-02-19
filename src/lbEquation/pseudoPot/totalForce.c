@@ -14,7 +14,7 @@ void totalForce( struct latticeMesh* mesh, double F[3], double* rho, double* T, 
     interactionForce( mesh, F, rho, T, id );
 
 
-    // Addition of boundary force
+    // Addition of body force
     
     for( i = 0 ; i < 3 ; i++) {
 	
