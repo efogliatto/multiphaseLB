@@ -24,6 +24,9 @@ void bounceBack( struct latticeMesh* mesh, struct macroFields* mfields, struct l
 
 	    }
 
+
+	    // Correction for velocities lying on face
+	    
 	    else {
 
 		field->value[id][k] = 0.5 * field->value[id][k]  +  0.5 * field->value[id][mesh->lattice.reverse[k]];
