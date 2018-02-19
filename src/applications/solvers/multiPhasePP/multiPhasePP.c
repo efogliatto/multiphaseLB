@@ -371,11 +371,11 @@ int main( int argc, char **argv ) {
 	}
 
 
-	/* if( ht != 0 ) { */
+	if( ht != 0 ) {
 
-	/*     syncScalarField( &mesh, mfields.T ); */
+	    syncScalarField( &mesh, mfields.T );
 
-	/* } */
+	}
 
 	
 	

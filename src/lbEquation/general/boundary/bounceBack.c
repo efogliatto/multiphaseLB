@@ -24,6 +24,14 @@ void bounceBack( struct latticeMesh* mesh, struct macroFields* mfields, struct l
 
 	    }
 
+	    else {
+
+		field->value[id][k] = 0.5 * field->value[id][k]  +  0.5 * field->value[id][mesh->lattice.reverse[k]];
+
+		field->value[id][mesh->lattice.reverse[k]] = field->value[id][k];		
+
+	    }
+
 	}
 	
 
