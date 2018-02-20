@@ -31,13 +31,13 @@ void bounceBack( struct latticeMesh* mesh, struct macroFields* mfields, struct l
 
 		if( (mesh->lattice.Q == 9) ) {
 
-		    /* if( ( mesh->mesh.nb[id][k] == 1 )  ||  ( mesh->mesh.nb[id][k] == 2 )  ||  ( mesh->mesh.nb[id][k] == 3 )  ||  ( mesh->mesh.nb[id][k] == 4 )  ) { */
+		    if( ( k == 1 )  ||  ( k == 2 )  ||  ( k == 3 )  ||  ( k == 4 )  ) {
 
-		    /* 	field->value[id][k] = 0.5 * field->value[id][k]  +  0.5 * field->value[id][mesh->lattice.reverse[k]]; */
+		    	field->value[id][k] = 0.5 * field->value[id][k]  +  0.5 * field->value[id][mesh->lattice.reverse[k]];
 		
-		    /* 	field->value[id][mesh->lattice.reverse[k]] = field->value[id][k]; */
+		    	field->value[id][mesh->lattice.reverse[k]] = field->value[id][k];
 
-		    /* } */
+		    }
 
 		}
 

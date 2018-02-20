@@ -228,25 +228,25 @@ int main( int argc, char **argv ) {
     	collision( &mesh, &mfields, &f );
 
 
-	{
+	/* { */
 
-	    unsigned int ii, jj;
+	/*     unsigned int ii, jj; */
 
-	    for( ii = 0 ; ii < mesh.mesh.nPoints ; ii++ ) {
+	/*     for( ii = 0 ; ii < mesh.mesh.nPoints ; ii++ ) { */
 
-		for( jj = 0 ; jj < mesh.mesh.nPoints ; jj++ ) {
+	/* 	for( jj = 0 ; jj < mesh.mesh.nPoints ; jj++ ) { */
 
-		    printf("%.6f ", f.value[ii][jj]);
+	/* 	    printf("%.6f ", f.value[ii][jj]); */
 
-		}
+	/* 	} */
 
-		printf("\n");
+	/* 	printf("\n"); */
 
-	    }
+	/*     } */
 
-	    printf("\n");
+	/*     printf("\n"); */
 
-	}
+	/* } */
 	
 	
     	// Collide g (Temperature)
@@ -264,25 +264,25 @@ int main( int argc, char **argv ) {
     	lbstream( &mesh, &f );
 
 
-	{
+	/* { */
 
-	    unsigned int ii, jj;
+	/*     unsigned int ii, jj; */
 
-	    for( ii = 0 ; ii < mesh.mesh.nPoints ; ii++ ) {
+	/*     for( ii = 0 ; ii < mesh.mesh.nPoints ; ii++ ) { */
 
-		for( jj = 0 ; jj < mesh.mesh.nPoints ; jj++ ) {
+	/* 	for( jj = 0 ; jj < mesh.mesh.nPoints ; jj++ ) { */
 
-		    printf("%.6f ", f.value[ii][jj]);
+	/* 	    printf("%.6f ", f.value[ii][jj]); */
 
-		}
+	/* 	} */
 
-		printf("\n");
+	/* 	printf("\n"); */
 
-	    }
+	/*     } */
 
-	    printf("\n");
+	/*     printf("\n"); */
 
-	}
+	/* } */
 	
 	
     	// Stream g
@@ -311,25 +311,25 @@ int main( int argc, char **argv ) {
     	updateBoundaries( &mesh, &mfields, &f );
 
 
-	{
+	/* { */
 
-	    unsigned int ii, jj;
+	/*     unsigned int ii, jj; */
 
-	    for( ii = 0 ; ii < mesh.mesh.nPoints ; ii++ ) {
+	/*     for( ii = 0 ; ii < mesh.mesh.nPoints ; ii++ ) { */
 
-		for( jj = 0 ; jj < mesh.mesh.nPoints ; jj++ ) {
+	/* 	for( jj = 0 ; jj < mesh.mesh.nPoints ; jj++ ) { */
 
-		    printf("%.6f ", f.value[ii][jj]);
+	/* 	    printf("%.6f ", f.value[ii][jj]); */
 
-		}
+	/* 	} */
 
-		printf("\n");
+	/* 	printf("\n"); */
 
-	    }
+	/*     } */
 
-	    printf("\n");
+	/*     printf("\n"); */
 
-	}
+	/* } */
 
 	
     	updateBoundaries( &mesh, &mfields, &g );
