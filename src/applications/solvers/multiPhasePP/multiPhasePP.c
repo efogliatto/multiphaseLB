@@ -157,6 +157,8 @@ int main( int argc, char **argv ) {
 
     }
 
+    if(frozen == 0) { f.update = 0; }
+
 
     
     // Energy field
@@ -174,6 +176,8 @@ int main( int argc, char **argv ) {
     	exit(1);
 
     }
+
+    if(ht == 0) { g.update = 0; }
     
     
 
@@ -181,12 +185,12 @@ int main( int argc, char **argv ) {
 
     // f
     
-    if( frozen != 0 ) {  equilibrium(&mesh, &mfields, &f); }
+    equilibrium(&mesh, &mfields, &f);
 
 	    
     // g
     
-    if( ht != 0 ) {  equilibrium(&mesh, &mfields, &g); }
+     equilibrium(&mesh, &mfields, &g);
 
 
 
@@ -221,41 +225,76 @@ int main( int argc, char **argv ) {
 	
     	// Collide f (Navier-Stokes)
 
-    	if( frozen != 0 ) {  collision( &mesh, &mfields, &f );  }
+    	collision( &mesh, &mfields, &f );
 
 
+	{
+
+	    unsigned int ii, jj;
+
+	    for( ii = 0 ; ii < mesh.mesh.nPoints ; ii++ ) {
+
+		for( jj = 0 ; jj < mesh.mesh.nPoints ; jj++ ) {
+
+		    printf("%.6f ", f.value[ii][jj]);
+
+		}
+
+		printf("\n");
+
+	    }
+
+	    printf("\n");
+
+	}
+	
 	
     	// Collide g (Temperature)
 
-    	if( ht != 0 ) {
+	collision( &mesh, &mfields, &g );
+	
+	syncPdfField( &mesh, g.value );
 
-	    collision( &mesh, &mfields, &g );
-
-	    syncPdfField( &mesh, g.value );
-
-	}
 
 
 	
 	
     	// Stream f
 	
-    	if( frozen != 0 ) {  lbstream( &mesh, &f );  }
+    	lbstream( &mesh, &f );
 
 
-	
+	{
+
+	    unsigned int ii, jj;
+
+	    for( ii = 0 ; ii < mesh.mesh.nPoints ; ii++ ) {
+
+		for( jj = 0 ; jj < mesh.mesh.nPoints ; jj++ ) {
+
+		    printf("%.6f ", f.value[ii][jj]);
+
+		}
+
+		printf("\n");
+
+	    }
+
+	    printf("\n");
+
+	}
 	
 	
     	// Stream g
 	
-    	if( ht != 0 ) {  lbstream( &mesh, &g );  }
+    	lbstream( &mesh, &g );
 
 
 
 	
     	// Sync fields
 
-    	if( frozen != 0 ) {  syncPdfField( &mesh, f.value );  }
+    	if( frozen != 0 ) {  syncPdfField( &mesh, f.value ); }
 
     	if( ht != 0 ) {  syncPdfField( &mesh, g.value );  }
 
@@ -269,11 +308,38 @@ int main( int argc, char **argv ) {
 
 	// Apply boundary conditions
 	
-    	if( frozen != 0 ) {  updateBoundaries( &mesh, &mfields, &f );  }
+    	updateBoundaries( &mesh, &mfields, &f );
+
+
+	{
+
+	    unsigned int ii, jj;
+
+	    for( ii = 0 ; ii < mesh.mesh.nPoints ; ii++ ) {
+
+		for( jj = 0 ; jj < mesh.mesh.nPoints ; jj++ ) {
+
+		    printf("%.6f ", f.value[ii][jj]);
+
+		}
+
+		printf("\n");
+
+	    }
+
+	    printf("\n");
+
+	}
+
 	
-    	if( ht != 0 )     {  updateBoundaries( &mesh, &mfields, &g );  }
+    	updateBoundaries( &mesh, &mfields, &g );
 
+	
+    	// Sync fields
 
+    	if( frozen != 0 ) {  syncPdfField( &mesh, f.value );  }
+
+    	if( ht != 0 ) {  syncPdfField( &mesh, g.value );  }
 
 	
 	
@@ -309,36 +375,15 @@ int main( int argc, char **argv ) {
 
 
     	
-	
+	if( frozen != 0 ) {
 
-	
+	    syncScalarField( &mesh, mfields.rho );
 
-	
-
-    
-
-
-
-
-
-
-
-    	/* // Sync macro fields (only for boundaries. this MUST be corrected) */
-
-	/* if( frozen != 0 ) { */
-
-	/*     syncScalarField( &mesh, mfields.rho ); */
-
-	/*     syncVectorField( &mesh, mfields.U );	     */
+	    syncVectorField( &mesh, mfields.U );
 	    
-	/* } */
+	}
+	
 
-
-	/* if( ht != 0 ) { */
-
-	/*     syncScalarField( &mesh, mfields.T ); */
-
-	/* } */
 
 	
 	

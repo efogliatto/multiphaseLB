@@ -27,11 +27,19 @@ void bounceBack( struct latticeMesh* mesh, struct macroFields* mfields, struct l
 
 	    // Correction for velocities lying on face
 	    
-	    else {		
+	    else {
 
-		/* field->value[id][k] = 0.5 * field->value[id][k]  +  0.5 * field->value[id][mesh->lattice.reverse[k]]; */
+		if( (mesh->lattice.Q == 9) ) {
 
-		/* field->value[id][mesh->lattice.reverse[k]] = field->value[id][k];		 */
+		    /* if( ( mesh->mesh.nb[id][k] == 1 )  ||  ( mesh->mesh.nb[id][k] == 2 )  ||  ( mesh->mesh.nb[id][k] == 3 )  ||  ( mesh->mesh.nb[id][k] == 4 )  ) { */
+
+		    /* 	field->value[id][k] = 0.5 * field->value[id][k]  +  0.5 * field->value[id][mesh->lattice.reverse[k]]; */
+		
+		    /* 	field->value[id][mesh->lattice.reverse[k]] = field->value[id][k]; */
+
+		    /* } */
+
+		}
 
 	    }
 

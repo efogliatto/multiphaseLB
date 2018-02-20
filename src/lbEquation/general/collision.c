@@ -14,45 +14,50 @@
 void collision( struct latticeMesh* mesh, struct macroFields* mfields, struct lbeField* field ) {
 
 
-    // Apply collision model
-    switch(field->colId) {
-
-    // Li MRT Model
-    case 0:
-    	liMRTCollision( mesh, mfields, field );
-    	break;
-
-
-    // Li SRT Model
-    case 1:
-    	liSRTCollision( mesh, mfields, field );
-    	break;
-
-	
-    // Li SRT Model. Temperature
-    case 2:
-    	liTempCollision( mesh, mfields, field );
-    	break;
-
-
-    /* // new Temperature SRT model */
-    /* case 3: */
-    /* 	newTempCollision( mesh, mfields, field ); */
-    /* 	break; */
-
-	
-    // new Temperature MRT model
-    case 4:
-    	myMRTCollision( mesh, mfields, field );
-    	break;		
-
-	
-    default:
-    	printf("\n   [ERROR]  Collision model is not yet implemented\n\n");
-    	exit(1);
-    	break;
-	
-    }
+    if( field->update != 0 ) {
     
 
+	// Apply collision model
+	switch(field->colId) {
+
+	    // Li MRT Model
+	case 0:
+	    liMRTCollision( mesh, mfields, field );
+	    break;
+
+
+	    // Li SRT Model
+	case 1:
+	    liSRTCollision( mesh, mfields, field );
+	    break;
+
+	
+	    // Li SRT Model. Temperature
+	case 2:
+	    liTempCollision( mesh, mfields, field );
+	    break;
+
+
+	    /* // new Temperature SRT model */
+	    /* case 3: */
+	    /* 	newTempCollision( mesh, mfields, field ); */
+	    /* 	break; */
+
+	
+	    // new Temperature MRT model
+	case 4:
+	    myMRTCollision( mesh, mfields, field );
+	    break;		
+
+	
+	default:
+	    printf("\n   [ERROR]  Collision model is not yet implemented\n\n");
+	    exit(1);
+	    break;
+	
+	}
+    
+
+    }
+    
 };

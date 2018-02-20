@@ -105,6 +105,11 @@ struct lbeField {
     double alpha_1;
 
     double alpha_2;
+
+
+    /** Update tag */
+
+    unsigned int update;
     
 
     

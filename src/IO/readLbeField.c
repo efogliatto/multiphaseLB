@@ -31,6 +31,8 @@ unsigned int readLbeField( struct latticeMesh* mesh, struct lbeField* field, cha
 
 
 
+    field->update = 1;
+    
     
     if( strcmp(cmodel,"liMRT") == 0 ) {
 

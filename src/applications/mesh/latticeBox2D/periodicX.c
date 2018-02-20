@@ -29,13 +29,15 @@ void periodicX( struct basicMesh* mesh, unsigned int nx, unsigned int ny ) {
 
 
     // Move over X-boundary points
-    for( j = 1 ; j < (ny-1) ; j++ ) {
+    /* for( j = 1 ; j < (ny-1) ; j++ ) { */
+    for( j = 0 ; j < ny ; j++ ) {
 
     	mesh->bd.bdPoints[0][j-1] = j*nx;
 	
     	mesh->bd.bdPoints[1][j-1] = (nx-1) + j*nx;
 
     	// Assign periodic neighbours
+	
     	for( velId = 0 ; velId < mesh->Q ; velId++ ) {
 
     	    if(mesh->nb[j*nx][velId] == -1) {
@@ -64,6 +66,9 @@ void periodicX( struct basicMesh* mesh, unsigned int nx, unsigned int ny ) {
     	mesh->bd.bdPoints[3][j] = j + (ny-1)*nx;
 
     }
+
+
+
 
     
     
