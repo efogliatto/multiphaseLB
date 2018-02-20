@@ -201,28 +201,7 @@ int main( int argc, char **argv ) {
     syncVectorField( &mesh, mfields.Fi );
 
 
-    
-    /* // Update macroscopic compression work */
 
-    /* if( ( frozen != 0 )  &&  (g.colId == 3) ) { */
-    
-    /* 	mfields.phiDivU = (double*)malloc(mesh.mesh.nPoints * sizeof(double)); */
-
-
-    /* 	unsigned int ii; */
-
-    /* 	for( ii = 0 ; ii < mesh.mesh.nPoints ; ii++ ) { */
-
-    /* 	    mfields.phiDivU[ii] = 0; */
-
-    /* 	} */
-	
-    
-    /* 	compWork( &mesh, &mfields ); */
-    
-    /* 	syncScalarField( &mesh, mfields.phiDivU );     */
-    
-    /* } */
     
    
     if(pid == 0){printf("\n\n");}
@@ -243,7 +222,7 @@ int main( int argc, char **argv ) {
     	// Collide f (Navier-Stokes)
 
     	if( frozen != 0 ) {  collision( &mesh, &mfields, &f );  }
-	
+
 
 	
     	// Collide g (Temperature)
@@ -265,6 +244,8 @@ int main( int argc, char **argv ) {
 
 
 	
+	
+	
     	// Stream g
 	
     	if( ht != 0 ) {  lbstream( &mesh, &g );  }
@@ -279,6 +260,23 @@ int main( int argc, char **argv ) {
     	if( ht != 0 ) {  syncPdfField( &mesh, g.value );  }
 
 
+
+	
+
+
+
+
+
+	// Apply boundary conditions
+	
+    	if( frozen != 0 ) {  updateBoundaries( &mesh, &mfields, &f );  }
+	
+    	if( ht != 0 )     {  updateBoundaries( &mesh, &mfields, &g );  }
+
+
+
+	
+	
 	
 
 
@@ -310,72 +308,37 @@ int main( int argc, char **argv ) {
     	if( frozen != 0 ) {  macroVelocity( &mesh, &mfields, &f ); }
 
 
-    	/* // Update compression work */
+    	
+	
 
-	/* if( ( frozen != 0 )  &&  (g.colId == 3) ) { */
+	
 
-	/*     compWork( &mesh, &mfields ); */
+	
 
-	/*     syncScalarField( &mesh, mfields.phiDivU ); */
+    
+
+
+
+
+
+
+
+    	/* // Sync macro fields (only for boundaries. this MUST be corrected) */
+
+	/* if( frozen != 0 ) { */
+
+	/*     syncScalarField( &mesh, mfields.rho ); */
+
+	/*     syncVectorField( &mesh, mfields.U );	     */
 	    
 	/* } */
-	
-	
-
-	
-
-	
-
-	
-    	// Apply boundary conditions
-	
-    	if( frozen != 0 ) {  updateBoundaries( &mesh, &mfields, &f );  }
-	
-    	if( ht != 0 )     {  updateBoundaries( &mesh, &mfields, &g );  }
 
 
-    	// F is not sync yet. Boundary conditions that are already implemented don't need another sync.
-    	// Remember that ghost nodes at boundary are updated
-    	/* syncPdfField( &mesh, f.value ); */
+	/* if( ht != 0 ) { */
 
-    	if( ht != 0 ) {  syncPdfField( &mesh, g.value );  }
+	/*     syncScalarField( &mesh, mfields.T ); */
 
-	
-    	if( frozen != 0 ) {  updateBdElements( &mesh, &mfields, &f );  }
-	
-    	if( ht != 0 )     {
-
-	    updateBdElements( &mesh, &mfields, &g );
-
-	    syncScalarField( &mesh, mfields.T );
-	}
-
-
-    	/* updateBdForce( &mesh, &mfields ); */
-
-
-
-
-
-
-
-
-    	// Sync macro fields (only for boundaries. this MUST be corrected)
-
-	if( frozen != 0 ) {
-
-	    syncScalarField( &mesh, mfields.rho );
-
-	    syncVectorField( &mesh, mfields.U );	    
-	    
-	}
-
-
-	if( ht != 0 ) {
-
-	    syncScalarField( &mesh, mfields.T );
-
-	}
+	/* } */
 
 	
 	

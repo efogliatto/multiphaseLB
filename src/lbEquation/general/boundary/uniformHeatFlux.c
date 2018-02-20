@@ -5,6 +5,7 @@
 #include <macroFields.h>
 #include <liTempEquilibrium.h>
 #include <myMRTEquilibrium.h>
+#include <singleNodeT.h>
 
 
 void uniformHeatFlux( struct latticeMesh* mesh, struct macroFields* mfields, struct lbeField* field, unsigned int bid ) {
@@ -77,8 +78,7 @@ void uniformHeatFlux( struct latticeMesh* mesh, struct macroFields* mfields, str
 
 		    if( nbid != -1 ) {
 
-			t_bd = mfields->T[nbid] + field->boundary[bid].scalarVal / lambda;
-			/* t_bd = mfields->T[nbid] + field->boundary[bid].scalarVal;			 */
+			t_bd = singleNodeT(mesh, mfields, field, nbid) + field->boundary[bid].scalarVal / lambda;
 
 		    }
 
@@ -86,8 +86,7 @@ void uniformHeatFlux( struct latticeMesh* mesh, struct macroFields* mfields, str
 
 			nbid = mesh->mesh.nb[id][k];
 
-			t_bd = mfields->T[nbid] - field->boundary[bid].scalarVal / lambda;
-			/* t_bd = mfields->T[nbid] - field->boundary[bid].scalarVal;			 */
+			t_bd = singleNodeT(mesh, mfields, field, nbid) - field->boundary[bid].scalarVal / lambda;
 
 		    }
 

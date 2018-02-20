@@ -5,6 +5,7 @@
 #include <macroFields.h>
 #include <liTempEquilibrium.h>
 #include <myMRTEquilibrium.h>
+#include <singleNodeT.h>
 
 
 void fixedT( struct latticeMesh* mesh, struct macroFields* mfields, struct lbeField* field, unsigned int bid ) {
@@ -69,7 +70,7 @@ void fixedT( struct latticeMesh* mesh, struct macroFields* mfields, struct lbeFi
 			
 			eq_bnd = mesh->EOS._Cv * field->boundary[bid].scalarVal * r * f_eq_nb[k];
 			    
-			eq_nb  = mesh->EOS._Cv * mfields->T[nbid] * f_eq_nb[k];
+			eq_nb  = mesh->EOS._Cv * singleNodeT(mesh, mfields, field, nbid) * f_eq_nb[k];
 
 
 
@@ -168,7 +169,7 @@ void fixedT( struct latticeMesh* mesh, struct macroFields* mfields, struct lbeFi
 			    
 			    // Equilibrium at neighbour node
 			    
-			    myMRTEquilibrium( &mesh->lattice, mfields->T[nbid], mfields->U[nbid], field->alpha_1, field->alpha_2, f_eq_nb );
+			    myMRTEquilibrium( &mesh->lattice, singleNodeT(mesh, mfields, field, nbid), mfields->U[nbid], field->alpha_1, field->alpha_2, f_eq_nb );
 			    
 			    eq_nb  = f_eq_nb[k];
 
