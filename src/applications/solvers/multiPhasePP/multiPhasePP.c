@@ -16,6 +16,30 @@
 #include <pseudoPot.h>
 
 
+void printField(double** field, int n, int Q, char* msg) {
+
+    /* unsigned int i, j; */
+
+    /* printf("%s\n",msg); */
+    
+    /* for( i = 0 ; i < n ; i++ ) { */
+
+    /* 	for( j = 0 ; j < Q ; j++ ) { */
+
+    /* 	    printf("%.6f ", field[i][j]); */
+
+    /* 	} */
+
+    /* 	printf("\n"); */
+
+    /* } */
+
+    /* printf("\n"); */
+
+}
+
+
+
 int main( int argc, char **argv ) {
 
 
@@ -227,26 +251,7 @@ int main( int argc, char **argv ) {
 
     	collision( &mesh, &mfields, &f );
 
-
-	/* { */
-
-	/*     unsigned int ii, jj; */
-
-	/*     for( ii = 0 ; ii < mesh.mesh.nPoints ; ii++ ) { */
-
-	/* 	for( jj = 0 ; jj < mesh.mesh.nPoints ; jj++ ) { */
-
-	/* 	    printf("%.6f ", f.value[ii][jj]); */
-
-	/* 	} */
-
-	/* 	printf("\n"); */
-
-	/*     } */
-
-	/*     printf("\n"); */
-
-	/* } */
+	printField(f.value, mesh.mesh.nPoints, mesh.lattice.Q, "colission");
 	
 	
     	// Collide g (Temperature)
@@ -263,26 +268,7 @@ int main( int argc, char **argv ) {
 	
     	lbstream( &mesh, &f );
 
-
-	/* { */
-
-	/*     unsigned int ii, jj; */
-
-	/*     for( ii = 0 ; ii < mesh.mesh.nPoints ; ii++ ) { */
-
-	/* 	for( jj = 0 ; jj < mesh.mesh.nPoints ; jj++ ) { */
-
-	/* 	    printf("%.6f ", f.value[ii][jj]); */
-
-	/* 	} */
-
-	/* 	printf("\n"); */
-
-	/*     } */
-
-	/*     printf("\n"); */
-
-	/* } */
+	printField(f.value, mesh.mesh.nPoints, mesh.lattice.Q, "streamming");
 	
 	
     	// Stream g
@@ -310,26 +296,9 @@ int main( int argc, char **argv ) {
 	
     	updateBoundaries( &mesh, &mfields, &f );
 
+	printField(f.value, mesh.mesh.nPoints, mesh.lattice.Q, "boundaries");
 
-	/* { */
 
-	/*     unsigned int ii, jj; */
-
-	/*     for( ii = 0 ; ii < mesh.mesh.nPoints ; ii++ ) { */
-
-	/* 	for( jj = 0 ; jj < mesh.mesh.nPoints ; jj++ ) { */
-
-	/* 	    printf("%.6f ", f.value[ii][jj]); */
-
-	/* 	} */
-
-	/* 	printf("\n"); */
-
-	/*     } */
-
-	/*     printf("\n"); */
-
-	/* } */
 
 	
     	updateBoundaries( &mesh, &mfields, &g );
