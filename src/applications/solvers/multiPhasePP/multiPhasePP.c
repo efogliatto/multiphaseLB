@@ -24,13 +24,15 @@ void printField(double** field, int n, int Q, char* msg) {
     
     /* for( i = 0 ; i < n ; i++ ) { */
 
+    /* 	printf("%d:  ",i); */
+	
     /* 	for( j = 0 ; j < Q ; j++ ) { */
 
     /* 	    printf("%.6f ", field[i][j]); */
 
     /* 	} */
 
-    /* 	printf("\n"); */
+    /* 	printf("\n");    	 */
 
     /* } */
 
@@ -318,6 +320,9 @@ int main( int argc, char **argv ) {
     	// Update macroscopic density
 	
     	if( frozen != 0 ) {  macroDensity( &mesh, &mfields, &f ); }
+
+
+	
 	
 	
     	// Update macroscopic temperature

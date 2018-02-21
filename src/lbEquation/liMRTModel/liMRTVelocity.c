@@ -2,6 +2,7 @@
 #include <macroFields.h>
 #include <lbeField.h>
 #include <pseudoPot.h>
+#include <stdlib.h>
 
 
 void liMRTVelocity( struct latticeMesh* mesh, struct macroFields* mfields, struct lbeField* field, double** v, unsigned int id ) {
@@ -17,12 +18,10 @@ void liMRTVelocity( struct latticeMesh* mesh, struct macroFields* mfields, struc
 	
     // Compute interaction force
     /* totalForce( mesh, F, mfields->rho, mfields->T, id ); */
-
-    unsigned int jj;
 	
-    for( jj = 0 ; jj < 3 ; jj++ ) {
+    for( j = 0 ; j < 3 ; j++ ) {
 
-	F[jj] = mfields->Fi[id][jj]  +   (mfields->rho[id] - mesh->EOS.rho_0) * mesh->EOS._g[jj];
+	F[j] = mfields->Fi[id][j]  +   (mfields->rho[id] - mesh->EOS.rho_0) * mesh->EOS._g[j];
 
     }
     
