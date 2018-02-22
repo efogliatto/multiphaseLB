@@ -35,8 +35,6 @@ void bounceBack( struct latticeMesh* mesh, struct macroFields* mfields, struct l
 
 			if( ( k == 1 )  ||  ( k == 2 )  ||  ( k == 3 )  ||  ( k == 4 )  ) {
 
-			    /* printf("%d\n",k); */
-
 			    field->value[id][k] = 0.5 * field->value[id][k]  +  0.5 * field->value[id][mesh->lattice.reverse[k]];
 		
 			    field->value[id][mesh->lattice.reverse[k]] = field->value[id][k];

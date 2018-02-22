@@ -32,7 +32,7 @@ void printField(double** field, int n, int Q, char* msg) {
 
     /* 	} */
 
-    /* 	printf("\n");    	 */
+    /* 	printf("\n"); */
 
     /* } */
 
@@ -248,21 +248,19 @@ int main( int argc, char **argv ) {
     
     while( updateTime(&mesh.time) ) {
 
+
 	
     	// Collide f (Navier-Stokes)
-
+	
     	collision( &mesh, &mfields, &f );
 
-	printField(f.value, mesh.mesh.nPoints, mesh.lattice.Q, "colission");
-	
-	
+
+		
     	// Collide g (Temperature)
 
 	collision( &mesh, &mfields, &g );
 	
 	syncPdfField( &mesh, g.value );
-
-
 
 	
 	
@@ -270,7 +268,6 @@ int main( int argc, char **argv ) {
 	
     	lbstream( &mesh, &f );
 
-	printField(f.value, mesh.mesh.nPoints, mesh.lattice.Q, "streamming");
 	
 	
     	// Stream g
@@ -297,14 +294,11 @@ int main( int argc, char **argv ) {
 	// Apply boundary conditions
 	
     	updateBoundaries( &mesh, &mfields, &f );
-
-	printField(f.value, mesh.mesh.nPoints, mesh.lattice.Q, "boundaries");
-
-
-
 	
     	updateBoundaries( &mesh, &mfields, &g );
 
+
+	
 	
     	// Sync fields
 

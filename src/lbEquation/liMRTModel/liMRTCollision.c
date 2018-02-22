@@ -91,7 +91,7 @@ void liMRTCollision( struct latticeMesh* mesh, struct macroFields* mfields, stru
 	
     	// Total Force
 	
-    	liMRTForce( mesh, mfields, field, S, id);
+    	liMRTForce( mesh, mfields, field, S, id );
 
 
 	

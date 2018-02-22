@@ -40,7 +40,7 @@ void liMRTForce( struct latticeMesh* mesh, struct macroFields* mfields, struct l
 	S[5] = F[1];
 	S[6] = -F[1];
 	S[7] = 2 * (mfields->U[id][0]*F[0] - mfields->U[id][1]*F[1]);
-	S[8] = mfields->U[id][0]*F[0] + mfields->U[id][1]*F[1];	
+	S[8] = mfields->U[id][0]*F[1] + mfields->U[id][1]*F[0];	
 	
     }
 
