@@ -12,7 +12,6 @@ add_library(generallbe SHARED
   updateBdElements.c
   updateBdForce.c
   singleNodeT.c
-  heatSource.c
   boundary/bounceBack.c
   boundary/fixedT.c
   boundary/fixedU.c

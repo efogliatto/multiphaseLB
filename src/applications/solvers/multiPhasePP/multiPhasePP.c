@@ -231,20 +231,6 @@ int main( int argc, char **argv ) {
     syncVectorField( &mesh, mfields.Fi );
 
 
-    
-    // Scalar source for energy equation
-
-    if( ht != 0 ) {
-
-	mfields.scalarSource = (double*)malloc( mesh.mesh.nPoints * sizeof(double) );
-
-	heatSource( &mesh, &mfields, &g );
-    
-	syncScalarField( &mesh, mfields.scalarSource );
-
-    }
-
-
 
     
    
@@ -274,6 +260,8 @@ int main( int argc, char **argv ) {
 
 	collision( &mesh, &mfields, &g );
 	
+	syncPdfField( &mesh, g.value );
+
 	
 	
     	// Stream f
@@ -288,13 +276,24 @@ int main( int argc, char **argv ) {
 
 
 
-	// Update f at boundaries
+	
+    	// Sync fields
+
+    	if( frozen != 0 ) {  syncPdfField( &mesh, f.value ); }
+
+    	if( ht != 0 ) {  syncPdfField( &mesh, g.value );  }
+
+
+
+	
+
+
+
+
+
+	// Apply boundary conditions
 	
     	updateBoundaries( &mesh, &mfields, &f );
-
-
-
-	// Update g at boundaries
 	
     	updateBoundaries( &mesh, &mfields, &g );
 
@@ -324,31 +323,36 @@ int main( int argc, char **argv ) {
 	
     	if( ht != 0 )     {
 
-	    heatSource( &mesh, &mfields, &g );
-    
-	    syncScalarField( &mesh, mfields.scalarSource );
-
 	    macroTemperature( &mesh, &mfields, &g );
+
+	    syncScalarField( &mesh, mfields.T );
 
 	}
 
+
+    	// Update force
 	
+    	interForce( &mesh, &mfields );
+
+    	syncVectorField( &mesh, mfields.Fi );
 	
 	
     	// Update macroscopic velocity
 	
-    	if( frozen != 0 ) {
-
-	    interForce( &mesh, &mfields );
-
-	    syncVectorField( &mesh, mfields.Fi );
-	    
-	    macroVelocity( &mesh, &mfields, &f );
-	    
-	}
+    	if( frozen != 0 ) {  macroVelocity( &mesh, &mfields, &f ); }
 
 
     	
+	if( frozen != 0 ) {
+
+	    syncScalarField( &mesh, mfields.rho );
+
+	    syncVectorField( &mesh, mfields.U );
+	    
+	}
+	
+
+
 	
 	
 	
