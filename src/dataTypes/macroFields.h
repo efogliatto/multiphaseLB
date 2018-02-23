@@ -16,6 +16,7 @@
 
 struct macroFields {
 
+    
     /** Macroscopic density field */
     
     double* rho; 
@@ -45,10 +46,6 @@ struct macroFields {
     
     double* scalarSource; 
     
-    /* // Constants */
-
-    /* // Specific heat */
-    /* double Cv; */
     
 };
 

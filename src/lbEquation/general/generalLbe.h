@@ -21,4 +21,6 @@
 
 #include <compWork.h>
 
+#include <heatSource.h>
+
 #endif // GENERALLBE_H
