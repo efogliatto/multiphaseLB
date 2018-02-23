@@ -232,6 +232,11 @@ int main( int argc, char **argv ) {
 
 
 
+    // Heat source
+
+    heatSource( &mesh, &mfields, &g );
+
+    syncScalarField( &mesh, g.scalarSource );
     
    
     if(pid == 0){printf("\n\n");}

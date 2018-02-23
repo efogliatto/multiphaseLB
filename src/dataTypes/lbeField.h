@@ -52,6 +52,9 @@ struct lbeField {
 
     /** Swap value */
     double** swap;
+
+    /** Scalar source term  */
+    double* scalarSource;
     
     /* // Field name */
     /* char* name; */
