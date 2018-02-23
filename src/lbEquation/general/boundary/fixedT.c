@@ -169,7 +169,8 @@ void fixedT( struct latticeMesh* mesh, struct macroFields* mfields, struct lbeFi
 			    
 			    // Equilibrium at neighbour node
 			    
-			    myMRTEquilibrium( &mesh->lattice, singleNodeT(mesh, mfields, field, nbid), mfields->U[nbid], field->alpha_1, field->alpha_2, f_eq_nb );
+			    myMRTEquilibrium( &mesh->lattice, mfields->T[nbid], mfields->U[nbid], field->alpha_1, field->alpha_2, f_eq_nb );
+			    /* myMRTEquilibrium( &mesh->lattice, singleNodeT(mesh, mfields, field, nbid), mfields->U[nbid], field->alpha_1, field->alpha_2, f_eq_nb ); */
 			    
 			    eq_nb  = f_eq_nb[k];
 
