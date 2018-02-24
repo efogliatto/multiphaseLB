@@ -328,6 +328,11 @@ int main( int argc, char **argv ) {
 	
     	if( ht != 0 )     {
 
+	    heatSource( &mesh, &mfields, &g );
+
+	    syncScalarField( &mesh, g.scalarSource );
+
+	    
 	    macroTemperature( &mesh, &mfields, &g );
 
 	    syncScalarField( &mesh, mfields.T );

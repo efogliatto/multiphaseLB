@@ -5,7 +5,7 @@
 
 void heatSource( struct latticeMesh* mesh, struct macroFields* mfields, struct lbeField* field ) {
 
-    unsigned int i, id;
+    unsigned int k, id;
 
     double lambda = 1.0,
 	dot = 0.0,
@@ -42,9 +42,11 @@ void heatSource( struct latticeMesh* mesh, struct macroFields* mfields, struct l
 
 
 
-	    for( i = 0 ; i < mesh->lattice.Q ; i++ ) {
+	    dot = 0;
+	    
+	    for( k = 0 ; k < 3 ; k++ ) {
 
-		dot += gradT[i] * gradRho[i];
+		dot += gradT[k] * gradRho[k];
 	
 	    }
 
@@ -53,7 +55,7 @@ void heatSource( struct latticeMesh* mesh, struct macroFields* mfields, struct l
 
 	    dpdT = dpdT / (0.2*mfields->T[id]);
     
-	    field->scalarSource[i] = -lambda * dot / mesh->EOS._Cv   +   divU * mfields->T[id]*( 1.0 - dpdT/(mfields->rho[id]*mesh->EOS._Cv) );
+	    field->scalarSource[id] = -lambda * dot / mesh->EOS._Cv   +   divU * mfields->T[id]*( 1.0 - dpdT/(mfields->rho[id]*mesh->EOS._Cv) );
 
 
 	}
