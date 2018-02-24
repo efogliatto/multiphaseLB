@@ -45,4 +45,8 @@
 
 #include <entryIsPresent.h>
 
+#include <createScalarField.h>
+#include <createVectorField.h>
+#include <createLbeField.h>
+
 #endif // IO_H

@@ -84,78 +84,34 @@ int main( int argc, char **argv ) {
     // Macroscopic fields
     
     struct macroFields mfields;
-
-    uint status;
     
 
     
     // Density
 
-    if(pid == 0) {  printf("\nReading field rho\n");  }
+    createScalarField( &mesh, &mfields.rho, "rho");
+
     
-    status = readScalarField( &mesh, &mfields.rho, "rho");
-
-    if( status == 0 ) {
-
-    	errorMsg("Unable to read field rho");
-	
-    }
-
-
-
     
     // Velocity
 
-    if(pid == 0) {  printf("\nReading field U\n");  }
-    
-    status = readVectorField( &mesh, &mfields.U, 3, "U");
-
-    if( status == 0 ) {
-
-    	printf("\n   [ERROR]  Unable to read field U\n\n");
-
-    	exit(1);
-
-    }
+    createVectorField( &mesh, &mfields.U, 3, "U");
     
 
     
     // Temperature
 
-    if(pid == 0) {  printf("\nReading field T\n");  }
-    
-    status = readScalarField( &mesh, &mfields.T, "T");
+    createScalarField( &mesh, &mfields.T, "T");
 
-    if( status == 0 ) {
-
-    	printf("\n   [ERROR]  Unable to read field T\n\n");
-
-    	exit(1);
-
-    }
-
-
-
-    
 
 
     // LBE fields
 
     // Navier-Stokes field
 
-    if(pid == 0) {  printf("\nReading field f\n");  }
-
     struct lbeField f;
     
-    status = readLbeField( &mesh, &f, "f");
-
-    if( status == 0 ) {
-
-    	printf("\n   [ERROR]  Unable to read field f\n\n");
-
-    	exit(1);
-
-    }
+    createLbeField( &mesh, &f, "f");
 
     if(frozen == 0) { f.update = 0; }
 
@@ -163,34 +119,19 @@ int main( int argc, char **argv ) {
     
     // Energy field
 
-    if(pid == 0) {  printf("\nReading field g\n");  }
-
     struct lbeField g;
     
-    status = readLbeField( &mesh, &g, "g");
-
-    if( status == 0 ) {
-
-    	printf("\n   [ERROR]  Unable to read field g\n\n");
-
-    	exit(1);
-
-    }
+    createLbeField( &mesh, &g, "g");
 
     if(ht == 0) { g.update = 0; }
     
     
 
     // Initial equilibrium distribution
-
-    // f
-    
+   
     equilibrium(&mesh, &mfields, &f);
-
-	    
-    // g
     
-     equilibrium(&mesh, &mfields, &g);
+    equilibrium(&mesh, &mfields, &g);
 
 
 
@@ -310,20 +251,6 @@ int main( int argc, char **argv ) {
 	macroVelocity( &mesh, &mfields, &f );
 
 
-
-	
-    	
-	/* if( frozen != 0 ) { */
-
-	/*     syncScalarField( &mesh, mfields.rho ); */
-
-	/*     syncVectorField( &mesh, mfields.U ); */
-	    
-	/* } */
-	
-
-
-	
 	
 	
     	// Write fields
