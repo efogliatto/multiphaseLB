@@ -17,4 +17,6 @@ int** matrixIntAlloc(unsigned int nrow, unsigned int ncol, int df);
 
 #include <vectorMag2.h>
 
+#include <errorMsg.h>
+
 #endif // BASIC_H

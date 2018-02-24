@@ -16,30 +16,6 @@
 #include <pseudoPot.h>
 
 
-void printField(double** field, int n, int Q, char* msg) {
-
-    /* unsigned int i, j; */
-
-    /* printf("%s\n",msg); */
-    
-    /* for( i = 0 ; i < n ; i++ ) { */
-
-    /* 	printf("%d:  ",i); */
-	
-    /* 	for( j = 0 ; j < Q ; j++ ) { */
-
-    /* 	    printf("%.6f ", field[i][j]); */
-
-    /* 	} */
-
-    /* 	printf("\n"); */
-
-    /* } */
-
-    /* printf("\n"); */
-
-}
-
 
 
 int main( int argc, char **argv ) {
@@ -121,10 +97,8 @@ int main( int argc, char **argv ) {
 
     if( status == 0 ) {
 
-    	printf("\n   [ERROR]  Unable to read field rho\n\n");
-
-    	exit(1);
-
+    	errorMsg("Unable to read field rho");
+	
     }
 
 
@@ -265,8 +239,6 @@ int main( int argc, char **argv ) {
 
 	collision( &mesh, &mfields, &g );
 	
-	syncPdfField( &mesh, g.value );
-
 	
 	
     	// Stream f
@@ -280,21 +252,7 @@ int main( int argc, char **argv ) {
     	lbstream( &mesh, &g );
 
 
-
 	
-    	// Sync fields
-
-    	if( frozen != 0 ) {  syncPdfField( &mesh, f.value ); }
-
-    	if( ht != 0 ) {  syncPdfField( &mesh, g.value );  }
-
-
-
-	
-
-
-
-
 
 	// Apply boundary conditions
 	
@@ -318,7 +276,7 @@ int main( int argc, char **argv ) {
 
     	// Update macroscopic density
 	
-    	if( frozen != 0 ) {  macroDensity( &mesh, &mfields, &f ); }
+    	macroDensity( &mesh, &mfields, &f );
 
 
 	
@@ -332,34 +290,36 @@ int main( int argc, char **argv ) {
 
 	    syncScalarField( &mesh, g.scalarSource );
 
-	    
-	    macroTemperature( &mesh, &mfields, &g );
-
-	    syncScalarField( &mesh, mfields.T );
-
 	}
 
+	macroTemperature( &mesh, &mfields, &g );
 
-    	// Update force
-	
-    	interForce( &mesh, &mfields );
 
-    	syncVectorField( &mesh, mfields.Fi );
 	
 	
     	// Update macroscopic velocity
 	
-    	if( frozen != 0 ) {  macroVelocity( &mesh, &mfields, &f ); }
+    	if( frozen != 0 ) {
 
+	    interForce( &mesh, &mfields );
 
-    	
-	if( frozen != 0 ) {
+	    syncVectorField( &mesh, mfields.Fi );
 
-	    syncScalarField( &mesh, mfields.rho );
-
-	    syncVectorField( &mesh, mfields.U );
-	    
 	}
+
+	macroVelocity( &mesh, &mfields, &f );
+
+
+
+	
+    	
+	/* if( frozen != 0 ) { */
+
+	/*     syncScalarField( &mesh, mfields.rho ); */
+
+	/*     syncVectorField( &mesh, mfields.U ); */
+	    
+	/* } */
 	
 
 
