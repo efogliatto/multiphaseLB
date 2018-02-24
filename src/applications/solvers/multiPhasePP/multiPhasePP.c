@@ -16,30 +16,6 @@
 #include <pseudoPot.h>
 
 
-void printField(double** field, int n, int Q, char* msg) {
-
-    /* unsigned int i, j; */
-
-    /* printf("%s\n",msg); */
-    
-    /* for( i = 0 ; i < n ; i++ ) { */
-
-    /* 	printf("%d:  ",i); */
-	
-    /* 	for( j = 0 ; j < Q ; j++ ) { */
-
-    /* 	    printf("%.6f ", field[i][j]); */
-
-    /* 	} */
-
-    /* 	printf("\n"); */
-
-    /* } */
-
-    /* printf("\n"); */
-
-}
-
 
 
 int main( int argc, char **argv ) {
@@ -108,80 +84,34 @@ int main( int argc, char **argv ) {
     // Macroscopic fields
     
     struct macroFields mfields;
-
-    uint status;
     
 
     
     // Density
 
-    if(pid == 0) {  printf("\nReading field rho\n");  }
+    createScalarField( &mesh, &mfields.rho, "rho");
+
     
-    status = readScalarField( &mesh, &mfields.rho, "rho");
-
-    if( status == 0 ) {
-
-    	printf("\n   [ERROR]  Unable to read field rho\n\n");
-
-    	exit(1);
-
-    }
-
-
-
     
     // Velocity
 
-    if(pid == 0) {  printf("\nReading field U\n");  }
-    
-    status = readVectorField( &mesh, &mfields.U, 3, "U");
-
-    if( status == 0 ) {
-
-    	printf("\n   [ERROR]  Unable to read field U\n\n");
-
-    	exit(1);
-
-    }
+    createVectorField( &mesh, &mfields.U, 3, "U");
     
 
     
     // Temperature
 
-    if(pid == 0) {  printf("\nReading field T\n");  }
-    
-    status = readScalarField( &mesh, &mfields.T, "T");
+    createScalarField( &mesh, &mfields.T, "T");
 
-    if( status == 0 ) {
-
-    	printf("\n   [ERROR]  Unable to read field T\n\n");
-
-    	exit(1);
-
-    }
-
-
-
-    
 
 
     // LBE fields
 
     // Navier-Stokes field
 
-    if(pid == 0) {  printf("\nReading field f\n");  }
-
     struct lbeField f;
     
-    status = readLbeField( &mesh, &f, "f");
-
-    if( status == 0 ) {
-
-    	printf("\n   [ERROR]  Unable to read field f\n\n");
-
-    	exit(1);
-
-    }
+    createLbeField( &mesh, &f, "f");
 
     if(frozen == 0) { f.update = 0; }
 
@@ -189,34 +119,19 @@ int main( int argc, char **argv ) {
     
     // Energy field
 
-    if(pid == 0) {  printf("\nReading field g\n");  }
-
     struct lbeField g;
     
-    status = readLbeField( &mesh, &g, "g");
-
-    if( status == 0 ) {
-
-    	printf("\n   [ERROR]  Unable to read field g\n\n");
-
-    	exit(1);
-
-    }
+    createLbeField( &mesh, &g, "g");
 
     if(ht == 0) { g.update = 0; }
     
     
 
     // Initial equilibrium distribution
-
-    // f
-    
+   
     equilibrium(&mesh, &mfields, &f);
-
-	    
-    // g
     
-     equilibrium(&mesh, &mfields, &g);
+    equilibrium(&mesh, &mfields, &g);
 
 
 
@@ -232,6 +147,11 @@ int main( int argc, char **argv ) {
 
 
 
+    // Heat source
+
+    heatSource( &mesh, &mfields, &g );
+
+    syncScalarField( &mesh, g.scalarSource );
     
    
     if(pid == 0){printf("\n\n");}
@@ -260,8 +180,6 @@ int main( int argc, char **argv ) {
 
 	collision( &mesh, &mfields, &g );
 	
-	syncPdfField( &mesh, g.value );
-
 	
 	
     	// Stream f
@@ -275,21 +193,7 @@ int main( int argc, char **argv ) {
     	lbstream( &mesh, &g );
 
 
-
 	
-    	// Sync fields
-
-    	if( frozen != 0 ) {  syncPdfField( &mesh, f.value ); }
-
-    	if( ht != 0 ) {  syncPdfField( &mesh, g.value );  }
-
-
-
-	
-
-
-
-
 
 	// Apply boundary conditions
 	
@@ -313,7 +217,7 @@ int main( int argc, char **argv ) {
 
     	// Update macroscopic density
 	
-    	if( frozen != 0 ) {  macroDensity( &mesh, &mfields, &f ); }
+    	macroDensity( &mesh, &mfields, &f );
 
 
 	
@@ -323,37 +227,30 @@ int main( int argc, char **argv ) {
 	
     	if( ht != 0 )     {
 
-	    macroTemperature( &mesh, &mfields, &g );
+	    heatSource( &mesh, &mfields, &g );
 
-	    syncScalarField( &mesh, mfields.T );
+	    syncScalarField( &mesh, g.scalarSource );
 
 	}
 
+	macroTemperature( &mesh, &mfields, &g );
 
-    	// Update force
-	
-    	interForce( &mesh, &mfields );
 
-    	syncVectorField( &mesh, mfields.Fi );
 	
 	
     	// Update macroscopic velocity
 	
-    	if( frozen != 0 ) {  macroVelocity( &mesh, &mfields, &f ); }
+    	if( frozen != 0 ) {
 
+	    interForce( &mesh, &mfields );
 
-    	
-	if( frozen != 0 ) {
+	    syncVectorField( &mesh, mfields.Fi );
 
-	    syncScalarField( &mesh, mfields.rho );
-
-	    syncVectorField( &mesh, mfields.U );
-	    
 	}
-	
+
+	macroVelocity( &mesh, &mfields, &f );
 
 
-	
 	
 	
     	// Write fields

@@ -1,33 +1,28 @@
 #include <heatSource.h>
 #include <finiteDifference.h>
 #include <pseudoPot.h>
+#include <stdlib.h>
 
 void heatSource( struct latticeMesh* mesh, struct macroFields* mfields, struct lbeField* field ) {
 
-    unsigned int id;
-
-    unsigned int i;
+    unsigned int k, id;
 
     double lambda = 1.0,
-    	dot = 0.0,
-    	divU = 0.0,
-    	dpdT = 0.0;
+	dot = 0.0,
+	divU = 0.0,
+	dpdT = 0.0;
 
     double gradT[3],
-    	gradRho[3];
-
-    
-
-    // Move over points
-
-    for( id = 0 ; id < mesh->parallel.nlocal ; id++ ) {
-	
-
-	switch( field->colId ) {
-
-	case 4:    
+	gradRho[3];
 
 
+    switch( field->colId ){
+
+    case 4:
+
+	for( id = 0 ; id < mesh->parallel.nlocal ; id++ ) {
+
+	    
 	    lambda = mfields->rho[id] * mesh->EOS._Cv * (1/field->Lambda[3] - 0.5) * (4.0 + 3.0 * field->alpha_1 + 2.0 * field->alpha_2) / 6.0;
     
 
@@ -47,9 +42,11 @@ void heatSource( struct latticeMesh* mesh, struct macroFields* mfields, struct l
 
 
 
-	    for( i = 0 ; i < mesh->lattice.Q ; i++ ) {
+	    dot = 0;
+	    
+	    for( k = 0 ; k < 3 ; k++ ) {
 
-	    	dot += gradT[i] * gradRho[i];
+		dot += gradT[k] * gradRho[k];
 	
 	    }
 
@@ -58,24 +55,20 @@ void heatSource( struct latticeMesh* mesh, struct macroFields* mfields, struct l
 
 	    dpdT = dpdT / (0.2*mfields->T[id]);
     
-	    mfields->scalarSource[id] = -lambda * dot / mesh->EOS._Cv   +   divU * mfields->T[id]*( 1.0 - dpdT/(mfields->rho[id]*mesh->EOS._Cv) );
-	    
+	    field->scalarSource[id] = -lambda * dot / mesh->EOS._Cv   +   divU * mfields->T[id]*( 1.0 - dpdT/(mfields->rho[id]*mesh->EOS._Cv) );
 
-	    
-	    break;
-
-
-
-	default:
-
-	    mfields->scalarSource[id] = 0;
-
-	    break;
 
 	}
 	
+	break;
+
+
+    default:
+
+	printf("\n  [ERROR] Heat source not defined for model %d\n\n", field->colId);
+
+	exit(0);
 
     }
-
 
 }

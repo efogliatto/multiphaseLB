@@ -11,46 +11,51 @@
 
 void macroDensity( struct latticeMesh* mesh, struct macroFields* mfields, struct lbeField* field ) {
 
-    
-    // Compute density according to field.colId
-    
-    unsigned int id;
-    
-    
-    // Apply collision model
-    switch(field->colId) {
+
+    if (field->update != 0) {
 
 	
-    // Li MRT Model
-    case 0:
+	// Compute density according to field.colId
+    
+	unsigned int id;
+    
+    
+	// Apply collision model
+	switch(field->colId) {
 
-	for( id = 0 ; id < mesh->mesh.nPoints ; id++) {
+	
+	    // Li MRT Model
+	case 0:
+
+	    for( id = 0 ; id < mesh->mesh.nPoints ; id++) {
 	    
-	    mfields->rho[id] = liMRTDensity( mesh, field->value[id] );
+		mfields->rho[id] = liMRTDensity( mesh, field->value[id] );
 	    
+	    }
+	
+	    break;
+
+
+	    // Li SRT Model
+	case 1:
+
+	    for( id = 0 ; id < mesh->mesh.nPoints ; id++) {
+	    
+		mfields->rho[id] = liSRTDensity( mesh, field->value[id] );
+	    
+	    }
+	
+	    break;
+	
+	
+	
+	default:
+	    printf("\n\n[ERROR]  Model not available \n\n");
+	    exit(1);
+	    break;	
+	
 	}
-	
-	break;
 
-
-    // Li SRT Model
-    case 1:
-
-	for( id = 0 ; id < mesh->mesh.nPoints ; id++) {
-	    
-	    mfields->rho[id] = liSRTDensity( mesh, field->value[id] );
-	    
-	}
-	
-	break;
-	
-	
-	
-    default:
-	printf("\n\n[ERROR]  Model not available \n\n");
-	exit(1);
-	break;	
-	
     }
-
+    
 }

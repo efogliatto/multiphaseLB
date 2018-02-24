@@ -168,7 +168,12 @@ unsigned int readLbeField( struct latticeMesh* mesh, struct lbeField* field, cha
 
 			sprintf( prop, "%s/alpha_2", fname);
 
-			status = lookUpDouble("properties/macroProperties", prop, &field->alpha_2, 1 );			
+			status = lookUpDouble("properties/macroProperties", prop, &field->alpha_2, 1 );
+
+
+
+			// Allocate scalar source
+			field->scalarSource = (double*)malloc( mesh->mesh.nPoints * sizeof(double) );
 	
 
 		    }

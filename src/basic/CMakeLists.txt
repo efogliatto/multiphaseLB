@@ -9,4 +9,5 @@ add_library(basic SHARED
   syncVectorField.c
   syncScalarField.c
   vectorMag2.c
+  errorMsg.c
   )

@@ -20,6 +20,9 @@ add_library(io SHARED
   readScalarField.c
   readVectorField.c
   readLbeField.c
+  createScalarField.c
+  createVectorField.c
+  createLbeField.c
   fileSearch/tokenize.c
   fileSearch/entryList.c
   fileSearch/subEntryList.c
