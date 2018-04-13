@@ -11,7 +11,7 @@ int main() {
 
     unsigned int status;
     
-    status = bracedEntry("f", dict.content, entry);
+    status = bracedEntry( "g", dict.content, entry );
 
     
     
