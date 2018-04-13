@@ -1,7 +1,7 @@
 #include <string.h>
 #include <stdio.h>
 
-unsigned int bracedEntry( char* ename, char* content, char* entry ) {
+unsigned int bracedEntry( char* ename, char* content, char** entry ) {
 
     unsigned int status = 0;
 
@@ -75,9 +75,9 @@ unsigned int bracedEntry( char* ename, char* content, char* entry ) {
 
 	    if( bcount == 0 ) {
 
-	    	entry = (char*)malloc((j+1)*sizeof(char));
+	    	*entry = (char*)malloc((j+1)*sizeof(char));
 
-	    	strncpy( entry, &partial[1], j-1 );
+	    	strncpy( *entry, &partial[1], j-1 );
 
 	    	/* printf("%s\n",entry); */
 

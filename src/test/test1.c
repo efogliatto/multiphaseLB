@@ -11,7 +11,17 @@ int main() {
 
     unsigned int status;
     
-    status = bracedEntry( "g", dict.content, entry );
+    status = bracedEntry( "g", dict.content, &entry );
+
+    if(status) {
+	
+	char* entry2 = 0;
+	
+	status = bracedEntry( "Y0", entry, &entry2 );
+
+	printf("%s\n", entry2);
+
+    }
 
     
     
