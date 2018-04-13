@@ -4,4 +4,5 @@
 add_library(dictio SHARED
   openDict.c
   bracedEntry.c
+  singleEntry.c
   )

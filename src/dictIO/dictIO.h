@@ -7,4 +7,6 @@
 
 #include <bracedEntry.h>
 
+#include <singleEntry.h>
+
 #endif // DICTIO_H
