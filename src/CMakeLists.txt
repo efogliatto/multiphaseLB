@@ -1,22 +1,25 @@
-# Input/output library
-add_subdirectory (IO)
+# # Input/output library
+# add_subdirectory (IO)
 
-# lattice Models library
-add_subdirectory (latticeModel)
+# Dictionary entry
+add_subdirectory (dictIO)
 
-# Basic library. C operations
-add_subdirectory (basic)
+# # lattice Models library
+# add_subdirectory (latticeModel)
 
-# Lattice-Boltzmann equations and models
-add_subdirectory (lbEquation)
+# # Basic library. C operations
+# add_subdirectory (basic)
 
-# finite difference differential operations
-add_subdirectory (finiteDifference)
+# # Lattice-Boltzmann equations and models
+# add_subdirectory (lbEquation)
+
+# # finite difference differential operations
+# add_subdirectory (finiteDifference)
 
 
 
-# Applications
-add_subdirectory (applications)
+# # Applications
+# add_subdirectory (applications)
 
 # Tests
 add_subdirectory (test)

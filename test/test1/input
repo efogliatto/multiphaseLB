@@ -1,23 +1,53 @@
-AA  2;
-BB 3;
-CC probando;
-
-DD
+f
 {
-  EE
-  {
-    FF
+
+    X0
     {
-      GG 4;
-      HH hh;
-      II (2 1 0);
-      JJ (8 7 6 5 4 3 2 1 0);
+        type   periodic;
     }
-  }
+
+    X1
+    {
+        type periodic;
+    }
+
+    Y0
+    {
+        type bounceBack;
+    }
+
+    Y1
+    {
+        type bounceBack;
+    }
+
 }
 
 
-AAA
+
+g
 {
-  BBB 1;
+
+    X0
+    {
+        type periodic;
+    }
+
+    X1
+    {
+        type periodic;
+    }
+
+    Y0
+    {
+        type fixedT;
+	value 0.033333;
+    }
+
+    Y1
+    {
+        type fixedT;
+	value  0.036667;
+    }
+
 }

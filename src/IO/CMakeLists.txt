@@ -2,8 +2,6 @@
  
 # IO library
 add_library(io SHARED
-  lookUpDoubleEntry.c
-  lookUpStringEntry.c
   openFile.c
   readBasicMesh.c
   writeBasicMesh.c
@@ -22,16 +20,7 @@ add_library(io SHARED
   readLbeField.c
   createScalarField.c
   createVectorField.c
-  createLbeField.c
-  fileSearch/tokenize.c
-  fileSearch/entryList.c
-  fileSearch/subEntryList.c
-  fileSearch/singleEntryList.c
-  fileSearch/lookUpEntry.c
-  fileSearch/lookUpDouble.c
-  fileSearch/lookUpVector.c
-  fileSearch/lookUpString.c
-  fileSearch/entryIsPresent.c
+  createLbeField.c 
   time/timeOptions.c
   basicInfo/readEOSInfo.c
   )
