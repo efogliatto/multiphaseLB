@@ -19,4 +19,6 @@
 
 #include <lookUpVectorEntry.h>
 
+#include <isBracedEntryDefined.h>
+
 #endif // DICTIO_H
