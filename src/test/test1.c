@@ -15,22 +15,21 @@ int main() {
 
     if(status) {
 	
-	char* entry2 = 0;
-	
 	status = bracedEntry( "Y0", entry, &entry );
 
-	/* printf("%s\n",entry2); */
-
-	/* if(status) {        */
+	if(status) {
 	
-	/*     status = singleEntry( "value", entry2, &entry2 ); */
+	    status = singleEntry( "value", entry, &entry );
 
-	/*     printf("%s\n",entry2); */
+	    printf("%s\n",entry);
 
-	/* } */
+	}
 
 
     }
+  
+
+
 
     
     

@@ -59,6 +59,8 @@ unsigned int singleEntry( char* ename, char* content, char** entry ) {
 
 	strcpy( *entry, aux );
 	
+	free(aux);
+	
 	status = 1;	
 
 

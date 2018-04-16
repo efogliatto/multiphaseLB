@@ -68,8 +68,6 @@ unsigned int bracedEntry( char* ename, char* content, char** entry ) {
 	    }
 
 
-	    j--;
-
 
 
 	    
@@ -81,11 +79,12 @@ unsigned int bracedEntry( char* ename, char* content, char** entry ) {
 
 		// Create a first copy. This enables the use of the same pointer for content and *entry
 
-		char *aux = (char*)malloc( (j+1)*sizeof(char) );
+		char *aux = (char*)malloc( (j-2)*sizeof(char) );
 
-		memset(aux,'\0',j+1);
+		memset(aux,'\0', (j-2));
 
-		strncpy( aux, partial, j+1 );
+		strncpy( aux, &partial[1], (j-2) );
+
 
 
 		// (Re)Allocate memory for entry and copy
@@ -96,12 +95,14 @@ unsigned int bracedEntry( char* ename, char* content, char** entry ) {
 
 		}
 		
-	    	*entry = (char*)malloc((j+1)*sizeof(char));
+	    	*entry = (char*)malloc((j-2)*sizeof(char));
 
-		memset(*entry,'\0',j+1);
+		memset(*entry,'\0',j-2);
 			
 
 	    	strcpy( *entry, aux );
+
+		free(aux);
 
 		status = 1;
 		
