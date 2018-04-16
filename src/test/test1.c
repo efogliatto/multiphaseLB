@@ -2,31 +2,47 @@
 
 int main() {
 
+    
     // Open dictionary
     
     struct dictionary dict = openDict("input");
 
 
-    char* entry = 0;
+    /* char* entry = 0; */
+
+    char** tk;
+
+    unsigned int n, i;
 
     unsigned int status;
-    
-    status = bracedEntry( "g", dict.content, &entry );
 
-    if(status) {
-	
-	status = bracedEntry( "Y0", entry, &entry );
+    status = tokenize("value", &tk, &n);
 
-	if(status) {
-	
-	    status = singleEntry( "value", entry, &entry );
+    for( i = 0 ; i < n ; i++ ) {
 
-	    printf("%s\n",entry);
-
-	}
-
+	printf("%s\n", tk[i]);
 
     }
+
+    
+    
+    /* status = bracedEntry( "g", dict.content, &entry ); */
+
+    /* if(status) { */
+	
+    /* 	status = bracedEntry( "Y0", entry, &entry ); */
+
+    /* 	if(status) { */
+	
+    /* 	    status = singleEntry( "value", entry, &entry ); */
+
+    /* 	    printf("%s\n",entry); */
+
+    /* 	} */
+
+
+    /* } */
+    
   
 
 

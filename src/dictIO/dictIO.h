@@ -9,4 +9,6 @@
 
 #include <singleEntry.h>
 
+#include <tokenize.h>
+
 #endif // DICTIO_H
