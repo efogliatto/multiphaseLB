@@ -41,13 +41,13 @@ g
     Y0
     {
         type fixedT;
-	value 0.033333;
+	value  0.033333;
     }
 
     Y1
     {
         type fixedT;
-	value  0.036667;
+	value 0.036667;
     }
 
 }

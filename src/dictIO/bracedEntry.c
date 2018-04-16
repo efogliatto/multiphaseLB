@@ -1,5 +1,6 @@
 #include <string.h>
 #include <stdio.h>
+#include <stdlib.h>
 
 unsigned int bracedEntry( char* ename, char* content, char** entry ) {
 
@@ -71,15 +72,36 @@ unsigned int bracedEntry( char* ename, char* content, char** entry ) {
 
 
 
+	    
 	    // Copy if found
 
 	    if( bcount == 0 ) {
 
+
+
+		// Create a first copy. This enables the use of the same pointer for content and *entry
+
+		char *aux = (char*)malloc( (j+1)*sizeof(char) );
+
+		memset(aux,'\0',j+1);
+
+		strncpy( aux, partial, j+1 );
+
+
+		// (Re)Allocate memory for entry and copy
+		
+		if(entry != NULL) {
+
+		    free(*entry);
+
+		}
+		
 	    	*entry = (char*)malloc((j+1)*sizeof(char));
 
-	    	strncpy( *entry, &partial[1], j-1 );
+		memset(*entry,'\0',j+1);
+			
 
-	    	/* printf("%s\n",entry); */
+	    	strcpy( *entry, aux );
 
 		status = 1;
 		
