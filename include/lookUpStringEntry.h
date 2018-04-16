@@ -1,1 +1,1 @@
-../src/IO/lookUpStringEntry.h
+../src/dictIO/lookUpStringEntry.h

@@ -13,4 +13,6 @@
 
 #include <lookUpEntry.h>
 
+#include <lookUpStringEntry.h>
+
 #endif // DICTIO_H
