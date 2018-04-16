@@ -15,4 +15,6 @@
 
 #include <lookUpStringEntry.h>
 
+#include <lookUpScalarEntry.h>
+
 #endif // DICTIO_H

@@ -8,4 +8,5 @@ add_library(dictio SHARED
   tokenize.c
   lookUpEntry.c
   lookUpStringEntry.c
+  lookUpScalarEntry.c
   )
