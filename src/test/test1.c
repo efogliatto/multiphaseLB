@@ -4,11 +4,13 @@ int main() {
 
 
     char* entry = 0;
+
+    unsigned int status;
     
-    unsigned int status = lookUpStringEntry("input", "g/Y0/type", &entry, "sarasa");
+    status = lookUpStringEntry("input", "g/Y0/type", &entry, "sarasa");
 
     if(status)
-	printf("type %s\n", entry);
+    	printf("type %s\n", entry);
 
 
 
@@ -17,7 +19,29 @@ int main() {
     status = lookUpScalarEntry("input", "g/Y0/value", 0, &de);
 
     if(status)
-	printf("value %f\n", de);
+    	printf("value %f\n", de);
+
+
+
+    double* ve;
+
+    unsigned int n;
+    
+    status = lookUpVectorEntry("initialFields", "g/internalField/value", &ve, &n);
+
+    if(status) {
+
+	unsigned int i;
+
+	for(i = 0 ; i < n ; i++)
+	    printf("%f ", ve[i]);
+	
+    	printf("\n");
+
+    }
+
+
+
 
     
     

@@ -17,4 +17,6 @@
 
 #include <lookUpScalarEntry.h>
 
+#include <lookUpVectorEntry.h>
+
 #endif // DICTIO_H

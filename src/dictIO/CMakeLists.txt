@@ -9,4 +9,5 @@ add_library(dictio SHARED
   lookUpEntry.c
   lookUpStringEntry.c
   lookUpScalarEntry.c
+  lookUpVectorEntry.c
   )
