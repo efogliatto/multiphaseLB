@@ -11,4 +11,6 @@
 
 #include <tokenize.h>
 
+#include <lookUpEntry.h>
+
 #endif // DICTIO_H

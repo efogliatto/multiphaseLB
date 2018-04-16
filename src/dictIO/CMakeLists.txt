@@ -6,4 +6,5 @@ add_library(dictio SHARED
   bracedEntry.c
   singleEntry.c
   tokenize.c
+  lookUpEntry.c
   )
