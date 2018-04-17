@@ -1,18 +1,35 @@
 #include <stdio.h>
-#include <string.h>
 #include <stdlib.h>
-
 #include <MRTInvMatrix.h>
 
-double** MRTInvMatrix( char* modelName ) {
+
+double** MRTInvMatrix( DdQq model ) {
 
     double** invM = NULL;
 
-    if ( strcmp(modelName,"D2Q9") == 0 ) {
+
+    switch( model ) {
+
+	
+    case D2Q9:
 
 	invM = D2Q9_MRTInv();
+
+	break;
+
 	
+    case D3Q15:
+
+	break;
+
+	
+    default:
+
+	break;
+
     }
+    
+    
 
     return invM;
 

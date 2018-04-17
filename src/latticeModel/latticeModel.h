@@ -3,18 +3,24 @@
 
 
 #include <latticeVelocities.h>
+
 #include <latticeWeights.h>
+
 #include <latticeReverseDir.h>
+
 #include <MRTMatrix.h>
+
 #include <MRTInvMatrix.h>
+
 #include <ppWeights.h>
+
 #include <cs2.h>
 
 #include <setLatticeInfo.h>
 
-unsigned int latticeQ( char* modelName );
+#include <latticeD.h>
 
-unsigned int latticeD( char* modelName );
+#include <latticeQ.h>
 
 
 #endif // LATTICEMODEL_H

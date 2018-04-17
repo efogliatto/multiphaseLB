@@ -1,70 +1,87 @@
 #include <setLatticeInfo.h>
-#include <io.h>
+#include <dictIO.h>
 #include <cs2.h>
+#include <latticeQ.h>
+#include <latticeD.h>
 #include <latticeVelocities.h>
 #include <latticeReverseDir.h>
 #include <latticeWeights.h>
 #include <ppWeights.h>
 #include <MRTMatrix.h>
 #include <MRTInvMatrix.h>
+#include <errorMsg.h>
 
 
-unsigned int latticeQ( char* modelName );
 
-unsigned int latticeD( char* modelName );
-
-
-struct latticeInfo setLatticeInfo( ) {
+latticeInfo setLatticeInfo( ) {
 
 
-    // Read model name    
     
-    char* modelName = (char*)malloc( 10*sizeof(char) );
+    unsigned int status;
 
-    unsigned int i;
+    char* modelName;
 
-    for( i = 0 ; i < 10 ; i++ ) {
+    latticeInfo info;
 
-	modelName[i] = '\0';
+
+    
+    // Read model name. Use D2Q9 as default
+    
+    status = lookUpStringEntry( "properties/latticeProperties", "LBModel", &modelName, "D2Q9" );
+
+    if(status) {}
+
+    if( strcmp(modelName, "D2Q9") == 0 ) {
+
+	info.model = D2Q9;
 
     }
 
-    char lbm[20];
+    else {
 
-    lookUpStringEntry("properties/latticeProperties","LBModel", lbm);
+	if( strcmp(modelName, "D3Q15") == 0 ) {
 
-    strcpy(modelName, lbm);
-    
+	    info.model = D3Q15;
 
+	}
 
+	else {
 
-    // Assign properties
-    
-    struct latticeInfo info;
-    
-    info.cs2 = cs2( modelName );
+	    char msg[100];
 
-    info.Q = latticeQ( modelName );
+	    sprintf(msg, "Unrecognized model %s", modelName);
+	    
+	    errorMsg( msg );
 
-    info.d = latticeD( modelName );
+	}
 
-    info.vel = latticeVelocities( modelName );
-
-    info.reverse = latticeReverseDir( modelName );
-
-    info.omega = latticeWeights( modelName );
-
-    info.weights = ppWeights( modelName );
-
-    info.M = MRTMatrix( modelName );
-
-    info.invM = MRTInvMatrix( modelName );
-    
-
+    }
 
     
+    
+    
 
-    free(modelName);
+    // Assign properties        
+    
+    info.cs2 = cs2( info.model );
+
+    info.Q = latticeQ( info.model );
+
+    info.d = latticeD( info.model );
+
+    info.vel = latticeVelocities( info.model );
+
+    info.reverse = latticeReverseDir( info.model );
+
+    info.omega = latticeWeights( info.model );
+
+    info.weights = ppWeights( info.model );
+
+    info.M = MRTMatrix( info.model );
+
+    info.invM = MRTInvMatrix( info.model );
+    
+  
     
     return info;
 

@@ -1,18 +1,38 @@
 #include <stdio.h>
-#include <string.h>
 #include <stdlib.h>
-
 #include <latticeWeights.h>
 
-double* latticeWeights( char* modelName ) {
+double* latticeWeights( DdQq model ) {
 
     double* omega = NULL;
 
-    if ( strcmp(modelName,"D2Q9") == 0 ) {
+
+    switch( model ) {
+
+	
+    case D2Q9:
 
 	omega = D2Q9_omega();
+
+	break;
+
 	
+    case D3Q15:
+
+	omega = NULL;
+
+	break;
+
+	
+    default:
+
+	omega = NULL;
+
+	break;
+
     }
+
+    
 
     return omega;
 

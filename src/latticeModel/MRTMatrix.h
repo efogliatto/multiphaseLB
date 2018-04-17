@@ -2,7 +2,21 @@
 #define MRTMATRIX_H
 
 #include <D2Q9_MRT.h>
+#include <latticeInfo.h>
 
-double** MRTMatrix( char* modelName );
+/**
+ * @file MRTMatrix.h
+ * @author Ezequiel O. Fogliatto
+ * @date 17 Apr 2018
+ * @brief MRT transformation matrix
+ */
+
+
+/**
+ * MRT transformation matrix (standard)
+ * @return M
+ */
+
+double** MRTMatrix( DdQq model );
 
 #endif // MRTMATRIX_H

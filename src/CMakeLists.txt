@@ -4,8 +4,8 @@
 # Dictionary entry
 add_subdirectory (dictIO)
 
-# # lattice Models library
-# add_subdirectory (latticeModel)
+# lattice Models library
+add_subdirectory (latticeModel)
 
 # # Basic library. C operations
 # add_subdirectory (basic)

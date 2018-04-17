@@ -1,7 +1,6 @@
 #ifndef LATTICEINFO_H
 #define LATTICEINFO_H
 
-// Basically, DdQq model info
 
 /**
  * @file latticeInfo.h
@@ -10,32 +9,57 @@
  * @brief Lattice model parameters
  */
 
+
+/**
+ * @brief Available lattice models
+ *
+ * Available lattice models. DdQq type.
+ */
+
+typedef enum {
+    D2Q9,
+    D3Q15
+} DdQq;
+
+
 /**
  * @brief Lattice model parameters
  *
- * Lattice model parameters
+ * Lattice model parameters. DdQq related constants (d, Q, weights, etc.).
  */
 
-struct latticeInfo {
+typedef struct {
 
-    double cs2;    /**< Sound speed */
-
-    int d;    /**< Dimension */
-
-    int Q;    /**< Number of discrete velocities */
-
-    int** vel;    /**< DdQq model velocities */
-
-    int* reverse;    /**< DdQq model reverse indices */
+    /** General lattice model */
+    DdQq model;
     
-    double* omega;    /**< DdQq model weights */
+    /** Sound speed */
+    double cs2;    
 
-    double* weights;    /**< Interaction force weights */
+    /** Dimension */
+    int d;    
 
-    double** M;    /**< MRT transformation matrix */
+    /** Number of discrete velocities */
+    int Q;    
 
-    double** invM;    /**< MRT inverse of transformation matrix */
+    /** DdQq model velocities */
+    int** vel;    
+
+    /** DdQq model reverse indices */
+    int* reverse;    
+
+    /** DdQq model weights */
+    double* omega;    
+
+    /** Interaction force weights */
+    double* weights;    
+
+    /** MRT transformation matrix */
+    double** M;    
+
+    /** MRT inverse of transformation matrix */
+    double** invM;    
     
-};
+}latticeInfo;
 
 #endif // LATTICEINFO_H

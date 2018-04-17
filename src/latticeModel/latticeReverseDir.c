@@ -1,18 +1,38 @@
 #include <stdio.h>
-#include <string.h>
 #include <stdlib.h>
-
 #include <latticeReverseDir.h>
 
-int* latticeReverseDir( char* modelName ) {
+int* latticeReverseDir( DdQq model ) {
 
     int* vel = NULL;
 
-    if ( strcmp(modelName,"D2Q9") == 0 ) {
+
+    switch( model ) {
+
+	
+    case D2Q9:
 
 	vel = D2Q9_Reverse();
+
+	break;
+
 	
+    case D3Q15:
+
+	vel = NULL;
+
+	break;
+
+	
+    default:
+
+	vel = NULL;
+
+	break;
+
     }
+
+    
 
     return vel;
 

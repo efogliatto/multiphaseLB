@@ -1,18 +1,35 @@
 #include <stdio.h>
-#include <string.h>
 #include <stdlib.h>
-
 #include <ppWeights.h>
 
-double* ppWeights( char* modelName ) {
+
+double* ppWeights( DdQq model ) {
 
     double* w = NULL;
 
-    if ( strcmp(modelName,"D2Q9") == 0 ) {
+
+    switch( model ) {
+
+	
+    case D2Q9:
 
 	w = D2Q9_ppw();
+
+	break;
+
 	
+    case D3Q15:
+
+	break;
+
+	
+    default:
+
+	break;
+
     }
+	
+
 
     return w;
 
