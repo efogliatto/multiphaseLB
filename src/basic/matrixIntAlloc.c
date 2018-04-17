@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <matrixIntAlloc.h>
 
 int** matrixIntAlloc(unsigned int nrow, unsigned int ncol, int df) {
 

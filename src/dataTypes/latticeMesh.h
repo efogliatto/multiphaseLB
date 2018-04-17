@@ -28,16 +28,21 @@
 
 struct latticeMesh {
 
-    
-    struct timeInfo time;          /**< Time information */
-    
-    struct basicMesh mesh;         /**< Mesh information */
-    
-    struct mpiInfo parallel;       /**< Parallel structure */
 
-    struct latticeInfo lattice;    /**< DdQq model information */
+    /** Time information */
+    struct timeInfo time;          
 
-    struct EOSInfo EOS;            /**< EOS information */
+    /** Mesh information */
+    struct basicMesh mesh;         
+
+    /** Parallel structure */
+    struct mpiInfo parallel;       
+
+    /** DdQq model information */
+    latticeInfo lattice;    
+
+    /** EOS information */
+    struct EOSInfo EOS;            
     
 };
 

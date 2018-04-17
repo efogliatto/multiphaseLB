@@ -1,7 +1,8 @@
 #include <stdlib.h>
 #include <stdio.h>
-#include <latticeMesh.h>
-#include <mpi.h>
+#include <syncPdfField.h>
+/* #include <latticeMesh.h> */
+/* #include <mpi.h> */
 #include <math.h>
 
 

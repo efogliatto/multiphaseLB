@@ -1,3 +1,6 @@
+#include <stdlib.h>
+#include <vectorMag2.h>
+
 double vectorMag2( double v[3] ) {
 
     unsigned int k;

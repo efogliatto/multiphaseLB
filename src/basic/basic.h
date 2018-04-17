@@ -3,9 +3,9 @@
 
 #include <stdlib.h>
 
-double** matrixDoubleAlloc(unsigned int nrow, unsigned int ncol, double df);
+#include <matrixDoubleAlloc.h>
 
-int** matrixIntAlloc(unsigned int nrow, unsigned int ncol, int df);
+#include <matrixIntAlloc.h>
 
 #include <matVecMult.h>
 

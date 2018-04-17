@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <matrixDoubleAlloc.h>
 
 double** matrixDoubleAlloc(unsigned int nrow, unsigned int ncol, double df) {
 

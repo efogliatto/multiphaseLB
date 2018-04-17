@@ -7,8 +7,8 @@ add_subdirectory (dictIO)
 # lattice Models library
 add_subdirectory (latticeModel)
 
-# # Basic library. C operations
-# add_subdirectory (basic)
+# Basic library. C operations
+add_subdirectory (basic)
 
 # # Lattice-Boltzmann equations and models
 # add_subdirectory (lbEquation)

@@ -1,8 +1,9 @@
 #include <stdlib.h>
 #include <stdio.h>
-#include <latticeMesh.h>
-#include <mpi.h>
+/* #include <latticeMesh.h> */
+/* #include <mpi.h> */
 #include <math.h>
+#include <syncScalarField.h>
 
 
 void syncScalarField( struct latticeMesh* mesh, double* fld ) {
