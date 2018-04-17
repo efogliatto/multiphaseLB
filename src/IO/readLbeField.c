@@ -2,7 +2,7 @@
 #include <basic.h>
 #include <readVectorField.h>
 
-unsigned int readLbeField( struct latticeMesh* mesh, struct lbeField* field, char* fname ) {
+unsigned int readLbeField( latticeMesh* mesh, lbeField* field, char* fname ) {
 
     
     

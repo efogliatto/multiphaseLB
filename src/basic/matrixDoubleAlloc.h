@@ -11,9 +11,9 @@
 
 /**
  * Allocation of two-dimensional double array
- * @param Number of rows
- * @param Number of columns
- * @param Default value for all elements
+ * @param nrow Number of rows
+ * @param ncol Number of columns
+ * @param df Default value for all elements
  * @return Pointer to allocated array
  */
 

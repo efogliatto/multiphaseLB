@@ -3,7 +3,7 @@
 #include <basic.h>
 
 
-void createScalarField( struct latticeMesh* mesh, double** field, char* fname ) {
+void createScalarField( latticeMesh* mesh, double** field, char* fname ) {
 
     
     if(mesh->parallel.pid == 0) {

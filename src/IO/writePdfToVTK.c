@@ -3,7 +3,7 @@
 #include <stdlib.h>
 
 
-void writePdfToVTK( char* fname, double** field, struct latticeMesh* mesh ) {
+void writePdfToVTK( char* fname, double** field, latticeMesh* mesh ) {
 
 	    
 

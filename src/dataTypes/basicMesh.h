@@ -36,7 +36,7 @@ struct basicBoundary {
  * Lattice information
  */
 
-struct basicMesh {
+typedef struct {
 
     
     unsigned int nPoints;   /**< Total number of points per patch */
@@ -62,7 +62,7 @@ struct basicMesh {
     
     int** vtkCells;   /**< VTK cell indices array */
 
-};
+} basicMesh;
 
 
 

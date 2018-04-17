@@ -6,11 +6,11 @@
 #include <io.h>
 #include <latticeModel.h>
 
-struct latticeMesh readLatticeMesh( unsigned int pid ) {
+latticeMesh readLatticeMesh( unsigned int pid ) {
 
     
     
-    struct latticeMesh mesh;
+    latticeMesh mesh;
 
     uint i,j,status;
 
@@ -27,7 +27,13 @@ struct latticeMesh readLatticeMesh( unsigned int pid ) {
 
 
     // Time information
+    
     readTimeInfo( &mesh );
+
+
+    // Update lattice properties
+
+    mesh.lattice = setLatticeInfo();
 
     
 
@@ -124,13 +130,13 @@ struct latticeMesh readLatticeMesh( unsigned int pid ) {
     // ******************************************************************** //
 
 
-    lookUpStringEntry("properties/latticeProperties", "LBModel", mesh.mesh.lbm);
+    /* status = lookUpStringEntry("properties/latticeProperties", "LBModel", &mesh.mesh.lbm); */
 
-    mesh.mesh.Q = latticeQ( mesh.mesh.lbm );
+    /* mesh.mesh.Q = latticeQ( mesh.mesh.lbm ); */
 
-    mesh.lattice.d = latticeD( mesh.mesh.lbm );
+    /* mesh.lattice.d = latticeD( mesh.mesh.lbm ); */
 
-    mesh.lattice.Q = mesh.mesh.Q;
+    /* mesh.lattice.Q = mesh.mesh.Q; */
 
     mesh.mesh.nb = matrixIntAlloc( mesh.parallel.nlocal, mesh.mesh.Q, -1 );
 

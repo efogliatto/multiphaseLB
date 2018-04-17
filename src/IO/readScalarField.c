@@ -1,7 +1,8 @@
 #include <io.h>
 #include <stdlib.h>
+#include <readScalarField.h>
 
-unsigned int readScalarField( struct latticeMesh* mesh, double** field, char* fname ) {
+unsigned int readScalarField( latticeMesh* mesh, double** field, char* fname ) {
 
     
     unsigned int status = 0;

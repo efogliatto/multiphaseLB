@@ -3,6 +3,6 @@
 
 #include <latticeMesh.h>
 
-void createScalarField( struct latticeMesh* mesh, double** field, char* fname );
+void createScalarField( latticeMesh* mesh, double** field, char* fname );
 
 #endif // CREATESCALARFIELD_H

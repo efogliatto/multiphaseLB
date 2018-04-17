@@ -6,7 +6,7 @@
 #include <math.h>
 
 
-void syncVectorField( struct latticeMesh* mesh, double** fld ) {
+void syncVectorField( latticeMesh* mesh, double** fld ) {
 
 
     if( mesh->parallel.worldSize > 1 ) {

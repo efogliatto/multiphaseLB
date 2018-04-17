@@ -3,7 +3,7 @@
 #include <basic.h>
 
 
-void createVectorField( struct latticeMesh* mesh, double*** field, unsigned int vsize, char* fname ) {
+void createVectorField( latticeMesh* mesh, double*** field, unsigned int vsize, char* fname ) {
 
     
     if(mesh->parallel.pid == 0) {

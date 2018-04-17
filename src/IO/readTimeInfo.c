@@ -1,6 +1,6 @@
 #include <io.h>
 
-void readTimeInfo( struct latticeMesh* mesh ) {
+void readTimeInfo( latticeMesh* mesh ) {
 
     
     double aux;

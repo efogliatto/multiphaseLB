@@ -3,6 +3,6 @@
 
 #include <latticeMesh.h>
 
-void writeLatticeMesh( struct latticeMesh* mesh );
+void writeLatticeMesh( latticeMesh* mesh );
 
 #endif // WRITELATTICEMESH_H

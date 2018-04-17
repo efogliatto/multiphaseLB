@@ -3,8 +3,9 @@
 #include <stdlib.h>
 
 
-void writeVectorToVTK( char* fname, double** field, struct latticeMesh* mesh ) {
+void writeVectorToVTK( char* fname, double** field, latticeMesh* mesh ) {
 
+    
     FILE *outFile;
 
     char fileName[100];

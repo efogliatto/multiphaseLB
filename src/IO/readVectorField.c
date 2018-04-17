@@ -1,7 +1,10 @@
+#include <dictIO.h>
 #include <io.h>
 #include <basic.h>
+#include <readVectorField.h>
 
-unsigned int readVectorField( struct latticeMesh* mesh, double*** field, unsigned int vsize, char* fname ) {
+
+unsigned int readVectorField( latticeMesh* mesh, double*** field, unsigned int vsize, char* fname ) {
     
     
     unsigned int status = 0;

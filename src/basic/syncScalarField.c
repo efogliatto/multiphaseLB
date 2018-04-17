@@ -6,7 +6,7 @@
 #include <syncScalarField.h>
 
 
-void syncScalarField( struct latticeMesh* mesh, double* fld ) {
+void syncScalarField( latticeMesh* mesh, double* fld ) {
 
 
     if( mesh->parallel.worldSize > 1 ) {

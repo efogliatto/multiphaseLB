@@ -15,10 +15,10 @@
 /**
  * Synchronization of ghost nodes between patches
  * @brief Synchronization of scalar field
- * @param Pointer to lattice mesh
- * @param Pointer to sync field
+ * @param mesh Pointer to lattice mesh
+ * @param fld Pointer to sync field
  */
 
-void syncScalarField( struct latticeMesh* mesh, double* fld );
+void syncScalarField( latticeMesh* mesh, double* fld );
 
 #endif // SYNCSCALARFIELD_H

@@ -26,14 +26,14 @@
  * Full mesh information
  */
 
-struct latticeMesh {
+typedef struct {
 
 
     /** Time information */
     struct timeInfo time;          
 
     /** Mesh information */
-    struct basicMesh mesh;         
+    basicMesh mesh;         
 
     /** Parallel structure */
     struct mpiInfo parallel;       
@@ -44,7 +44,7 @@ struct latticeMesh {
     /** EOS information */
     struct EOSInfo EOS;            
     
-};
+} latticeMesh;
 
 
 

@@ -3,6 +3,6 @@
 
 #include <latticeMesh.h>
 
-void readTimeInfo( struct latticeMesh* mesh );
+void readTimeInfo( latticeMesh* mesh );
 
 #endif // READTIMEINFO_H

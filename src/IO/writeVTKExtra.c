@@ -3,7 +3,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-void writeVTKExtra( struct latticeMesh* mesh, struct vtkInfo* vtk ) {
+void writeVTKExtra( latticeMesh* mesh, struct vtkInfo* vtk ) {
 
     int status;
     

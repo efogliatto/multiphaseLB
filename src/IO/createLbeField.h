@@ -4,6 +4,6 @@
 #include <latticeMesh.h>
 #include <lbeField.h>
 
-void createLbeField( struct latticeMesh* mesh, struct lbeField* field, char* fname );
+void createLbeField( latticeMesh* mesh, lbeField* field, char* fname );
 
 #endif // CREATELBEFIELD_H

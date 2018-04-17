@@ -1,5 +1,5 @@
-# # Input/output library
-# add_subdirectory (IO)
+# Input/output library
+add_subdirectory (IO)
 
 # Dictionary entry
 add_subdirectory (dictIO)

@@ -6,7 +6,7 @@
 #include <math.h>
 
 
-void syncPdfField( struct latticeMesh* mesh, double** fld ) {
+void syncPdfField( latticeMesh* mesh, double** fld ) {
 
 
     if( mesh->parallel.worldSize > 1 ) {

@@ -11,7 +11,7 @@
 
 /**
  * Print error message and stop execution
- * @param Message to print before interruption
+ * @param msg Message to print before interruption
  */
 
 void errorMsg( char* msg );

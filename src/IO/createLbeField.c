@@ -3,7 +3,7 @@
 #include <basic.h>
 
 
-void createLbeField( struct latticeMesh* mesh, struct lbeField* field, char* fname ) {
+void createLbeField( latticeMesh* mesh, lbeField* field, char* fname ) {
 
     
     if(mesh->parallel.pid == 0) {

@@ -3,6 +3,6 @@
 
 #include <latticeMesh.h>
 
-void writeVectorToVTK( char* fname, double** field, struct latticeMesh* mesh );
+void writeVectorToVTK( char* fname, double** field, latticeMesh* mesh );
 
 #endif // WRITEVECTORTOVTK_H

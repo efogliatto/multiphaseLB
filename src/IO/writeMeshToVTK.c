@@ -3,7 +3,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-void writeMeshToVTK( struct latticeMesh* mesh, struct vtkInfo* vtk ) {
+void writeMeshToVTK( latticeMesh* mesh, struct vtkInfo* vtk ) {
 
     
     FILE *outFile;

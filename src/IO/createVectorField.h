@@ -3,6 +3,6 @@
 
 #include <latticeMesh.h>
 
-void createVectorField( struct latticeMesh* mesh, double*** field, unsigned int vsize, char* fname );
+void createVectorField( latticeMesh* mesh, double*** field, unsigned int vsize, char* fname );
 
 #endif // CREATEVECTORFIELD_H

@@ -11,10 +11,12 @@
 
 /**
  * Allocation of two-dimensional integer array
- * @param Number of rows
- * @param Number of columns
- * @param Default value for all elements
+ * @param nrow Number of rows
+ * @param ncol Number of columns
+ * @param df Default value for all elements
  * @return Pointer to allocated array
  */
+
+int** matrixIntAlloc(unsigned int nrow, unsigned int ncol, int df);
 
 #endif // MATRIXINTALLOC_H

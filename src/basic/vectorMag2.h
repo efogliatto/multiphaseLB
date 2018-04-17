@@ -11,8 +11,8 @@
 
 /**
  * Square of vector magnitude
- * @param 1D array
- * @return Squared magnitude
+ * @param v 1D array
+ * @return Squared magnitude: \f$ \mathbf{v} \cdot \mathbf{v} \f$
  */
 
 double vectorMag2( double v[3] );

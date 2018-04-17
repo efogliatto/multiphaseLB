@@ -7,7 +7,7 @@
 #include <latticeModel.h>
 
 
-void writeBasicMesh( struct basicMesh* mesh ) {
+void writeBasicMesh( basicMesh* mesh ) {
 
 
     uint i,j;

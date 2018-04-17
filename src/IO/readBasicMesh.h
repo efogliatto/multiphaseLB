@@ -3,6 +3,18 @@
 
 #include <basicMesh.h>
 
-struct basicMesh readBasicMesh();
+/**
+ * @file readBasicMesh.h
+ * @author Ezequiel O. Fogliatto
+ * @date 17 Dic 2018
+ * @brief Read lattice mesh elements from file
+ */
+
+/**
+ * Read lattice mesh elements from distributed files
+ * @return Mesh structure
+ */
+
+basicMesh readBasicMesh();
 
 #endif // READBASICMESH_H

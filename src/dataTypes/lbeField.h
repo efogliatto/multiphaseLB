@@ -2,7 +2,7 @@
 #define LBEFIELD_H
 
 #include <stdio.h>
-
+#include <lbeModel.h>
 
 /**
  * @file lbeField.h
@@ -44,7 +44,7 @@ struct bdField {
  * Population field
  */
     
-struct lbeField {
+typedef struct {
 
     
     /** Distribution functions */
@@ -67,6 +67,7 @@ struct lbeField {
      *- 4: new MRT for temperature
     */
     unsigned int colId;
+    
     
     /** Single relaxation time */
     double tau;
@@ -110,11 +111,6 @@ struct lbeField {
     double alpha_2;    
 
 
-
-
-    
-
-
     /** Update tag */
 
     unsigned int update;
@@ -123,8 +119,15 @@ struct lbeField {
     
     /** Boundary info. Related to basicBoundary in basicMesh */
     struct bdField* boundary;
+
+
+
+    // New section until full update
+
+    /** Lattice - Boltzmann model */
+    lbeModel model;
     
     
-};
+} lbeField;
 
 #endif // LBEFIELD_H

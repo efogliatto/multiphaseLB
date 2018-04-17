@@ -3,6 +3,21 @@
 
 #include <latticeMesh.h>
 
-unsigned int readScalarField( struct latticeMesh* mesh, double** field, char* fname );
+/**
+ * @file readScalarField.h
+ * @author Ezequiel O. Fogliatto
+ * @date 17 Dic 2018
+ * @brief Read scalar field from pvtu file
+ */
+
+/**
+ * @brief Read vector field from pvtu file and updates @p field
+ * @param mesh Pointer to lattice mesh
+ * @param field Pointer to field array
+ * @param fname Field name
+ * @return Status. Correct if different from zero
+ */
+
+unsigned int readScalarField( latticeMesh* mesh, double** field, char* fname );
 
 #endif // READSCALARFIELD_H

@@ -15,10 +15,10 @@
 /**
  * Synchronization of ghost nodes betwenn patches for vector field
  * @brief Synchronization of vector (3 elements) field
- * @param Pointer to lattice mesh
- * @param Pointer to sync field
+ * @param mesh Pointer to lattice mesh
+ * @param fld Pointer to sync field
  */
 
-void syncVectorField( struct latticeMesh* mesh, double** fld );
+void syncVectorField( latticeMesh* mesh, double** fld );
 
 #endif // SYNCVECTORFIELD_H

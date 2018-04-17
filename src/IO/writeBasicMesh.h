@@ -3,7 +3,7 @@
 
 #include <basicMesh.h>
 
-void writeBasicMesh( struct basicMesh* mesh );
+void writeBasicMesh( basicMesh* mesh );
 
 
 #endif // WRITEBASICMESH_H

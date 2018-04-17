@@ -4,15 +4,18 @@
 #include <basicMesh.h>
 #include <basic.h>
 #include <io.h>
+#include <dictIO.h>
 #include <latticeModel.h>
+#include <latticeInfo.h>
 
-struct basicMesh readBasicMesh() {
 
-    struct basicMesh mesh;
+basicMesh readBasicMesh() {
+
+    basicMesh mesh;
 
     uint i,j;
 
-    int status;
+    unsigned int status;
 
     
 
@@ -55,12 +58,60 @@ struct basicMesh readBasicMesh() {
     // Open file
     inFile = fopen( "lattice/neighbours", "r" );
 
-    // Lattice Model   
-    lookUpStringEntry("properties/latticeProperties","LBModel",mesh.lbm);
-    mesh.Q = latticeQ(mesh.lbm);
+    
+    // Read model name. Use D2Q9 as default
 
+    char* modelName;
+    
+    latticeInfo info;
+
+    info.model = D2Q9;
+    
+    status = lookUpStringEntry( "properties/latticeProperties", "LBModel", &modelName, "D2Q9" );
+
+    if(status) {}
+
+    if( strcmp(modelName, "D2Q9") == 0 ) {
+
+	info.model = D2Q9;
+
+    }
+
+    else {
+
+	if( strcmp(modelName, "D3Q15") == 0 ) {
+
+	    info.model = D3Q15;
+
+	}
+
+	else {
+
+	    char msg[100];
+
+	    sprintf(msg, "Unrecognized model %s", modelName);
+	    
+	    errorMsg( msg );
+
+	}
+
+    }
+
+    
+
+    mesh.Q = latticeQ( info.model );
+
+
+
+
+
+
+
+    
     // Read neighbours
+    
     mesh.nb = matrixIntAlloc(mesh.nPoints, mesh.Q, -1);
+
     for( i = 0 ; i < mesh.nPoints ; i++ ) {
 
 	for( j = 0 ; j < mesh.Q ; j++ ) {

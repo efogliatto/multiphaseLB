@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-void writeScalarToVTK( char* fname, double* field, struct latticeMesh* mesh ) {
+void writeScalarToVTK( char* fname, double* field, latticeMesh* mesh ) {
 
     FILE *outFile;
 

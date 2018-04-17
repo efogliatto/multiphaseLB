@@ -15,10 +15,10 @@
 /**
  * Synchronization of ghost nodes betwenn patches
  * @brief Synchronization of pdf field
- * @param Pointer to lattice mesh
- * @param Pointer to sync field
+ * @param mesh Pointer to lattice mesh
+ * @param fld Pointer to sync field
  */
 
-void syncPdfField( struct latticeMesh* mesh, double** fld );
+void syncPdfField( latticeMesh* mesh, double** fld );
 
 #endif // SYNCPDFFIELD_H
