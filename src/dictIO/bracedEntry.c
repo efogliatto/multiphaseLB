@@ -4,22 +4,24 @@
 
 unsigned int bracedEntry( char* ename, char* content, char** entry ) {
 
+    
     unsigned int status = 0;
 
     char *partial = strstr(content, ename);
 
+    
 
     // Not wanted, but there can multiple entries (maybe nested)
 
     unsigned int isEntry = 0;
 
-    while(  ( isEntry == 0 )  ||  (partial != NULL) ) {
+    while(  ( isEntry == 0 )  &&  (partial != NULL)  ) {
 	
 
 
 	// Check ename + { ocurrence
 	partial = strstr(partial, ename);
-    
+	    
 	
 	if( partial != NULL ) {
 	
@@ -122,10 +124,11 @@ unsigned int bracedEntry( char* ename, char* content, char** entry ) {
 
 	    }
 
-
 	
 
 	}
+
+	
 
 
 

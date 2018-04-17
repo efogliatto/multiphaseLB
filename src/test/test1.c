@@ -7,45 +7,45 @@ int main() {
 
     unsigned int status;
     
-    /* status = lookUpStringEntry("input", "g/Y0/type", &entry, "sarasa"); */
+    status = lookUpStringEntry("input", "g/Y0/type", &entry, "sarasa");
 
-    /* if(status) */
-    /* 	printf("type %s\n", entry); */
+    if(status)
+    	printf("type %s\n", entry);
 
 
 
-    /* double de; */
+    double de;
     
-    /* status = lookUpScalarEntry("input", "g/Y0/value", 0, &de); */
+    status = lookUpScalarEntry("input", "g/Y0/value", 0, &de);
 
-    /* if(status) */
-    /* 	printf("value %f\n", de); */
+    if(status)
+    	printf("value %f\n", de);
 
 
 
-    /* double* ve; */
+    double* ve;
 
-    /* unsigned int n; */
+    unsigned int n;
     
-    /* status = lookUpVectorEntry("initialFields", "g/internalField/value", &ve, &n); */
+    status = lookUpVectorEntry("initialFields", "g/internalField/value", &ve, &n);
 
-    /* if(status) { */
+    if(status) {
 
-    /* 	unsigned int i; */
+    	unsigned int i;
 
-    /* 	for(i = 0 ; i < n ; i++) */
-    /* 	    printf("%f ", ve[i]); */
+    	for(i = 0 ; i < n ; i++)
+    	    printf("%f ", ve[i]);
 	
-    /* 	printf("\n"); */
+    	printf("\n");
 
-    /* } */
-
-
+    }
 
 
-    status = isBracedEntryDefined("initialFields", "g/boundaryField");
 
-    printf("%d\n", status);
+
+    printf("Found boundaryField: %d\n", isBracedEntryDefined("initialFields", "g/boundaryField") );
+
+    printf("Found internalField: %d\n", isBracedEntryDefined("initialFields", "g/internalField") );
 
 
 

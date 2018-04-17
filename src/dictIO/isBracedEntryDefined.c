@@ -43,10 +43,8 @@ unsigned int isBracedEntryDefined( char* dname, char* ename ) {
     	if( n > 1 ){
 
     	    for( i = 0 ; i < n ; i++ ) {		
-
+		
     		status = bracedEntry( tk[i], braced, &braced );
-
-		printf("%s\n",braced);
 
 		
 		// Stop looking if error is present
