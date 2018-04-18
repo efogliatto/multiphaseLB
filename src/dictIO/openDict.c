@@ -1,6 +1,6 @@
 #include <openDict.h>
 
-struct dictionary openDict( char* name ) {
+dictionary openDict( char* name ) {
 
     
     // Open file
@@ -21,7 +21,7 @@ struct dictionary openDict( char* name ) {
 
     // Load dictionary content as single string
 
-    struct dictionary dict;
+    dictionary dict;
     
     long length;
 

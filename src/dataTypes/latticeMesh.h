@@ -30,19 +30,19 @@ typedef struct {
 
 
     /** Time information */
-    struct timeInfo time;          
+    timeInfo time;          
 
     /** Mesh information */
     basicMesh mesh;         
 
     /** Parallel structure */
-    struct mpiInfo parallel;       
+    mpiInfo parallel;       
 
     /** DdQq model information */
     latticeInfo lattice;    
 
     /** EOS information */
-    struct EOSInfo EOS;            
+    EOSInfo EOS;            
     
 } latticeMesh;
 

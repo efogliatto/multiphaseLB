@@ -13,7 +13,7 @@ unsigned int lookUpEntry( char* dname, char* ename, char** entry ) {
 
     // Open dictionary
 
-    struct dictionary dict = openDict( dname );
+    dictionary dict = openDict( dname );
 
     char* braced = (char*)malloc( strlen(dict.content) * sizeof(char) );
 

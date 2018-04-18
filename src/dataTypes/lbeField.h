@@ -20,7 +20,7 @@
  * @return Nothing
  */
 
-struct bdField {
+typedef struct {
 
     /** Boundary condition tag
      *- 0: periodic
@@ -35,7 +35,7 @@ struct bdField {
     /** Vector type boundary value (may be auxiliar) */
     double vectorVal[3];
 
-};
+} bdField;
     
 
 /**

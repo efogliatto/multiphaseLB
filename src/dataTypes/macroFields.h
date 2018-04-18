@@ -14,7 +14,7 @@
  * This struct contains arrays for all macroscopic fields, wether they are used or not.
  */
 
-struct macroFields {
+typedef struct {
 
     /** Macroscopic density field */
     
@@ -50,6 +50,6 @@ struct macroFields {
     /* // Specific heat */
     /* double Cv; */
     
-};
+} macroFields;
 
 #endif // MACROFIELDS_H

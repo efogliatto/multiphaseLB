@@ -16,7 +16,7 @@
  * This struct contains information related to mpi communications
  */
 
-struct mpiInfo {
+typedef struct {
     
     unsigned int pid;   /**< Process id */
     
@@ -52,6 +52,6 @@ struct mpiInfo {
     double** vrbuf;   /**< Vector receive buffer */
     
     
-};
+} mpiInfo;
 
 #endif // MPIINFO_H

@@ -14,20 +14,26 @@
  * Information related to VTK uotput
  */
 
-struct vtkInfo {
+typedef struct {
 
-    unsigned int nscalar;   /**< Total number of scalar fields */
-    
-    unsigned int nvector;   /**< Total number of vector fields */
-    
-    unsigned int npdf;   /**< Total number of pdf fields */
-    
-    char scalarFields[10][100];   /**< Scalar fields names*/
+    /** Total number of scalar fields */
+    unsigned int nscalar;   
 
-    char vectorFields[10][100];   /**< Vector fields names*/
+    /** Total number of vector fields */
+    unsigned int nvector;   
 
-    char pdfFields[10][100];   /**< Pdf fields names*/
+    /** Total number of pdf fields */
+    unsigned int npdf;   
+
+    /** Scalar fields names*/
+    char scalarFields[10][100];   
+
+    /** Vector fields names*/
+    char vectorFields[10][100];   
+
+    /** Pdf fields names*/
+    char pdfFields[10][100];   
     
-};
+} vtkInfo;
 
 #endif // VTKINFO_H

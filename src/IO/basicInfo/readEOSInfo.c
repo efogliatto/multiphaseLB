@@ -6,10 +6,10 @@
 #include <string.h>
 #include <stdlib.h>
 
-struct EOSInfo readEOSInfo() {
+EOSInfo readEOSInfo() {
 
 
-    struct EOSInfo info;
+    EOSInfo info;
 
     unsigned int status = 0;
     

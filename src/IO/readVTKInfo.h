@@ -1,6 +1,6 @@
 #ifndef READVTKINFO_H
 #define READVTKINFO_H
 
-struct vtkInfo readVTKInfo();
+vtkInfo readVTKInfo();
 
 #endif // READVTKINFO_H

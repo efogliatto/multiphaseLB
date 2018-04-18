@@ -4,6 +4,6 @@
 #include <latticeMesh.h>
 #include <vtkInfo.h>
 
-void writeMeshToVTK( latticeMesh* mesh, struct vtkInfo* vtk );
+void writeMeshToVTK( latticeMesh* mesh, vtkInfo* vtk );
 
 #endif // WRITEMESHTOVTK_H

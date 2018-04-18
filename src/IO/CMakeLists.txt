@@ -5,7 +5,7 @@ add_library(io SHARED
   # openFile.c
   readBasicMesh.c
   # writeBasicMesh.c
-  # readLatticeMesh.c
+  readLatticeMesh.c
   # writeLatticeMesh.c
   # writeMeshToVTK.c
   # writeScalarToVTK.c
@@ -14,7 +14,7 @@ add_library(io SHARED
   # readVTKInfo.c
   # writeVTKExtra.c
   # writeMainPvd.c
-  # readTimeInfo.c
+  readTimeInfo.c
   readScalarField.c
   readVectorField.c
   # readLbeField.c

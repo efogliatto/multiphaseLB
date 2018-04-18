@@ -25,14 +25,18 @@ basicMesh readBasicMesh() {
 
     printf("Reading Mesh points\n\n");
 
+    
     // Open file
     FILE* inFile = fopen( "lattice/points", "r" );
+
     
     // Number of points
     status = fscanf(inFile, "%d", &mesh.nPoints);
 
+    
     // Read Mesh points
     mesh.points = matrixIntAlloc(mesh.nPoints,3,0);
+
     for( i = 0 ; i < mesh.nPoints ; i++ ) {
 
 	status = fscanf(inFile, "%d", &mesh.points[i][0]);

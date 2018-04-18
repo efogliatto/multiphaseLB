@@ -16,7 +16,7 @@
  * Information about boundary elements
  */
 
-struct basicBoundary {
+typedef struct {
     
     unsigned int nbd;         /**< Number of boundary types */
     
@@ -26,7 +26,7 @@ struct basicBoundary {
     
     unsigned int** bdPoints;  /**< Elements in boundary */
 
-};
+} basicBoundary;
 
 
 
@@ -53,7 +53,7 @@ typedef struct {
 
 
     
-    struct basicBoundary bd;   /**< Boundary information */
+    basicBoundary bd;   /**< Boundary information */
 
     
     unsigned int ncells;   /**< Number of VTK cells per patch */

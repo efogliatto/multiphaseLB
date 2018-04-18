@@ -2,7 +2,7 @@
 
 
 // Elapsed time
-double elapsed ( struct timeInfo* info ) {
+double elapsed ( timeInfo* info ) {
 
     struct timeval _end;
     
@@ -15,7 +15,7 @@ double elapsed ( struct timeInfo* info ) {
 
     
 // Flag to enable writing
-unsigned int writeFlag( struct timeInfo* info ) {
+unsigned int writeFlag( timeInfo* info ) {
 
     unsigned int wrt = 0;
 	
@@ -32,7 +32,7 @@ unsigned int writeFlag( struct timeInfo* info ) {
 
     
 // Update time structure
-unsigned int updateTime( struct timeInfo* info ) {
+unsigned int updateTime( timeInfo* info ) {
 
     unsigned int upd = 1;
 

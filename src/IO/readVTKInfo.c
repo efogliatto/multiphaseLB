@@ -1,10 +1,11 @@
+#include <dictIO.h>
 #include <io.h>
 #include <vtkInfo.h>
 
-struct vtkInfo readVTKInfo() {
+vtkInfo readVTKInfo() {
 
 
-    struct vtkInfo vtk;
+    vtkInfo vtk;
 
     unsigned int status;
 

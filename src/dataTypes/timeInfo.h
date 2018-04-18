@@ -17,7 +17,7 @@
  * This struct contains information related to global simulation 
  */
 
-struct timeInfo {
+typedef struct {
 
     unsigned int start;   /**< Start time */
 
@@ -35,7 +35,7 @@ struct timeInfo {
 
     unsigned int debug;   /**< Debug flag. If true, write fields in raw format */   
     
-};
+} timeInfo;
 
 
 #endif // TIMEINFO_H

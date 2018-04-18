@@ -4,7 +4,7 @@
 #include <latticeMesh.h>
 #include <vtkInfo.h>
 
-void writeVTKExtra( latticeMesh* mesh, struct vtkInfo* vtk );
+void writeVTKExtra( latticeMesh* mesh, vtkInfo* vtk );
 
 
 #endif // WRITEVTKEXTRA_H

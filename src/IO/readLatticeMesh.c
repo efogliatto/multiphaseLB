@@ -138,6 +138,8 @@ latticeMesh readLatticeMesh( unsigned int pid ) {
 
     /* mesh.lattice.Q = mesh.mesh.Q; */
 
+    mesh.mesh.Q = mesh.lattice.Q;
+    
     mesh.mesh.nb = matrixIntAlloc( mesh.parallel.nlocal, mesh.mesh.Q, -1 );
 
     

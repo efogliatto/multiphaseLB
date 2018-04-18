@@ -14,7 +14,7 @@
  * Constants used in the selecter EOS
  */
 
-struct EOSInfo {
+typedef struct {
 
     /** EOS identifier
      *- 0 : ideal gas
@@ -52,6 +52,6 @@ struct EOSInfo {
     
     double rho_0;  /**< Reference density (buoyant force) */
     
-};
+} EOSInfo;
 
 #endif // EOSINFO_H

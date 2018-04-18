@@ -3,6 +3,6 @@
 
 #include <EOSInfo.h>
 
-struct EOSInfo readEOSInfo();
+EOSInfo readEOSInfo();
 
 #endif // READEOSINFO_H
