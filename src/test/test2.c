@@ -4,12 +4,12 @@ int main() {
 
     char* msg;
 
-    char* fname = "fafa";
+    char* fname = "fafafa";
     
     unsigned int status = vstring(&msg, "%s/Lambda", fname);
 
-    /* if(status) */
-    /* 	printf("%s\n",msg); */
+    if(status)
+    	printf("%s\n",msg);
     
     
     return 0;

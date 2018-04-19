@@ -5,42 +5,43 @@
 #include <string.h>
 
 
-unsigned int vstring( char** strp, const char* fmt, ... ) {
+unsigned int vasprintf(char **strp, const char *fmt, va_list ap) {
 
-    unsigned int status = 0;
+    va_list ap1;
 
+    size_t size;
 
-    // Work with arguments
+    char *buffer;
 
-    va_list valist;
-
-    va_start( valist, fmt );
-
-
-    printf(fmt,valist);
     
+    va_copy(ap1, ap);
+
+    size = vsnprintf(NULL, 0, fmt, ap1) + 1;
+
+    va_end(ap1);
+
+    buffer = calloc(1, size);
+
+    if (!buffer)
+        return -1;
+
+    *strp = buffer;
+
+    return vsnprintf(buffer, size, fmt, ap);
+}
+
+
+unsigned int vstring(char **strp, const char *fmt, ...) {
     
-    // Compute size needed and allocate memory
-
-    size_t strl = snprintf(NULL, 0, fmt, valist) + 1;
-
-    /* printf("%d\n",(int)strl); */
-
-    char* aux = (char*)malloc( (strl+1) * sizeof(char) );
-
-    memset(strp, '\0', strl);
-
-
-    // Print fmt
-
-    /* strl = snprintf(aux, strl, fmt, valist); */
-
-    /* printf("%s\n",aux); */
+    unsigned int error;
     
+    va_list ap;
 
-    va_end(valist);
+    va_start(ap, fmt);
 
+    error = vasprintf(strp, fmt, ap);
 
-    return status;
+    va_end(ap);
 
+    return error;
 }
