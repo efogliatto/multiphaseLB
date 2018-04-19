@@ -56,6 +56,19 @@ int main() {
     if(status)
     	printf("sarasa %s\n", entry);
 
+
+    char** sentry;
+    
+    status = lookUpStringList("initialFields", "scalarFields", &sentry, &n);
+
+    if(status) {
+
+    	unsigned int i;
+
+    	for(i = 0 ; i < n ; i++)
+    	    printf("%s\n", sentry[i]);       
+
+    }
     
     
     return 0;

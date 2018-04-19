@@ -15,6 +15,8 @@
 
 #include <lookUpStringEntry.h>
 
+#include <lookUpStringList.h>
+
 #include <lookUpScalarEntry.h>
 
 #include <lookUpVectorEntry.h>

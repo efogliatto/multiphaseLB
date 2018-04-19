@@ -10,5 +10,6 @@ add_library(dictio SHARED
   lookUpStringEntry.c
   lookUpScalarEntry.c
   lookUpVectorEntry.c
+  lookUpStringList.c
   isBracedEntryDefined.c
   )
