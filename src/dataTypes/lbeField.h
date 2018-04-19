@@ -3,6 +3,7 @@
 
 #include <stdio.h>
 #include <lbeModel.h>
+#include <lbParameters.h>
 
 /**
  * @file lbeField.h
@@ -126,6 +127,9 @@ typedef struct {
 
     /** Lattice - Boltzmann model */
     lbeModel model;
+
+    /** Model-specific constants */
+    lbParameters lbparam;
     
     
 } lbeField;

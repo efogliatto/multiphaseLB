@@ -10,4 +10,5 @@ add_library(basic SHARED
   syncScalarField.c
   vectorMag2.c
   errorMsg.c
+  vstring.c
   )

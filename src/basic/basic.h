@@ -19,4 +19,6 @@
 
 #include <errorMsg.h>
 
+#include <vstring.h>
+
 #endif // BASIC_H

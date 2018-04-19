@@ -139,7 +139,13 @@ unsigned int lookUpStringList( char* dname, char* ename, char*** entry, unsigned
 	    }	    
 	    
 
-	    
+
+
+	    free(aux);
+
+	    free(token);
+
+	    free(token2);
 
 	}
 
@@ -149,13 +155,9 @@ unsigned int lookUpStringList( char* dname, char* ename, char*** entry, unsigned
 
 
 
-    /* // Allocate memory for entry and copy */
-    
-    /* *entry = (char*)malloc( strlen(braced) * sizeof(char) ); */
 
-    /* strcpy(*entry, braced); */
 
-    /* free(braced); */
+    free(braced);
     
 
 
