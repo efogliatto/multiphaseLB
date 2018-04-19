@@ -57,30 +57,30 @@ typedef struct {
     /** Scalar source term  */
     double* scalarSource;
     
-    /* // Field name */
-    /* char* name; */
+    /* /\* // Field name *\/ */
+    /* /\* char* name; *\/ */
     
-    /** Collision model tag
-     *- 0: Li MRT 
-     *- 1: Li SRT
-     *- 2: Li SRT for temperature
-     *- 3: new SRT for temperature
-     *- 4: new MRT for temperature
-    */
-    unsigned int colId;
+    /* /\** Collision model tag */
+    /*  *- 0: Li MRT  */
+    /*  *- 1: Li SRT */
+    /*  *- 2: Li SRT for temperature */
+    /*  *- 3: new SRT for temperature */
+    /*  *- 4: new MRT for temperature */
+    /* *\/ */
+    /* unsigned int colId; */
     
     
-    /** Single relaxation time */
-    double tau;
+    /* /\** Single relaxation time *\/ */
+    /* double tau; */
 
-    /** Multiple relaxation times */
-    double* Lambda;
+    /* /\** Multiple relaxation times *\/ */
+    /* double* Lambda; */
 
-    /** Force coefficient */
-    double sigma;
+    /* /\** Force coefficient *\/ */
+    /* double sigma; */
 
-    /** Thermal conductivity */
-    double lambda;
+    /* /\** Thermal conductivity *\/ */
+    /* double lambda; */
 
     /** Relaxation time tag
      *- 0: constant
@@ -92,24 +92,24 @@ typedef struct {
     unsigned int tauModel;
 
 
-    /** Extra constants used for tau dependency */
-    double ra;
+    /* /\** Extra constants used for tau dependency *\/ */
+    /* double ra; */
 
-    /** Extra constants used for tau dependency */
-    double rb;
+    /* /\** Extra constants used for tau dependency *\/ */
+    /* double rb; */
 
-    /** Extra constants used for tau dependency */
-    double na;
+    /* /\** Extra constants used for tau dependency *\/ */
+    /* double na; */
 
-    /** Extra constants used for tau dependency */
-    double nb;
+    /* /\** Extra constants used for tau dependency *\/ */
+    /* double nb; */
 
     
-    /** Extra constants used for equilibrium distributions in moment space (myMRTModel) */
+    /* /\** Extra constants used for equilibrium distributions in moment space (myMRTModel) *\/ */
 
-    double alpha_1;
+    /* double alpha_1; */
 
-    double alpha_2;    
+    /* double alpha_2;     */
 
 
     /** Update tag */

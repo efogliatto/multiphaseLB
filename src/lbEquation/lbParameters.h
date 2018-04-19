@@ -2,6 +2,7 @@
 #define LBPARAMETERS_H
 
 #include <liMRTConstants.h>
+#include <myMRTConstants.h>
 
 /**
  * @file lbParameters.h
@@ -14,6 +15,9 @@ typedef union {
 
     /** Li et al. MRT Model */
     liMRTConstants liMRT;
+
+    /** My MRT Model */
+    myMRTConstants myMRT;    
 
 } lbParameters;
 
