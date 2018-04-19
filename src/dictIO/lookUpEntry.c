@@ -68,6 +68,16 @@ unsigned int lookUpEntry( char* dname, char* ename, char** entry ) {
 	    }
 
     	}
+
+
+
+	// No braced entry, only single
+	
+	else {
+
+	    status = singleEntry( ename, braced, &braced );
+	    
+	}
 	
 
     }

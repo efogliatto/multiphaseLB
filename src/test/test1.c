@@ -50,6 +50,12 @@ int main() {
 
 
 
+
+    status = lookUpStringEntry("initialFields", "sarasa", &entry, "");
+
+    if(status)
+    	printf("sarasa %s\n", entry);
+
     
     
     return 0;
