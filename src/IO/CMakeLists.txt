@@ -17,7 +17,7 @@ add_library(io SHARED
   readTimeInfo.c
   readScalarField.c
   readVectorField.c
-  # readLbeField.c
+  readLbeField.c
   # createScalarField.c
   # createVectorField.c
   # createLbeField.c 
