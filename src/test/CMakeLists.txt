@@ -3,7 +3,7 @@
 set ( PROJECT_LINK_LIBS
   dictio.so
   # libio.so
-  # libbasic.so
+  libbasic.so
   # liblatticemodel.so
   # libgenerallbe.so
   # libpseudopot.so
@@ -12,7 +12,7 @@ set ( PROJECT_LINK_LIBS
   # liblitempmodel.so
   # libmymrtmodel.so
   # libfinitedifference.so
-  # ${MPI_LIBRARIES}
+  ${MPI_LIBRARIES}
   )
 
 
@@ -23,9 +23,9 @@ link_directories( ~/multiphaseLB/lib )
 add_executable(test1 "test1.c")
 target_link_libraries(test1 ${PROJECT_LINK_LIBS})
 
-# # Test 2. lattice Model properties
-# add_executable(test2 "test2.c")
-# target_link_libraries(test2 ${PROJECT_LINK_LIBS})
+# Test 2. 
+add_executable(test2 "test2.c")
+target_link_libraries(test2 ${PROJECT_LINK_LIBS})
 
 # # Test 3. mpi sync
 # add_executable(test3 "test3.c")
