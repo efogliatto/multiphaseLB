@@ -5,25 +5,45 @@
 
 liMRTConstants readLiMRTConstants( char* fname ) {
 
+    
     liMRTConstants param;
 
     char* msg;
 
-    size_t strl;
+    unsigned int status;
+
     
 
     // Relaxation times
 
     unsigned int n;
 
-    strl = snprintf(NULL, 0, "%s/Lambda", fname);
+    status = vstring(&msg, "%s/Lambda", fname);
+	
+    if( !lookUpVectorEntry("properties/macroProperties", msg, &param.Lambda, &n) ) {
 
+	status = vstring(&msg, "Ill defined entry %s/Lambda", fname);
+
+	if(status)	
+	    errorMsg( msg );
+
+    }
+
+
+
+    // Sigma
+
+    status = vstring(&msg, "%s/sigma", fname);
+	
+    if( !lookUpScalarEntry("properties/macroProperties", msg, 0, &param.sigma) ) {
+
+	status = vstring(&msg, "Ill defined entry %s/sigma", fname);
+
+	if(status)
+	    errorMsg( msg );
+
+    }    
     
-
-    /* msg = asprintf("%s/Lambda", fname); */
-
-    /* if( !lookUpVectorEntry("properties/macroProperties", asprintf("%s/Lambda",fname), &param.Lambda, &n) ) */
-    /* 	errorMsg( asprintf("Ill defined entry %s/Lambda",fname) ); */
 	
     
 

@@ -3,10 +3,8 @@
 int main() {
 
     char* msg;
-
-    char* fname = "fafafa";
     
-    unsigned int status = vstring(&msg, "%s/Lambda", fname);
+    unsigned int status = vstring(&msg, "%s/Lambda", "fafafad");
 
     if(status)
     	printf("%s\n",msg);
