@@ -1,1 +1,1 @@
-../src/lbEquation/pseudoPot/T_eos.h
+../src/EOS/T_eos.h

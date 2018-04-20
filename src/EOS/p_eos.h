@@ -3,6 +3,6 @@
 
 #include <EOSInfo.h>
 
-double p_eos( struct EOSInfo* info, double rho, double T );
+double p_eos( EOSInfo* info, double rho, double T );
 
 #endif // P_EOS_H

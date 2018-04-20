@@ -21,5 +21,4 @@ add_library(io SHARED
   createVectorField.c
   createLbeField.c 
   time/timeOptions.c
-  # basicInfo/readEOSInfo.c
   )

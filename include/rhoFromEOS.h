@@ -1,1 +1,1 @@
-../src/lbEquation/pseudoPot/rhoFromEOS.h
+../src/EOS/rhoFromEOS.h

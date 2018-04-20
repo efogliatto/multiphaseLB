@@ -1,1 +1,1 @@
-../src/dataTypes/EOSInfo.h
+../src/EOS/EOSInfo.h

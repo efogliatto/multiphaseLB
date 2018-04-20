@@ -1,1 +1,1 @@
-../src/IO/basicInfo/readEOSInfo.h
+../src/EOS/readEOSInfo.h
