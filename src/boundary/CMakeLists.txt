@@ -7,5 +7,5 @@ add_library(boundary SHARED
   # fixedU.c
   # uniformHeatFlux.c
   # fixedEOSp.c
-  # outflow.c
+  outflow/outflow.c
   )
