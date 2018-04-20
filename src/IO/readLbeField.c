@@ -81,6 +81,28 @@ unsigned int readLbeField( latticeMesh* mesh, lbeField* field, char* fname ) {
     field->update = 1;
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     
 
 
