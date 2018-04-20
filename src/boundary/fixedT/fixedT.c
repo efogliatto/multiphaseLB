@@ -1,19 +1,22 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <basic.h>
 #include <latticeMesh.h>
 #include <lbeField.h>
 #include <macroFields.h>
-#include <liTempEquilibrium.h>
 #include <myMRTEquilibrium.h>
 #include <singleNodeT.h>
+#include <lbeModel.h>
+#include <fixedT.h>
 
 
-void fixedT( latticeMesh* mesh, macroFields* mfields, double** field, unsigned int bid ) {
+void fixedT( latticeMesh* mesh, macroFields* mfields, double** field, unsigned int bid, lbeModel model, bdParam* bp, lbParameters* lp ) {
 
 
-    // Apply only if collision model is liTemp
 
-    if(  ( field->colId == 2 )  ||  ( field->colId == 3 )  ){
+    // Apply only if collision model is myMRT
+   
+    if( model == myMRT ) {
 
 	
 	unsigned int i, k;
@@ -23,10 +26,7 @@ void fixedT( latticeMesh* mesh, macroFields* mfields, double** field, unsigned i
 	double eq_bnd = 0;
 	
 	double eq_nb = 0;
-
-	
-	srand( time(NULL) );
-	
+		
     
 	// Move over boundary elements
 
@@ -47,65 +47,36 @@ void fixedT( latticeMesh* mesh, macroFields* mfields, double** field, unsigned i
 
 		    // Need density and velocity at neighbour (reverse) node
 		    
-		    int nbid = mesh->mesh.nb[id][ mesh->lattice.reverse[k] ];		    
+		    int nbid = mesh->mesh.nb[id][ mesh->lattice.reverse[k] ];
 		    
 		    if( nbid != -1 ) {
 
-			liTempEquilibrium( &mesh->lattice, mfields->rho[nbid], mfields->U[nbid], f_eq_nb );
-
-
-
-			
-			// Use perturbations
-
-			double r = 1;
-			
-			if( field->boundary[bid].vectorVal[0] != 0 ) {
-
-			    r = (double)rand() / (double)RAND_MAX;
-
-			    r = (1.0 - field->boundary[bid].vectorVal[0]/100) + r * ( (1.0 + field->boundary[bid].vectorVal[0]/100) - (1.0 - field->boundary[bid].vectorVal[0]/100) );
-			}
-
-			
-			eq_bnd = mesh->EOS._Cv * field->boundary[bid].scalarVal * r * f_eq_nb[k];
 			    
-			eq_nb  = mesh->EOS._Cv * singleNodeT(mesh, mfields, field, nbid) * f_eq_nb[k];
+			// Equilibrium at neighbour node
+			    
+			myMRTEquilibrium( &mesh->lattice, mfields->T[nbid], mfields->U[nbid], lp->myMRT.alpha_1, lp->myMRT.alpha_2, f_eq_nb );
+			    
+			eq_nb  = f_eq_nb[k];
 
 
+			// Equilibrium at boundary node
 
+			myMRTEquilibrium( &mesh->lattice, bp->ft.T, mfields->U[nbid], lp->myMRT.alpha_1, lp->myMRT.alpha_2, f_eq_nb );
+			    
+			eq_bnd = f_eq_nb[k];
+			    
 
 			
 			// Update distribution
 			
-			field->value[id][k] = eq_bnd + (field->value[nbid][k] - eq_nb);
+			field[id][k] = eq_bnd + (field[nbid][k] - eq_nb);
 
 		    }
-
-
-		    /* else { */
-
-		    /* 	noneigh++; */
-
-		    /* } */
 		
 
 		}
 
 	    }
-
-
-
-
-	    /* // Apply correction for corners */
-	    /* if( noneigh != 0 ) { */
-
-	    
-	    /* } */
-
-
-
-
 	
 	
 
@@ -115,109 +86,128 @@ void fixedT( latticeMesh* mesh, macroFields* mfields, double** field, unsigned i
 	free(f_eq_nb);
 
 
-    }
-
-
-    
-
-
-    
-    else {
+    	}
 
 
 
-	// Apply only if collision model is myMRT
+    	else {
 
-	if(  ( field->colId == 4 )  ){
+    	    errorMsg("Unable to apply boundary condition on temperature");
 
-	
-	    unsigned int i, k;
-
-	    double* f_eq_nb = (double*)malloc( mesh->mesh.Q * sizeof(double) );
-
-	    double eq_bnd = 0;
-	
-	    double eq_nb = 0;
-
-	
-	    /* srand( time(NULL) ); */
-	
-    
-	    // Move over boundary elements
-
-	    for( i = 0 ; i < mesh->mesh.bd.nbdelem[bid] ; i++ ) {
-
-	
-		unsigned int id = mesh->mesh.bd.bdPoints[bid][i];
-
-	
-	
-		// Move over lattice velocities
-	    
-		for( k = 0 ; k < mesh->mesh.Q ; k++ ) {
-
-
-		    if ( mesh->mesh.nb[id][k] == -1 ) {
-
-
-			// Need density and velocity at neighbour (reverse) node
-		    
-			int nbid = mesh->mesh.nb[id][ mesh->lattice.reverse[k] ];		    
-		    
-			if( nbid != -1 ) {
-
-			    
-			    // Equilibrium at neighbour node
-			    
-			    myMRTEquilibrium( &mesh->lattice, mfields->T[nbid], mfields->U[nbid], field->alpha_1, field->alpha_2, f_eq_nb );
-			    /* myMRTEquilibrium( &mesh->lattice, singleNodeT(mesh, mfields, field, nbid), mfields->U[nbid], field->alpha_1, field->alpha_2, f_eq_nb ); */
-			    
-			    eq_nb  = f_eq_nb[k];
-
-
-			    // Equilibrium at boundary node
-
-			    myMRTEquilibrium( &mesh->lattice, field->boundary[bid].scalarVal, mfields->U[nbid], field->alpha_1, field->alpha_2, f_eq_nb );
-			    
-			    eq_bnd = f_eq_nb[k];
-			    
-
-			
-			    // Update distribution
-			
-			    field->value[id][k] = eq_bnd + (field->value[nbid][k] - eq_nb);
-
-			}
-		
-
-		    }
-
-		}
-
-
-
-	
-	
-
-	    }
-
-
-	    free(f_eq_nb);
-
-
-	}
-
-
-
-	else {
-
-	    printf("\n  [ERROR]  Unable to apply boundary condition on temperature\n\n");
-
-	    exit(1);
-
-	}
-
-    }
-    
+    	}
+           
 
 }
+
+
+
+
+
+
+
+
+    /* // Apply only if collision model is liTemp */
+
+    /* if(  ( field->colId == 2 )  ||  ( field->colId == 3 )  ){ */
+
+	
+    /* 	unsigned int i, k; */
+
+    /* 	double* f_eq_nb = (double*)malloc( mesh->mesh.Q * sizeof(double) ); */
+
+    /* 	double eq_bnd = 0; */
+	
+    /* 	double eq_nb = 0; */
+
+	
+    /* 	srand( time(NULL) ); */
+	
+    
+    /* 	// Move over boundary elements */
+
+    /* 	for( i = 0 ; i < mesh->mesh.bd.nbdelem[bid] ; i++ ) { */
+
+	
+    /* 	    unsigned int id = mesh->mesh.bd.bdPoints[bid][i]; */
+
+	
+	
+    /* 	    // Move over lattice velocities */
+	    
+    /* 	    for( k = 0 ; k < mesh->mesh.Q ; k++ ) { */
+
+
+    /* 		if ( mesh->mesh.nb[id][k] == -1 ) { */
+
+
+    /* 		    // Need density and velocity at neighbour (reverse) node */
+		    
+    /* 		    int nbid = mesh->mesh.nb[id][ mesh->lattice.reverse[k] ];		     */
+		    
+    /* 		    if( nbid != -1 ) { */
+
+    /* 			liTempEquilibrium( &mesh->lattice, mfields->rho[nbid], mfields->U[nbid], f_eq_nb ); */
+
+
+
+			
+    /* 			// Use perturbations */
+
+    /* 			double r = 1; */
+			
+    /* 			if( field->boundary[bid].vectorVal[0] != 0 ) { */
+
+    /* 			    r = (double)rand() / (double)RAND_MAX; */
+
+    /* 			    r = (1.0 - field->boundary[bid].vectorVal[0]/100) + r * ( (1.0 + field->boundary[bid].vectorVal[0]/100) - (1.0 - field->boundary[bid].vectorVal[0]/100) ); */
+    /* 			} */
+
+			
+    /* 			eq_bnd = mesh->EOS._Cv * field->boundary[bid].scalarVal * r * f_eq_nb[k]; */
+			    
+    /* 			eq_nb  = mesh->EOS._Cv * singleNodeT(mesh, mfields, field, nbid) * f_eq_nb[k]; */
+
+
+
+
+			
+    /* 			// Update distribution */
+			
+    /* 			field->value[id][k] = eq_bnd + (field->value[nbid][k] - eq_nb); */
+
+    /* 		    } */
+
+
+    /* 		    /\* else { *\/ */
+
+    /* 		    /\* 	noneigh++; *\/ */
+
+    /* 		    /\* } *\/ */
+		
+
+    /* 		} */
+
+    /* 	    } */
+
+
+
+
+    /* 	    /\* // Apply correction for corners *\/ */
+    /* 	    /\* if( noneigh != 0 ) { *\/ */
+
+	    
+    /* 	    /\* } *\/ */
+
+
+
+
+	
+	
+
+    /* 	} */
+
+
+    /* 	free(f_eq_nb); */
+
+
+    /* } */

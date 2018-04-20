@@ -6,7 +6,7 @@
 #include <heatSource.h>
 
 
-void myMRTSource( struct latticeMesh* mesh, struct macroFields* mfields, struct lbeField* field, double* Gamma, unsigned int id ) {
+void myMRTSource( latticeMesh* mesh, macroFields* mfields, lbeField* field, double* Gamma, unsigned int id ) {
 
     unsigned int i;
 

@@ -4,7 +4,7 @@
 #include <myMRTSource.h>
 #include <stdlib.h>
 
-double myMRTTemperature( struct latticeMesh* mesh, struct macroFields* mfields, struct lbeField* field, unsigned int id ) {
+double myMRTTemperature( latticeMesh* mesh, macroFields* mfields, lbeField* field, unsigned int id ) {
 
     unsigned int k;
 

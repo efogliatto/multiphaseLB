@@ -2,7 +2,7 @@
 #include <macroFields.h>
 #include <basic.h>
 
-void myMRTEquilibriumMS( struct latticeMesh* mesh, struct macroFields* mfields, double* n_eq, double alpha_1, double alpha_2, unsigned int id ) {
+void myMRTEquilibriumMS( latticeMesh* mesh, macroFields* mfields, double* n_eq, double alpha_1, double alpha_2, unsigned int id ) {
 
     // Up to now, only D2Q9
 

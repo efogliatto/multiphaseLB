@@ -4,8 +4,10 @@
 #include <latticeMesh.h>
 #include <lbeField.h>
 #include <macroFields.h>
+#include <bdParam.h>
+#include <lbParameters.h>
 
-void fixedT( latticeMesh* mesh, macroFields* mfields, double** field, unsigned int bid );
+void fixedT( latticeMesh* mesh, macroFields* mfields, double** field, unsigned int bid, lbeModel model, bdParam* bp, lbParameters* lp );
 
 
 #endif // FIXEDT_H

@@ -2,8 +2,8 @@
  
 # Basic boundary conditions library.
 add_library(boundary SHARED
-  bounceBack.c
-  # fixedT.c
+  bounceBack/bounceBack.c
+  fixedT/fixedT.c
   # fixedU.c
   # uniformHeatFlux.c
   # fixedEOSp.c

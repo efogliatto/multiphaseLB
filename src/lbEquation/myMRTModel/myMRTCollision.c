@@ -9,7 +9,7 @@
 
 
 
-void myMRTCollision( struct latticeMesh* mesh, struct macroFields* mfields, struct lbeField* field ) {
+void myMRTCollision( latticeMesh* mesh, macroFields* mfields, lbeField* field ) {
 
 
     // Indices

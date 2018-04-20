@@ -13,6 +13,9 @@ add_subdirectory (basic)
 # Lattice-Boltzmann equations and models
 add_subdirectory (lbEquation)
 
+# Boundary conditions library
+add_subdirectory (boundary)
+
 # # finite difference differential operations
 # add_subdirectory (finiteDifference)
 

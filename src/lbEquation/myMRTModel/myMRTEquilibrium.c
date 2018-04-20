@@ -2,7 +2,7 @@
 #include <basic.h>
 
 
-void myMRTEquilibrium( struct latticeInfo* lattice, double T, double U[3], double alpha_1, double alpha_2, double* f ) {
+void myMRTEquilibrium( latticeInfo* lattice, double T, double U[3], double alpha_1, double alpha_2, double* f ) {
 
 
     if(   (lattice->Q == 9)   &&   (lattice->d == 2)   ) {
