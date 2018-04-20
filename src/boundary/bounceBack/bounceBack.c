@@ -2,7 +2,7 @@
 #include <lbeField.h>
 #include <macroFields.h>
 
-void bounceBack( struct latticeMesh* mesh, struct macroFields* mfields, struct lbeField* field, unsigned int bid ) {
+void bounceBack( latticeMesh* mesh, macroFields* mfields, double** field, unsigned int bid ) {
 
     unsigned int i, k;
     
@@ -20,7 +20,7 @@ void bounceBack( struct latticeMesh* mesh, struct macroFields* mfields, struct l
 
 	    if ( mesh->mesh.nb[id][k] == -1 ) {
 
-		field->value[id][k] = field->value[id][mesh->lattice.reverse[k]];
+		field[id][k] = field[id][mesh->lattice.reverse[k]];
 
 	    }
 
@@ -35,9 +35,9 @@ void bounceBack( struct latticeMesh* mesh, struct macroFields* mfields, struct l
 
 			if( ( k == 1 )  ||  ( k == 2 )  ||  ( k == 3 )  ||  ( k == 4 )  ) {
 
-			    field->value[id][k] = 0.5 * field->value[id][k]  +  0.5 * field->value[id][mesh->lattice.reverse[k]];
+			    field[id][k] = 0.5 * field[id][k]  +  0.5 * field[id][mesh->lattice.reverse[k]];
 		
-			    field->value[id][mesh->lattice.reverse[k]] = field->value[id][k];
+			    field[id][mesh->lattice.reverse[k]] = field[id][k];
 
 			}
 

@@ -1,1 +1,1 @@
-../src/lbEquation/general/boundary/bounceBack.h
+../src/boundary/bounceBack/bounceBack.h

@@ -8,7 +8,7 @@
 #include <singleNodeT.h>
 
 
-void uniformHeatFlux( struct latticeMesh* mesh, struct macroFields* mfields, struct lbeField* field, unsigned int bid ) {
+void uniformHeatFlux(  latticeMesh* mesh,  macroFields* mfields,  double** field, unsigned int bid ) {
 
 
     // Apply only if collision model is liTemp or myMRTModel

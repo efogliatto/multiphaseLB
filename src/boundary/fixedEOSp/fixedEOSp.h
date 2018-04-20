@@ -5,7 +5,7 @@
 #include <lbeField.h>
 #include <macroFields.h>
 
-void fixedEOSp( struct latticeMesh* mesh, struct macroFields* mfields, struct lbeField* field, unsigned int bid );
+void fixedEOSp( latticeMesh* mesh, macroFields* mfields, double** field, unsigned int bid );
 
 
 #endif // FIXEDEOSP_H

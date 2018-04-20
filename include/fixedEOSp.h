@@ -1,1 +1,1 @@
-../src/lbEquation/general/boundary/fixedEOSp.h
+../src/boundary/fixedEOSp/fixedEOSp.h

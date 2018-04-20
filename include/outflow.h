@@ -1,1 +1,1 @@
-../src/lbEquation/general/boundary/outflow.h
+../src/boundary/outflow/outflow.h

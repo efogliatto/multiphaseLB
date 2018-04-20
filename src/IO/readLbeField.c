@@ -67,9 +67,19 @@ unsigned int readLbeField( latticeMesh* mesh, lbeField* field, char* fname ) {
 
 	field->lbparam.myMRT = readMyMRTConstants( fname );
 
+	// Allocate scalar source
+	field->scalarSource = (double*)malloc( mesh->mesh.nPoints * sizeof(double) );	
+
 	break;	
 
     }
+
+
+    
+    // Enable field update
+
+    field->update = 1;
+
 
     
 

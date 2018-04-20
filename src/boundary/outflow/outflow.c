@@ -8,7 +8,7 @@
 
 
 
-void outflow( struct latticeMesh* mesh, struct macroFields* mfields, struct lbeField* field, unsigned int bid ) {
+void outflow(  latticeMesh* mesh,  macroFields* mfields,  double** field, unsigned int bid ) {
 
 
     unsigned int i, j, k;

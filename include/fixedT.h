@@ -1,1 +1,1 @@
-../src/lbEquation/general/boundary/fixedT.h
+../src/boundary/fixedT/fixedT.h

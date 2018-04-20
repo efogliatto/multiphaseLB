@@ -5,7 +5,7 @@
 #include <lbeField.h>
 #include <macroFields.h>
 
-void fixedU( struct latticeMesh* mesh, struct macroFields* mfields, struct lbeField* field, unsigned int bid );
+void fixedU(  latticeMesh* mesh,  macroFields* mfields,  double** field, unsigned int bid );
 
 
 #endif // FIXEDU_H

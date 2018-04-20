@@ -1,1 +1,1 @@
-../src/lbEquation/general/boundary/fixedU.h
+../src/boundary/fixedU/fixedU.h

@@ -5,7 +5,7 @@
 #include <lbeField.h>
 #include <macroFields.h>
 
-void bounceBack( struct latticeMesh* mesh, struct macroFields* mfields, struct lbeField* field, unsigned int bid );
+void bounceBack( latticeMesh* mesh, macroFields* mfields, double** field, unsigned int bid );
 
 
 #endif // BOUNCEBACK_H

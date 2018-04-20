@@ -1,1 +1,1 @@
-../src/lbEquation/general/boundary/uniformHeatFlux.h
+../src/boundary/uniformHeatFlux/uniformHeatFlux.h

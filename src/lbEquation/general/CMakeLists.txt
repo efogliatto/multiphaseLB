@@ -13,10 +13,4 @@ add_library(generallbe SHARED
   updateBdForce.c
   singleNodeT.c
   heatSource.c
-  boundary/bounceBack.c
-  boundary/fixedT.c
-  boundary/fixedU.c
-  boundary/uniformHeatFlux.c
-  boundary/fixedEOSp.c
-  boundary/outflow.c
   )
