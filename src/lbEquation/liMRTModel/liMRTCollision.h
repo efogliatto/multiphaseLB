@@ -5,6 +5,6 @@
 #include <lbeField.h>
 #include <latticeMesh.h>
 
-void liMRTCollision( struct latticeMesh* mesh, struct macroFields* mfields, struct lbeField* field );
+void liMRTCollision( latticeMesh* mesh, macroFields* mfields, lbeField* field );
 
 #endif // LIMRTCOLLISION_H

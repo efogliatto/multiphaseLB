@@ -7,7 +7,7 @@
 /* #include <potential.h> */
 
 
-void liMRTForce( struct latticeMesh* mesh, struct macroFields* mfields, struct lbeField* field, double* S, unsigned int id ) {
+void liMRTForce( latticeMesh* mesh, macroFields* mfields, lbeField* field, double* S, unsigned int id ) {
 
     
     if( mesh->lattice.Q == 9 ) {

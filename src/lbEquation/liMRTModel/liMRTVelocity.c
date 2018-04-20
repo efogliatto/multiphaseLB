@@ -5,7 +5,7 @@
 #include <stdlib.h>
 
 
-void liMRTVelocity( struct latticeMesh* mesh, struct macroFields* mfields, struct lbeField* field, double** v, unsigned int id ) {
+void liMRTVelocity( latticeMesh* mesh, macroFields* mfields, lbeField* field, double** v, unsigned int id ) {
 
     unsigned int j, k;
 
