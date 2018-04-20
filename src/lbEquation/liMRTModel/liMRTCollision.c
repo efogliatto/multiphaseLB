@@ -1,20 +1,5 @@
-/* #include <liMRTCollision.h> */
-/* #include <stdlib.h> */
-/* #include <matVecMult.h> */
-/* #include <liMRTForce.h> */
-/* #include <totalForce.h> */
-/* #include <potential.h> */
-/* #include <syncPdfField.h> */
-
-/* #include <updateLambda.h> */
-
-
 #include <basic.h>
-
-#include <latticeMesh.h>
-#include <macroFields.h>
-#include <lbeField.h>
-
+#include <liMRTCollision.h>
 #include <liMRTForce.h>
 
 
@@ -41,23 +26,23 @@ void liMRTCollision( latticeMesh* mesh, macroFields* mfields, lbeField* field ) 
     /* for( id = 0 ; id < mesh->parallel.nlocal ; id++ ) { */
 	
 
-    	// Update Lambda values
+    	/* // Update Lambda values */
 
-	if( field->tauModel == 3 ) {
+	/* if( field->tauModel == 3 ) { */
 
-	    double a = (field->nb - field->na) / (field->rb - field->ra);
+	/*     double a = (field->nb - field->na) / (field->rb - field->ra); */
 
-	    double b = field->na  -  a * field->ra;
+	/*     double b = field->na  -  a * field->ra; */
 
-	    double nu = a * mfields->rho[id] + b;
+	/*     double nu = a * mfields->rho[id] + b; */
 
-	    double tau = nu / mesh->lattice.cs2 + 0.5;
+	/*     double tau = nu / mesh->lattice.cs2 + 0.5; */
 
-	    field->Lambda[7] = 1/tau;
+	/*     field->Lambda[7] = 1/tau; */
 
-	    field->Lambda[8] = 1/tau;
+	/*     field->Lambda[8] = 1/tau; */
 
-	}
+	/* } */
 
 
 	double umag = 0;

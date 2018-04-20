@@ -1,4 +1,4 @@
-#include <latticeInfo.h>
+#include <liMRTEquilibrium.h>
 
 void liMRTEquilibrium( latticeInfo* lattice, double rho, double v[3], double* f ) {
 

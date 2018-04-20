@@ -1,4 +1,4 @@
-#include <latticeMesh.h>
+#include <liMRTDensity.h>
 
 double liMRTDensity( latticeMesh* mesh, double* f ) {
 
