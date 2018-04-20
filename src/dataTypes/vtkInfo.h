@@ -26,13 +26,13 @@ typedef struct {
     unsigned int npdf;   
 
     /** Scalar fields names*/
-    char scalarFields[10][100];   
+    char** scalarFields;   
 
     /** Vector fields names*/
-    char vectorFields[10][100];   
+    char** vectorFields;
 
     /** Pdf fields names*/
-    char pdfFields[10][100];   
+    char** pdfFields;
     
 } vtkInfo;
 

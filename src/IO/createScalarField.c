@@ -13,7 +13,7 @@ void createScalarField( latticeMesh* mesh, double** field, char* fname ) {
     }
     
 
-    unsigned int status = readScalarField( mesh, field, fname);
+    unsigned int status = readScalarField( mesh, field, fname );
 
     
     if( status == 0 ) {

@@ -1,10 +1,8 @@
 #include <stdio.h>
 #include <EOSInfo.h>
-#include <lookUpDouble.h>
-#include <lookUpVector.h>
-#include <lookUpString.h>
 #include <string.h>
 #include <stdlib.h>
+#include <dictIO.h>
 
 EOSInfo readEOSInfo() {
 
