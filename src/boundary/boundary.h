@@ -17,4 +17,8 @@
 
 #include <bdParam.h>
 
+#include <readFixedTParam.h>
+
+#include <readFixedUParam.h>
+
 #endif // BOUNDARY_H

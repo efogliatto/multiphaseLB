@@ -5,6 +5,8 @@
 #include <lbeModel.h>
 #include <lbParameters.h>
 #include <boundary.h>
+#include <bdType.h>
+#include <bdParam.h>
 
 /**
  * @file lbeField.h
