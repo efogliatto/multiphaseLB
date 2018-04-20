@@ -3,6 +3,6 @@
 
 #include <latticeMesh.h>
 
-double potential( struct latticeMesh* mesh, double rho, double T );
+double potential( latticeMesh* mesh, double rho, double T );
 
 #endif // POTENTIAL_H

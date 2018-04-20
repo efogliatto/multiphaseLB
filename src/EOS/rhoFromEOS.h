@@ -3,6 +3,6 @@
 
 #include <EOSInfo.h>
 
-double rhoFromEOS( struct EOSInfo* info, double rho, double T, double p );
+double rhoFromEOS( EOSInfo* info, double rho, double T, double p );
 
 #endif // RHOFROMEOS_H

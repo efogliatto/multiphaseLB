@@ -84,7 +84,7 @@ void liMRTCollision( latticeMesh* mesh, macroFields* mfields, lbeField* field ) 
 	
     	for( k = 0 ; k < mesh->lattice.Q ; k++ ) {
 
-    	    m[k] = m[k]  -  field->Lambda[k]*( m[k] - m_eq[k] )  +  ( 1 - 0.5*field->Lambda[k] ) * S[k];
+    	    m[k] = m[k]  -  field->lbparam.liMRT.Lambda[k]*( m[k] - m_eq[k] )  +  ( 1 - 0.5*field->lbparam.liMRT.Lambda[k] ) * S[k];
 	    
     	}
 

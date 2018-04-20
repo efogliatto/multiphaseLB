@@ -6,7 +6,7 @@
 #include <interactionForce.h>
 
 
-void interForce( struct latticeMesh* mesh, struct macroFields* mfields ) {
+void interForce( latticeMesh* mesh, macroFields* mfields ) {
 
     unsigned int id, j;
 

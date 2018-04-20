@@ -4,7 +4,7 @@
 #include <latticeMesh.h>
 #include <macroFields.h>
 
-void interForce( struct latticeMesh* mesh, struct macroFields* mfields );
+void interForce( latticeMesh* mesh, macroFields* mfields );
 
 
 #endif // INTERFORCE_H

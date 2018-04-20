@@ -21,7 +21,7 @@ void liMRTVelocity( latticeMesh* mesh, macroFields* mfields, lbeField* field, do
 	
     for( j = 0 ; j < 3 ; j++ ) {
 
-	F[j] = mfields->Fi[id][j]  +   (mfields->rho[id] - mesh->EOS.rho_0) * mesh->EOS._g[j];
+	F[j] = mfields->Fi[id][j]  +   (mfields->rho[id] - mesh->EOS.rho_0) * mesh->EOS.g[j];
 
     }
     

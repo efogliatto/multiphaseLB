@@ -3,7 +3,7 @@
 #include <potential.h>
 #include <latticeMesh.h>
 
-void interactionForce( struct latticeMesh* mesh, double Ff[3], double* rho, double* T, unsigned int id ) {
+void interactionForce( latticeMesh* mesh, double Ff[3], double* rho, double* T, unsigned int id ) {
 
     unsigned int i,
 	k,

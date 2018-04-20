@@ -33,8 +33,8 @@ void liMRTForce( latticeMesh* mesh, macroFields* mfields, lbeField* field, doubl
 	
 
 	S[0] = 0;
-	S[1] =  6 * (mfields->U[id][0]*F[0] + mfields->U[id][1]*F[1]) + 12 * field->sigma * (mfields->Fi[id][0]*mfields->Fi[id][0] + mfields->Fi[id][1]*mfields->Fi[id][1]) / (psi * psi * ((1/field->Lambda[1])-0.5));
-	S[2] = -6 * (mfields->U[id][0]*F[0] + mfields->U[id][1]*F[1]) - 12 * field->sigma * (mfields->Fi[id][0]*mfields->Fi[id][0] + mfields->Fi[id][1]*mfields->Fi[id][1]) / (psi * psi * ((1/field->Lambda[2])-0.5));
+	S[1] =  6 * (mfields->U[id][0]*F[0] + mfields->U[id][1]*F[1]) + 12 * field->lbparam.liMRT.sigma * (mfields->Fi[id][0]*mfields->Fi[id][0] + mfields->Fi[id][1]*mfields->Fi[id][1]) / (psi * psi * ((1/field->lbparam.liMRT.Lambda[1])-0.5));
+	S[2] = -6 * (mfields->U[id][0]*F[0] + mfields->U[id][1]*F[1]) - 12 * field->lbparam.liMRT.sigma * (mfields->Fi[id][0]*mfields->Fi[id][0] + mfields->Fi[id][1]*mfields->Fi[id][1]) / (psi * psi * ((1/field->lbparam.liMRT.Lambda[2])-0.5));
 	S[3] = F[0];
 	S[4] = -F[0];
 	S[5] = F[1];

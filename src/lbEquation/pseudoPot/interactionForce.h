@@ -3,6 +3,6 @@
 
 #include <latticeMesh.h>
 
-void interactionForce( struct latticeMesh* mesh, double F[3], double* rho, double* T, unsigned int id );
+void interactionForce( latticeMesh* mesh, double F[3], double* rho, double* T, unsigned int id );
 
 #endif // INTERACTIONFORCE_H
