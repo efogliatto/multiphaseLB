@@ -6,11 +6,11 @@
 #include <latticeMesh.h>
 
 /**
- * @file macroVelocity.h
+ * @file updateBoundaries.h
  * @author Ezequiel O. Fogliatto
  * @date 23 Apr 2018
  *
- * Update macroscopic velocity for every lattice node
+ * Apply boundary conditions
  *
  * @param mesh Lattice mesh
  * @param mfields Macroscopic fields structure

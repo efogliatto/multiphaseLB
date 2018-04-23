@@ -19,7 +19,10 @@ typedef enum {
     fep,
 
     /** Outflow */
-    of
+    of,
+
+    /** Periodic */
+    periodic
 
 } bdType;
 

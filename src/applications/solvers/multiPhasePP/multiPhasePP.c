@@ -69,13 +69,13 @@ int main( int argc, char **argv ) {
     
     // Simulation properties
     
-    struct latticeMesh mesh = readLatticeMesh( pid );
+    latticeMesh mesh = readLatticeMesh( pid );
 
     mesh.lattice = setLatticeInfo();
 
     mesh.EOS = readEOSInfo();
 
-    struct vtkInfo vtk = readVTKInfo();
+    vtkInfo vtk = readVTKInfo();
     
 
     
@@ -83,7 +83,7 @@ int main( int argc, char **argv ) {
 
     // Macroscopic fields
     
-    struct macroFields mfields;
+    macroFields mfields;
     
 
     
@@ -109,7 +109,7 @@ int main( int argc, char **argv ) {
 
     // Navier-Stokes field
 
-    struct lbeField f;
+    lbeField f;
     
     createLbeField( &mesh, &f, "f");
 
@@ -119,7 +119,7 @@ int main( int argc, char **argv ) {
     
     // Energy field
 
-    struct lbeField g;
+    lbeField g;
     
     createLbeField( &mesh, &g, "g");
 

@@ -8,7 +8,7 @@ add_library(generallbe SHARED
   macroDensity.c
   macroVelocity.c
   macroTemperature.c
-  # updateBoundaries.c
+  updateBoundaries.c
   # updateBdElements.c
   # updateBdForce.c
   singleNodeT.c

@@ -2,14 +2,16 @@
 
 set ( PROJECT_LINK_LIBS
   libio.so
+  libdictio.so
   libbasic.so
   liblatticemodel.so
   libgenerallbe.so
   libpseudopot.so
+  libpseudopot.so
   liblimrtmodel.so
-  liblisrtmodel.so
-  liblitempmodel.so
   libmymrtmodel.so
+  libboundary.so
+  libeos.so
   libfinitedifference.so
   ${MPI_LIBRARIES})
 

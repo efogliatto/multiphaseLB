@@ -1,18 +1,6 @@
-#include <lbeField.h>
-#include <macroFields.h>
-#include <latticeMesh.h>
-#include <bounceBack.h>
-#include <fixedT.h>
-#include <fixedEOSp.h>
-#include <fixedU.h>
-#include <outflow.h>
-#include <uniformHeatFlux.h>
-
-#include <stdlib.h>
-
-#include <liMRTModel.h>
-#include <liSRTModel.h>
-#include <liTempModel.h>
+#include <updateBoundaries.h>
+#include <boundary.h>
+#include <basic.h>
 
 
 void updateBoundaries( latticeMesh* mesh, macroFields* mfields, lbeField* field ) {
@@ -28,47 +16,48 @@ void updateBoundaries( latticeMesh* mesh, macroFields* mfields, lbeField* field 
 	for( bndId = 0 ; bndId < mesh->mesh.bd.nbd ; bndId++ ) {
 
 
-	    switch( field->boundary[bndId].bdType ) {
+	    switch( field->boundary[bndId].type ) {
 
 
 		// none - periodic
-	    case 0:
+	    case periodic:
 		break;
 	    
 		// bounceBack
-	    case 1:
-		bounceBack( mesh, mfields, field, bndId );
+	    case bback:
+		bounceBack( mesh, mfields, field->value, bndId );
 		break;
 
 		// fixedU
-	    case 2:
-		fixedU( mesh, mfields, field, bndId );
+	    case fu:
+		fixedU( mesh, mfields, field->value, bndId, field->model, &(field->boundary[bndId].param), &(field->lbparam) );
 		break;	    
 	    
 		// fixedT
-	    case 3:
-		fixedT( mesh, mfields, field, bndId );
+	    case ft:
+		fixedT( mesh, mfields, field->value, bndId, field->model, &(field->boundary[bndId].param), &(field->lbparam) );
 		break;
 
 		// Outflow
-	    case 4:
-		outflow( mesh, mfields, field, bndId );
+	    case of:
+		outflow( mesh, mfields, field->value, bndId );
 		break;
 
 		// Fixed EOS pressure
-	    case 5:
-		fixedEOSp( mesh, mfields, field, bndId );
+	    case fep:
+		/* fixedEOSp( mesh, mfields, field, bndId ); */
 		break;
 
 		// Fixed heat flux
-	    case 6:
-		uniformHeatFlux( mesh, mfields, field, bndId );
+	    case uhf:
+		/* uniformHeatFlux( mesh, mfields, field, bndId ); */
 		break;
 	    
 	    default:
-		printf("\n  [ERROR]  Unrecognized boundary condition \n\n\n");
-		exit(1);
-	    
+		
+		errorMsg("Unrecognized boundary condition");
+		
+		break;
 
 	    }
 
