@@ -1,9 +1,5 @@
 #include <basic.h>
-
-#include <latticeMesh.h>
-#include <macroFields.h>
-#include <lbeField.h>
-
+#include <myMRTCollision.h>
 #include <myMRTSource.h>
 #include <myMRTEquilibriumMS.h>
 
@@ -40,7 +36,7 @@ void myMRTCollision( latticeMesh* mesh, macroFields* mfields, lbeField* field ) 
 
     for( k = 0 ; k < mesh->lattice.Q ; k++ ) {
 
-	Q[k][k] = field->Lambda[k];
+	Q[k][k] = field->lbparam.myMRT.Lambda[k];
 
     }
 
@@ -84,34 +80,34 @@ void myMRTCollision( latticeMesh* mesh, macroFields* mfields, lbeField* field ) 
 
 
 
-	// Constant Lambda
+	/* // Constant Lambda */
 	
-	if( field->tauModel == 2 ) {
+	/* if( field->tauModel == 2 ) { */
 	    
-	    Q[3][3] = 1 / ( 6.0 * field->lambda / (mfields->rho[id] * mesh->EOS._Cv * (4.0 + 3.0 * field->alpha_1 + 2.0 * field->alpha_2))  +  0.5);
+	/*     Q[3][3] = 1 / ( 6.0 * field->lbParam.myMRT.lambda / (mfields->rho[id] * mesh->EOS.Cv * (4.0 + 3.0 * field->lbParam.myMRT.alpha_1 + 2.0 * field->lbParam.myMRT.alpha_2))  +  0.5); */
 
-	    Q[5][5] = Q[3][3];
+	/*     Q[5][5] = Q[3][3]; */
 
-	    Q[3][4] = Q[4][4]  *  ( Q[3][3]/2.0  - 1.0 );
+	/*     Q[3][4] = Q[4][4]  *  ( Q[3][3]/2.0  - 1.0 ); */
 
-	    Q[5][6] = Q[6][6]  *  ( Q[5][5]/2.0  - 1.0 );
+	/*     Q[5][6] = Q[6][6]  *  ( Q[5][5]/2.0  - 1.0 ); */
 
 
-	    Q_aux[3][3] = 1.0 - 0.5 * Q[3][3];
+	/*     Q_aux[3][3] = 1.0 - 0.5 * Q[3][3]; */
 
-	    Q_aux[5][5] = 1.0 - 0.5 * Q[5][5];
+	/*     Q_aux[5][5] = 1.0 - 0.5 * Q[5][5]; */
 
-	    Q_aux[3][4] = -0.5 * Q[3][4];
+	/*     Q_aux[3][4] = -0.5 * Q[3][4]; */
 
-	    Q_aux[5][6] = -0.5 * Q[5][6];
+	/*     Q_aux[5][6] = -0.5 * Q[5][6]; */
 
-	}
+	/* } */
 	
 	
 
 	// Equilibrium distribution in moment space
 
-	myMRTEquilibriumMS( mesh, mfields, n_eq, field->alpha_1, field->alpha_2, id );
+	myMRTEquilibriumMS( mesh, mfields, n_eq, field->lbparam.myMRT.alpha_1, field->lbparam.myMRT.alpha_2, id );
 	
 	
     	// Distribution in momentum space

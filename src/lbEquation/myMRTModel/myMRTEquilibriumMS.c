@@ -1,12 +1,11 @@
-#include <latticeMesh.h>
-#include <macroFields.h>
+#include <myMRTEquilibriumMS.h>
 #include <basic.h>
 
 void myMRTEquilibriumMS( latticeMesh* mesh, macroFields* mfields, double* n_eq, double alpha_1, double alpha_2, unsigned int id ) {
 
     // Up to now, only D2Q9
 
-    if(mesh->lattice.Q == 9) {
+    if(mesh->lattice.model == D2Q9) {
 
 	
     	// Compute equilibrium in momentum space

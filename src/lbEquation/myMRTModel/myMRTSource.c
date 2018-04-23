@@ -1,9 +1,4 @@
-#include <macroFields.h>
-#include <lbeField.h>
-#include <latticeMesh.h>
-#include <finiteDifference.h>
-#include <pseudoPot.h>
-#include <heatSource.h>
+#include <myMRTSource.h>
 
 
 void myMRTSource( latticeMesh* mesh, macroFields* mfields, lbeField* field, double* Gamma, unsigned int id ) {

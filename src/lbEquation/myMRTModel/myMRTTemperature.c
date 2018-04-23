@@ -1,6 +1,4 @@
-#include <latticeMesh.h>
-#include <macroFields.h>
-#include <lbeField.h>
+#include <myMRTTemperature.h>
 #include <myMRTSource.h>
 #include <stdlib.h>
 

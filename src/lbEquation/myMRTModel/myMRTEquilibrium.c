@@ -1,11 +1,11 @@
-#include <latticeInfo.h>
+#include <myMRTEquilibrium.h>
 #include <basic.h>
 
 
 void myMRTEquilibrium( latticeInfo* lattice, double T, double U[3], double alpha_1, double alpha_2, double* f ) {
 
 
-    if(   (lattice->Q == 9)   &&   (lattice->d == 2)   ) {
+    if( lattice->model == D2Q9 ) {
 
 
 	// Equilibrium in moment space
