@@ -2,7 +2,7 @@
 #include <latticeMesh.h>
 #include <pseudoPot.h>
 
-void updateBdForce( struct latticeMesh* mesh, struct macroFields* mfields ) {
+void updateBdForce( latticeMesh* mesh, macroFields* mfields ) {
 
     
     unsigned int bndId,

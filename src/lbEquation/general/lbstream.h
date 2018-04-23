@@ -3,8 +3,19 @@
 
 #include <latticeMesh.h>
 #include <lbeField.h>
-/* #include <syncPdfField.h> */
 
-void lbstream( struct latticeMesh* mesh, struct lbeField* field );
+/**
+ * @file lbstream.h
+ * @author Ezequiel O. Fogliatto
+ * @date 23 Apr 2018
+ *
+ * Field streaming
+ *
+ * @param mesh Lattice mesh
+ * @param field lbField with population distribution
+ */
+
+
+void lbstream( latticeMesh* mesh, lbeField* field );
 
 #endif // LBSTREAM_H

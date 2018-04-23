@@ -5,6 +5,6 @@
 #include <lbeField.h>
 #include <latticeMesh.h>
 
-void heatSource( struct latticeMesh* mesh, struct macroFields* mfields, struct lbeField* field );
+void heatSource( latticeMesh* mesh, macroFields* mfields, lbeField* field );
 
 #endif // HEATSOURCE_H

@@ -5,6 +5,6 @@
 #include <macroFields.h>
 #include <latticeMesh.h>
 
-void updateBdElements( struct latticeMesh* mesh, struct macroFields* mfields, struct lbeField* field );
+void updateBdElements( latticeMesh* mesh, macroFields* mfields, lbeField* field );
 
 #endif // UPDATEBDELEMENTS_H

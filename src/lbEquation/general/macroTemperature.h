@@ -5,6 +5,6 @@
 #include <macroFields.h>
 #include <lbeField.h>
 
-void macroTemperature( struct latticeMesh* mesh, struct macroFields* mfields, struct lbeField* field );
+void macroTemperature( latticeMesh* mesh, macroFields* mfields, lbeField* field );
 
 #endif // MACROTEMPERATURE_H

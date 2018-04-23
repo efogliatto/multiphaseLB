@@ -19,7 +19,7 @@
 
 #include <updateBdForce.h>
 
-#include <compWork.h>
+//#include <compWork.h>
 
 #include <heatSource.h>
 

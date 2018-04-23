@@ -1,33 +1,26 @@
-#include <stdlib.h>
-
-#include <latticeMesh.h>
-#include <macroFields.h>
-#include <lbeField.h>
-
+#include <equilibrium.h>
+#include <basic.h>
 #include <liMRTModel.h>
-#include <liSRTModel.h>
-#include <liTempModel.h>
-#include <newTempModel.h>
 #include <myMRTModel.h>
 
 
-void equilibrium( struct latticeMesh* mesh, struct macroFields* mfields, struct lbeField* field ) {
+void equilibrium( latticeMesh* mesh, macroFields* mfields, lbeField* field ) {
 
 
     if( field->update != 0 ) {
 
     
     
-	// Apply equilibrium model according to field.colId
+	// Apply equilibrium model
 
 	unsigned int id;
     
-	switch(field->colId) {
+	switch(field->model) {
 
 	
 	    // Li model. MRT version
 	
-	case 0:
+	case liMRT:
 	
 	    for( id = 0 ; id < mesh->mesh.nPoints ; id++) {
 
@@ -37,75 +30,16 @@ void equilibrium( struct latticeMesh* mesh, struct macroFields* mfields, struct 
 	
 	    break;
 
-	
-	    // Li model. SRT version
-	
-	case 1:
-	
-	    for( id = 0 ; id < mesh->mesh.nPoints ; id++) {
-
-		liSRTEquilibrium( &mesh->lattice, mfields->rho[id], mfields->U[id], field->value[id] );
-
-	    }
-	
-	    break;
-	
-	
-
-	    // Li model. Temperature
-	
-	case 2:
-	
-	    for( id = 0 ; id < mesh->mesh.nPoints ; id++) {
-
-		liTempEquilibrium( &mesh->lattice, mfields->rho[id], mfields->U[id], field->value[id] );
-
-		unsigned int k;
-
-		for( k = 0 ; k < mesh->lattice.Q ; k++ ) {
-
-		    field->value[id][k] = field->value[id][k] * mesh->EOS._Cv * mfields->T[id];
-	    
-		}
-	    
-	    }
-
-	
-	    break;
-
-
-
-	    /* // new model. Temperature */
-	
-	    /* case 3: */
-	
-	    /* 	for( id = 0 ; id < mesh->mesh.nPoints ; id++) { */
-
-	    /* 	    newTempEquilibrium( &mesh->lattice, mfields->rho[id], mfields->U[id], field->value[id] ); */
-
-	    /* 	    unsigned int k; */
-
-	    /* 	    for( k = 0 ; k < mesh->lattice.Q ; k++ ) { */
-
-	    /* 		field->value[id][k] = field->value[id][k] * mesh->EOS._Cv * mfields->T[id]; */
-	    
-	    /* 	    } */
-	    
-	    /* 	} */
-
-	
-	    /* 	break; */
-	
-
+      
 
 
 	    // new MRT model. Temperature
 	
-	case 4:
+	case myMRT:
 	
 	    for( id = 0 ; id < mesh->mesh.nPoints ; id++) {
 
-		myMRTEquilibrium( &mesh->lattice, mfields->T[id], mfields->U[id], field->alpha_1, field->alpha_2, field->value[id] );
+		myMRTEquilibrium( &mesh->lattice, mfields->T[id], mfields->U[id], field->lbparam.myMRT.alpha_1, field->lbparam.myMRT.alpha_2, field->value[id] );
 	    
 	    }
 
@@ -113,13 +47,14 @@ void equilibrium( struct latticeMesh* mesh, struct macroFields* mfields, struct 
 	    break;
 	
 
+	    
 	default:
 
-	    printf("\n   [ERROR]  Unrecognized collision model\n\n");
+	    errorMsg("Unrecognized collision model");       
 
-	    exit(1);
-	
 	    break;
+
+	    
 	
 	}
 

@@ -3,7 +3,7 @@
 #include <pseudoPot.h>
 #include <stdlib.h>
 
-void heatSource( struct latticeMesh* mesh, struct macroFields* mfields, struct lbeField* field ) {
+void heatSource( latticeMesh* mesh, macroFields* mfields, lbeField* field ) {
 
     unsigned int k, id;
 

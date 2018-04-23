@@ -5,6 +5,6 @@
 #include <macroFields.h>
 #include <lbeField.h>
 
-void macroVelocity( struct latticeMesh* mesh, struct macroFields* mfields, struct lbeField* field );
+void macroVelocity( latticeMesh* mesh, macroFields* mfields, lbeField* field );
 
 #endif // MACROVELOCITY_H

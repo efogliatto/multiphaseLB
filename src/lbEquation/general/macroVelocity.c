@@ -10,7 +10,7 @@
 #include <liTempModel.h>
 
 
-void macroVelocity( struct latticeMesh* mesh, struct macroFields* mfields, struct lbeField* field ) {
+void macroVelocity( latticeMesh* mesh, macroFields* mfields, lbeField* field ) {
 
 
     if (field->update != 0) {

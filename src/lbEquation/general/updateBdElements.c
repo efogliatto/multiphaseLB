@@ -12,7 +12,7 @@
 #include <myMRTModel.h>
 
 
-void updateBdElements( struct latticeMesh* mesh, struct macroFields* mfields, struct lbeField* field ) {
+void updateBdElements( latticeMesh* mesh, macroFields* mfields, lbeField* field ) {
 
     
     unsigned int bndId;

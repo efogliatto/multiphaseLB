@@ -1,15 +1,10 @@
-#include <stdlib.h>
-
-#include <latticeMesh.h>
-#include <macroFields.h>
-#include <lbeField.h>
-
+#include <macroDensity.h>
+#include <basic.h>
 #include <liMRTModel.h>
-#include <liSRTModel.h>
-#include <liTempModel.h>
 
 
-void macroDensity( struct latticeMesh* mesh, struct macroFields* mfields, struct lbeField* field ) {
+
+void macroDensity( latticeMesh* mesh, macroFields* mfields, lbeField* field ) {
 
 
     if (field->update != 0) {
@@ -21,11 +16,11 @@ void macroDensity( struct latticeMesh* mesh, struct macroFields* mfields, struct
     
     
 	// Apply collision model
-	switch(field->colId) {
+	switch(field->model) {
 
 	
 	    // Li MRT Model
-	case 0:
+	case liMRT:
 
 	    for( id = 0 ; id < mesh->mesh.nPoints ; id++) {
 	    
@@ -37,21 +32,18 @@ void macroDensity( struct latticeMesh* mesh, struct macroFields* mfields, struct
 
 
 	    // Li SRT Model
-	case 1:
+	case myMRT:
 
-	    for( id = 0 ; id < mesh->mesh.nPoints ; id++) {
-	    
-		mfields->rho[id] = liSRTDensity( mesh, field->value[id] );
-	    
-	    }
+	    errorMsg("Density update not suitable for myMRTModel");
 	
 	    break;
 	
 	
 	
 	default:
-	    printf("\n\n[ERROR]  Model not available \n\n");
-	    exit(1);
+
+	    errorMsg("Density update not available");
+
 	    break;	
 	
 	}

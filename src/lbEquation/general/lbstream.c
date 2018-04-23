@@ -1,9 +1,8 @@
 #include <stdio.h>
-#include <latticeMesh.h>
-#include <lbeField.h>
+#include <lbstream.h>
 
 
-void lbstream( struct latticeMesh* mesh, struct lbeField* field ) {
+void lbstream( latticeMesh* mesh, lbeField* field ) {
 
     if( field->update != 0 ) {
 	

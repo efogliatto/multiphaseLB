@@ -4,6 +4,6 @@
 #include <latticeMesh.h>
 #include <macroFields.h>
 
-void compWork( struct latticeMesh* mesh, struct macroFields* mfields );
+void compWork( latticeMesh* mesh, macroFields* mfields );
 
 #endif // COMPWORK_H

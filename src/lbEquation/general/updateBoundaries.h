@@ -5,6 +5,6 @@
 #include <macroFields.h>
 #include <latticeMesh.h>
 
-void updateBoundaries( struct latticeMesh* mesh, struct macroFields* mfields, struct lbeField* field );
+void updateBoundaries( latticeMesh* mesh, macroFields* mfields, lbeField* field );
 
 #endif // UPDATEBOUNDARIES_H

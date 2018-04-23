@@ -1,5 +1,5 @@
-# # Basic LBE library. Used as model caller
-# add_subdirectory (general)
+# Basic LBE library. Used as model caller
+add_subdirectory (general)
 
 # Pseudo-potential basics
 add_subdirectory (pseudoPot)

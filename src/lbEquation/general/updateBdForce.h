@@ -4,6 +4,6 @@
 #include <macroFields.h>
 #include <latticeMesh.h>
 
-void updateBdForce( struct latticeMesh* mesh, struct macroFields* mfields );
+void updateBdForce( latticeMesh* mesh, macroFields* mfields );
 
 #endif // UPDATEBDFORCE_H

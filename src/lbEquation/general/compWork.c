@@ -2,7 +2,7 @@
 #include <macroFields.h>
 #include <vectorDivergence.h>
 
-void compWork( struct latticeMesh* mesh, struct macroFields* mfields ) {
+void compWork( latticeMesh* mesh, macroFields* mfields ) {
 
     
     unsigned int id;
