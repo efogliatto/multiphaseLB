@@ -1,7 +1,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <potential.h>
-#include <latticeMesh.h>
+#include <interactionForce.h>
 
 void interactionForce( latticeMesh* mesh, double Ff[3], double* rho, double* T, unsigned int id ) {
 
@@ -59,7 +59,7 @@ void interactionForce( latticeMesh* mesh, double Ff[3], double* rho, double* T, 
 	
 
     	// Extra constant
-    	double beta = -mesh->EOS._G * potential(mesh, rho[id], T[id]);
+    	double beta = -mesh->EOS.G * potential(mesh, rho[id], T[id]);
     
     	for( i = 0 ; i < 3 ; i++) {
 	

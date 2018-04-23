@@ -1,4 +1,4 @@
-#include <latticeMesh.h>
+#include <totalForce.h>
 #include <interactionForce.h>
 #include <stdio.h>
 

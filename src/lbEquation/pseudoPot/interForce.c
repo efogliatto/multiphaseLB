@@ -1,8 +1,6 @@
 #include <stdlib.h>
 #include <stdio.h>
-#include <potential.h>
-#include <latticeMesh.h>
-#include <macroFields.h>
+#include <interForce.h>
 #include <interactionForce.h>
 
 
