@@ -1,8 +1,8 @@
-#include <latticeMesh.h>
-#include <stdio.h>
-#include <stdlib.h>
+#include <vectorDivergence.h>
+#include <basic.h>
 
-double vectorDivergence( double** field, struct latticeMesh* mesh, unsigned int id ) {
+
+double vectorDivergence( double** field, latticeMesh* mesh, unsigned int id ) {
 
 
     // Neighbours
@@ -14,7 +14,10 @@ double vectorDivergence( double** field, struct latticeMesh* mesh, unsigned int 
 
     // D2Q9 model
 
-    if(   ( mesh->lattice.d == 2 )  &&  ( mesh->lattice.Q == 9 )   )  {
+    switch( mesh->lattice.model ) {
+
+	
+    case D2Q9:
     
 
     	// X - derivative
@@ -86,20 +89,32 @@ double vectorDivergence( double** field, struct latticeMesh* mesh, unsigned int 
 
     	}   
 
+	
 
-    }
-
-
+	break;
 
     
-    else {
 
-    	printf("\n  [ERROR]  Divergence function not defined\n\n");
 
-    	exit(0);
 
-    }
+    case D3Q15:
 
+	errorMsg("Finite difference scheme not implemented for D3Q15");
+
+	break;
+
+
+
+    default:
+
+	errorMsg("Finite difference scheme not implemented");
+
+	break;	
+
+
+
+	
+    }    
 
 
     return div;

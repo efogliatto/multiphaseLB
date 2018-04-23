@@ -1,8 +1,8 @@
-#include <latticeMesh.h>
-#include <stdio.h>
-#include <stdlib.h>
+#include <scalarGradient.h>
+#include <basic.h>
 
-void scalarGradient( double* grad, double* field, struct latticeMesh* mesh, unsigned int id ) {
+
+void scalarGradient( double* grad, double* field, latticeMesh* mesh, unsigned int id ) {
 
 
     // Neighbours
@@ -12,7 +12,9 @@ void scalarGradient( double* grad, double* field, struct latticeMesh* mesh, unsi
 
     // D2Q9 model
 
-    if(   ( mesh->lattice.d == 2 )  &&  ( mesh->lattice.Q == 9 )   )  {
+    switch(mesh->lattice.model) {
+
+    case D2Q9:
     
 
     	// X - derivative
@@ -96,17 +98,29 @@ void scalarGradient( double* grad, double* field, struct latticeMesh* mesh, unsi
     	grad[2] = 0.0;
 
 
+	break;
+
+
+	
+    case D3Q15:
+
+	errorMsg("Finite difference scheme not implemented for D3Q15");
+
+	break;
+
+
+
+    default:
+
+	errorMsg("Finite difference scheme not implemented");
+
+	break;	
+
+
+	
+
     }
-
-
-
     
-    else {
 
-    	printf("\n  [ERROR]  Gradient function not defined\n\n");
-
-    	exit(0);
-
-    }
 
 }

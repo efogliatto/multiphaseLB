@@ -19,8 +19,8 @@ add_subdirectory (boundary)
 # Equation of State library
 add_subdirectory (EOS)
 
-# # finite difference differential operations
-# add_subdirectory (finiteDifference)
+# finite difference differential operations
+add_subdirectory (finiteDifference)
 
 
 

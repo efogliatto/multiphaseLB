@@ -1,8 +1,8 @@
-#include <latticeMesh.h>
-#include <stdio.h>
-#include <stdlib.h>
+#include <invScalarGradient.h>
+#include <basic.h>
 
-void invScalarGradient( double* grad, double* field, struct latticeMesh* mesh, unsigned int id ) {
+
+void invScalarGradient( double* grad, double* field, latticeMesh* mesh, unsigned int id ) {
 
 
     // Neighbours
@@ -12,14 +12,19 @@ void invScalarGradient( double* grad, double* field, struct latticeMesh* mesh, u
 
     // D2Q9 model
 
-    if(   ( mesh->lattice.d == 2 )  &&  ( mesh->lattice.Q == 9 )   )  {
+    switch(mesh->lattice.model) {
+
+    case D2Q9:
     
 
     	// X - derivative
 
     	a = mesh->mesh.nb[id][3];
+	
     	b = mesh->mesh.nb[id][1];
-    
+
+
+	
     	if(  (a != -1)  &&  (b != -1)  ) {
     
     	    grad[0] = 0.5 * (1.0/field[a] - 1.0/field[b]);
@@ -58,8 +63,10 @@ void invScalarGradient( double* grad, double* field, struct latticeMesh* mesh, u
     	// Y - derivative
 
     	a = mesh->mesh.nb[id][4];
-    	b = mesh->mesh.nb[id][2];
-    
+
+	b = mesh->mesh.nb[id][2];
+
+	
     	if(  (a != -1)  &&  (b != -1)  ) {
     
     	    grad[1] = 0.5 * (1.0/field[a] - 1.0/field[b]);
@@ -96,17 +103,24 @@ void invScalarGradient( double* grad, double* field, struct latticeMesh* mesh, u
     	grad[2] = 0.0;
 
 
-    }
+
+	
+    case D3Q15:
+
+	errorMsg("Finite difference scheme not implemented for D3Q15");
+
+	break;
 
 
+
+    default:
+
+	errorMsg("Finite difference scheme not implemented");
+
+	break;	
+	
 
     
-    else {
-
-    	printf("\n  [ERROR]  Gradient function not defined\n\n");
-
-    	exit(0);
-
     }
 
 }
