@@ -8,10 +8,9 @@
 #include <io.h>
 #include <latticeModel.h>
 #include <basic.h>
-
 #include <mpi.h>
-#include <macroFields.h>
-#include <vtkInfo.h>
+/* #include <macroFields.h> */
+/* #include <vtkInfo.h> */
 #include <generalLbe.h>
 #include <pseudoPot.h>
 
@@ -178,7 +177,7 @@ int main( int argc, char **argv ) {
 		
     	// Collide g (Temperature)
 
-	collision( &mesh, &mfields, &g );
+    	collision( &mesh, &mfields, &g );
 	
 	
 	
@@ -195,7 +194,7 @@ int main( int argc, char **argv ) {
 
 	
 
-	// Apply boundary conditions
+    	// Apply boundary conditions
 	
     	updateBoundaries( &mesh, &mfields, &f );
 	
@@ -227,13 +226,13 @@ int main( int argc, char **argv ) {
 	
     	if( ht != 0 )     {
 
-	    heatSource( &mesh, &mfields, &g );
+    	    heatSource( &mesh, &mfields, &g );
 
-	    syncScalarField( &mesh, g.scalarSource );
+    	    syncScalarField( &mesh, g.scalarSource );
 
-	}
+    	}
 
-	macroTemperature( &mesh, &mfields, &g );
+    	macroTemperature( &mesh, &mfields, &g );
 
 
 	
@@ -242,13 +241,13 @@ int main( int argc, char **argv ) {
 	
     	if( frozen != 0 ) {
 
-	    interForce( &mesh, &mfields );
+    	    interForce( &mesh, &mfields );
 
-	    syncVectorField( &mesh, mfields.Fi );
+    	    syncVectorField( &mesh, mfields.Fi );
 
-	}
+    	}
 
-	macroVelocity( &mesh, &mfields, &f );
+    	macroVelocity( &mesh, &mfields, &f );
 
 
 	

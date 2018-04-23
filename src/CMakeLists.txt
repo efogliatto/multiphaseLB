@@ -24,8 +24,8 @@ add_subdirectory (finiteDifference)
 
 
 
-# # Applications
-# add_subdirectory (applications)
+# Applications
+add_subdirectory (applications)
 
 # Tests
 add_subdirectory (test)
