@@ -5,7 +5,7 @@
 typedef unsigned int uint;
 
 
-void periodicX( struct basicMesh* mesh, unsigned int nx, unsigned int ny ) {
+void periodicX( basicMesh* mesh, unsigned int nx, unsigned int ny ) {
 
 
     mesh->bd.nbd = 4;

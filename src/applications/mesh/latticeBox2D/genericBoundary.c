@@ -5,7 +5,7 @@
 typedef unsigned int uint;
 
 
-void genericBoundary( struct basicMesh* mesh, unsigned int nx, unsigned int ny ) {
+void genericBoundary( basicMesh* mesh, unsigned int nx, unsigned int ny ) {
 
     mesh->bd.nbd = 4;
     

@@ -7,41 +7,93 @@
 */
 
 #include <io.h>
+#include <dictIO.h>
 #include <latticeModel.h>
 #include <basic.h>
 
 typedef unsigned int uint;
 
 
-void periodicX( struct basicMesh* mesh, unsigned int nx, unsigned int ny );
-void periodicY( struct basicMesh* mesh, unsigned int nx, unsigned int ny );
-void periodicXY( struct basicMesh* mesh, unsigned int nx, unsigned int ny );
-void genericBoundary( struct basicMesh* mesh, unsigned int nx, unsigned int ny );
+void periodicX( basicMesh* mesh, unsigned int nx, unsigned int ny );
+void periodicY( basicMesh* mesh, unsigned int nx, unsigned int ny );
+void periodicXY( basicMesh* mesh, unsigned int nx, unsigned int ny );
+void genericBoundary( basicMesh* mesh, unsigned int nx, unsigned int ny );
 
 int main(int argc, char** argv) {
 
     
-    printf("\n\n   LATTICE MESH GENERATION\n\n");
-
-    struct basicMesh mesh;
+    printf("\n\n   LATTICE MESH GENERATION\n\n");    
 
 
     
     // Basic lattice properties
+
+    basicMesh mesh;
+
+    unsigned int status;
     
 
     // Lattice size
-    uint nx = (uint)lookUpDoubleEntry("properties/latticeProperties","Nx",-1);
-    uint ny = (uint)lookUpDoubleEntry("properties/latticeProperties","Ny",-1);
+
+    double dn;
+
+    uint nx = 0,
+	ny = 0;    
+
+    if(  lookUpScalarEntry("properties/latticeProperties", "Nx", -1, &dn)  )
+	nx = (uint)dn;
+
+    if(  lookUpScalarEntry("properties/latticeProperties", "Ny", -1, &dn)  )
+	ny = (uint)dn;    
+
+
     mesh.nPoints = nx*ny;
 
-    // Lattice model
-    lookUpStringEntry("properties/latticeProperties","LBModel",mesh.lbm);
 
-    // Boundary type
-    char bdType[100];
-    lookUpStringEntry("properties/latticeProperties","boundaryType",bdType);
+
+
     
+    // Lattice model
+
+    char* modelName;
+    
+    latticeInfo lattice;
+
+    lattice.model = D2Q9;
+    
+    status = lookUpStringEntry( "properties/latticeProperties", "LBModel", &modelName, "D2Q9" );
+
+    if(status) {}
+
+    if( strcmp(modelName, "D2Q9") == 0 ) {
+
+    	lattice.model = D2Q9;
+
+    }
+
+    else {
+
+    	if( strcmp(modelName, "D3Q15") == 0 ) {
+
+    	    lattice.model = D3Q15;
+
+    	}
+
+    	else {
+
+    	    char msg[100];
+
+    	    sprintf(msg, "Unrecognized model %s", modelName);
+	    
+    	    errorMsg( msg );
+
+    	}
+
+    }
+    
+    
+
+  
 
 
 
@@ -66,7 +118,7 @@ int main(int argc, char** argv) {
     	for( i = 0 ; i < nx ; i++) {
 			    
     	    mesh.points[i+j*nx][0] = i;
-	    mesh.points[i+j*nx][1] = j;
+    	    mesh.points[i+j*nx][1] = j;
 		
     	}
     }
@@ -86,11 +138,17 @@ int main(int argc, char** argv) {
 
     
     // Lattice velocities
-    int** velocities = latticeVelocities(mesh.lbm);
-    int* rev = latticeReverseDir(mesh.lbm);
+    
+    int** velocities = latticeVelocities(lattice.model);
+
+    int* rev = latticeReverseDir(lattice.model);
+
+    
     
     // Create and resize neighbour matrix
-    mesh.Q = latticeQ( mesh.lbm );
+    
+    mesh.Q = latticeQ( lattice.model );
+
     mesh.nb = matrixIntAlloc(mesh.nPoints, mesh.Q,-1);
     
 
@@ -205,11 +263,17 @@ int main(int argc, char** argv) {
     sprintf(mesh.bd.bdNames[3],"Y1");
 
     
+    // Boundary type
+    
+    char* bdt;
 
+    status = lookUpStringEntry("properties/latticeProperties","boundaryType", &bdt, "generic");
+
+    
     // Assign points on boundary based on bdType
 
     // Generic
-    if( strcmp(bdType,"generic") == 0) {
+    if( strcmp(bdt,"generic") == 0) {
 
     	genericBoundary( &mesh, nx, ny );
 
@@ -219,7 +283,7 @@ int main(int argc, char** argv) {
     // periodicX
     else {
 
-    	if( strcmp(bdType,"periodicX")  == 0 ) {
+    	if( strcmp(bdt,"periodicX")  == 0 ) {
 
     	    periodicX( &mesh, nx, ny );
 
@@ -229,7 +293,7 @@ int main(int argc, char** argv) {
     	// periodicY
     	else {
 
-    	    if( strcmp(bdType,"periodicY")  == 0 ) {
+    	    if( strcmp(bdt,"periodicY")  == 0 ) {
 
     		periodicY( &mesh, nx, ny );
 
@@ -239,7 +303,7 @@ int main(int argc, char** argv) {
     	    // periodicXY
     	    else {
 
-    		if( strcmp(bdType,"periodicXY")  == 0 ) {
+    		if( strcmp(bdt,"periodicXY")  == 0 ) {
 
     		    periodicXY( &mesh, nx, ny );
 
@@ -247,7 +311,7 @@ int main(int argc, char** argv) {
 
     		else {
 
-    		    printf("[ERROR]   Unrecognized boundary type %s\n\n", bdType);
+    		    printf("[ERROR]   Unrecognized boundary type %s\n\n", bdt);
     		    exit(0);
 
     		}
