@@ -1,6 +1,19 @@
 #------------------ Lattice Mesh Partition------------------#
 
-set ( PROJECT_LINK_LIBS libio.so libbasic.so liblatticemodel.so ${MPI_LIBRARIES})
+set ( PROJECT_LINK_LIBS
+  libio.so
+  libdictio.so
+  libbasic.so
+  liblatticemodel.so
+  # libgenerallbe.so
+  # libpseudopot.so
+  libpseudopot.so
+  liblimrtmodel.so
+  libmymrtmodel.so
+  libboundary.so
+  libeos.so
+  # libfinitedifference.so
+  ${MPI_LIBRARIES})
 link_directories( ~/multiphaseLB/lib )
 
 # latticeMeshPartition

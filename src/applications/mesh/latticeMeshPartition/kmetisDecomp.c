@@ -5,7 +5,7 @@
 #ifdef USE_METIS
 
 
-void kmetisDecomp( unsigned int* owner, struct basicMesh* mesh, unsigned int np )  {
+void kmetisDecomp( unsigned int* owner, basicMesh* mesh, unsigned int np )  {
 
 
     if( np > 1 ) {
@@ -141,7 +141,7 @@ void kmetisDecomp( unsigned int* owner, struct basicMesh* mesh, unsigned int np 
 
 #ifndef USE_METIS
 
-void kmetisDecomp( unsigned int* owner, struct basicMesh* mesh, unsigned int np )  {
+void kmetisDecomp( unsigned int* owner, basicMesh* mesh, unsigned int np )  {
 
     printf("\n   [ERROR]  METIS library not included\n\n");
 

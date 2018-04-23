@@ -4,7 +4,7 @@
 #include <basic.h>
 
 
-void localIndexing ( struct basicMesh* mesh, int** local, int** nGhosts, uint* owner, uint np ) {
+void localIndexing ( basicMesh* mesh, int** local, int** nGhosts, uint* owner, uint np ) {
 
     uint i,j,velId;
 
