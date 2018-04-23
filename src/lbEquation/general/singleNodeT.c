@@ -1,51 +1,44 @@
-#include <stdlib.h>
-
-#include <latticeMesh.h>
-#include <macroFields.h>
-#include <lbeField.h>
-
-#include <liSRTModel.h>
-#include <liTempModel.h>
+#include <singleNodeT.h>
+#include <basic.h>
 #include <myMRTModel.h>
 
 
 double singleNodeT( latticeMesh* mesh, macroFields* mfields, lbeField* field, unsigned int id ) {
 
 
-    double T;
+    double T = 0;
     
     
     // Apply collision model
     
-    switch(field->colId) {
-
-	
-    // Li SRT Model
-	
-    case 2:
-
-	T = liTempTemperature( mesh, mfields, field, id );
-	
-	break;
-
+    switch(field->model) {
 	
 
     // myMRTModel
 	
-    case 4:
+    case myMRT:
 	
 	T = myMRTTemperature( mesh, mfields, field, id );
        
 	break;	
 
+
+    // Li SRT Model
+    case liMRT:
+
+	errorMsg("Temperature not suitable for liMRTModel");
+	
+	break;
+	
+	
 	
     default:
-	
-	printf("\n   [ERROR]  Unable to compute macroscopic temperature\n\n");
-	
-	exit(1);
-	
+
+	errorMsg("Temperature not available");
+
 	break;	
+
+
 	
     }
 

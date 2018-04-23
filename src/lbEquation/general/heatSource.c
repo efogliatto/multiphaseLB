@@ -1,7 +1,8 @@
 #include <heatSource.h>
 #include <finiteDifference.h>
 #include <pseudoPot.h>
-#include <stdlib.h>
+#include <basic.h>
+
 
 void heatSource( latticeMesh* mesh, macroFields* mfields, lbeField* field ) {
 
@@ -16,14 +17,14 @@ void heatSource( latticeMesh* mesh, macroFields* mfields, lbeField* field ) {
 	gradRho[3];
 
 
-    switch( field->colId ){
+    switch( field->model ){
 
-    case 4:
+    case myMRT:
 
 	for( id = 0 ; id < mesh->parallel.nlocal ; id++ ) {
 
 	    
-	    lambda = mfields->rho[id] * mesh->EOS._Cv * (1/field->Lambda[3] - 0.5) * (4.0 + 3.0 * field->alpha_1 + 2.0 * field->alpha_2) / 6.0;
+	    lambda = mfields->rho[id] * mesh->EOS.Cv * (1/field->lbparam.myMRT.Lambda[3] - 0.5) * (4.0 + 3.0 * field->lbparam.myMRT.alpha_1 + 2.0 * field->lbparam.myMRT.alpha_2) / 6.0;
     
 
 	    // Temperature gradient
@@ -55,7 +56,7 @@ void heatSource( latticeMesh* mesh, macroFields* mfields, lbeField* field ) {
 
 	    dpdT = dpdT / (0.2*mfields->T[id]);
     
-	    field->scalarSource[id] = -lambda * dot / mesh->EOS._Cv   +   divU * mfields->T[id]*( 1.0 - dpdT/(mfields->rho[id]*mesh->EOS._Cv) );
+	    field->scalarSource[id] = -lambda * dot / mesh->EOS.Cv   +   divU * mfields->T[id]*( 1.0 - dpdT/(mfields->rho[id]*mesh->EOS.Cv) );
 
 
 	}
@@ -63,11 +64,22 @@ void heatSource( latticeMesh* mesh, macroFields* mfields, lbeField* field ) {
 	break;
 
 
+    // Li SRT Model
+    case liMRT:
+
+	errorMsg("Heat source not defined for liMRTModel");
+	
+	break;
+	
+	
+	
     default:
 
-	printf("\n  [ERROR] Heat source not defined for model %d\n\n", field->colId);
+	errorMsg("Heat source not defined");
 
-	exit(0);
+	break;	
+
+	    
 
     }
 

@@ -5,6 +5,20 @@
 #include <macroFields.h>
 #include <lbeField.h>
 
+/**
+ * @file singleNodeT.h
+ * @author Ezequiel O. Fogliatto
+ * @date 23 Apr 2018
+ *
+ * Macroscopic temperature at single lattice node
+ *
+ * @param mesh Lattice mesh
+ * @param mfields Macroscopic fields structure
+ * @param field lbField with population distribution
+ * @param id Node index
+ * @return Temperature at single node @p id
+ */
+
 double singleNodeT( latticeMesh* mesh, macroFields* mfields, lbeField* field, unsigned int id );
 
 #endif // SINGLENODET_H

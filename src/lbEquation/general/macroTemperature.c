@@ -1,13 +1,5 @@
-#include <stdlib.h>
-
-#include <latticeMesh.h>
-#include <macroFields.h>
-#include <lbeField.h>
-
-#include <liMRTModel.h>
-#include <liSRTModel.h>
-#include <liTempModel.h>
-#include <newTempModel.h>
+#include <basic.h>
+#include <macroTemperature.h>
 #include <myMRTModel.h>
 
 
@@ -19,30 +11,14 @@ void macroTemperature( latticeMesh* mesh, macroFields* mfields, lbeField* field 
 	
 	unsigned int id;    
     
-	switch(field->colId) {
-
-
+	switch(field->model) {
 	    
-	// Li SRT Model
-	
-	case 2:
-
-	    for( id = 0 ; id < mesh->mesh.nPoints ; id++) {
-
-		mfields->T[id] = liTempTemperature( mesh, mfields, field, id );
-
-	    }
-	
-	    break;
-
-
 
 	// myMRTModel
 	    
-	case 4:
+	case myMRT:
 
 	    for( id = 0 ; id < mesh->mesh.nPoints ; id++) {
-		/* for( id = 0 ; id < mesh->parallel.nlocal ; id++) { */
 
 		mfields->T[id] = myMRTTemperature( mesh, mfields, field, id );
 
@@ -50,11 +26,24 @@ void macroTemperature( latticeMesh* mesh, macroFields* mfields, lbeField* field 
 	
 	    break;	
 
+
+	    
+      	// Li SRT Model
+	case liMRT:
+
+	    errorMsg("Temperature update not suitable for liMRTModel");
+	
+	    break;
+	
+	
 	
 	default:
-	    printf("\n   [ERROR]  Unable to compute macroscopic temperature\n\n");
-	    exit(1);
+
+	    errorMsg("Temperature update not available");
+
 	    break;	
+
+	    
 	
 	}
 

@@ -1,13 +1,6 @@
-#include <stdlib.h>
-#include <stdio.h>
-
-#include <latticeMesh.h>
-#include <macroFields.h>
-#include <lbeField.h>
-
+#include <macroVelocity.h>
+#include <basic.h>
 #include <liMRTModel.h>
-#include <liSRTModel.h>
-#include <liTempModel.h>
 
 
 void macroVelocity( latticeMesh* mesh, macroFields* mfields, lbeField* field ) {
@@ -21,11 +14,11 @@ void macroVelocity( latticeMesh* mesh, macroFields* mfields, lbeField* field ) {
     
     
 	// Apply collision model
-	switch(field->colId) {
+	switch(field->model) {
 
 	
 	    // Li MRT Model
-	case 0:
+	case liMRT:
 
 	    for( id = 0 ; id < mesh->mesh.nPoints ; id++) {
 	    
@@ -36,22 +29,19 @@ void macroVelocity( latticeMesh* mesh, macroFields* mfields, lbeField* field ) {
 	    break;
 
 
-	    // Li SRT Model
-	case 1:
+	    // my MRT Model
+	case myMRT:
 
-	    for( id = 0 ; id < mesh->mesh.nPoints ; id++) {
-	    
-		liSRTVelocity( mesh, mfields, field, mfields->U, id );
-	    
-	    }
+	    errorMsg("Velocity update not suitable for myMRTModel");
 	
 	    break;
 	
 
 	
 	default:
-	    printf("\n   [ERROR]  Unable to compute macroscopic velocity\n\n");
-	    exit(1);
+
+	    errorMsg("Velocity update not available");
+	    
 	    break;	
 	
 	}
