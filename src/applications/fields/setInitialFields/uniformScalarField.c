@@ -1,9 +1,10 @@
-#include <io.h>
+#include <dictIO.h>
 #include <latticeMesh.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include <basic.h>
 
-void uniformScalarField( struct latticeMesh* mesh, double** field, char* fname ) {
+void uniformScalarField( latticeMesh* mesh, double** field, char* fname ) {
 
 
     // Allocate memory
@@ -14,28 +15,27 @@ void uniformScalarField( struct latticeMesh* mesh, double** field, char* fname )
     
     // Look for values
 
-    char aux[100];
+    char* aux;
 
-    double fval = 0;
+    double fval = 0;    
+
+    unsigned int status = 0;
+
+    if( vstring(&aux, "%s/internalField/value", fname)  )
+	status = lookUpScalarEntry("start/initialFields", aux, 0, &fval);
+
+
+    if (status) {   
     
-    sprintf(aux, "%s/internalField/value", fname);
+	uint ii;
 
-    unsigned int status = lookUpDouble("start/initialFields", aux, &fval, 0);
+	for( ii = 0 ; ii < mesh->mesh.nPoints ; ii++ ) {
 
+	    field[0][ii] = fval;
 
-    if (status) {}
-    
-    
-    uint ii;
-
-    for( ii = 0 ; ii < mesh->mesh.nPoints ; ii++ ) {
-
-	field[0][ii] = fval;
+	}    
 
     }
-    
-
-
 
     /* // Read boundary information */
 

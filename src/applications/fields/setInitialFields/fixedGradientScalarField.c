@@ -1,9 +1,10 @@
-#include <io.h>
+#include <dictIO.h>
 #include <latticeMesh.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include <basic.h>
 
-void fixedGradientScalarField( struct latticeMesh* mesh, double** field, char* fname ) {
+void fixedGradientScalarField( latticeMesh* mesh, double** field, char* fname ) {
 
 
     // Allocate memory
@@ -14,25 +15,26 @@ void fixedGradientScalarField( struct latticeMesh* mesh, double** field, char* f
     
     // Look for values. field = \vec{a} * \vec{x} + b
 
-    char aux[100];
+    char* aux;
 
     double b = 0;
 
-    double a[3];
+    double* a;
+
+    unsigned int status,
+	n;
 
 
     // Read b
     
-    sprintf(aux, "%s/internalField/b", fname);
-    
-    unsigned int status = lookUpDouble("start/initialFields", aux, &b, 0);
+    if(  vstring(&aux, "%s/internalField/b", fname)  )    
+	status = lookUpScalarEntry("start/initialFields", aux, 0, &b);
 
 
     // Read a
     
-    sprintf(aux, "%s/internalField/a", fname);
-
-    status = lookUpVector("start/initialFields", aux, a, 3);
+    if(  vstring(&aux, "%s/internalField/a", fname)  )
+	status = lookUpVectorEntry("start/initialFields", aux, &a, &n);
 
 
     if (status) {}

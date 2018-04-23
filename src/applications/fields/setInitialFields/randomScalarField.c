@@ -1,9 +1,11 @@
-#include <io.h>
+#include <dictIO.h>
 #include <latticeMesh.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include <basic.h>
 
-void randomScalarField( struct latticeMesh* mesh, double** field, char* fname ) {
+
+void randomScalarField( latticeMesh* mesh, double** field, char* fname ) {
 
 
     // Allocate memory
@@ -14,13 +16,15 @@ void randomScalarField( struct latticeMesh* mesh, double** field, char* fname ) 
     
     // Look for values
 
-    char aux[100];
+    char* aux;
 
     double fval = 0;
-    
-    sprintf(aux, "%s/internalField/value", fname);
 
-    unsigned int status = lookUpDouble("start/initialFields", aux, &fval, 0);
+    unsigned int status;
+    
+    
+    if(  vstring(&aux, "%s/internalField/value", fname)  )
+	status = lookUpScalarEntry("start/initialFields", aux, 0, &fval);
 
     if (status) {}
 
@@ -28,9 +32,8 @@ void randomScalarField( struct latticeMesh* mesh, double** field, char* fname ) 
 
     double pert = 0;
 
-    sprintf(aux, "%s/internalField/perturbation", fname );
-
-    status = lookUpDouble("start/initialFields", aux, &pert, 1);
+    if(  vstring(&aux, "%s/internalField/perturbation", fname )  )
+	status = lookUpScalarEntry("start/initialFields", aux, 1, &pert);
     
 
 

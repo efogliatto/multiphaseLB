@@ -1,10 +1,12 @@
+#include <dictIO.h>
 #include <io.h>
 #include <latticeMesh.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include <basic.h>
 
 
-void sphereBoundedScalarField( struct latticeMesh* mesh, double** field, char* fname ) {
+void sphereBoundedScalarField( latticeMesh* mesh, double** field, char* fname ) {
 
 
     // Allocate memory
@@ -15,44 +17,45 @@ void sphereBoundedScalarField( struct latticeMesh* mesh, double** field, char* f
     
     // Look for values
 
-    char aux[100];
+    char* aux;
 
     double in = 0,
 	out = 0;
 
-    double centre[3], radius;
+    double* centre;
 
+    double radius;
 
+    unsigned int status,
+	n;
+
+    
     // Centre
     
-    sprintf(aux, "%s/internalField/centre", fname);
-
-    unsigned int status = lookUpVector("start/initialFields", aux, centre, 3);
+    if(  vstring(&aux, "%s/internalField/centre", fname)  )
+	status = lookUpVectorEntry("start/initialFields", aux, &centre, &n);
 
     
 
     // Radius
 
-    char ins[100];
+    char* ins;
     
-    sprintf(ins, "%s/internalField/radius", fname);
-    
-    status = lookUpDouble("start/initialFields", ins, &radius, 0);
+    if(  vstring(&ins, "%s/internalField/radius", fname)  )    
+	status = lookUpScalarEntry("start/initialFields", ins, 0, &radius);
     
 
     // Inside value
     
-    sprintf(ins, "%s/internalField/inside", fname);
-    
-    status = lookUpDouble("start/initialFields", ins, &in, 0);
+    if(  vstring(&ins, "%s/internalField/inside", fname)  )    
+	status = lookUpScalarEntry("start/initialFields", ins, 0, &in);
 
 
 
     // Outside value
     
-    sprintf(ins, "%s/internalField/outside", fname);
-    
-    status = lookUpDouble("start/initialFields", ins, &out, 0);
+    if(  vstring(&ins, "%s/internalField/outside", fname)  )    
+	status = lookUpScalarEntry("start/initialFields", ins, 0, &out);
 
     
     
