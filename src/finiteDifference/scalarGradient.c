@@ -97,7 +97,6 @@ void scalarGradient( double* grad, double* field, latticeMesh* mesh, unsigned in
 
     	grad[2] = 0.0;
 
-
 	break;
 
 

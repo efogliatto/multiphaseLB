@@ -102,12 +102,14 @@ void invScalarGradient( double* grad, double* field, latticeMesh* mesh, unsigned
 
     	grad[2] = 0.0;
 
+	break;
+
 
 
 	
     case D3Q15:
 
-	errorMsg("Finite difference scheme not implemented for D3Q15");
+	errorMsg("invScalarGradient scheme not implemented for D3Q15");
 
 	break;
 
@@ -115,7 +117,7 @@ void invScalarGradient( double* grad, double* field, latticeMesh* mesh, unsigned
 
     default:
 
-	errorMsg("Finite difference scheme not implemented");
+	errorMsg("invScalarGradient scheme not implemented");
 
 	break;	
 	

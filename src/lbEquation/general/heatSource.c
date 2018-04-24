@@ -47,7 +47,7 @@ void heatSource( latticeMesh* mesh, macroFields* mfields, lbeField* field ) {
 	    
 	    for( k = 0 ; k < 3 ; k++ ) {
 
-		dot += gradT[k] * gradRho[k];
+	    	dot += gradT[k] * gradRho[k];
 	
 	    }
 

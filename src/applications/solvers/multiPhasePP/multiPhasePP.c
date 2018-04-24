@@ -68,90 +68,90 @@ int main( int argc, char **argv ) {
     
     latticeMesh mesh = readLatticeMesh( pid );
 
-    /* mesh.lattice = setLatticeInfo(); */
+    mesh.lattice = setLatticeInfo();
 
-    /* mesh.EOS = readEOSInfo(); */
+    mesh.EOS = readEOSInfo();
 
-    /* vtkInfo vtk = readVTKInfo(); */
+    vtkInfo vtk = readVTKInfo();
     
 
     
     
 
-    /* // Macroscopic fields */
+    // Macroscopic fields
     
-    /* macroFields mfields; */
-    
-
-    
-    /* // Density */
-
-    /* createScalarField( &mesh, &mfields.rho, "rho"); */
-
-    
-    
-    /* // Velocity */
-
-    /* createVectorField( &mesh, &mfields.U, 3, "U"); */
+    macroFields mfields;
     
 
     
-    /* // Temperature */
+    // Density
 
-    /* createScalarField( &mesh, &mfields.T, "T"); */
-
-
-
-    /* // LBE fields */
-
-    /* // Navier-Stokes field */
-
-    /* lbeField f; */
-    
-    /* createLbeField( &mesh, &f, "f"); */
-
-    /* if(frozen == 0) { f.update = 0; } */
-
+    createScalarField( &mesh, &mfields.rho, "rho");
 
     
-    /* // Energy field */
-
-    /* lbeField g; */
     
-    /* createLbeField( &mesh, &g, "g"); */
+    // Velocity
 
-    /* if(ht == 0) { g.update = 0; } */
-    
+    createVectorField( &mesh, &mfields.U, 3, "U");
     
 
-    /* // Initial equilibrium distribution */
+    
+    // Temperature
+
+    createScalarField( &mesh, &mfields.T, "T");
+
+
+
+    // LBE fields
+
+    // Navier-Stokes field
+
+    lbeField f;
+    
+    createLbeField( &mesh, &f, "f");
+
+    if(frozen == 0) { f.update = 0; }
+
+
+    
+    // Energy field
+
+    lbeField g;
+    
+    createLbeField( &mesh, &g, "g");
+
+    if(ht == 0) { g.update = 0; }
+    
+    
+
+    // Initial equilibrium distribution
    
-    /* equilibrium(&mesh, &mfields, &f); */
+    equilibrium(&mesh, &mfields, &f);
     
-    /* equilibrium(&mesh, &mfields, &g); */
+    equilibrium(&mesh, &mfields, &g);
 
 
 
 
 
-    /* // Update macroscopic interaction force */
+    // Update macroscopic interaction force
 
-    /* mfields.Fi = matrixDoubleAlloc( mesh.mesh.nPoints, 3, -1 ); */
+    mfields.Fi = matrixDoubleAlloc( mesh.mesh.nPoints, 3, -1 );
     
-    /* interForce( &mesh, &mfields ); */
+    interForce( &mesh, &mfields );
     
-    /* syncVectorField( &mesh, mfields.Fi ); */
+    syncVectorField( &mesh, mfields.Fi );
 
 
 
-    /* // Heat source */
+    // Heat source
 
-    /* heatSource( &mesh, &mfields, &g ); */
+    heatSource( &mesh, &mfields, &g );
 
-    /* syncScalarField( &mesh, g.scalarSource ); */
+    syncScalarField( &mesh, g.scalarSource );
     
    
-    /* if(pid == 0){printf("\n\n");} */
+    if(pid == 0){printf("\n\n");}
 
 
 
@@ -161,9 +161,9 @@ int main( int argc, char **argv ) {
 
 
     
-    /* // Advance in time. Collide, stream, update and write */
+    // Advance in time. Collide, stream, update and write
     
-    /* while( updateTime(&mesh.time) ) { */
+    while( updateTime(&mesh.time) ) {
 
 
 	
@@ -250,56 +250,56 @@ int main( int argc, char **argv ) {
 
 	
 	
-    /* 	// Write fields */
+    	// Write fields
 	
-    /* 	if( writeFlag(&mesh.time) ) { */
+    	if( writeFlag(&mesh.time) ) {
 
 	    
-    /* 	    if(pid == 0) { */
+    	    if(pid == 0) {
 		
-    /* 		printf( "Time = %d\n", mesh.time.current ); */
+    		printf( "Time = %d\n", mesh.time.current );
 		
-    /* 		printf("Elapsed time = %.2f seconds\n\n", elapsed(&mesh.time) ); */
+    		printf("Elapsed time = %.2f seconds\n\n", elapsed(&mesh.time) );
 		
-    /* 	    } */
+    	    }
 
 
 	    
-    /* 	    // VTK files */
+    	    // VTK files
 	    
-    /* 	    writeMeshToVTK( &mesh, &vtk ); */
+    	    writeMeshToVTK( &mesh, &vtk );
 
-    /* 	    writeScalarToVTK( "rho", mfields.rho, &mesh ); */
+    	    writeScalarToVTK( "rho", mfields.rho, &mesh );
 
-    /* 	    writeScalarToVTK( "T", mfields.T, &mesh ); */
+    	    writeScalarToVTK( "T", mfields.T, &mesh );
 
-    /* 	    writeVectorToVTK( "U", mfields.U, &mesh ); */
+    	    writeVectorToVTK( "U", mfields.U, &mesh );
 
-    /* 	    writePdfToVTK( "f", f.value, &mesh ); */
+    	    writePdfToVTK( "f", f.value, &mesh );
 
-    /* 	    writePdfToVTK( "g", g.value, &mesh ); */
+    	    writePdfToVTK( "g", g.value, &mesh );
     
-    /* 	    writeVTKExtra( &mesh, &vtk ); */
+    	    writeVTKExtra( &mesh, &vtk );
 
-    /* 	    writeMainPvd(); */
+    	    writeMainPvd();
 
 
 	    
 	    
-    /* 	} */
+    	}
 	
 
-    /* } */
+    }
 
 
 
     
-    /* // Print info */
-    /* if(pid == 0) { */
+    // Print info
+    if(pid == 0) {
 	
-    /* 	printf("\n  Finished in %.2f seconds \n\n", elapsed(&mesh.time) ); */
+    	printf("\n  Finished in %.2f seconds \n\n", elapsed(&mesh.time) );
 	
-    /* } */
+    }
 
 
     
