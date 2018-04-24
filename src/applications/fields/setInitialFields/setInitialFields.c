@@ -222,7 +222,7 @@ int main(int argc, char** argv) {
 
 	    char* entry;
 
-	    unsigned int n;
+	    unsigned int nn;
 	    
 	    
     	    // Internal field type
@@ -237,20 +237,20 @@ int main(int argc, char** argv) {
     	    if( strcmp(itype,"uniform") == 0 ) {
 
     	    	if(  vstring(&entry, "%s/internalField/value", vtk.vectorFields[fid] )  )
-		    status = lookUpVectorEntry("start/initialFields", fname, &fval, &n);
+	    	    status = lookUpVectorEntry("start/initialFields", entry, &fval, &nn);
 		
 
-		uint ii,jj;
+	    	uint ii,jj;
 
-		for( ii = 0 ; ii < mesh.mesh.nPoints ; ii++ ) {
+	    	for( ii = 0 ; ii < mesh.mesh.nPoints ; ii++ ) {
 
-		    for( jj = 0 ; jj < 3 ; jj++ ) {
+	    	    for( jj = 0 ; jj < 3 ; jj++ ) {
 
-			field[ii][jj] = fval[jj];
+	    		field[ii][jj] = fval[jj];
 
-		    }
+	    	    }
 
-		}
+	    	}
 
 
     	    }
@@ -284,72 +284,76 @@ int main(int argc, char** argv) {
 	
 
 
-    	/* // Move over pdf fields */
+    	// Move over pdf fields
 
-    	/* for( fid = 0 ; fid < vtk.npdf ; fid++ ) { */
+    	for( fid = 0 ; fid < vtk.npdf ; fid++ ) {
 
 
-    	/*     double** field = matrixDoubleAlloc(  mesh.mesh.nPoints, mesh.mesh.Q, 0); */
+    	    double** field = matrixDoubleAlloc(  mesh.mesh.nPoints, mesh.mesh.Q, 0);
 
-	/*     double fval[20]; */
+	    double* fval;
 
-	/*     char itype[100]; */
+	    char* itype;
+
+	    char* entry;
+
+	    unsigned int nn;
+
+		
+    	    // Internal field type
 	    
-    	/*     // Internal field type */
-	    
-    	/*     sprintf(fname, "%s/internalField/type", vtk.pdfFields[fid] ); */
-	    
-	/*     status = lookUpString("start/initialFields", fname, itype); */
+	    if(  vstring(&entry, "%s/internalField/type", vtk.pdfFields[fid] )  )	    
+		status = lookUpStringEntry("start/initialFields", entry, &itype, "uniform");
     
 	   		    
 
-    	/*     // Uniform distribution */
+    	    // Uniform distribution
 	    
-    	/*     if( strcmp(itype,"uniform") == 0 ) { */
+    	    if( strcmp(itype,"uniform") == 0 ) {
 
-    	/*     	sprintf(fname, "%s/internalField/value", vtk.pdfFields[fid] ); */
-
-	/* 	status = lookUpVector("start/initialFields", fname, fval, mesh.mesh.Q); */
+    	    	if(  vstring(&entry, "%s/internalField/value", vtk.pdfFields[fid] ) )
+		    status = lookUpVectorEntry("start/initialFields", entry, &fval, &nn);
 		
-	/* 	uint ii,jj; */
-
-	/* 	for( ii = 0 ; ii < mesh.mesh.nPoints ; ii++ ) { */
-
-	/* 	    for( jj = 0 ; jj < mesh.mesh.Q ; jj++ ) { */
-
-	/* 		field[ii][jj] = fval[jj]; */
-
-	/* 	    } */
-
-	/* 	} */
-
-
-    	/*     } */
-
-	    
-
-    	/*     // Write field */
-    	/*     writePdfToVTK( vtk.pdfFields[fid], field, &mesh ); */
-
-
-	/*     // Deallocate memory */
-	    
-	/*     { */
-
-	/* 	uint jj; */
-
-	/* 	for( jj = 0 ; jj < mesh.mesh.nPoints ; jj++ ) { */
-
-	/* 	    free( field[jj] ); */
-
-	/* 	} */
-
-	/* 	free(field); */
 		
-	/*     } */
+		uint ii,jj;
+
+		for( ii = 0 ; ii < mesh.mesh.nPoints ; ii++ ) {
+
+		    for( jj = 0 ; jj < mesh.mesh.Q ; jj++ ) {
+
+			field[ii][jj] = fval[jj];
+
+		    }
+
+		}
+
+
+    	    }
+
 	    
 
-    	/* } */
+    	    // Write field
+    	    writePdfToVTK( vtk.pdfFields[fid], field, &mesh );
+
+
+	    // Deallocate memory
+	    
+	    {
+
+		uint jj;
+
+		for( jj = 0 ; jj < mesh.mesh.nPoints ; jj++ ) {
+
+		    free( field[jj] );
+
+		}
+
+		free(field);
+		
+	    }
+	    
+
+    	}
 	
 
 
