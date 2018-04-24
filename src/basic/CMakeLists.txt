@@ -11,4 +11,5 @@ add_library(basic SHARED
   vectorMag2.c
   errorMsg.c
   vstring.c
+  int2dArray.c
   )

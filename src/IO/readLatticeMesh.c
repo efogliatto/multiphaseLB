@@ -87,11 +87,11 @@ latticeMesh readLatticeMesh( unsigned int pid ) {
 
     for( i = 0 ; i < mesh.parallel.nlocal ; i++ ) {
 
-	status = fscanf(inFile, "%d", &mesh.mesh.points[i][0]);
+    	status = fscanf(inFile, "%d", &mesh.mesh.points[i][0]);
 
-	status = fscanf(inFile, "%d", &mesh.mesh.points[i][1]);
+    	status = fscanf(inFile, "%d", &mesh.mesh.points[i][1]);
 
-	status = fscanf(inFile, "%d", &mesh.mesh.points[i][2]);
+    	status = fscanf(inFile, "%d", &mesh.mesh.points[i][2]);
 
     }
 
@@ -106,11 +106,11 @@ latticeMesh readLatticeMesh( unsigned int pid ) {
 
     for( i = mesh.parallel.nlocal ; i < mesh.mesh.nPoints ; i++ ) {
 
-	status = fscanf(inFile, "%d", &mesh.mesh.points[i][0]);
+    	status = fscanf(inFile, "%d", &mesh.mesh.points[i][0]);
 
-	status = fscanf(inFile, "%d", &mesh.mesh.points[i][1]);
+    	status = fscanf(inFile, "%d", &mesh.mesh.points[i][1]);
 
-	status = fscanf(inFile, "%d", &mesh.mesh.points[i][2]);
+    	status = fscanf(inFile, "%d", &mesh.mesh.points[i][2]);
 
     }
 
@@ -119,7 +119,7 @@ latticeMesh readLatticeMesh( unsigned int pid ) {
 
     
 
-
+    if(status) {}
 
 
 
@@ -130,18 +130,13 @@ latticeMesh readLatticeMesh( unsigned int pid ) {
     // ******************************************************************** //
 
 
-    /* status = lookUpStringEntry("properties/latticeProperties", "LBModel", &mesh.mesh.lbm); */
-
-    /* mesh.mesh.Q = latticeQ( mesh.mesh.lbm ); */
-
-    /* mesh.lattice.d = latticeD( mesh.mesh.lbm ); */
-
-    /* mesh.lattice.Q = mesh.mesh.Q; */
-
     mesh.mesh.Q = mesh.lattice.Q;
     
-    mesh.mesh.nb = matrixIntAlloc( mesh.parallel.nlocal, mesh.mesh.Q, -1 );
+    if(  !int2dArray( &mesh.mesh.nb, mesh.parallel.nlocal, mesh.mesh.Q, -1 )  )
+	errorMsg("Unable to allocate memory for neighbours");
 
+
+    
     
     sprintf(command,"processor%d/lattice/neighbours", pid);
 
@@ -149,11 +144,11 @@ latticeMesh readLatticeMesh( unsigned int pid ) {
 
     for( i = 0 ; i < mesh.parallel.nlocal ; i++ ) {
 
-	for( j = 0 ; j < mesh.mesh.Q ; j++ ) {
+    	for( j = 0 ; j < mesh.mesh.Q ; j++ ) {
 
-	    status = fscanf(inFile, "%d", &mesh.mesh.nb[i][j]);
+    	    status = fscanf(inFile, "%d", &mesh.mesh.nb[i][j]);
 
-	}
+    	}
 
     }
 

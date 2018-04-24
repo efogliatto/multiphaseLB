@@ -21,4 +21,6 @@
 
 #include <vstring.h>
 
+#include <int2dArray.h>
+
 #endif // BASIC_H

@@ -35,7 +35,7 @@ void readTimeInfo( latticeMesh* mesh ) {
     
     // Write interval
 
-    status = lookUpScalarEntry("properties/simulation","writeInterval",1,&aux);
+    status = lookUpScalarEntry("properties/simulation","writeInterval", 1, &aux);
 
     if(status) {}
     
@@ -63,9 +63,11 @@ void readTimeInfo( latticeMesh* mesh ) {
 
     if( strcmp(debug,"yes") == 0 ) {
     
-	mesh->time.debug = 1;
+    	mesh->time.debug = 1;
 
     }
+
+    free(debug);
     
 
 }

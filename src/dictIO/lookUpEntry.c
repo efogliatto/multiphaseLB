@@ -78,6 +78,12 @@ unsigned int lookUpEntry( char* dname, char* ename, char** entry ) {
 	    status = singleEntry( ename, braced, &braced );
 	    
 	}
+
+
+
+	// Memory release
+	
+	free(tk);
 	
 
     }
