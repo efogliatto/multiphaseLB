@@ -67,7 +67,7 @@ void uniformScalarField( latticeMesh* mesh, double** field, char* fname ) {
 
 
 
-    
+    free(aux);
 
     
 

@@ -85,5 +85,8 @@ void sphereBoundedScalarField( latticeMesh* mesh, double** field, char* fname ) 
     }
     
 
+    free(aux);
+
+    free(centre);
 
 }

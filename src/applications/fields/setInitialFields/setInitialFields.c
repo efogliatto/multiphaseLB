@@ -40,8 +40,8 @@ int main(int argc, char** argv) {
     unsigned int np = 4;
     
     if(  lookUpScalarEntry("properties/parallel","numProc", 4, &dn)  )
-	np = (uint)dn;
-	
+    	np = (uint)dn;
+
 
     
     
@@ -64,7 +64,7 @@ int main(int argc, char** argv) {
 
     // Move over processors
 
-    uint pid;   
+    uint pid;
     
     for( pid = 0 ; pid < np ; pid++ ) {
 
@@ -79,7 +79,7 @@ int main(int argc, char** argv) {
     	mesh.time.current = 0;
 
 
-	writeLatticeMesh( &mesh );
+    	writeLatticeMesh( &mesh );
 	
 
     	// Write mesh in VTK file
@@ -91,29 +91,28 @@ int main(int argc, char** argv) {
     	// Move over scalar fields
 
     	uint fid;
-
-	char* itype;
 	
-	/* char* fname; */
 	
 
     	for( fid = 0 ; fid < vtk.nscalar ; fid++ ) {
 
 	    
-	    double* field;
+    	    double* field;
 
-	    char* entry;
-    
+    	    char* entry;
+
+	    char* itype;
+	    
 	    
     	    // Internal field type
 
-	    if( vstring(&entry, "%s/internalField/type", vtk.scalarFields[fid])  ) {
+    	    if( vstring(&entry, "%s/internalField/type", vtk.scalarFields[fid])  ) {
 	    
-		status = lookUpStringEntry("start/initialFields", entry, &itype, "uniform");
+    		status = lookUpStringEntry("start/initialFields", entry, &itype, "uniform");
 
-	    }
+    	    }
 
-	    if(status) {}
+    	    if(status) {}
 
 	    
 	   		    
@@ -122,84 +121,87 @@ int main(int argc, char** argv) {
 	    
     	    if( strcmp(itype,"uniform") == 0 ) {
 
-		uniformScalarField( &mesh, &field, vtk.scalarFields[fid] );
+    		uniformScalarField( &mesh, &field, vtk.scalarFields[fid] );
 
     	    }
 
 
-	    else {
+    	    else {
 
 
-		// Random distribution
+    		// Random distribution
 		
-	    	if( strcmp(itype,"random") == 0 ) {
+    	    	if( strcmp(itype,"random") == 0 ) {
 
-		    randomScalarField( &mesh, &field, vtk.scalarFields[fid] );
+    		    randomScalarField( &mesh, &field, vtk.scalarFields[fid] );
 
-	    	}
-
-
-	    	else {
+    	    	}
 
 
-		    // Box bounded
+    	    	else {
+
+
+    		    // Box bounded
 		
-		    if( strcmp(itype,"box") == 0 ) {
+    		    if( strcmp(itype,"box") == 0 ) {
 
-			boxBoundedScalarField( &mesh, &field, vtk.scalarFields[fid] );
+    			boxBoundedScalarField( &mesh, &field, vtk.scalarFields[fid] );
 
-		    }
+    		    }
 
 
-		    else {
+    		    else {
 
 			
-			// Sphere bounded
+    			// Sphere bounded
 		
-			if( strcmp(itype,"sphere") == 0 ) {
+    			if( strcmp(itype,"sphere") == 0 ) {
 
-			    sphereBoundedScalarField( &mesh, &field, vtk.scalarFields[fid] );
+    			    sphereBoundedScalarField( &mesh, &field, vtk.scalarFields[fid] );
 
-			}
-
-
-			else {
+    			}
 
 
-			    // fixedGradient
+    			else {
+
+
+    			    // fixedGradient
 		
-			    if( strcmp(itype,"fixedGradient") == 0 ) {
+    			    if( strcmp(itype,"fixedGradient") == 0 ) {
 
-				fixedGradientScalarField( &mesh, &field, vtk.scalarFields[fid] );
+    				fixedGradientScalarField( &mesh, &field, vtk.scalarFields[fid] );
 
-			    }
+    			    }
 			    
-			    else {
+    			    else {
 
-				errorMsg("Unrecognized type");
+    				errorMsg("Unrecognized type");
 
-			    }
-
-
-			}
+    			    }
 
 
-		    }
+    			}
 
 
-	    	}
+    		    }
 
-	    }
+
+    	    	}
+
+    	    }
 
 	    
 		
 		
-	    // Write field
-	    writeScalarToVTK( vtk.scalarFields[fid], field, &mesh );
+    	    // Write field
+    	    writeScalarToVTK( vtk.scalarFields[fid], field, &mesh );
 
 
-	    free(field);
+    	    free(field);
 
+	    free(entry);
+
+	    free(itype);
 
 	    
     	}
@@ -216,19 +218,19 @@ int main(int argc, char** argv) {
 
     	    double** field = matrixDoubleAlloc(  mesh.mesh.nPoints, 3, 0);
 
-	    double* fval;
+    	    double* fval;
 
-	    char* itype;
+    	    char* itype;
 
-	    char* entry;
+    	    char* entry;
 
-	    unsigned int nn;
+    	    unsigned int nn;
 	    
 	    
     	    // Internal field type
 	    
-    	    if(  vstring(&entry, "%s/internalField/type", vtk.vectorFields[fid] )  )	    
-		status = lookUpStringEntry("start/initialFields", entry, &itype, "");
+    	    if(  vstring(&entry, "%s/internalField/type", vtk.vectorFields[fid] )  )
+    		status = lookUpStringEntry("start/initialFields", entry, &itype, "");
     
 	   		    
 
@@ -237,20 +239,20 @@ int main(int argc, char** argv) {
     	    if( strcmp(itype,"uniform") == 0 ) {
 
     	    	if(  vstring(&entry, "%s/internalField/value", vtk.vectorFields[fid] )  )
-	    	    status = lookUpVectorEntry("start/initialFields", entry, &fval, &nn);
+    	    	    status = lookUpVectorEntry("start/initialFields", entry, &fval, &nn);
 		
 
-	    	uint ii,jj;
+    	    	uint ii,jj;
 
-	    	for( ii = 0 ; ii < mesh.mesh.nPoints ; ii++ ) {
+    	    	for( ii = 0 ; ii < mesh.mesh.nPoints ; ii++ ) {
 
-	    	    for( jj = 0 ; jj < 3 ; jj++ ) {
+    	    	    for( jj = 0 ; jj < 3 ; jj++ ) {
 
-	    		field[ii][jj] = fval[jj];
+    	    		field[ii][jj] = fval[jj];
 
-	    	    }
+    	    	    }
 
-	    	}
+    	    	}
 
 
     	    }
@@ -261,21 +263,28 @@ int main(int argc, char** argv) {
     	    writeVectorToVTK( vtk.vectorFields[fid], field, &mesh );
 
 
-	    // Deallocate memory
+    	    // Deallocate memory
 	    
-	    {
+    	    {
 
-		uint jj;
+    	    	uint jj;
 
-		for( jj = 0 ; jj < mesh.mesh.nPoints ; jj++ ) {
+    	    	for( jj = 0 ; jj < mesh.mesh.nPoints ; jj++ ) {
 
-		    free( field[jj] );
+    	    	    free( field[jj] );
 
-		}
+    	    	}
 
-		free(field);
+    	    	free(field);
 		
-	    }
+    	    }
+
+
+	    /* free(entry); */
+
+	    /* free(itype); */
+
+	    /* free(fval); */
 
 
     	}
@@ -289,21 +298,21 @@ int main(int argc, char** argv) {
     	for( fid = 0 ; fid < vtk.npdf ; fid++ ) {
 
 
-    	    double** field = matrixDoubleAlloc(  mesh.mesh.nPoints, mesh.mesh.Q, 0);
+    	    double** field = matrixDoubleAlloc(  mesh.mesh.nPoints, mesh.mesh.Q, 0 );
 
-	    double* fval;
+    	    double* fval;
 
-	    char* itype;
+    	    char* itype;
 
-	    char* entry;
+    	    char* entry;
 
-	    unsigned int nn;
+    	    unsigned int nn;
 
 		
     	    // Internal field type
 	    
-	    if(  vstring(&entry, "%s/internalField/type", vtk.pdfFields[fid] )  )	    
-		status = lookUpStringEntry("start/initialFields", entry, &itype, "uniform");
+    	    if(  vstring(&entry, "%s/internalField/type", vtk.pdfFields[fid] )  )
+    		status = lookUpStringEntry("start/initialFields", entry, &itype, "uniform");
     
 	   		    
 
@@ -312,20 +321,20 @@ int main(int argc, char** argv) {
     	    if( strcmp(itype,"uniform") == 0 ) {
 
     	    	if(  vstring(&entry, "%s/internalField/value", vtk.pdfFields[fid] ) )
-		    status = lookUpVectorEntry("start/initialFields", entry, &fval, &nn);
+    	    	    status = lookUpVectorEntry("start/initialFields", entry, &fval, &nn);
 		
 		
-		uint ii,jj;
+    	    	uint ii,jj;
 
-		for( ii = 0 ; ii < mesh.mesh.nPoints ; ii++ ) {
+    	    	for( ii = 0 ; ii < mesh.mesh.nPoints ; ii++ ) {
 
-		    for( jj = 0 ; jj < mesh.mesh.Q ; jj++ ) {
+    	    	    for( jj = 0 ; jj < mesh.mesh.Q ; jj++ ) {
 
-			field[ii][jj] = fval[jj];
+    	    		field[ii][jj] = fval[jj];
 
-		    }
+    	    	    }
 
-		}
+    	    	}
 
 
     	    }
@@ -336,21 +345,28 @@ int main(int argc, char** argv) {
     	    writePdfToVTK( vtk.pdfFields[fid], field, &mesh );
 
 
-	    // Deallocate memory
+    	    /* // Deallocate memory */
 	    
-	    {
+    	    /* { */
 
-		uint jj;
+    	    /* 	uint jj; */
 
-		for( jj = 0 ; jj < mesh.mesh.nPoints ; jj++ ) {
+    	    /* 	for( jj = 0 ; jj < mesh.mesh.nPoints ; jj++ ) { */
 
-		    free( field[jj] );
+    	    /* 	    free( field[jj] ); */
 
-		}
+    	    /* 	} */
 
-		free(field);
+    	    /* 	free(field); */
 		
-	    }
+    	    /* } */
+
+
+	    /* free(entry); */
+
+	    /* free(itype); */
+
+	    /* free(fval); */
 	    
 
     	}

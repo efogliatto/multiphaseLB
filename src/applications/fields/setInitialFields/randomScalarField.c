@@ -57,6 +57,8 @@ void randomScalarField( latticeMesh* mesh, double** field, char* fname ) {
     
 
 
+    free(aux);
+    
 }
 
 
