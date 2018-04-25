@@ -167,36 +167,36 @@ int main( int argc, char **argv ) {
 
 
 	
-    /* 	// Collide f (Navier-Stokes) */
+    	// Collide f (Navier-Stokes)
 	
-    /* 	collision( &mesh, &mfields, &f ); */
+    	collision( &mesh, &mfields, &f );
 
 
 		
-    /* 	// Collide g (Temperature) */
+    	// Collide g (Temperature)
 
-    /* 	collision( &mesh, &mfields, &g ); */
+    	collision( &mesh, &mfields, &g );
 	
 	
 	
-    /* 	// Stream f */
+    	// Stream f
 	
-    /* 	lbstream( &mesh, &f ); */
-
-	
-	
-    /* 	// Stream g */
-	
-    /* 	lbstream( &mesh, &g ); */
-
+    	lbstream( &mesh, &f );
 
 	
+	
+    	// Stream g
+	
+    	lbstream( &mesh, &g );
 
-    /* 	// Apply boundary conditions */
+
 	
-    /* 	updateBoundaries( &mesh, &mfields, &f ); */
+
+    	// Apply boundary conditions
 	
-    /* 	updateBoundaries( &mesh, &mfields, &g ); */
+    	updateBoundaries( &mesh, &mfields, &f );
+	
+    	updateBoundaries( &mesh, &mfields, &g );
 
 
 	

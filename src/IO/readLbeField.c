@@ -114,6 +114,11 @@ unsigned int readLbeField( latticeMesh* mesh, lbeField* field, char* fname ) {
 
 	    }
 
+	    if( strcmp(str, "periodic") == 0 ) {
+
+		field->boundary[i].type = periodic;
+
+	    }	    
 	    
 	    if( strcmp(str, "fixedT") == 0 ) {
 
