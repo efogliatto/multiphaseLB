@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
+#include <basic.h>
 
 double p_eos( EOSInfo* info, double rho, double T ) {
 
@@ -38,6 +39,13 @@ double p_eos( EOSInfo* info, double rho, double T ) {
 	
 	p = rho * info->R * T / (info->M - rho * info->eParam.vdwparam.b)  -  info->eParam.vdwparam.a * rho * rho / ( info->M * info->M );
 	
+	break;
+
+	
+    default:
+
+	errorMsg("EOS not defined");
+
 	break;
 	
 	

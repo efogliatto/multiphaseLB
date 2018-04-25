@@ -47,9 +47,12 @@ EOSInfo readEOSInfo() {
 
 	    info.etype = VdW;
 
-	    status = lookUpScalarEntry("properties/macroProperties", "EOS/a", 0, &info.eParam.vdwparam.a);
-
-	    status = lookUpScalarEntry("properties/macroProperties", "EOS/b", 0, &info.eParam.vdwparam.b);
+	    if(  !lookUpScalarEntry("properties/macroProperties", "EOS/a_vdw", 0, &info.eParam.vdwparam.a)  )
+		errorMsg("Unable to find constant a_vdw");
+	       
+		
+	    if(  !lookUpScalarEntry("properties/macroProperties", "EOS/b_vdw", 0, &info.eParam.vdwparam.b)  )
+		errorMsg("Unable to find constant b_vdw");
 
 	}	
 	

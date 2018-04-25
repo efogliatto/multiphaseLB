@@ -216,17 +216,6 @@ int main( int argc, char **argv ) {
 	
     	macroDensity( &mesh, &mfields, &f );
 
-	{
-
-	    unsigned int ii;
-
-	    for( ii = 0 ; ii < mesh.parallel.nlocal ; ii++ ){
-
-		printf("%g\n", potential(&mesh, mfields.rho[ii], mfields.T[ii]));
-
-	    }
-
-	}
 
 	
 	
