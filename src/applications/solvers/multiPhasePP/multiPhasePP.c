@@ -201,36 +201,36 @@ int main( int argc, char **argv ) {
 
 	
 	
-    /* 	// Sync fields */
+    	// Sync fields
 
-    /* 	if( frozen != 0 ) {  syncPdfField( &mesh, f.value );  } */
+    	if( frozen != 0 ) {  syncPdfField( &mesh, f.value );  }
 
-    /* 	if( ht != 0 ) {  syncPdfField( &mesh, g.value );  } */
-
-	
-	
-	
-
-
-    /* 	// Update macroscopic density */
-	
-    /* 	macroDensity( &mesh, &mfields, &f ); */
-
+    	if( ht != 0 ) {  syncPdfField( &mesh, g.value );  }
 
 	
 	
 	
-    /* 	// Update macroscopic temperature */
+
+
+    	// Update macroscopic density
 	
-    /* 	if( ht != 0 )     { */
+    	macroDensity( &mesh, &mfields, &f );
 
-    /* 	    heatSource( &mesh, &mfields, &g ); */
 
-    /* 	    syncScalarField( &mesh, g.scalarSource ); */
+	
+	
+	
+    	// Update macroscopic temperature
+	
+    	if( ht != 0 )     {
 
-    /* 	} */
+    	    heatSource( &mesh, &mfields, &g );
 
-    /* 	macroTemperature( &mesh, &mfields, &g ); */
+    	    syncScalarField( &mesh, g.scalarSource );
+
+    	}
+
+    	macroTemperature( &mesh, &mfields, &g );
 
 
 	
