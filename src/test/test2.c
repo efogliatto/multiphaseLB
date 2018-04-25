@@ -1,133 +1,289 @@
+/*
+
+  Multiphase solver with heat transfer
+
+ */
+
+
+#include <io.h>
+#include <latticeModel.h>
 #include <basic.h>
+#include <mpi.h>
+#include <generalLbe.h>
+#include <pseudoPot.h>
 
-int main() {
 
-    char* msg;
+
+
+int main( int argc, char **argv ) {
+
+  
+
+    int pid, world;
     
-    unsigned int status = vstring(&msg, "%s/Lambda", "fafafad");
-
-    if(status)
-    	printf("%s\n",msg);
+    // Initialize mpi
+    MPI_Init(&argc, &argv);
+    MPI_Comm_rank(MPI_COMM_WORLD,&pid);
+    MPI_Comm_size(MPI_COMM_WORLD,&world);
     
+    /* if(pid == 0) { */
+    /* 	printf("                    \n"); */
+    /* 	printf("     o-----o-----o  \n"); */
+    /* 	printf("     | -   |   - |  \n"); */
+    /* 	printf("     |   - | -   |  \n"); */
+    /* 	printf("     o<----o---->o       Two Phases - Lattice-Boltzmann solver with heat transfer. Pseudopotential model\n"); */
+    /* 	printf("     |   - | -   |  \n"); */
+    /* 	printf("     | -   |   - |  \n"); */
+    /* 	printf("     o-----o-----o  \n"); */
+    /* } */
+
+
+
+    
+    // Simulation properties
+    
+    latticeMesh mesh = readLatticeMesh( pid );
+
+    mesh.lattice = setLatticeInfo();
+
+    mesh.EOS = readEOSInfo();
+
+    vtkInfo vtk = readVTKInfo();
+    
+
+    
+    
+
+    // Macroscopic fields
+    
+    macroFields mfields;
+    
+
+    
+    // Density
+
+    createScalarField( &mesh, &mfields.rho, "rho");
+
+    
+    
+    // Velocity
+
+    createVectorField( &mesh, &mfields.U, 3, "U");
+    
+
+    
+    // Temperature
+
+    createScalarField( &mesh, &mfields.T, "T");
+
+
+
+    // LBE fields
+
+    // Navier-Stokes field
+
+    lbeField f;
+    
+    createLbeField( &mesh, &f, "f");
+
+    f.update = 1;
+    
+    /* if(frozen == 0) { f.update = 0; } */
+
+
+    
+    /* // Energy field */
+
+    /* lbeField g; */
+    
+    /* createLbeField( &mesh, &g, "g"); */
+
+    /* if(ht == 0) { g.update = 0; } */
+    
+    
+
+    // Initial equilibrium distribution
+   
+    equilibrium(&mesh, &mfields, &f);
+    
+    /* equilibrium(&mesh, &mfields, &g); */
+
+
+
+
+
+    // Update macroscopic interaction force
+
+    mfields.Fi = matrixDoubleAlloc( mesh.mesh.nPoints, 3, -1 );
+    
+    interForce( &mesh, &mfields );
+    
+    syncVectorField( &mesh, mfields.Fi );
+
+
+
+    /* // Heat source */
+
+    /* heatSource( &mesh, &mfields, &g ); */
+
+    /* syncScalarField( &mesh, g.scalarSource ); */
+    
+   
+    /* if(pid == 0){printf("\n\n");} */
+
+
+
+
+
+
+
+
+    
+    // Advance in time. Collide, stream, update and write
+    
+    while( updateTime(&mesh.time) ) {
+
+
+	
+    	// Collide f (Navier-Stokes)
+	
+    	collision( &mesh, &mfields, &f );
+
+
+		
+    	/* // Collide g (Temperature) */
+
+    	/* collision( &mesh, &mfields, &g ); */
+	
+	
+	
+    	/* // Stream f */
+	
+    	/* lbstream( &mesh, &f ); */
+
+	
+	
+    	/* // Stream g */
+	
+    	/* lbstream( &mesh, &g ); */
+
+
+	
+
+    	/* // Apply boundary conditions */
+	
+    	/* updateBoundaries( &mesh, &mfields, &f ); */
+	
+    	/* updateBoundaries( &mesh, &mfields, &g ); */
+
+
+	
+	
+    	/* // Sync fields */
+
+    	/* if( frozen != 0 ) {  syncPdfField( &mesh, f.value );  } */
+
+    	/* if( ht != 0 ) {  syncPdfField( &mesh, g.value );  } */
+
+	
+	
+	
+
+
+    	/* // Update macroscopic density */
+	
+    	/* macroDensity( &mesh, &mfields, &f ); */
+
+
+	
+	
+	
+    	/* // Update macroscopic temperature */
+	
+    	/* if( ht != 0 )     { */
+
+    	/*     heatSource( &mesh, &mfields, &g ); */
+
+    	/*     syncScalarField( &mesh, g.scalarSource ); */
+
+    	/* } */
+
+    	/* macroTemperature( &mesh, &mfields, &g ); */
+
+
+	
+	
+    	/* // Update macroscopic velocity */
+	
+    	/* if( frozen != 0 ) { */
+
+    	/*     interForce( &mesh, &mfields ); */
+
+    	/*     syncVectorField( &mesh, mfields.Fi ); */
+
+    	/* } */
+
+    	/* macroVelocity( &mesh, &mfields, &f ); */
+
+
+	
+	
+    	// Write fields
+	
+    	if( writeFlag(&mesh.time) ) {
+
+	    
+    	    if(pid == 0) {
+		
+    		printf( "Time = %d\n", mesh.time.current );
+		
+    		printf("Elapsed time = %.2f seconds\n\n", elapsed(&mesh.time) );
+		
+    	    }
+
+
+	    
+    	    // VTK files
+	    
+    	    writeMeshToVTK( &mesh, &vtk );
+
+    	    writeScalarToVTK( "rho", mfields.rho, &mesh );
+
+    	    writeScalarToVTK( "T", mfields.T, &mesh );
+
+    	    writeVectorToVTK( "U", mfields.U, &mesh );
+
+    	    writePdfToVTK( "f", f.value, &mesh );
+
+    	    /* writePdfToVTK( "g", g.value, &mesh ); */
+    
+    	    writeVTKExtra( &mesh, &vtk );
+
+    	    writeMainPvd();
+
+
+	    
+	    
+    	}
+	
+
+    }
+
+
+
+    
+    // Print info
+    if(pid == 0) {
+	
+    	printf("\n  Finished in %.2f seconds \n\n", elapsed(&mesh.time) );
+	
+    }
+
+
+    
+    MPI_Finalize();
+
     
     return 0;
-
+    
 }
-
-
-
-    /* // Read model from file */
-    /* char c[100]; */
-    /* lookUpStringEntry("input","LBModel", c); */
-    
-    /* printf("\n"); */
-    /* printf("LBModel: %s\n",c); */
-    /* printf("\n"); */
-
-
-    
-
-    /* // Lattice velocities */
-    /* unsigned int i;     */
-    /* int** lvel = latticeVelocities(c); */
-
-    /* printf("\nVelocities\n"); */
-    /* for( i = 0 ; i < 9 ; i++) { */
-
-    /* 	printf(" %d  %d  %d\n",lvel[i][0],lvel[i][1],lvel[i][2]); */
-	
-    /* } */
-    /* printf("\n\n"); */
-
-
-
-
-    /* // Lattice weights     */
-    /* double* omega = latticeWeights(c); */
-
-    /* printf("\nWeights\n"); */
-    /* for( i = 0 ; i < 9 ; i++) { */
-
-    /* 	printf(" %f\n",omega[i]); */
-	
-    /* } */
-    /* printf("\n\n");     */
-
-    
-
-    /* // Reverse directions */
-    /* int* rev = latticeReverseDir(c); */
-
-    /* printf("\nReverse dir\n"); */
-    /* for( i = 0 ; i < 9 ; i++) { */
-
-    /* 	printf(" %d\n",rev[i]); */
-	
-    /* } */
-    /* printf("\n\n");     */
-
-
-
-    /* // MRT Matrix    */
-    /* double** M = MRTMatrix(c); */
-
-    /* printf("\nMRT\n"); */
-    /* int j; */
-    /* for( i = 0 ; i < 9 ; i++) { */
-
-    /* 	for( j = 0 ; j < 9 ; j++) { */
-
-    /* 	    printf("%.0f ",M[i][j]); */
-
-    /* 	} */
-	
-    /* 	printf("\n"); */
-	
-    /* } */
-    /* printf("\n\n"); */
-
-
-    
-
-    /* // MRT Inv Matrix    */
-    /* double** invM = MRTInvMatrix(c); */
-
-    /* printf("\nMRT Inv\n"); */
-    /* for( i = 0 ; i < 9 ; i++) { */
-
-    /* 	for( j = 0 ; j < 9 ; j++) { */
-
-    /* 	    printf("%f ",invM[i][j]); */
-
-    /* 	} */
-	
-    /* 	printf("\n"); */
-	
-    /* } */
-    /* printf("\n\n");      */
-    
-
-
-
-
-
-
-
-
-    /* // Pseudo pot w */
-    /* double* w = ppWeights(c); */
-
-    /* printf("\nPP W\n"); */
-    /* for( i = 0 ; i < 9 ; i++) { */
-
-    /* 	printf(" %f\n",w[i]); */
-	
-    /* } */
-    /* printf("\n\n");  */
-
-
-
-
-
-    /* printf("\ncs2: %f\n\n",cs2(c)); */
-

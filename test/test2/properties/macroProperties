@@ -11,13 +11,13 @@ f
 
 g
 {
-  Collision liTemp;
+  Collision myMRT;
 
-  tauModel constantLambda;
+  Lambda (0.0 1.0 1.0 0.8 1.0 0.8 1.0 1.0 1.0);
 
-  lambda 0.1;
+  alpha_1 1.0;
 
-  tau 0.8;
+  alpha_2 1.0;
 }
 
 
@@ -27,9 +27,9 @@ EOS
 
     model vanDerWaals;
 
-    a 0.5;
+    a_vdw 0.5;
 
-    b 4;
+    b_vdw 4;
 
     R 1;
 
@@ -37,7 +37,7 @@ EOS
 
     G -1;
 
-    g (0 -1.0e-07 0);
+    g (0 -1.234567e-07 0);
 
     rho_0 0;
 

@@ -6,3 +6,4 @@ rm -rf lattice/
 rm -rf [0-9]*
 rm -rf processor*
 rm -rf case.pvd
+rm -rf log.* *.csv

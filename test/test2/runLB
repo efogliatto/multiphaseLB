@@ -1,0 +1,9 @@
+#!/bin/bash
+
+clear
+
+./Allclean > log.lbm
+
+./Allpre >> log.lbm
+
+multiPhasePP 2>&1 | tee log.lbm   

@@ -38,9 +38,9 @@ rho
     internalField
     {
 
-        type uniform;
+        type random;
 
-        value 0.083;
+        value 0.083333;
 
         perturbation 1;
 
