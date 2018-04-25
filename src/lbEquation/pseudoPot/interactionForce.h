@@ -11,12 +11,12 @@
  * Interaction force for pseuso-potential models
  *
  * @param mesh Lattice mesh
- * @param F Array for interaction force
+ * @param Ff Array for interaction force
  * @param rho Macroscopic density field
  * @param T Macroscopic temperature field
  * @param id Node index
  */
 
-void interactionForce( latticeMesh* mesh, double F[3], double* rho, double* T, unsigned int id );
+void interactionForce( latticeMesh* mesh, double Ff[3], double* rho, double* T, unsigned int id );
 
 #endif // INTERACTIONFORCE_H

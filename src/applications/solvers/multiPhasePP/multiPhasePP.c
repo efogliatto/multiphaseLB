@@ -216,6 +216,17 @@ int main( int argc, char **argv ) {
 	
     	macroDensity( &mesh, &mfields, &f );
 
+	{
+
+	    unsigned int ii;
+
+	    for( ii = 0 ; ii < mesh.parallel.nlocal ; ii++ ){
+
+		printf("%g\n", potential(&mesh, mfields.rho[ii], mfields.T[ii]));
+
+	    }
+
+	}
 
 	
 	
@@ -235,17 +246,17 @@ int main( int argc, char **argv ) {
 
 	
 	
-    /* 	// Update macroscopic velocity */
+    	// Update macroscopic velocity
 	
-    /* 	if( frozen != 0 ) { */
+    	if( frozen != 0 ) {
 
-    /* 	    interForce( &mesh, &mfields ); */
+    	    interForce( &mesh, &mfields );
 
-    /* 	    syncVectorField( &mesh, mfields.Fi ); */
+    	    syncVectorField( &mesh, mfields.Fi );
 
-    /* 	} */
+    	}
 
-    /* 	macroVelocity( &mesh, &mfields, &f ); */
+    	macroVelocity( &mesh, &mfields, &f );
 
 
 	

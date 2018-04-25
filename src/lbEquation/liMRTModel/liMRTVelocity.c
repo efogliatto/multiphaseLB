@@ -1,7 +1,5 @@
-#include <latticeMesh.h>
-#include <macroFields.h>
-#include <lbeField.h>
 #include <pseudoPot.h>
+#include <liMRTVelocity.h>
 #include <stdlib.h>
 
 
@@ -16,24 +14,13 @@ void liMRTVelocity( latticeMesh* mesh, macroFields* mfields, lbeField* field, do
     double lv[3] = {0,0,0};
 
 	
-    // Compute interaction force
-    /* totalForce( mesh, F, mfields->rho, mfields->T, id ); */
+    // Compute Total force
 	
     for( j = 0 ; j < 3 ; j++ ) {
 
 	F[j] = mfields->Fi[id][j]  +   (mfields->rho[id] - mesh->EOS.rho_0) * mesh->EOS.g[j];
 
-    }
-    
-
-	
-    /* // Initialize velocities */
-    /* for(k = 0 ; k < 3 ; k++) { */
-	
-    /* 	v[id][k] = 0; */
-	
-    /* }	 */
-	
+    }          
 
 
     // Move over velocity components
@@ -42,7 +29,6 @@ void liMRTVelocity( latticeMesh* mesh, macroFields* mfields, lbeField* field, do
 	// Move over model velocities
 	for(k = 0 ; k < mesh->mesh.Q ; k++) {
 
-	    /* v[id][j] += mesh->lattice.vel[k][j] * field->value[id][k]; */
 	    lv[j] += mesh->lattice.vel[k][j] * field->value[id][k];
 		    
 	}
@@ -53,7 +39,6 @@ void liMRTVelocity( latticeMesh* mesh, macroFields* mfields, lbeField* field, do
     // Add interaction force and divide by density
     for( j = 0 ; j < 3 ; j++ ) {
 
-	/* v[id][j] = ( v[id][j]   +   F[j] * 0.5  ) / mfields->rho[id]; */
 	lv[j] = ( lv[j]   +   F[j] * 0.5  ) / mfields->rho[id];
 	
     }
