@@ -42,10 +42,58 @@ liMRTConstants readLiMRTConstants( char* fname ) {
 	if(status)
 	    errorMsg( msg );
 
-    }    
-    
+    }
+
+
+
+
+    // Surface tension
+
+    status = vstring(&msg, "%s/SurfaceTension", fname);
+
+    char* aux;
+
+    if( lookUpStringEntry("properties/macroProperties", msg, &aux, "none") ) {
+
+	if( strcmp(aux, "none") == 0 ) {
+
+	    param.surfaceTension = no_st;
+
+	}
+
+	else {
+
+	    if( strcmp(aux, "liSurfTen") == 0 ) {
+
+		
+		param.surfaceTension = liSurfTen;
+
+
+		// Look up kappa
+
+		status = vstring(&msg, "%s/kappa_st", fname);
+
+		if( !lookUpScalarEntry("properties/macroProperties", msg, -1, &param.kappa_st) ) {
+
+		    status = vstring(&msg, "Unable to find %s/kappa_st", fname);
+
+		    errorMsg( msg );
+
+		}		
+		printf("%f\n", param.kappa_st);
+		
+	    }
+
+	}
+
+    }
+
+    else {
+
+	param.surfaceTension = no_st;
+
+    }
 	
-    
 
     return param;
 

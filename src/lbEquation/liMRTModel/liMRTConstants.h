@@ -8,6 +8,16 @@
  * Constants for li MRT model
  */
 
+typedef enum {
+
+    no_st,
+
+    liSurfTen
+
+} stModel;
+
+
+
 typedef struct {
 
     /** Multiple relaxation times */
@@ -27,6 +37,12 @@ typedef struct {
 
     /** Extra constants used for tau dependency */
     double nb;
+
+    /** Surface tension model */
+    stModel surfaceTension;
+
+    /** Surface tension constants */
+    double kappa_st;
     
 
 } liMRTConstants;
