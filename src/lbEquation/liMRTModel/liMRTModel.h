@@ -7,6 +7,8 @@
 
 #include <liMRTVelocity.h>
 
+#include <liMRTPressure.h>
+
 #include <liMRTForce.h>
 
 #include <liMRTEquilibrium.h>

@@ -5,6 +5,7 @@ add_library(limrtmodel SHARED
   liMRTCollision.c
   liMRTForce.c
   liMRTDensity.c
+  liMRTPressure.c
   liMRTVelocity.c
   liMRTEquilibrium.c
   readLiMRTConstants.c

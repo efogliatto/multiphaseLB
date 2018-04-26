@@ -6,6 +6,7 @@ add_library(generallbe SHARED
   collision.c
   lbstream.c
   macroDensity.c
+  macroPressure.c  
   macroVelocity.c
   macroTemperature.c
   updateBoundaries.c
