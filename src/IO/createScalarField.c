@@ -3,27 +3,61 @@
 #include <basic.h>
 
 
-void createScalarField( latticeMesh* mesh, double** field, char* fname ) {
+void createScalarField( latticeMesh* mesh, scalar** field, char* fname, fieldOpt options ) {
 
+
+    unsigned int status = 0,
+	i;
+    
     
     if(mesh->parallel.pid == 0) {
 
 	printf("\nReading field %s\n",fname);
 
     }
+
+
+    switch(options) {
     
 
-    unsigned int status = readScalarField( mesh, field, fname );
+	// Read field from fields.vtu
+	
+    case MUST_READ:
+	
+	status = readScalarField( mesh, field, fname );
 
     
-    if( status == 0 ) {
+	if( status == 0 ) {
 
-	char msg[100];
+	    char msg[100];
 
-	sprintf(msg, "Unable to read field %s",fname);
+	    sprintf(msg, "Unable to read field %s",fname);
 	
-    	errorMsg( msg );
+	    errorMsg( msg );
 	
+	}
+
+	break;
+
+
+
+	// Do not read field from file. Only allocate field
+
+    case NO_READ:
+
+	*field = (scalar*)malloc( mesh->mesh.nPoints * sizeof(scalar) );
+
+	for( i = 0 ; i < mesh->mesh.nPoints ; i++ ) {
+
+	    field[0][i] = 0;
+
+	}
+
+	break;
+
+	
+	
+
     }
     
 

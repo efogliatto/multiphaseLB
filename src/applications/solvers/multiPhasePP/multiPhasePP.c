@@ -86,20 +86,27 @@ int main( int argc, char **argv ) {
     
     // Density
 
-    createScalarField( &mesh, &mfields.rho, "rho");
+    createScalarField( &mesh, &mfields.rho, "rho", MUST_READ);
 
     
     
     // Velocity
 
-    createVectorField( &mesh, &mfields.U, 3, "U");
+    createVectorField( &mesh, &mfields.U, 3, "U", MUST_READ);
     
 
     
     // Temperature
 
-    createScalarField( &mesh, &mfields.T, "T");
+    createScalarField( &mesh, &mfields.T, "T", MUST_READ);
 
+
+
+    // Pressure
+
+    createScalarField( &mesh, &mfields.p, "p", MUST_READ);
+    
+    
 
 
     // LBE fields
@@ -108,7 +115,7 @@ int main( int argc, char **argv ) {
 
     lbeField f;
     
-    createLbeField( &mesh, &f, "f");
+    createLbeField( &mesh, &f, "f", MUST_READ);
 
     if(frozen == 0) { f.update = 0; }
 
@@ -118,7 +125,7 @@ int main( int argc, char **argv ) {
 
     lbeField g;
     
-    createLbeField( &mesh, &g, "g");
+    createLbeField( &mesh, &g, "g", MUST_READ);
 
     if(ht == 0) { g.update = 0; }
     
@@ -272,6 +279,8 @@ int main( int argc, char **argv ) {
     	    writeScalarToVTK( "rho", mfields.rho, &mesh );
 
     	    writeScalarToVTK( "T", mfields.T, &mesh );
+
+    	    writeScalarToVTK( "p", mfields.p, &mesh );	    
 
     	    writeVectorToVTK( "U", mfields.U, &mesh );
 

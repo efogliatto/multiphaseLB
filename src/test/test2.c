@@ -62,19 +62,19 @@ int main( int argc, char **argv ) {
     
     // Density
 
-    createScalarField( &mesh, &mfields.rho, "rho");
+    createScalarField( &mesh, &mfields.rho, "rho", MUST_READ);
 
     
     
     // Velocity
 
-    createVectorField( &mesh, &mfields.U, 3, "U");
+    createVectorField( &mesh, &mfields.U, 3, "U", MUST_READ);
     
 
     
     // Temperature
 
-    createScalarField( &mesh, &mfields.T, "T");
+    createScalarField( &mesh, &mfields.T, "T", MUST_READ);
 
 
 
@@ -84,7 +84,7 @@ int main( int argc, char **argv ) {
 
     lbeField f;
     
-    createLbeField( &mesh, &f, "f");
+    createLbeField( &mesh, &f, "f", MUST_READ);
 
     f.update = 1;
     

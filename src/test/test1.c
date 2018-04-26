@@ -5,71 +5,78 @@ int main() {
 
     char* entry = 0;
 
-    unsigned int status;
-    
-    status = lookUpStringEntry("input", "g/Y0/type", &entry, "sarasa");
+    if(  lookUpStringEntry("boundaries", "f/Y1/type", &entry, "sarasa")  )
 
-    if(status)
     	printf("type %s\n", entry);
 
 
-
-    double de;
     
-    status = lookUpScalarEntry("input", "g/Y0/value", 0, &de);
-
-    if(status)
-    	printf("value %f\n", de);
-
-
-
-    double* ve;
-
-    unsigned int n;
+    /* unsigned int status; */
     
-    status = lookUpVectorEntry("initialFields", "g/internalField/value", &ve, &n);
+    /* status = lookUpStringEntry("input", "g/Y0/type", &entry, "sarasa"); */
 
-    if(status) {
+    /* if(status) */
+    /* 	printf("type %s\n", entry); */
 
-    	unsigned int i;
 
-    	for(i = 0 ; i < n ; i++)
-    	    printf("%f ", ve[i]);
+
+    /* double de; */
+    
+    /* status = lookUpScalarEntry("input", "g/Y0/value", 0, &de); */
+
+    /* if(status) */
+    /* 	printf("value %f\n", de); */
+
+
+
+    /* double* ve; */
+
+    /* unsigned int n; */
+    
+    /* status = lookUpVectorEntry("initialFields", "g/internalField/value", &ve, &n); */
+
+    /* if(status) { */
+
+    /* 	unsigned int i; */
+
+    /* 	for(i = 0 ; i < n ; i++) */
+    /* 	    printf("%f ", ve[i]); */
 	
-    	printf("\n");
+    /* 	printf("\n"); */
 
-    }
-
-
-
-
-    printf("Found boundaryField: %d\n", isBracedEntryDefined("initialFields", "g/boundaryField") );
-
-    printf("Found internalField: %d\n", isBracedEntryDefined("initialFields", "g/internalField") );
+    /* } */
 
 
 
 
+    /* printf("Found boundaryField: %d\n", isBracedEntryDefined("initialFields", "g/boundaryField") ); */
 
-    status = lookUpStringEntry("initialFields", "sarasa", &entry, "");
-
-    if(status)
-    	printf("sarasa %s\n", entry);
+    /* printf("Found internalField: %d\n", isBracedEntryDefined("initialFields", "g/internalField") ); */
 
 
-    char** sentry;
+
+
+
+    /* status = lookUpStringEntry("initialFields", "sarasa", &entry, ""); */
+
+    /* if(status) */
+    /* 	printf("sarasa %s\n", entry); */
+
+
+    /* char** sentry; */
     
-    status = lookUpStringList("initialFields", "scalarFields", &sentry, &n);
+    /* status = lookUpStringList("initialFields", "scalarFields", &sentry, &n); */
 
-    if(status) {
+    /* if(status) { */
 
-    	unsigned int i;
+    /* 	unsigned int i; */
 
-    	for(i = 0 ; i < n ; i++)
-    	    printf("%s\n", sentry[i]);       
+    /* 	for(i = 0 ; i < n ; i++) */
+    /* 	    printf("%s\n", sentry[i]);        */
 
-    }
-    
+    /* } */
+        
+
     
     return 0;
 
