@@ -274,7 +274,9 @@ int main( int argc, char **argv ) {
 	    
 	    // Update pressure
 
-	    macroPressure( &mesh, &mfields, &f );	    
+	    macroPressure( &mesh, &mfields, &f );
+
+	    syncScalarField( &mesh, mfields.p );
 
 
 	    
