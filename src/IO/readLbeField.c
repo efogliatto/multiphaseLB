@@ -30,22 +30,22 @@ unsigned int readLbeField( latticeMesh* mesh, lbeField* field, char* fname ) {
     status = lookUpStringEntry("properties/macroProperties", entry, &str, "");
 
     if(!status)
-	errorMsg("Collision model not found");
+    	errorMsg("Collision model not found");
 
     
     if( strcmp(str,"liMRT") == 0 ) {
 
-	field->model = liMRT;
+    	field->model = liMRT;
 
     }
 
     else {
 
-	if( strcmp(str,"myMRT") == 0 ) {
+    	if( strcmp(str,"myMRT") == 0 ) {
 
-	    field->model = myMRT;
+    	    field->model = myMRT;
 
-	}
+    	}
 
     }
 
@@ -59,19 +59,20 @@ unsigned int readLbeField( latticeMesh* mesh, lbeField* field, char* fname ) {
 
     case liMRT:
 
-	field->lbparam.liMRT = readLiMRTConstants( fname );
+    	field->lbparam.liMRT = readLiMRTConstants( fname );
 
-	break;
+    	break;
 
     case myMRT:
 
-	field->lbparam.myMRT = readMyMRTConstants( fname );
+    	field->lbparam.myMRT = readMyMRTConstants( fname );
 
-	// Allocate scalar source
 	
-	field->scalarSource = (double*)malloc( mesh->mesh.nPoints * sizeof(double) );	
+    	// Allocate scalar source
+	
+    	field->scalarSource = (double*)malloc( mesh->mesh.nPoints * sizeof(double) );
 
-	break;	
+    	break;
 
     }
 
@@ -93,59 +94,59 @@ unsigned int readLbeField( latticeMesh* mesh, lbeField* field, char* fname ) {
 
     for( i = 0 ; i < mesh->mesh.bd.nbd ; i++ ) {
 
-	status = vstring(&entry, "%s/%s/type", fname, mesh->mesh.bd.bdNames[i]);
+    	status = vstring(&entry, "%s/%s/type", fname, mesh->mesh.bd.bdNames[i]);
 
-	status = lookUpStringEntry("start/boundaries", entry, &str, "");
+    	status = lookUpStringEntry("start/boundaries", entry, &str, "");
 
-	if(!status) {
+    	if(!status) {
 
-	    status = vstring(&str, "Unable to find entry %s", entry);
+    	    status = vstring(&str, "Unable to find entry %s", entry);
 	    
-	    errorMsg(str);
+    	    errorMsg(str);
 
-	}
+    	}
 
-	else {
-	    
-
-	    if( strcmp(str, "bounceBack") == 0 ) {
-
-		field->boundary[i].type = bback;
-
-	    }
-
-	    if( strcmp(str, "periodic") == 0 ) {
-
-		field->boundary[i].type = periodic;
-
-	    }	    
-	    
-	    if( strcmp(str, "fixedT") == 0 ) {
-
-		field->boundary[i].type = ft;
-
-		field->boundary[i].param.ft = readFixedTParam(fname, mesh->mesh.bd.bdNames[i]);
-
-	    }
-
-	    
-	    if( strcmp(str, "fixedU") == 0 ) {
-
-		field->boundary[i].type = fu;
-
-		field->boundary[i].param.fu = readFixedUParam(fname, mesh->mesh.bd.bdNames[i]);
-
-	    }
-
-	    
-	    if( strcmp(str, "outflow") == 0 ) {
-
-		field->boundary[i].type = of;
-
-	    }	    	    	   
+    	else {
 	    
 
-	}
+    	    if( strcmp(str, "bounceBack") == 0 ) {
+
+    		field->boundary[i].type = bback;
+
+    	    }
+
+    	    if( strcmp(str, "periodic") == 0 ) {
+
+    		field->boundary[i].type = periodic;
+
+    	    }
+	    
+    	    if( strcmp(str, "fixedT") == 0 ) {
+
+    		field->boundary[i].type = ft;
+
+    		field->boundary[i].param.ft = readFixedTParam(fname, mesh->mesh.bd.bdNames[i]);
+
+    	    }
+
+	    
+    	    if( strcmp(str, "fixedU") == 0 ) {
+
+    		field->boundary[i].type = fu;
+
+    		field->boundary[i].param.fu = readFixedUParam(fname, mesh->mesh.bd.bdNames[i]);
+
+    	    }
+
+	    
+    	    if( strcmp(str, "outflow") == 0 ) {
+
+    		field->boundary[i].type = of;
+
+    	    }
+	    
+
+    	}
 	
 
     }

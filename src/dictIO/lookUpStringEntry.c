@@ -7,7 +7,9 @@ unsigned int lookUpStringEntry( char* dname, char* ename, char** entry, const ch
 
     char* aux = 0;
     
-    unsigned int status = lookUpEntry( dname, ename, &aux );
+    unsigned int status = 0;
+    
+    status = lookUpEntry( dname, ename, &aux );
 
 
     // If ename is not properly found, use df
@@ -24,14 +26,13 @@ unsigned int lookUpStringEntry( char* dname, char* ename, char** entry, const ch
 
 	*entry = (char*)malloc( strlen(aux) * sizeof(char) );
 
-	strcpy(*entry, aux);
+	strcpy(*entry, aux);	
 
     }
 
-
     free(aux);
 
-
+    
     return status;
 
 }
