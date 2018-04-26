@@ -34,7 +34,7 @@ void boxBoundedScalarField( latticeMesh* mesh, double** field, char* fname ) {
     unsigned int n;
     
     if(  vstring(&aux, "%s/internalField/minPoint", fname)  )
-	status = lookUpVectorEntry("start/initialFields", aux, &min, &n);
+	status = lookUpVectorEntry("start/initialFields", aux, &min, &n);    
 
 
     // Max corner
@@ -55,10 +55,9 @@ void boxBoundedScalarField( latticeMesh* mesh, double** field, char* fname ) {
 
     // Outside value
 
-    if(  vstring(&ins, "%s/internalField/inside", fname)  )    
+    if(  vstring(&ins, "%s/internalField/outside", fname)  )    
 	status = lookUpScalarEntry("start/initialFields", ins, 0, &out);
     
-
     
     
     if (status) {}
