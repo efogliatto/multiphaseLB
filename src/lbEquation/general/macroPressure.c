@@ -24,7 +24,7 @@ void macroPressure( latticeMesh* mesh, macroFields* mfields, lbeField* field ) {
 
 	    for( id = 0 ; id < mesh->mesh.nPoints ; id++) {
 	    
-		mfields->p[id] = liMRTPressure( mesh, mfields->rho, mfields->T, id );
+		mfields->p[id] = liMRTPressure( mesh, mfields->rho, mfields->T, field->lbparam.liMRT.sigma, id );
 	    
 	    }
 	

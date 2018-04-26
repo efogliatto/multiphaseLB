@@ -272,6 +272,12 @@ int main( int argc, char **argv ) {
 
 
 	    
+	    // Update pressure
+
+	    macroPressure( &mesh, &mfields, &f );	    
+
+
+	    
     	    // VTK files
 	    
     	    writeMeshToVTK( &mesh, &vtk );

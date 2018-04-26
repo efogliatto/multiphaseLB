@@ -23,19 +23,18 @@ void uniformScalarField( latticeMesh* mesh, double** field, char* fname ) {
 
     if( vstring(&aux, "%s/internalField/value", fname)  )
 	status = lookUpScalarEntry("start/initialFields", aux, 0, &fval);
+   
+    if (status) {}
 
 
-    if (status) {   
-    
-	uint ii;
+    uint ii;
 
-	for( ii = 0 ; ii < mesh->mesh.nPoints ; ii++ ) {
+    for( ii = 0 ; ii < mesh->mesh.nPoints ; ii++ ) {
 
-	    field[0][ii] = fval;
+	field[0][ii] = fval;
 
-	}    
+    }    
 
-    }
 
     /* // Read boundary information */
 

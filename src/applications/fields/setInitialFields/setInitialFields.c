@@ -113,8 +113,6 @@ int main(int argc, char** argv) {
     	    }
 
     	    if(status) {}
-
-	    
 	   		    
 
     	    // Uniform distribution

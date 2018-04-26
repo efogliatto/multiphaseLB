@@ -3,6 +3,6 @@
 
 #include <latticeMesh.h>
 
-double liMRTPressure( latticeMesh* mesh, double* rho, double* T, unsigned int id );
+double liMRTPressure( latticeMesh* mesh, double* rho, double* T, double sigma, unsigned int id );
 
 #endif // LIMRTPRESSURE_H
