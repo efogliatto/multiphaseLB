@@ -8,5 +8,6 @@ add_library(limrtmodel SHARED
   liMRTPressure.c
   liMRTVelocity.c
   liMRTEquilibrium.c
+  liMRTSurfaceTension.c
   readLiMRTConstants.c
   )

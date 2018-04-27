@@ -1,7 +1,8 @@
 #include <basic.h>
 #include <liMRTCollision.h>
 #include <liMRTForce.h>
-/* #include <omp.h> */
+#include <liMRTSurfaceTension.h>
+
 
 void liMRTCollision( latticeMesh* mesh, macroFields* mfields, lbeField* field ) {
 
@@ -15,102 +16,113 @@ void liMRTCollision( latticeMesh* mesh, macroFields* mfields, lbeField* field ) 
     // Partial distributions
     
     double* m     = (double*)malloc( mesh->lattice.Q * sizeof(double) );   // m:  momentum space
+    
     double* m_eq  = (double*)malloc( mesh->lattice.Q * sizeof(double) );   // meq: equilibrium in momentum space
+
     double* S     = (double*)malloc( mesh->lattice.Q * sizeof(double) );   // MRT force
 
+    double* C     = (double*)malloc( mesh->lattice.Q * sizeof(double) );   // Surface tension term
+
     
+
     
-    // Move over ALL points
-
-    /* omp_set_num_threads(2); */
-
-    /* int chunk = 100; */
-    
-/* #pragma omp parallel default(shared) private(id,k) */
-    {
-
-/* #pragma omp for  */
-	for( id = 0 ; id < mesh->mesh.nPoints ; id++ ) {
-	    /* for( id = 0 ; id < mesh->parallel.nlocal ; id++ ) { */
+    for( id = 0 ; id < mesh->mesh.nPoints ; id++ ) {
+	/* for( id = 0 ; id < mesh->parallel.nlocal ; id++ ) { */
 	
 
-	    /* // Update Lambda values */
+	/* // Update Lambda values */
 
-	    /* if( field->tauModel == 3 ) { */
+	/* if( field->tauModel == 3 ) { */
 
-	    /*     double a = (field->nb - field->na) / (field->rb - field->ra); */
+	/*     double a = (field->nb - field->na) / (field->rb - field->ra); */
 
-	    /*     double b = field->na  -  a * field->ra; */
+	/*     double b = field->na  -  a * field->ra; */
 
-	    /*     double nu = a * mfields->rho[id] + b; */
+	/*     double nu = a * mfields->rho[id] + b; */
 
-	    /*     double tau = nu / mesh->lattice.cs2 + 0.5; */
+	/*     double tau = nu / mesh->lattice.cs2 + 0.5; */
 
-	    /*     field->Lambda[7] = 1/tau; */
+	/*     field->Lambda[7] = 1/tau; */
 
-	    /*     field->Lambda[8] = 1/tau; */
+	/*     field->Lambda[8] = 1/tau; */
 
-	    /* } */
+	/* } */
 
 
-	    double umag = 0;
+	double umag = 0;
 	
-	    for( k = 0 ; k < 3 ; k++ ) {
+	for( k = 0 ; k < 3 ; k++ ) {
 	
-		umag += mfields->U[id][k] * mfields->U[id][k];
+	    umag += mfields->U[id][k] * mfields->U[id][k];
 
-	    }
-
-	
-	    // Compute equilibrium in momentum space
-	
-	    m_eq[0] = mfields->rho[id];
-	    m_eq[1] = mfields->rho[id] * (-2 + 3*umag);
-	    m_eq[2] = mfields->rho[id] * (1 - 3*umag);
-	    m_eq[3] = mfields->rho[id] * mfields->U[id][0];
-	    m_eq[4] = mfields->rho[id] * (-mfields->U[id][0]);
-	    m_eq[5] = mfields->rho[id] * mfields->U[id][1];
-	    m_eq[6] = mfields->rho[id] * (-mfields->U[id][1]);
-	    m_eq[7] = mfields->rho[id] * (mfields->U[id][0]*mfields->U[id][0] - mfields->U[id][1]*mfields->U[id][1]);
-	    m_eq[8] = mfields->rho[id] * mfields->U[id][0] * mfields->U[id][1];
-
-	
-
-	
-	    // Distribution in momentum space
-
-	    matVecMult(mesh->lattice.M, field->value[id], m, mesh->lattice.Q);
-
-	
-	    // Total Force
-	
-	    liMRTForce( mesh, mfields, field, S, id );
-
-
-	
-	    // Collision in momentum space
-	
-	    for( k = 0 ; k < mesh->lattice.Q ; k++ ) {
-
-		m[k] = m[k]  -  field->lbparam.liMRT.Lambda[k]*( m[k] - m_eq[k] )  +  ( 1 - 0.5*field->lbparam.liMRT.Lambda[k] ) * S[k];
-	    
-	    }
-
-	
-	
-	    // Back to phase space
-	
-	    matVecMult(mesh->lattice.invM, m, field->value[id], mesh->lattice.Q);
-
-	
 	}
+
+	
+	// Compute equilibrium in momentum space
+	
+	m_eq[0] = mfields->rho[id];
+	m_eq[1] = mfields->rho[id] * (-2 + 3*umag);
+	m_eq[2] = mfields->rho[id] * (1 - 3*umag);
+	m_eq[3] = mfields->rho[id] * mfields->U[id][0];
+	m_eq[4] = mfields->rho[id] * (-mfields->U[id][0]);
+	m_eq[5] = mfields->rho[id] * mfields->U[id][1];
+	m_eq[6] = mfields->rho[id] * (-mfields->U[id][1]);
+	m_eq[7] = mfields->rho[id] * (mfields->U[id][0]*mfields->U[id][0] - mfields->U[id][1]*mfields->U[id][1]);
+	m_eq[8] = mfields->rho[id] * mfields->U[id][0] * mfields->U[id][1];
+
+	
+
+	
+	// Distribution in momentum space
+
+	matVecMult(mesh->lattice.M, field->value[id], m, mesh->lattice.Q);
+
+	
+	// Total Force
+	
+	liMRTForce( mesh, mfields, field, S, id );
+
+
+	
+	// Surface Tension term
+	
+	liMRTSurfaceTension( mesh, mfields, field, C, id );
+	
+
+	
+	// Collision in momentum space
+	
+	for( k = 0 ; k < mesh->lattice.Q ; k++ ) {
+
+	    m[k] = m[k]  -  field->lbparam.liMRT.Lambda[k]*( m[k] - m_eq[k] )  +  ( 1 - 0.5*field->lbparam.liMRT.Lambda[k] ) * S[k];
+
+	    if(field->lbparam.liMRT.surfaceTension == liSurfTen) {
+
+	    	m[k] = m[k] + C[k];
+
+	    }
+	    
+	}
+
+	
+	
+	// Back to phase space
+	
+	matVecMult(mesh->lattice.invM, m, field->value[id], mesh->lattice.Q);
+
+	
     }
 
 
     // Deallocate memory
+
     free(m);
+    
     free(m_eq);
+
     free(S);
+
+    free(C);
 
 
     

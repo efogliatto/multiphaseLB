@@ -79,8 +79,8 @@ liMRTConstants readLiMRTConstants( char* fname ) {
 
 		    errorMsg( msg );
 
-		}		
-		printf("%f\n", param.kappa_st);
+		}
+		
 		
 	    }
 

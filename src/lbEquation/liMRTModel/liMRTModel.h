@@ -13,4 +13,6 @@
 
 #include <liMRTEquilibrium.h>
 
+#include <liMRTSurfaceTension.h>
+
 #endif // LIMRTMODEL_H
