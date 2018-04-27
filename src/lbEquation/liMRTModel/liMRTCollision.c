@@ -23,30 +23,25 @@ void liMRTCollision( latticeMesh* mesh, macroFields* mfields, lbeField* field ) 
 
     double* C     = (double*)malloc( mesh->lattice.Q * sizeof(double) );   // Surface tension term
 
+
+
+
+    // Depending on surface tension model, computes collision over all points, or only local.
+    // If only local, syncs field at the end
+
+    unsigned int nodes = mesh->mesh.nPoints;
+
+    if( field->lbparam.liMRT.surfaceTension == liSurfTen ) {
+
+	nodes = mesh->parallel.nlocal;
+
+    }
     
 
     
-    for( id = 0 ; id < mesh->mesh.nPoints ; id++ ) {
-	/* for( id = 0 ; id < mesh->parallel.nlocal ; id++ ) { */
+    for( id = 0 ; id < nodes ; id++ ) {
 	
 
-	/* // Update Lambda values */
-
-	/* if( field->tauModel == 3 ) { */
-
-	/*     double a = (field->nb - field->na) / (field->rb - field->ra); */
-
-	/*     double b = field->na  -  a * field->ra; */
-
-	/*     double nu = a * mfields->rho[id] + b; */
-
-	/*     double tau = nu / mesh->lattice.cs2 + 0.5; */
-
-	/*     field->Lambda[7] = 1/tau; */
-
-	/*     field->Lambda[8] = 1/tau; */
-
-	/* } */
 
 
 	double umag = 0;
@@ -123,6 +118,16 @@ void liMRTCollision( latticeMesh* mesh, macroFields* mfields, lbeField* field ) 
     free(S);
 
     free(C);
+
+
+    
+    // Sync field if needed
+
+    if( field->lbparam.liMRT.surfaceTension == liSurfTen ) {
+
+	syncPdfField( mesh, field->value );
+
+    }    
 
 
     
