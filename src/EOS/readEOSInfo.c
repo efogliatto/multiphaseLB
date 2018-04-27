@@ -33,6 +33,14 @@ EOSInfo readEOSInfo() {
 
 	    info.etype = CarStar;
 
+	    
+	    if(  !lookUpScalarEntry("properties/macroProperties", "EOS/a_cs", 0, &info.eParam.csp.a)  )
+		errorMsg("Unable to find constant a_cs");
+
+	    
+	    if(  !lookUpScalarEntry("properties/macroProperties", "EOS/b_cs", 0, &info.eParam.csp.b)  )
+		errorMsg("Unable to find constant b_cs");	    
+
 	}
 
 
@@ -40,6 +48,18 @@ EOSInfo readEOSInfo() {
 
 	    info.etype = PengRob;
 
+	    
+	    if(  !lookUpScalarEntry("properties/macroProperties", "EOS/a_pr", 0, &info.eParam.prp.a)  )
+		errorMsg("Unable to find constant a_pr");
+
+	    
+	    if(  !lookUpScalarEntry("properties/macroProperties", "EOS/b_pr", 0, &info.eParam.prp.b)  )
+		errorMsg("Unable to find constant b_pr");
+
+
+	    if(  !lookUpScalarEntry("properties/macroProperties", "EOS/w_pr", 0, &info.eParam.prp.omega)  )
+		errorMsg("Unable to find constant w_pr");	    	    
+	    
 	}
 
 

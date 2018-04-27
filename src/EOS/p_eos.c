@@ -6,7 +6,7 @@
 
 double p_eos( EOSInfo* info, double rho, double T ) {
 
-    double p = 0;//, alpha, beta;
+    double p = 0, alpha, beta;
 
     switch( info->etype ) {
     
@@ -20,17 +20,25 @@ double p_eos( EOSInfo* info, double rho, double T ) {
 
     // Carnahan - Starling
     case CarStar:
-	/* alpha = info->_b * rho / 4; */
-	/* beta  = 1 - alpha;  */
-	/* p = rho * info->_R * T * ( (1 + alpha + alpha*alpha - alpha*alpha*alpha) / ( beta*beta*beta )  ) - info->_a * rho * rho; */
+	
+	alpha = info->eParam.csp.b * rho / 4;
+
+	beta  = 1 - alpha;
+
+	p = rho * info->R * T * ( (1 + alpha + alpha*alpha - alpha*alpha*alpha) / ( beta*beta*beta )  ) - info->eParam.csp.a * rho * rho;
+
 	break;
 
     
     // Peng - Robinson
-    case PengRob:	
-	/* alpha = 0.170151343 * info->_a / (info->_b * info->_R); // Tc */
-	/* beta = (1 + (0.37464+1.5422*info->_omega-0.26992*info->_omega*info->_omega)*(1-sqrt(T/alpha))); // sqrt(phi) */
-	/* p = rho * info->_R * T / ( 1 - info->_b * rho)    -   info->_a * beta * beta * rho * rho / (1 + 2 * info->_b * rho - info->_b * rho * info->_b * rho); */
+    case PengRob:
+	
+	alpha = 0.170151343 * info->eParam.prp.a / (info->eParam.prp.b * info->R); // Tc
+	
+	beta = (1 + (0.37464+1.5422*info->eParam.prp.omega-0.26992*info->eParam.prp.omega*info->eParam.prp.omega)*(1-sqrt(T/alpha))); // sqrt(phi)
+	
+	p = rho * info->R * T / ( 1 - info->eParam.prp.b * rho)    -   info->eParam.prp.a * beta * beta * rho * rho / (1 + 2 * info->eParam.prp.b * rho - info->eParam.prp.b * rho * info->eParam.prp.b * rho);
+	
 	break;
 
 
