@@ -1,9 +1,11 @@
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <basic.h>
 
 unsigned int bracedEntry( char* ename, char* content, char** entry ) {
 
+   
     
     unsigned int status = 0;
 
@@ -16,7 +18,6 @@ unsigned int bracedEntry( char* ename, char* content, char** entry ) {
     unsigned int isEntry = 0;
 
     while(  ( isEntry == 0 )  &&  (partial != NULL)  ) {
-	
 
 
 	// Check ename + { ocurrence
@@ -118,6 +119,7 @@ unsigned int bracedEntry( char* ename, char* content, char** entry ) {
 		    free(aux);
 
 		    status = 1;
+
 		
 		}
 	    
@@ -129,7 +131,7 @@ unsigned int bracedEntry( char* ename, char* content, char** entry ) {
 	}
 
 	
-
+	    
 
 
     }

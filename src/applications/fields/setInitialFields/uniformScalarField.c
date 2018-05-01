@@ -13,6 +13,7 @@ void uniformScalarField( latticeMesh* mesh, double** field, char* fname ) {
 
 
     
+    
     // Look for values
 
     char* aux;
@@ -21,8 +22,11 @@ void uniformScalarField( latticeMesh* mesh, double** field, char* fname ) {
 
     unsigned int status = 0;
 
-    if( vstring(&aux, "%s/internalField/value", fname)  )
+    if( vstring(&aux, "%s/internalField/value", fname)  ) {
+	
 	status = lookUpScalarEntry("start/initialFields", aux, 0, &fval);
+
+    }
    
     if (status) {}
 

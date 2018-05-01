@@ -102,6 +102,7 @@ int main(int argc, char** argv) {
     	    char* entry;
 
 	    char* itype;
+
 	    
 	    
     	    // Internal field type
@@ -109,17 +110,17 @@ int main(int argc, char** argv) {
     	    if( vstring(&entry, "%s/internalField/type", vtk.scalarFields[fid])  ) {
 	    
     		status = lookUpStringEntry("start/initialFields", entry, &itype, "uniform");
-
+		
     	    }
 
     	    if(status) {}
-	   		    
+	    
 
     	    // Uniform distribution
 	    
     	    if( strcmp(itype,"uniform") == 0 ) {
-
-    		uniformScalarField( &mesh, &field, vtk.scalarFields[fid] );
+		
+    		uniformScalarField( &mesh, &field, vtk.scalarFields[fid] );		
 
     	    }
 

@@ -3,6 +3,7 @@
 #include <tokenize.h>
 #include <bracedEntry.h>
 #include <singleEntry.h>
+#include <basic.h>
 
 
 unsigned int lookUpEntry( char* dname, char* ename, char** entry ) {
@@ -19,7 +20,6 @@ unsigned int lookUpEntry( char* dname, char* ename, char** entry ) {
 
     strcpy(braced, dict.content);
 
-    
 
 
     // Tokenize ename
@@ -43,9 +43,11 @@ unsigned int lookUpEntry( char* dname, char* ename, char** entry ) {
     	if( n > 1 ){
 
     	    for( i = 0 ; i < (n-1) ; i++ ) {
+		
 
     		status = bracedEntry( tk[i], braced, &braced );
 
+		
 		
 		// Stop looking if error is present
 		
@@ -87,7 +89,6 @@ unsigned int lookUpEntry( char* dname, char* ename, char** entry ) {
 	
 
     }
-
 
 
 

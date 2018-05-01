@@ -1,6 +1,7 @@
 #include <lookUpEntry.h>
 #include <string.h>
 #include <stdlib.h>
+#include <basic.h>
 
 unsigned int lookUpStringEntry( char* dname, char* ename, char** entry, const char* df ) {
 
@@ -8,9 +9,10 @@ unsigned int lookUpStringEntry( char* dname, char* ename, char** entry, const ch
     char* aux = 0;
     
     unsigned int status = 0;
+
     
     status = lookUpEntry( dname, ename, &aux );
-
+	
 
     // If ename is not properly found, use df
     
@@ -31,7 +33,7 @@ unsigned int lookUpStringEntry( char* dname, char* ename, char** entry, const ch
     }
 
     free(aux);
-
+  
     
     return status;
 
