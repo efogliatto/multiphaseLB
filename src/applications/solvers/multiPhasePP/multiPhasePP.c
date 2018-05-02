@@ -25,13 +25,13 @@ int main( int argc, char **argv ) {
 	unsigned int arg;
 	for( arg = 0 ; arg < argc ; arg++) {
 
-	    if ( strcmp("--noHeatTransfer", argv[arg]) == 0 ) {
+	    if ( strcmp("--nht", argv[arg]) == 0 ) {
 		ht = 0;
 	    }
 
 	    else {
 
-		if ( strcmp("--frozenFlow", argv[arg]) == 0 ) {
+		if ( strcmp("--frozen", argv[arg]) == 0 ) {
 		    frozen = 0;
 		}
 		
