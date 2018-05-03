@@ -13,8 +13,13 @@ set ( PROJECT_LINK_LIBS
   libboundary.so
   libeos.so
   # libfinitedifference.so
+  m
   ${MPI_LIBRARIES})
-link_directories( ~/multiphaseLB/lib )
+
+# link_directories( ~/multiphaseLB/lib )
+link_directories( ${CMAKE_SOURCE_DIR}/lib )
+
+
 
 # latticeMeshPartition
 add_executable(latticeMeshPartition "latticeMeshPartition.c" "standardDecomp.c" "kmetisDecomp.c" "localIndexing.c")

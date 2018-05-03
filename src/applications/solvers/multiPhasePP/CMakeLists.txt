@@ -15,8 +15,8 @@ set ( PROJECT_LINK_LIBS
   libfinitedifference.so
   ${MPI_LIBRARIES})
 
-link_directories( ~/multiphaseLB/lib )
-
+# link_directories( ~/multiphaseLB/lib )
+link_directories( ${CMAKE_SOURCE_DIR}/lib )
 
 # multiPhasePP
 add_executable( multiPhasePP "multiPhasePP.c" )

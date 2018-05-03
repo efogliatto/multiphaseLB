@@ -1,4 +1,4 @@
-#ifndef LIMRSURFACETENSION_H
+#ifndef LIMRTSURFACETENSION_H
 #define LIMRTSURFACETENSION_H
 
 #include <macroFields.h>

@@ -1,0 +1,7 @@
+Nx 101;
+
+Ny 101;
+
+LBModel D2Q9;
+
+boundaryType periodicXY;

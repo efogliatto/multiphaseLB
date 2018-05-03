@@ -5,16 +5,17 @@ set ( PROJECT_LINK_LIBS
   libdictio.so
   libbasic.so
   liblatticemodel.so
-  # libgenerallbe.so
-  # libpseudopot.so
+  libgenerallbe.so
   libpseudopot.so
   liblimrtmodel.so
   libmymrtmodel.so
   libboundary.so
   libeos.so
-  # libfinitedifference.so
+  libfinitedifference.so
+  m
   ${MPI_LIBRARIES})
-link_directories( ~/multiphaseLB/lib )
+
+link_directories( ${CMAKE_SOURCE_DIR}/lib )
 
 
 # latticeBox2D

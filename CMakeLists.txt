@@ -17,7 +17,10 @@ find_package(MPI REQUIRED)
 include_directories(include ${MPI_INCLUDE_PATH})
 
 # Compiler options for C
-SET( CMAKE_C_FLAGS  "${CMAKE_C_FLAGS} -Wall" )
+SET( CMAKE_C_FLAGS  "${CMAKE_C_FLAGS} -Wall -lm" )
+
+# # Linker options
+# SET( CMAKE_EXE_LINKER_FLAGS  "${CMAKE_EXE_LINKER_FLAGS} -lm")
 
 
 # Optional metis decomposition
