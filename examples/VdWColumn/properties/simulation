@@ -1,4 +1,4 @@
 startTime 0;
 endTime 200000;
-writeInterval 200000;
+writeInterval 25000;
 writeDebug no;

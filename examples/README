@@ -1,0 +1,67 @@
+Cada caso de ejemplo tiene la siguiente estructura:
+
+-Directorio properties
+
+  -macroProperties
+      Constantes macroscopicas (ej gravedad)
+      Factores de relajacion
+      Constantes de EOS
+      Hay entradas definidas para dos campos, f y g. f es para el modelo de NS, g para energía
+
+
+  -parallel
+      Método de descomposicion del dominio
+      Número de procesos
+
+  -simulation
+      Parámetros de la simulación
+      Tiempo inicial y final (se puede rearrancar usando como inicial el final de una simulación anterior)
+      Intervalo de escritura
+      Flag para escritura en formato raw (debug yes). Si se coloca en yes, también escribe los campos en tabla xyz
+
+  -latticeProperties
+      Propiedades de la grilla. Usado por la aplicación latticeBox2D
+      Número de elementos por dirección
+      Modelo de grilla
+
+
+-Directorio start
+
+  -boundaries
+      Para cada campo y cada borde, se da el tipo de condición de contorno y sus constantes asociadas
+
+  -initialFields
+      Campos iniciales
+      Usado por la aplicación setInitialFields
+
+
+
+
+
+Para poder correr un caso:
+
+1. Configurar adecuadamante los archivos
+2. Crear la malla (ej latticeBox2D o usando los scripts para SALOME que están en tools)
+3. Partir el dominio usando latticeMeshPartition. Es necesario aunque se use un solo proceso
+4. Crear los campos iniciales con setInitialFields
+5. Ejecutar multiPhasePP. Si se usa con la opción --nht, no resuelve ecuación de energía pero usa el campo de temperatura fijo
+
+Los pasos 2, 3 y 4 pueden ahorrarse usando el script Allpre
+
+
+Si se desea ejecutar en paralelo, utilizar una cantidad de procesos Np en properties/parallel/numProcs, y usar
+
+   mpiexec -n Np multiPhasePP --nht
+
+Para sólo un proceso, no es necesario usar mpiexec
+
+
+
+
+
+Salida
+
+Por defecto se lee y escribe en formato VTK-HML. Si se tiene ParaView, pueden visualizarse los resultados abriendo el archivo case.pvd que se genera
+en el directorio de ejecución: se genera con setInitialFields y luego el solver lo va modificando.
+Si se coloca la opción "debug yes;" en properties/simulation, también se escriben los campos en formato xzy, dentro de processor*/tiempo/nombre_del_campo. Si se ejecuta el solver con solo un proceso, es el directorio processor0.
+El orden en el que aparecen los valores de los campos es el de los puntos, como están en processor*/lattice/points
