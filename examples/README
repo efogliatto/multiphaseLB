@@ -46,13 +46,18 @@ Para poder correr un caso:
 4. Crear los campos iniciales con setInitialFields
 5. Ejecutar multiPhasePP. Si se usa con la opción --nht, no resuelve ecuación de energía pero usa el campo de temperatura fijo
 
-Los pasos 2, 3 y 4 pueden ahorrarse usando el script Allpre
+Los pasos 2, 3 y 4 pueden ahorrarse usando el script Allpre, y el 5 con el script Allrun. Es decir, para correr ejecutar
+
+1. Allclean
+2. Allpre
+3. Allrun
 
 
 Si se desea ejecutar en paralelo, utilizar una cantidad de procesos Np en properties/parallel/numProcs, y usar
 
    mpiexec -n Np multiPhasePP --nht
 
+O bien comentar/descomentar el comando correspondiente en Allrun. Si no está compilado con kmetis, se puede usar "method standard;" en properties/parallel.
 Para sólo un proceso, no es necesario usar mpiexec
 
 
