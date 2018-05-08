@@ -150,6 +150,7 @@ int main( int argc, char **argv ) {
     syncVectorField( &mesh, mfields.Fi );
 
 
+    
 
     // Heat source
 
@@ -215,8 +216,7 @@ int main( int argc, char **argv ) {
     	if( ht != 0 ) {  syncPdfField( &mesh, g.value );  }
 
 	
-	
-	
+		
 
 
     	// Update macroscopic density
@@ -309,6 +309,17 @@ int main( int argc, char **argv ) {
     }
 
 
+    /* { */
+
+    /* 	unsigned int ii; */
+
+    /* 	for( ii = 1 ; ii < mesh.parallel.nlocal ; ii+=3 ) { */
+
+    /* 	    printf(  "%d %g %g\n", mesh.mesh.points[ii][1], potential( &mesh, mfields.rho[ii], mfields.T[ii] ), mfields.rho[ii]  ); */
+
+    /* 	} */
+
+    /* } */
 
     
     // Print info
