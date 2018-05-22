@@ -315,7 +315,8 @@ int main( int argc, char **argv ) {
 
     /* 	for( ii = 1 ; ii < mesh.parallel.nlocal ; ii+=3 ) { */
 
-    /* 	    printf(  "%d %g %g\n", mesh.mesh.points[ii][1], potential( &mesh, mfields.rho[ii], mfields.T[ii] ), mfields.rho[ii]  ); */
+    /* 	    printf(  "%d %g %g %g\n", mesh.mesh.points[ii][1], potential( &mesh, mfields.rho[ii], mfields.T[ii] ), mfields.rho[ii], mfields.Fi[ii][1]  ); */
+    /* 	    /\* printf("%g\n", mfields.Fi[ii][1] ); *\/ */
 
     /* 	} */
 
