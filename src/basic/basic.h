@@ -23,4 +23,6 @@
 
 #include <int2dArray.h>
 
+#include <averageScalarField.h>
+
 #endif // BASIC_H

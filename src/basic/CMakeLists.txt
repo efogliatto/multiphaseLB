@@ -12,4 +12,5 @@ add_library(basic SHARED
   errorMsg.c
   vstring.c
   int2dArray.c
+  averageScalarField.c
   )

@@ -88,6 +88,9 @@ int main( int argc, char **argv ) {
 
     createScalarField( &mesh, &mfields.rho, "rho", MUST_READ);
 
+    mesh.EOS.rho_0 = averageScalarField(&mesh, mfields.rho);
+
+
     
     
     // Velocity
@@ -277,6 +280,11 @@ int main( int argc, char **argv ) {
 	    macroPressure( &mesh, &mfields, &f );
 
 	    syncScalarField( &mesh, mfields.p );
+
+
+	    // Update average density
+	    
+	    mesh.EOS.rho_0 = averageScalarField(&mesh, mfields.rho);
 
 
 	    
