@@ -1,7 +1,7 @@
 #ifndef MPIINFO_H
 #define MPIINFO_H
 
-#define MPI_BUFF_SIZE 100  /**< MPI buffer size */
+#define MPI_BUFF_SIZE 500  /**< MPI buffer size */
 
 /**
  * @file mpiInfo.h
