@@ -16,6 +16,12 @@ typedef struct {
     /** Temperature perturbation */
     double p;
 
+    /** Perturbation length (time steps) */
+    int psteps;
+
+    /** Perturbation local time step */
+    int localTStep;
+
 } fixedTParam;
 
 #endif // FIXEDTPARAM_H

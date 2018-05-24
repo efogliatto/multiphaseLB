@@ -8,6 +8,7 @@
 #include <singleNodeT.h>
 #include <lbeModel.h>
 #include <fixedT.h>
+#include <time.h>
 
 
 void fixedT( latticeMesh* mesh, macroFields* mfields, double** field, unsigned int bid, lbeModel model, bdParam* bp, lbParameters* lp ) {
@@ -26,6 +27,18 @@ void fixedT( latticeMesh* mesh, macroFields* mfields, double** field, unsigned i
 	double eq_bnd = 0;
 	
 	double eq_nb = 0;
+
+
+
+	// Perturbation conditions
+
+	srand(0);
+
+	double minT = bp->ft.T * (100.0-bp->ft.p) / 100.0;
+
+	double maxT = bp->ft.T * (100.0+bp->ft.p) / 100.0;
+
+	double r = 1;
 		
     
 	// Move over boundary elements
@@ -61,7 +74,21 @@ void fixedT( latticeMesh* mesh, macroFields* mfields, double** field, unsigned i
 
 			// Equilibrium at boundary node
 
-			myMRTEquilibrium( &mesh->lattice, bp->ft.T, mfields->U[nbid], lp->myMRT.alpha_1, lp->myMRT.alpha_2, f_eq_nb );
+			if(bp->ft.localTStep < bp->ft.psteps) {
+
+			    r = (double)rand() / RAND_MAX;
+
+			    double Tb = minT + (maxT-minT)*r;
+
+			    myMRTEquilibrium( &mesh->lattice, Tb, mfields->U[nbid], lp->myMRT.alpha_1, lp->myMRT.alpha_2, f_eq_nb );
+
+			}
+
+			else {
+
+			    myMRTEquilibrium( &mesh->lattice, bp->ft.T, mfields->U[nbid], lp->myMRT.alpha_1, lp->myMRT.alpha_2, f_eq_nb );
+
+			}
 			    
 			eq_bnd = f_eq_nb[k];
 			    
@@ -85,16 +112,19 @@ void fixedT( latticeMesh* mesh, macroFields* mfields, double** field, unsigned i
 
 	free(f_eq_nb);
 
+	bp->ft.localTStep++;
 
-    	}
+    }
+    
 
 
 
-    	else {
 
-    	    errorMsg("Unable to apply boundary condition on temperature");
+    else {
 
-    	}
+	errorMsg("Unable to apply boundary condition on temperature");
+
+    }
            
 
 }
