@@ -30,49 +30,49 @@ fixedTParam readFixedTParam( char* fname, char* bdname ) {
 
 
 
-    /* Read boundary perturbation */
+    /* /\* Read boundary perturbation *\/ */
 
-    status = vstring(&entry, "%s/%s/pert", fname, bdname);
+    /* status = vstring(&entry, "%s/%s/pert", fname, bdname); */
 
-    status = lookUpScalarEntry("start/boundaries", entry, 0, &param.p);
+    /* status = lookUpScalarEntry("start/boundaries", entry, 0, &param.p); */
 
-    if(!status) {
+    /* if(!status) { */
 
-    	param.p = 0;
+    /* 	param.p = 0; */
 
-    	param.psteps = 0;
+    /* 	param.psteps = 0; */
 
-    	param.localTStep = 1;
+    /* 	param.localTStep = 1; */
 
-    }
+    /* } */
 
-    else {
+    /* else { */
 
-    	double steps = 0;
+    /* 	double steps = 0; */
 	
-    	status = vstring(&entry, "%s/%s/duration", fname, bdname);
+    /* 	status = vstring(&entry, "%s/%s/duration", fname, bdname); */
 
-    	status = lookUpScalarEntry("start/boundaries", entry, 0, &steps);
+    /* 	status = lookUpScalarEntry("start/boundaries", entry, 0, &steps); */
 
-    	if(!status) {
+    /* 	if(!status) { */
 
-    	    char* msg;
+    /* 	    char* msg; */
 
-    	    status = vstring(&msg, "Unable to find %s", entry);
+    /* 	    status = vstring(&msg, "Unable to find %s", entry); */
 	
-    	    errorMsg(msg);
+    /* 	    errorMsg(msg); */
 
-    	}
+    /* 	} */
 
-    	else {
+    /* 	else { */
 
-    	    param.psteps = (int)steps;
+    /* 	    param.psteps = (int)steps; */
 
-    	    param.localTStep = 0;
+    /* 	    param.localTStep = 0; */
 
-    	}
+    /* 	} */
 	
-    }
+    /* } */
 
     
     return param;
