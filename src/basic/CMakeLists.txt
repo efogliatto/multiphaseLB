@@ -13,4 +13,5 @@ add_library(basic SHARED
   vstring.c
   int2dArray.c
   averageScalarField.c
+  sparseMatVecMult.c
   )

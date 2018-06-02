@@ -25,6 +25,8 @@ void myMRTCollision( latticeMesh* mesh, macroFields* mfields, lbeField* field ) 
     double* aux_1  = (double*)malloc( mesh->lattice.Q * sizeof(double) );
 
     double* aux_2  = (double*)malloc( mesh->lattice.Q * sizeof(double) );
+
+    unsigned int** nonZero  = (unsigned int**)malloc( 2 * sizeof(unsigned int*) );
     
 
     
@@ -40,6 +42,20 @@ void myMRTCollision( latticeMesh* mesh, macroFields* mfields, lbeField* field ) 
 
     }
 
+
+    for( k = 0 ; k < 2 ; k++ ) {
+
+	nonZero[k] = (unsigned int*)malloc( 2 * sizeof(unsigned int) );
+	
+    }
+    
+
+    nonZero[0][0] = 3;
+    nonZero[0][1] = 4;
+    nonZero[1][0] = 5;
+    nonZero[1][1] = 6;
+
+    
 
     if( mesh->lattice.Q == 9 ) {
 
@@ -67,7 +83,6 @@ void myMRTCollision( latticeMesh* mesh, macroFields* mfields, lbeField* field ) 
     }
 
 
-    
     
     
 
@@ -110,9 +125,11 @@ void myMRTCollision( latticeMesh* mesh, macroFields* mfields, lbeField* field ) 
 	myMRTEquilibriumMS( mesh, mfields, n_eq, field->lbparam.myMRT.alpha_1, field->lbparam.myMRT.alpha_2, id );
 	
 	
+	
     	// Distribution in momentum space
 
     	matVecMult(mesh->lattice.M, field->value[id], n, mesh->lattice.Q);
+
 
 
 	// Source in momentum space (heat sink, compression work and correction terms)
@@ -133,14 +150,20 @@ void myMRTCollision( latticeMesh* mesh, macroFields* mfields, lbeField* field ) 
 
 	// aux_1 = Q * (n - n_eq)
 
-	matVecMult(Q, aux_2, aux_1, mesh->lattice.Q);
+	/* matVecMult(Q, aux_2, aux_1, mesh->lattice.Q); */
 
+	sparseMatVecMult(Q, aux_2, aux_1, nonZero, mesh->lattice.Q, 2);
+
+
+	
 
 
 	// Second auxiliary distribution: (I  -  0.5 * Q) * GammaHat
 	
-	matVecMult(Q_aux, GammaHat, aux_2, mesh->lattice.Q);
+	/* matVecMult(Q_aux, GammaHat, aux_2, mesh->lattice.Q); */
 
+	sparseMatVecMult(Q_aux, GammaHat, aux_2, nonZero, mesh->lattice.Q, 2);
+	
 	
 	
 	
@@ -188,6 +211,15 @@ void myMRTCollision( latticeMesh* mesh, macroFields* mfields, lbeField* field ) 
 
     free(Q_aux);
 
+
+    for( k = 0 ; k < 2 ; k++ ) {
+
+	free( nonZero[k] );
+
+    }
+
+    free(nonZero);
+    
 
     
 }

@@ -25,4 +25,6 @@
 
 #include <averageScalarField.h>
 
+#include <sparseMatVecMult.h>
+
 #endif // BASIC_H
