@@ -7,7 +7,7 @@ unsigned int singleEntry( char* ename, char* content, char** entry ) {
 
     
     unsigned int status = 0;
-
+    /* printf("\n\n%s\n\n",ename); */
 
     // Find ename occurrence
 
@@ -20,9 +20,7 @@ unsigned int singleEntry( char* ename, char* content, char** entry ) {
 	
 	// Move past ename and whitespaces
 	
-	partial = partial + strlen(ename);
-
-	partial = partial + strspn(partial, " ");
+	partial = partial + strlen(ename) + 1;
 
 
 	
@@ -34,14 +32,16 @@ unsigned int singleEntry( char* ename, char* content, char** entry ) {
 
 
 
+
 	// Create a first copy. This enables the use of the same pointer for content and *entry
 
-	char *aux = (char*)malloc( (l)*sizeof(char) );
+	char *aux = (char*)malloc( (l+1)*sizeof(char) );
 
-	memset(aux,'\0',l);
+	memset(aux,'\0',l+1);
 
 	strncpy( aux, partial, l );
 	
+
 	
 	
 	// (Re)Allocate memory for entry and copy

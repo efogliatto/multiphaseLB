@@ -89,6 +89,8 @@ unsigned int bracedEntry( char* ename, char* content, char** entry ) {
 
 		if( bcount == 0 ) {
 
+		  /* if(strcmp(ename,"Y1") == 0) {printf("\n\n%d\n\n",j);} */
+
 
 
 		    // Create a first copy. This enables the use of the same pointer for content and *entry
@@ -97,7 +99,8 @@ unsigned int bracedEntry( char* ename, char* content, char** entry ) {
 
 		    memset(aux,'\0', (j-2));
 
-		    strncpy( aux, &partial[1], (j-2) );
+		    strncpy( aux, &partial[2], (j-4) );
+
 
 
 

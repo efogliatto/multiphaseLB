@@ -23,25 +23,84 @@ dictionary openDict( char* name ) {
 
     dictionary dict;
     
-    long length;
+    int length = 0;
 
-    if (fp) {
-	
-	fseek (fp, 0, SEEK_END);
-	
-	length = ftell (fp);
-	
-	fseek (fp, 0, SEEK_SET);
+    char word[100];
 
-	dict.content = malloc (length);
+    while( fscanf(fp,"%s",word) != EOF ) {
 
-	if (dict.content)
-	{
-	    fread (dict.content, 1, length, fp);
-	}
+      length = length + strlen(word) + 1;
 
-	fclose (fp);
     }
+
+    /* length; */
+
+
+
+    // Allocate space for dictionary content
+
+    dict.content = malloc(length);
+
+    memset(dict.content,' ',length);
+
+
+
+    fseek (fp, 0, SEEK_SET);
+
+    unsigned int pos = 0,
+      i;
+
+    if (dict.content) {
+
+      while( fscanf(fp,"%s",word) != EOF ) {
+
+    	for( i = 0 ; i < strlen(word) ; i++ ) {
+
+    	  dict.content[i+pos] = word[i];
+
+    	}
+
+    	pos = pos + strlen(word) + 1;
+
+      }
+
+
+    }
+
+
+    /* printf("%s\n",dict.content); */
+
+    
+
+
+
+
+
+    /* 	if (dict.content) */
+    /* 	{ */
+    /* 	    fread (dict.content, 1, length, fp); */
+    /* 	} */
+
+
+
+
+    /* if (fp) { */
+	
+    /* 	fseek (fp, 0, SEEK_END); */
+	
+    /* 	length = ftell (fp); */
+	
+    /* 	fseek (fp, 0, SEEK_SET); */
+
+    /* 	dict.content = malloc (length); */
+
+    /* 	if (dict.content) */
+    /* 	{ */
+    /* 	    fread (dict.content, 1, length, fp); */
+    /* 	} */
+
+    /* 	fclose (fp); */
+    /* } */
 
     
     /* printf(); */

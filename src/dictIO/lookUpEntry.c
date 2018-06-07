@@ -22,6 +22,7 @@ unsigned int lookUpEntry( char* dname, char* ename, char** entry ) {
 
 
 
+
     // Tokenize ename
 
     char** tk;
@@ -44,9 +45,7 @@ unsigned int lookUpEntry( char* dname, char* ename, char** entry ) {
 
     	    for( i = 0 ; i < (n-1) ; i++ ) {
 		
-
     		status = bracedEntry( tk[i], braced, &braced );
-
 		
 		
 		// Stop looking if error is present
@@ -65,7 +64,7 @@ unsigned int lookUpEntry( char* dname, char* ename, char** entry ) {
 
 	    if(status) {
 
-		status = singleEntry( tk[n-1], braced, &braced );
+	      status = singleEntry( tk[n-1], braced, &braced );
 
 	    }
 
