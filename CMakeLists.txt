@@ -33,10 +33,16 @@ endif()
 
 
 
-
 # Directorio con fuentes
 add_subdirectory (src)
 
 
-# Documentation. make docs
-add_subdirectory (docs)
+
+
+# Optional docs
+option(WITH_DOCS "Create documentation" OFF)
+
+if(WITH_DOCS)
+  add_subdirectory (docs)
+endif()
+
