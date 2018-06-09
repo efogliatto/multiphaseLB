@@ -83,6 +83,16 @@ unsigned int lookUpEntry( char* dname, char* ename, char** entry ) {
 
 
 	// Memory release
+
+	if(n>1) {
+
+	     for( i = 0 ; i < (n-1) ; i++ ) {
+
+		 free(tk[i]);
+		 
+	     }
+	    
+	}
 	
 	free(tk);
 	

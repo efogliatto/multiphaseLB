@@ -141,7 +141,9 @@ unsigned int lookUpStringList( char* dname, char* ename, char*** entry, unsigned
 
 
 
-	    free(aux);
+	    // Memory release
+	   
+	    free(aux);	    
 
 	    free(token);
 
@@ -150,11 +152,31 @@ unsigned int lookUpStringList( char* dname, char* ename, char*** entry, unsigned
 	}
 
 
+
+
+
+
+	// Memory release
+
+	if(nn>1) {
+
+	    for( i = 0 ; i < (nn-1) ; i++ ) {
+
+		free(tk[i]);
+		 
+	    }
+	    
+	}
+	
+	free(tk);
+
+	
+
     }
 
 
 
-
+    
 
 
     free(braced);

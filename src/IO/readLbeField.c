@@ -151,6 +151,15 @@ unsigned int readLbeField( latticeMesh* mesh, lbeField* field, char* fname ) {
 
     }
 
+
+
+    // Release memory
+    
+    free(entry);
+
+    free(str);
+
+    
     
     return status;
 
