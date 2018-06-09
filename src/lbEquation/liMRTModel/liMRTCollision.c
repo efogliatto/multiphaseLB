@@ -26,6 +26,7 @@ void liMRTCollision( latticeMesh* mesh, macroFields* mfields, lbeField* field ) 
 
 
 
+
     // Depending on surface tension model, computes collision over all points, or only local.
     // If only local, syncs field at the end
 
@@ -120,6 +121,8 @@ void liMRTCollision( latticeMesh* mesh, macroFields* mfields, lbeField* field ) 
     free(C);
 
 
+
+    
     
     // Sync field if needed
 

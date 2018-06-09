@@ -15,6 +15,6 @@ void matVecMult(double** M, double* v, double* res, unsigned int n) {
 
 	}
 
-    }
+    }    
     
 }
