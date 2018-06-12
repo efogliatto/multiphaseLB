@@ -2,15 +2,15 @@
 #include <stdlib.h>
 #include <matrixDoubleAlloc.h>
 
-double** matrixDoubleAlloc(unsigned int nrow, unsigned int ncol, double df) {
+scalar** matrixDoubleAlloc(unsigned int nrow, unsigned int ncol, scalar df) {
 
-    double** M = (double**)malloc( nrow * sizeof(double*) );
+    scalar** M = (scalar**)malloc( nrow * sizeof(scalar*) );
 
     unsigned int i,j;
 
     for( i = 0 ; i < nrow ; i++ ) {
 
-	M[i] = (double*)malloc( ncol * sizeof(double) );
+	M[i] = (scalar*)malloc( ncol * sizeof(scalar) );
 
     }
 

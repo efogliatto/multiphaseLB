@@ -15,6 +15,8 @@
  * @return Squared magnitude: \f$ \mathbf{v} \cdot \mathbf{v} \f$
  */
 
-double vectorMag2( double v[3] );
+#include <dataTypes.h>
+
+scalar vectorMag2( scalar v[3] );
 
 #endif // VECTORMAG2_H

@@ -1,12 +1,10 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <syncPdfField.h>
-/* #include <latticeMesh.h> */
-/* #include <mpi.h> */
 #include <math.h>
 
 
-void syncPdfField( latticeMesh* mesh, double** fld ) {
+void syncPdfField( latticeMesh* mesh, scalar** fld ) {
 
 
     if( mesh->parallel.worldSize > 1 ) {
@@ -63,8 +61,16 @@ void syncPdfField( latticeMesh* mesh, double** fld ) {
 	for( pid = 0 ; pid < mesh->parallel.worldSize ; pid++ ) {
 
 	    if( mesh->parallel.nsg[pid] > 0 ) {
-	    
+
+		#ifdef DP
+		
 		MPI_Isend (&mesh->parallel.sbuf[pid][0], mesh->parallel.nsg[pid] * mesh->mesh.Q, MPI_DOUBLE, pid, mesh->parallel.pid, MPI_COMM_WORLD, &request[nreq]);
+
+		#elif SP
+
+		MPI_Isend (&mesh->parallel.sbuf[pid][0], mesh->parallel.nsg[pid] * mesh->mesh.Q, MPI_FLOAT, pid, mesh->parallel.pid, MPI_COMM_WORLD, &request[nreq]);
+
+		#endif
 
 		nreq++;
 
@@ -78,8 +84,16 @@ void syncPdfField( latticeMesh* mesh, double** fld ) {
 	for( pid = 0 ; pid < mesh->parallel.worldSize ; pid++ ) {
 
 	    if( mesh->parallel.nrg[pid] > 0 ) {
-	    
+
+		#ifdef DP
+		
 		MPI_Irecv (mesh->parallel.rbuf[pid], mesh->parallel.nrg[pid] * mesh->mesh.Q, MPI_DOUBLE, pid, pid, MPI_COMM_WORLD, &request[nreq]);
+
+		#elif SP
+
+		MPI_Irecv (mesh->parallel.rbuf[pid], mesh->parallel.nrg[pid] * mesh->mesh.Q, MPI_DOUBLE, pid, pid, MPI_COMM_WORLD, &request[nreq]);
+
+		#endif
 
 		nreq++;
 
@@ -94,49 +108,6 @@ void syncPdfField( latticeMesh* mesh, double** fld ) {
 
 
 
-
-	
-
-        /* // Send information */
-    	
-	/* MPI_Status status; */
-
-	
-        /* // Move over send ghosts. Send data */
-
-	/* for( pid = 0 ; pid < mesh->parallel.worldSize ; pid++ ) { */
-
-	/*     if( mesh->parallel.shared[pid] > 0 ) { */
-	    
-	/* 	MPI_Send (&mesh->parallel.sbuf[pid][0], mesh->parallel.shared[pid] * mesh->mesh.Q, MPI_DOUBLE, pid, mesh->parallel.pid, MPI_COMM_WORLD); */
-
-	/*     } */
-	/* } */
-
-
-
-        /* // Wait for everyone */
-	
-	/* MPI_Barrier(MPI_COMM_WORLD); */
-
-	
-        /* // Move over recv ghosts. Receive data */
-
-	/* for( pid = 0 ; pid < mesh->parallel.worldSize ; pid++ ) { */
-
-	/*     if( mesh->parallel.shared[pid] > 0 ) { */
-	    
-	/* 	MPI_Recv (mesh->parallel.rbuf[pid], mesh->parallel.shared[pid] * mesh->mesh.Q, MPI_DOUBLE, pid, pid, MPI_COMM_WORLD, &status); */
-
-	/*     } */
-	/* } */
-
-
-        /* // Wait for everyone */
-	
-	/* MPI_Barrier(MPI_COMM_WORLD); */
-
-	
 
 
 	

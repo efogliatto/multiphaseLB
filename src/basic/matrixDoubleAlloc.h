@@ -1,6 +1,8 @@
 #ifndef MATRIXDOUBLEALLOC_H
 #define MATRIXDOUBLEALLOC_H
 
+#include <dataTypes.h>
+
 /**
  * @file matrixDoubleAlloc.h
  * @author Ezequiel O. Fogliatto
@@ -17,6 +19,6 @@
  * @return Pointer to allocated array
  */
 
-double** matrixDoubleAlloc(unsigned int nrow, unsigned int ncol, double df);
+scalar** matrixDoubleAlloc(unsigned int nrow, unsigned int ncol, scalar df);
 
 #endif // MATRIXDOUBLEALLOC_H

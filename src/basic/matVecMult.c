@@ -1,7 +1,7 @@
 #include <matVecMult.h>
 #include <stdio.h>
 
-void matVecMult(double** M, double* v, double* res, unsigned int n) {
+void matVecMult(scalar** M, scalar* v, scalar* res, unsigned int n) {
 
     unsigned int i,j;
 

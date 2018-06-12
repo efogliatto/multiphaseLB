@@ -3,6 +3,7 @@
 
 #include <latticeMesh.h>
 #include <mpi.h>
+#include <dataTypes.h>
 
 /**
  * @file syncScalarField.h
@@ -19,6 +20,6 @@
  * @param fld Pointer to sync field
  */
 
-void syncScalarField( latticeMesh* mesh, double* fld );
+void syncScalarField( latticeMesh* mesh, scalar* fld );
 
 #endif // SYNCSCALARFIELD_H

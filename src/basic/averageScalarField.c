@@ -1,10 +1,10 @@
 #include <averageScalarField.h>
 
 
-double averageScalarField( latticeMesh* mesh, double* fld ) {
+scalar averageScalarField( latticeMesh* mesh, scalar* fld ) {
 
 
-    double avg = 0;
+    scalar avg = 0;
 
 
     if (mesh->EOS.rho_0 <= 0) {
@@ -20,7 +20,7 @@ double averageScalarField( latticeMesh* mesh, double* fld ) {
 
 	// Sum local nodes locally
 
-	double localSum = 0;
+	scalar localSum = 0;
 
 	int i = 0;
 
@@ -35,7 +35,7 @@ double averageScalarField( latticeMesh* mesh, double* fld ) {
 
 	// Apply collective reduction
 
-	double globalSum = 0;
+	scalar globalSum = 0;
 
 	int nelem = 0;
 
@@ -43,7 +43,17 @@ double averageScalarField( latticeMesh* mesh, double* fld ) {
     
 	if( mesh->parallel.worldSize > 1 ) {
 
+	    #ifdef DP
+	    
 	    MPI_Allreduce(&localSum, &globalSum, 1, MPI_DOUBLE, MPI_SUM, MPI_COMM_WORLD);
+
+	    #elif SP
+
+	    MPI_Allreduce(&localSum, &globalSum, 1, MPI_FLOAT, MPI_SUM, MPI_COMM_WORLD);
+
+	    #endif
+
+	    
 
 	    MPI_Allreduce(&nlocal, &nelem, 1, MPI_INT, MPI_SUM, MPI_COMM_WORLD);	
 

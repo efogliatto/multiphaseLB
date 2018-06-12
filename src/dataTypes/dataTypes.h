@@ -16,7 +16,15 @@ typedef unsigned int uint;
 
 /** Scalar for precision change */
 
+#ifdef DP
+
 typedef double scalar;
+
+#elif SP
+
+typedef float scalar;
+
+#endif
 
 
 /** Field creation options */

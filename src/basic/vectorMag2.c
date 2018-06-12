@@ -1,11 +1,11 @@
 #include <stdlib.h>
 #include <vectorMag2.h>
 
-double vectorMag2( double v[3] ) {
+scalar vectorMag2( scalar v[3] ) {
 
     unsigned int k;
 
-    double mag = 0;
+    scalar mag = 0;
 
     for( k = 0 ; k < 3 ; k++ ) {
 

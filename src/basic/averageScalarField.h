@@ -3,6 +3,7 @@
 
 #include <latticeMesh.h>
 #include <mpi.h>
+#include <dataTypes.h>
 
 /**
  * @file averageScalarField.h
@@ -19,6 +20,6 @@
  * @param fld Pointer to field
  */
 
-double averageScalarField( latticeMesh* mesh, double* fld );
+scalar averageScalarField( latticeMesh* mesh, scalar* fld );
 
 #endif // AVERAGESCALARFIELD_H

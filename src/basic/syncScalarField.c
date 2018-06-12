@@ -1,12 +1,10 @@
 #include <stdlib.h>
 #include <stdio.h>
-/* #include <latticeMesh.h> */
-/* #include <mpi.h> */
 #include <math.h>
 #include <syncScalarField.h>
 
 
-void syncScalarField( latticeMesh* mesh, double* fld ) {
+void syncScalarField( latticeMesh* mesh, scalar* fld ) {
 
 
     if( mesh->parallel.worldSize > 1 ) {
@@ -55,8 +53,16 @@ void syncScalarField( latticeMesh* mesh, double* fld ) {
 	for( pid = 0 ; pid < mesh->parallel.worldSize ; pid++ ) {
 
 	    if( mesh->parallel.nsg[pid] > 0 ) {
-	    
+
+		#ifdef DP
+		
 		MPI_Isend (&mesh->parallel.vsbuf[pid][0], mesh->parallel.nsg[pid], MPI_DOUBLE, pid, mesh->parallel.pid, MPI_COMM_WORLD, &request[nreq]);
+
+		#elif SP
+
+		MPI_Isend (&mesh->parallel.vsbuf[pid][0], mesh->parallel.nsg[pid], MPI_FLOAT, pid, mesh->parallel.pid, MPI_COMM_WORLD, &request[nreq]);
+
+		#endif
 
 		nreq++;
 
@@ -70,8 +76,16 @@ void syncScalarField( latticeMesh* mesh, double* fld ) {
 	for( pid = 0 ; pid < mesh->parallel.worldSize ; pid++ ) {
 
 	    if( mesh->parallel.nrg[pid] > 0 ) {
-	    
+
+		#ifdef DP
+		
 		MPI_Irecv (mesh->parallel.vrbuf[pid], mesh->parallel.nrg[pid], MPI_DOUBLE, pid, pid, MPI_COMM_WORLD, &request[nreq]);
+
+		#elif SP
+
+		MPI_Irecv (mesh->parallel.vrbuf[pid], mesh->parallel.nrg[pid], MPI_FLOAT, pid, pid, MPI_COMM_WORLD, &request[nreq]);
+
+		#endif
 
 		nreq++;
 

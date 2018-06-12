@@ -25,11 +25,37 @@ SET( CMAKE_C_FLAGS  "${CMAKE_C_FLAGS} -Wall -lm" )
 # SET( CMAKE_EXE_LINKER_FLAGS  "${CMAKE_EXE_LINKER_FLAGS} -lm")
 
 
-# Optional metis decomposition
+
+# Optional: Metis decomposition
 option(WITH_METIS "Compile with METIS" OFF)
 
 if(WITH_METIS)
   add_definitions(-DUSE_METIS)
+endif()
+
+
+
+# Optional: precision
+
+set(PRECISION "double" CACHE STRING "Floating-point precision")
+
+if(PRECISION STREQUAL "double")
+
+  message("-- Double precision")
+
+  add_definitions(-DDP)
+
+  
+  elseif(PRECISION STREQUAL "simple")
+
+    add_definitions(-DSP)
+
+    message("-- Simple precision")
+
+  else()
+
+    message( FATAL_ERROR "Precision not supported" )
+  
 endif()
 
 

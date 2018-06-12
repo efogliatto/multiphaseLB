@@ -1,7 +1,7 @@
 #include <sparseMatVecMult.h>
 #include <stdio.h>
 
-void sparseMatVecMult(double** M, double* v, double* res, unsigned int** nonZero, unsigned int n, unsigned int nextra) {
+void sparseMatVecMult(scalar** M, scalar* v, scalar* res, unsigned int** nonZero, unsigned int n, unsigned int nextra) {
     
     unsigned int i,j,k;
 

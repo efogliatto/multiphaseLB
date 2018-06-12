@@ -2,6 +2,7 @@
 #define SPARSEMATVECMULT_H
 
 #include <stdio.h>
+#include <dataTypes.h>
 
 /**
  * @file sparseMatVecMult.h
@@ -21,6 +22,6 @@
  * @param nextra Number of non-zero extra elements
  */
 
-void sparseMatVecMult(double** M, double* v, double* res, unsigned int** nonZero, unsigned int n, unsigned int nextra);
+void sparseMatVecMult(scalar** M, scalar* v, scalar* res, unsigned int** nonZero, unsigned int n, unsigned int nextra);
 
 #endif // SPARSEMATVECMULT_H
