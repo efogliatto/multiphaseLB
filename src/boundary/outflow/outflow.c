@@ -3,12 +3,12 @@
 #include <latticeMesh.h>
 #include <lbeField.h>
 #include <macroFields.h>
+#include <outflow.h>
+
+void outflow( latticeMesh* mesh, macroFields* mfields, scalar** field, uint bid ) {
 
 
-void outflow( latticeMesh* mesh, macroFields* mfields, double** field, unsigned int bid ) {
-
-
-    unsigned int i, j, k;
+    uint i, j, k;
     
 
     // Move over boundary elements
@@ -52,7 +52,7 @@ void outflow( latticeMesh* mesh, macroFields* mfields, double** field, unsigned 
 
 	// Detect correspondence with lattice velocities
 
-	unsigned int ln = 0;
+	uint ln = 0;
 
 	for( k = 0 ; k < mesh->mesh.Q ; k++ ) {
 	    
@@ -68,7 +68,7 @@ void outflow( latticeMesh* mesh, macroFields* mfields, double** field, unsigned 
 
 	// Interpolate missing components from neighbour in normal direction
 
-	unsigned int neigh = mesh->mesh.nb[id][ln];
+	uint neigh = mesh->mesh.nb[id][ln];
 
 	if( neigh != -1 ) {
 

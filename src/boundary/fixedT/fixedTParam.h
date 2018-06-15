@@ -8,13 +8,15 @@
  * Parameters for fixedT boundary type
  */
 
+#include <dataTypes.h>
+
 typedef struct {
 
     /** Fixed temperature value at boundary */
-    double T;
+    scalar T;
 
     /** Temperature perturbation */
-    double p;
+    scalar p;
 
     /** Perturbation length (time steps) */
     int psteps;

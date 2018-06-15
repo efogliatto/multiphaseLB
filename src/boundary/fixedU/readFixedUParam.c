@@ -7,11 +7,11 @@ fixedUParam readFixedUParam( char* fname, char* bdname ) {
     
     char* entry;
 
-    unsigned int status = 0;
+    uint status = 0;
 
     fixedUParam param;
 
-    double* u;
+    scalar* u;
 
     unsigned int n;
 

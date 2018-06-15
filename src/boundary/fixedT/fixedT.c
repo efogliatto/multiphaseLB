@@ -11,7 +11,7 @@
 #include <time.h>
 
 
-void fixedT( latticeMesh* mesh, macroFields* mfields, double** field, unsigned int bid, lbeModel model, bdParam* bp, lbParameters* lp ) {
+void fixedT( latticeMesh* mesh, macroFields* mfields, scalar** field, unsigned int bid, lbeModel model, bdParam* bp, lbParameters* lp ) {
 
 
 
@@ -20,13 +20,13 @@ void fixedT( latticeMesh* mesh, macroFields* mfields, double** field, unsigned i
     if( model == myMRT ) {
 
 	
-	unsigned int i, k;
+	uint i, k;
 
-	double* f_eq_nb = (double*)malloc( mesh->mesh.Q * sizeof(double) );
+	scalar* f_eq_nb = (scalar*)malloc( mesh->mesh.Q * sizeof(scalar) );
 
-	double eq_bnd = 0;
+	scalar eq_bnd = 0;
 	
-	double eq_nb = 0;
+	scalar eq_nb = 0;
 
 
 
@@ -34,11 +34,11 @@ void fixedT( latticeMesh* mesh, macroFields* mfields, double** field, unsigned i
 
 	/* srand(0); */
 
-	/* double minT = bp->ft.T * (100.0-bp->ft.p) / 100.0; */
+	/* scalar minT = bp->ft.T * (100.0-bp->ft.p) / 100.0; */
 
-	/* double maxT = bp->ft.T * (100.0+bp->ft.p) / 100.0; */
+	/* scalar maxT = bp->ft.T * (100.0+bp->ft.p) / 100.0; */
 
-	/* double r = 1; */
+	/* scalar r = 1; */
 		
     
 	// Move over boundary elements
@@ -46,7 +46,7 @@ void fixedT( latticeMesh* mesh, macroFields* mfields, double** field, unsigned i
 	for( i = 0 ; i < mesh->mesh.bd.nbdelem[bid] ; i++ ) {
 
 	
-	    unsigned int id = mesh->mesh.bd.bdPoints[bid][i];
+	    uint id = mesh->mesh.bd.bdPoints[bid][i];
 
 	
 	
@@ -76,9 +76,9 @@ void fixedT( latticeMesh* mesh, macroFields* mfields, double** field, unsigned i
 
 			/* if(bp->ft.localTStep < bp->ft.psteps) { */
 
-			/*     r = (double)rand() / RAND_MAX; */
+			/*     r = (scalar)rand() / RAND_MAX; */
 
-			/*     double Tb = minT + (maxT-minT)*r; */
+			/*     scalar Tb = minT + (maxT-minT)*r; */
 
 			/*     myMRTEquilibrium( &mesh->lattice, Tb, mfields->U[nbid], lp->myMRT.alpha_1, lp->myMRT.alpha_2, f_eq_nb ); */
 

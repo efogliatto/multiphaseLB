@@ -1,10 +1,12 @@
 #include <latticeMesh.h>
 #include <lbeField.h>
 #include <macroFields.h>
+#include <bounceBack.h>
 
-void bounceBack( latticeMesh* mesh, macroFields* mfields, double** field, unsigned int bid ) {
 
-    unsigned int i, k;
+void bounceBack( latticeMesh* mesh, macroFields* mfields, scalar** field, uint bid ) {
+
+    uint i, k;
     
 
     // Move over boundary elements

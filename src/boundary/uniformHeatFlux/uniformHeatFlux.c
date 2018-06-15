@@ -8,7 +8,7 @@
 #include <singleNodeT.h>
 
 
-void uniformHeatFlux(  latticeMesh* mesh,  macroFields* mfields,  double** field, unsigned int bid ) {
+void uniformHeatFlux(  latticeMesh* mesh,  macroFields* mfields,  scalar** field, unsigned int bid ) {
 
 
     // Apply only if collision model is liTemp or myMRTModel
@@ -16,13 +16,13 @@ void uniformHeatFlux(  latticeMesh* mesh,  macroFields* mfields,  double** field
     if(  ( field->colId == 2 ) ||  ( field->colId == 4 )  ){
 
 	
-	unsigned int i, k;
+	uint i, k;
 
-	double* f_eq_nb = (double*)malloc( mesh->mesh.Q * sizeof(double) );
+	scalar* f_eq_nb = (scalar*)malloc( mesh->mesh.Q * sizeof(scalar) );
 
-	double eq_bnd = 0;
+	scalar eq_bnd = 0;
 	
-	double eq_nb = 0;
+	scalar eq_nb = 0;
 
 	
 	
@@ -32,12 +32,12 @@ void uniformHeatFlux(  latticeMesh* mesh,  macroFields* mfields,  double** field
 	for( i = 0 ; i < mesh->mesh.bd.nbdelem[bid] ; i++ ) {
 
 	
-	    unsigned int id = mesh->mesh.bd.bdPoints[bid][i];
+	    uint id = mesh->mesh.bd.bdPoints[bid][i];
 
 
 	    // Compute thermal conductivity
 
-	    double lambda = 0;
+	    scalar lambda = 0;
 
 	    if( field->colId == 2 ) {
 
@@ -64,7 +64,7 @@ void uniformHeatFlux(  latticeMesh* mesh,  macroFields* mfields,  double** field
 
 	    // Estimated boundary temperature
 	    
-	    double t_bd = 0;
+	    scalar t_bd = 0;
 	    
 	    for( k = 0 ; k < mesh->mesh.Q ; k++ ) {
 

@@ -6,7 +6,7 @@ fixedTParam readFixedTParam( char* fname, char* bdname ) {
 
     char* entry;
 
-    unsigned int status = 0;
+    uint status = 0;
 
     fixedTParam param;
 

@@ -7,11 +7,12 @@
  * @date 20 Apr 2018
  * Parameters for fixedU boundary type
  */
+#include <dataTypes.h>
 
 typedef struct {
 
     /** Fixed velocity value at boundary */
-    double U[3];
+    scalar U[3];
 
 } fixedUParam;
 

@@ -5,16 +5,17 @@
 #include <macroFields.h>
 #include <liMRTEquilibrium.h>
 #include <pseudoPot.h>
+#include <fixedEOSp.h>
 
 
-void fixedEOSp( latticeMesh* mesh, macroFields* mfields, double** field, unsigned int bid ) {
+void fixedEOSp( latticeMesh* mesh, macroFields* mfields, scalar** field, uint bid ) {
 
 
 
     /* if(  ( field->colId == 2 ) ||  ( field->colId == 3 )  ){ */
 
 	
-	unsigned int i;
+	uint i;
 
 	
     
@@ -25,19 +26,19 @@ void fixedEOSp( latticeMesh* mesh, macroFields* mfields, double** field, unsigne
 
 	    // Point local index
 	    
-	    unsigned int id = mesh->mesh.bd.bdPoints[bid][i];
+	    uint id = mesh->mesh.bd.bdPoints[bid][i];
 
 
 	    
 	    // EOS fixed pressure value, using refence values for density and temperature
 
-	    double p_bd = p_eos(&mesh->EOS, field->boundary[bid].vectorVal[0], field->boundary[bid].vectorVal[1]);
+	    scalar p_bd = p_eos(&mesh->EOS, field->boundary[bid].vectorVal[0], field->boundary[bid].vectorVal[1]);
 
 	    
 
 	    // New density that matches p_bd
 	    
-	    double newRho = 0, rho = mfields->rho[id];
+	    scalar newRho = 0, rho = mfields->rho[id];
 
 	    while(  abs(newRho - rho) / rho > 1e-06  ) {
 

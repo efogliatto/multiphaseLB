@@ -8,13 +8,15 @@
  * Parameters for fixed EOS pressure boundary type
  */
 
+#include <dataTypes.h>
+
 typedef struct {
 
     /** Reference temperature */
-    double T;
+    scalar T;
 
     /** Reference pressure */
-    double p;
+    scalar p;
 
 } fixedEOSpParam;
 

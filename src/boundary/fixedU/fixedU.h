@@ -8,7 +8,7 @@
 #include <bdParam.h>
 #include <lbParameters.h>
 
-void fixedU( latticeMesh* mesh, macroFields* mfields, double** field, unsigned int bid, lbeModel model, bdParam* bp, lbParameters* lp );
+void fixedU( latticeMesh* mesh, macroFields* mfields, scalar** field, uint bid, lbeModel model, bdParam* bp, lbParameters* lp );
 
 
 #endif // FIXEDU_H

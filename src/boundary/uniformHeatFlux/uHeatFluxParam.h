@@ -8,10 +8,12 @@
  * Parameters for uniform heat flux boundary type
  */
 
+#include <dataTypes.h>
+
 typedef struct {
 
     /** Fixed heat flux at boundary */
-    double q[3];
+    scalar q[3];
 
 } uHeatFluxParam;
 

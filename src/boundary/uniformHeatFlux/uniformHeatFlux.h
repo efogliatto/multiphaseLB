@@ -5,7 +5,7 @@
 #include <lbeField.h>
 #include <macroFields.h>
 
-void uniformHeatFlux(  latticeMesh* mesh,  macroFields* mfields,  double** field, unsigned int bid );
+void uniformHeatFlux(  latticeMesh* mesh,  macroFields* mfields,  scalar** field, uint bid );
 
 
 #endif // UNIFORMHEATFLUX_H
