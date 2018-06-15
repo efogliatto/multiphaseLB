@@ -8,7 +8,7 @@ scalar elapsed ( timeInfo* info ) {
     
     gettimeofday( &_end, NULL );
 	
-    return (((scalar)_end.tv_sec + (scalar)_end.tv_usec / 1000000)  - ((scalar)info->stt.tv_sec + (scalar)info->stt.tv_usec / 1000000));
+    return (scalar)(((double)_end.tv_sec + (double)_end.tv_usec / 1000000)  - ((double)info->stt.tv_sec + (double)info->stt.tv_usec / 1000000));
 
 }
 

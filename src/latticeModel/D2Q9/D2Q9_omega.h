@@ -3,6 +3,6 @@
 
 #include <dataTypes.h>
 
-double* D2Q9_omega();
+scalar* D2Q9_omega();
 
 #endif // D2Q9_OMEGA_H

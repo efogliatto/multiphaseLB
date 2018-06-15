@@ -3,6 +3,6 @@
 
 #include <dataTypes.h>
 
-double D2Q9_cs2();
+scalar D2Q9_cs2();
 
 #endif // D2Q9_CS2_H
