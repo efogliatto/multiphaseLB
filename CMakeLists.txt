@@ -35,6 +35,7 @@ endif()
 
 
 
+
 # Optional: precision
 
 set(PRECISION "double" CACHE STRING "Floating-point precision")
@@ -57,6 +58,8 @@ if(PRECISION STREQUAL "double")
     message( FATAL_ERROR "Precision not supported" )
   
 endif()
+
+
 
 
 

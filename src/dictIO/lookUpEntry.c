@@ -6,10 +6,10 @@
 #include <basic.h>
 
 
-unsigned int lookUpEntry( char* dname, char* ename, char** entry ) {
+uint lookUpEntry( char* dname, char* ename, char** entry ) {
 
 
-    unsigned int status = 0;
+    uint status = 0;
 
 
     // Open dictionary
@@ -27,7 +27,7 @@ unsigned int lookUpEntry( char* dname, char* ename, char** entry ) {
 
     char** tk;
 
-    unsigned int n;
+    uint n;
 
     status = tokenize(ename, &tk, &n);
 
@@ -39,7 +39,7 @@ unsigned int lookUpEntry( char* dname, char* ename, char** entry ) {
 
     	// Look for braced entries first
 
-    	unsigned int i;
+    	uint i;
 	
     	if( n > 1 ){
 

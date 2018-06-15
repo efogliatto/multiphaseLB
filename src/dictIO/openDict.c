@@ -68,42 +68,6 @@ dictionary openDict( char* name ) {
     }
 
 
-    /* printf("%s\n",dict.content); */
-
-    
-
-
-
-
-
-    /* 	if (dict.content) */
-    /* 	{ */
-    /* 	    fread (dict.content, 1, length, fp); */
-    /* 	} */
-
-
-
-
-    /* if (fp) { */
-	
-    /* 	fseek (fp, 0, SEEK_END); */
-	
-    /* 	length = ftell (fp); */
-	
-    /* 	fseek (fp, 0, SEEK_SET); */
-
-    /* 	dict.content = malloc (length); */
-
-    /* 	if (dict.content) */
-    /* 	{ */
-    /* 	    fread (dict.content, 1, length, fp); */
-    /* 	} */
-
-    /* 	fclose (fp); */
-    /* } */
-
-    
-    /* printf(); */
 
     return dict;
 

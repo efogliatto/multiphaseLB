@@ -14,41 +14,43 @@
  * This struct contains arrays for all macroscopic fields, wether they are used or not.
  */
 
+#include <dataTypes.h>
+
 typedef struct {
 
     /** Macroscopic density field */
     
-    double* rho; 
+    scalar* rho; 
 
     
     /** Macroscopic pressure field */
     
-    double* p;  
+    scalar* p;  
 
 
     /** Macroscopic velocity field */
     
-    double** U;  
+    scalar** U;  
 
     
     /** Macroscopic temperature field */
     
-    double* T;  
+    scalar* T;  
 
 
     /** Macroscopic interaction force field */
     
-    double** Fi; 
+    scalar** Fi; 
 
     
     /** Macroscopic scalar source term */
     
-    double* scalarSource; 
+    scalar* scalarSource; 
     
     /* // Constants */
 
     /* // Specific heat */
-    /* double Cv; */
+    /* scalar Cv; */
     
 } macroFields;
 

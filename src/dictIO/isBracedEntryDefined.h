@@ -15,6 +15,8 @@
  * @return Status. True if different from zero
  */
 
-unsigned int isBracedEntryDefined( char* dname, char* ename );
+#include <dataTypes.h>
+
+uint isBracedEntryDefined( char* dname, char* ename );
 
 #endif // ISBRACEDENTRYDEFINED_H

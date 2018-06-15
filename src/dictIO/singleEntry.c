@@ -3,10 +3,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-unsigned int singleEntry( char* ename, char* content, char** entry ) {
+uint singleEntry( char* ename, char* content, char** entry ) {
 
     
-    unsigned int status = 0;
+    uint status = 0;
     /* printf("\n\n%s\n\n",ename); */
 
     // Find ename occurrence

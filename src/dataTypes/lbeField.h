@@ -1,12 +1,16 @@
 #ifndef LBEFIELD_H
 #define LBEFIELD_H
 
+#include <dataTypes.h>
+
 #include <stdio.h>
 #include <lbeModel.h>
 #include <lbParameters.h>
 #include <boundary.h>
 #include <bdType.h>
 #include <bdParam.h>
+
+
 
 /**
  * @file lbeField.h
@@ -45,13 +49,13 @@ typedef struct {
 
     
     /** Distribution functions */
-    double** value;
+    scalar** value;
 
     /** Swap value */
-    double** swap;
+    scalar** swap;
 
     /** Scalar source term  */
-    double* scalarSource;
+    scalar* scalarSource;
     
     // Field name
     char* name;
@@ -63,7 +67,7 @@ typedef struct {
     lbParameters lbparam;
     
     /** Update tag */
-    unsigned int update;    
+    uint update;    
     
     /** Boundary info. Related to basicBoundary in basicMesh */
     bdField* boundary;

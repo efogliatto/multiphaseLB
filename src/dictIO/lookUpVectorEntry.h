@@ -13,6 +13,8 @@
  * @return Status. Correct if different from zero
  */
 
-unsigned int lookUpVectorEntry( char* dname, char* ename, double** entry, unsigned int* n );
+#include <dataTypes.h>
+
+uint lookUpVectorEntry( char* dname, char* ename, scalar** entry, uint* n );
 
 #endif // LOOKUPVECTORENTRY_H

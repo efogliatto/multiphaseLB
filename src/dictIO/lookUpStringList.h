@@ -14,6 +14,8 @@
  * @return Status. Correct if different from zero
  */
 
-unsigned int lookUpStringList( char* dname, char* ename, char*** entry, unsigned int* n );
+#include <dataTypes.h>
+
+uint lookUpStringList( char* dname, char* ename, char*** entry, uint* n );
 
 #endif // LOOKUPSTRINGLIST_H

@@ -18,6 +18,8 @@
  * @return Status. Correct if different from zero
  */
 
-unsigned int singleEntry( char* ename, char* content, char** entry );
+#include <dataTypes.h>
+
+uint singleEntry( char* ename, char* content, char** entry );
 
 #endif // SINGLEENTRY_H

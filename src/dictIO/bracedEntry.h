@@ -16,6 +16,8 @@
  * @return Status. Correct if different from zero
  */
 
-unsigned int bracedEntry( char* ename, char* content, char** entry );
+#include <dataTypes.h>
+
+uint bracedEntry( char* ename, char* content, char** entry );
 
 #endif // BRACEDENTRY_H

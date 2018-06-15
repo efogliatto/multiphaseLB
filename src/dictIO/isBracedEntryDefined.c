@@ -5,10 +5,10 @@
 #include <string.h>
 #include <stdlib.h>
 
-unsigned int isBracedEntryDefined( char* dname, char* ename ) {
+uint isBracedEntryDefined( char* dname, char* ename ) {
 
 
-    unsigned int status = 0;
+    uint status = 0;
 
 
     // Open dictionary
@@ -26,7 +26,7 @@ unsigned int isBracedEntryDefined( char* dname, char* ename ) {
 
     char** tk;
 
-    unsigned int n;
+    uint n;
 
     status = tokenize(ename, &tk, &n);
 
@@ -38,7 +38,7 @@ unsigned int isBracedEntryDefined( char* dname, char* ename ) {
 
     	// Look for braced entries
 
-    	unsigned int i;
+    	uint i;
 	
     	if( n > 1 ){
 

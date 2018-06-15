@@ -13,6 +13,8 @@
  * @return Status. Correct if different from zero
  */
 
-unsigned int lookUpScalarEntry( char* dname, char* ename, const double df, double* entry );
+#include <dataTypes.h>
+
+uint lookUpScalarEntry( char* dname, char* ename, const scalar df, scalar* entry );
 
 #endif // LOOKUPSCALARENTRY_H

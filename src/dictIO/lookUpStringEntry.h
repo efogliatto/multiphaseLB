@@ -13,6 +13,8 @@
  * @return Status. Correct if different from zero
  */
 
-unsigned int lookUpStringEntry( char* dname, char* ename, char** entry, const char* df );
+#include <dataTypes.h>
+
+uint lookUpStringEntry( char* dname, char* ename, char** entry, const char* df );
 
 #endif // LOOKUPSTRINGENTRY_H

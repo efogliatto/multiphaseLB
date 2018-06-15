@@ -2,12 +2,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <basic.h>
+#include <bracedEntry.h>
 
-unsigned int bracedEntry( char* ename, char* content, char** entry ) {
+uint bracedEntry( char* ename, char* content, char** entry ) {
 
    
     
-    unsigned int status = 0;
+    uint status = 0;
 
     char *partial = strstr(content, ename);
 
@@ -15,7 +16,7 @@ unsigned int bracedEntry( char* ename, char* content, char** entry ) {
 
     // Not wanted, but there can multiple entries (maybe nested)
 
-    unsigned int isEntry = 0;
+    uint isEntry = 0;
 
     while(  ( isEntry == 0 )  &&  (partial != NULL)  ) {
 
@@ -54,7 +55,7 @@ unsigned int bracedEntry( char* ename, char* content, char** entry ) {
 
 		// Find corresponding }
 
-		unsigned int bcount = 1,
+		uint bcount = 1,
 		    j = 1;
 
 		while(   ( j < strlen(partial) )   &&   ( bcount != 0 )   )  {

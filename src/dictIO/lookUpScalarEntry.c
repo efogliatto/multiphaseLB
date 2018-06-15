@@ -4,13 +4,13 @@
 #include <stdlib.h>
 #include <basic.h>
 
-unsigned int lookUpScalarEntry( char* dname, char* ename, const double df, double* entry ) {
+uint lookUpScalarEntry( char* dname, char* ename, const scalar df, scalar* entry ) {
 
     
     char* aux = 0;
 
     
-    unsigned int status = lookUpEntry( dname, ename, &aux );
+    uint status = lookUpEntry( dname, ename, &aux );
     
 
     // If ename is not properly found, use df
@@ -24,8 +24,16 @@ unsigned int lookUpScalarEntry( char* dname, char* ename, const double df, doubl
     else {
 
 	char* end;
+
+	#ifdef DP
 	
 	*entry = strtod( aux, &end );
+
+	#elif SP
+
+	*entry = strtof( aux, &end );
+
+	#endif
 
     }
 

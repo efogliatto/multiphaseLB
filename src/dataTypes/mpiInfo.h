@@ -16,23 +16,25 @@
  * This struct contains information related to mpi communications
  */
 
+#include <dataTypes.h>
+
 typedef struct {
     
-    unsigned int pid;   /**< Process id */
+    uint pid;   /**< Process id */
     
-    unsigned int worldSize;   /**< Total number of processes */
+    uint worldSize;   /**< Total number of processes */
     
-    unsigned int nghosts;   /**< Total number of ghosts */
+    uint nghosts;   /**< Total number of ghosts */
     
-    unsigned int nlocal;   /**< Number of local elements */
+    uint nlocal;   /**< Number of local elements */
     
-    unsigned int** recvGhosts;   /**< Receive ghosts indices*/
+    uint** recvGhosts;   /**< Receive ghosts indices*/
     
-    unsigned int** sendGhosts;   /**< Send ghosts indices*/        
+    uint** sendGhosts;   /**< Send ghosts indices*/        
     
-    unsigned int* nrg;   /**< Number of receive ghosts */
+    uint* nrg;   /**< Number of receive ghosts */
     
-    unsigned int* nsg;   /**< Number of send ghosts */
+    uint* nsg;   /**< Number of send ghosts */
     
 
     // Buffers
@@ -43,13 +45,13 @@ typedef struct {
     /* int* sendScalarBlocks; */
     /* int* recvScalarBlocks; */
 
-    double** sbuf;   /**< Scalar send buffer */
+    scalar** sbuf;   /**< Scalar send buffer */
     
-    double** rbuf;   /**< Scalar receive buffer */
+    scalar** rbuf;   /**< Scalar receive buffer */
 
-    double** vsbuf;   /**< Vector send buffer */
+    scalar** vsbuf;   /**< Vector send buffer */
     
-    double** vrbuf;   /**< Vector receive buffer */
+    scalar** vrbuf;   /**< Vector receive buffer */
     
     
 } mpiInfo;

@@ -8,7 +8,7 @@
  * @brief Mesh information
  */
 
-
+#include <dataTypes.h>
 
 /**
  * @brief Boundary information
@@ -18,13 +18,13 @@
 
 typedef struct {
     
-    unsigned int nbd;         /**< Number of boundary types */
+    uint nbd;         /**< Number of boundary types */
     
-    unsigned int* nbdelem;    /**< Total number of elements per boundary type */
+    uint* nbdelem;    /**< Total number of elements per boundary type */
     
     char bdNames[100][100];   /**< Boundary names (max 100 boundaries) */
     
-    unsigned int** bdPoints;  /**< Elements in boundary */
+    uint** bdPoints;  /**< Elements in boundary */
 
 } basicBoundary;
 
@@ -39,13 +39,13 @@ typedef struct {
 typedef struct {
 
     
-    unsigned int nPoints;   /**< Total number of points per patch */
+    uint nPoints;   /**< Total number of points per patch */
     
     int** points;   /**< Points coordinates array */
     
 
     
-    unsigned int Q;   /**< Total number of neighbours */
+    uint Q;   /**< Total number of neighbours */
     
     char lbm[100];   /**< LB lattice model (DdQq type) */
     
@@ -56,9 +56,9 @@ typedef struct {
     basicBoundary bd;   /**< Boundary information */
 
     
-    unsigned int ncells;   /**< Number of VTK cells per patch */
+    uint ncells;   /**< Number of VTK cells per patch */
     
-    unsigned int cellType;   /**< VTK cell type */
+    uint cellType;   /**< VTK cell type */
     
     int** vtkCells;   /**< VTK cell indices array */
 

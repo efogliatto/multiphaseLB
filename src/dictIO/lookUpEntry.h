@@ -14,6 +14,6 @@
  * @return Status. Correct if different from zero
  */
 
-unsigned int lookUpEntry( char* dname, char* ename, char** entry );
+uint lookUpEntry( char* dname, char* ename, char** entry );
 
 #endif // LOOKUPENTRY_H

@@ -4,10 +4,10 @@
 #include <bracedEntry.h>
 
 
-unsigned int lookUpStringList( char* dname, char* ename, char*** entry, unsigned int* n ) {
+uint lookUpStringList( char* dname, char* ename, char*** entry, uint* n ) {
 
 
-    unsigned int status = 0;
+    uint status = 0;
 
 
     // Open dictionary
@@ -25,7 +25,7 @@ unsigned int lookUpStringList( char* dname, char* ename, char*** entry, unsigned
 
     char** tk;
 
-    unsigned int nn;
+    uint nn;
 
     status = tokenize(ename, &tk, &nn);
 
@@ -38,7 +38,7 @@ unsigned int lookUpStringList( char* dname, char* ename, char*** entry, unsigned
 
     	// Look for braced entries first
 
-    	unsigned int i;
+    	uint i;
 	
 
 	for( i = 0 ; i < nn ; i++ ) {
@@ -85,7 +85,7 @@ unsigned int lookUpStringList( char* dname, char* ename, char*** entry, unsigned
 
 	    // Count numbers
 
-	    unsigned int count = 0,
+	    uint count = 0,
 		maxl = 0;
 
 	    char* token = strtok(aux, " \n");

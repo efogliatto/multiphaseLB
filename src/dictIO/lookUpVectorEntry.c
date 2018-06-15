@@ -3,12 +3,12 @@
 #include <string.h>
 #include <stdlib.h>
 
-unsigned int lookUpVectorEntry( char* dname, char* ename, double** entry, unsigned int* n ) {
+uint lookUpVectorEntry( char* dname, char* ename, scalar** entry, uint* n ) {
 
     
     char* aux = 0;
     
-    unsigned int status = lookUpEntry( dname, ename, &aux );
+    uint status = lookUpEntry( dname, ename, &aux );
 
 
 
@@ -25,7 +25,7 @@ unsigned int lookUpVectorEntry( char* dname, char* ename, double** entry, unsign
 
 	// Remove delimiters
 
-	unsigned int i;
+	uint i;
 
 	for( i = 0 ; i < strlen(aux) ; i++ ) {
 
@@ -48,7 +48,7 @@ unsigned int lookUpVectorEntry( char* dname, char* ename, double** entry, unsign
 
 	// Count numbers
 
-	unsigned int count = 0;
+	uint count = 0;
 
 	char* token = strtok(aux, "( )");
 
@@ -67,7 +67,7 @@ unsigned int lookUpVectorEntry( char* dname, char* ename, double** entry, unsign
 
 	// Allocate memory
 
-	*entry = (double*)malloc( count * sizeof(double) );
+	*entry = (scalar*)malloc( count * sizeof(scalar) );
 
 	for(i = 0 ; i < count ; i++)
 	    (*entry)[i] = 0;

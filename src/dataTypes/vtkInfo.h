@@ -14,16 +14,18 @@
  * Information related to VTK uotput
  */
 
+#include <dataTypes.h>
+
 typedef struct {
 
     /** Total number of scalar fields */
-    unsigned int nscalar;   
+    uint nscalar;   
 
     /** Total number of vector fields */
-    unsigned int nvector;   
+    uint nvector;   
 
     /** Total number of pdf fields */
-    unsigned int npdf;   
+    uint npdf;   
 
     /** Scalar fields names*/
     char** scalarFields;   

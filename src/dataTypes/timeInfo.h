@@ -17,23 +17,25 @@
  * This struct contains information related to global simulation 
  */
 
+#include <dataTypes.h>
+
 typedef struct {
 
-    unsigned int start;   /**< Start time */
+    uint start;   /**< Start time */
 
-    unsigned int end;   /**< End time */
+    uint end;   /**< End time */
 
-    unsigned int current;   /**< Current time */
+    uint current;   /**< Current time */
 
-    unsigned int writeInterval;   /**< Write interval (write every writeInterval steps) */
+    uint writeInterval;   /**< Write interval (write every writeInterval steps) */
 
     time_t st;   /**< Start time (cpu time measurement) */
     
     struct timeval stt;   /**< Time struct (cpu time measurement) */
 
-    unsigned int stp;   /**< Time step inside write intrval */
+    uint stp;   /**< Time step inside write intrval */
 
-    unsigned int debug;   /**< Debug flag. If true, write fields in raw format */   
+    uint debug;   /**< Debug flag. If true, write fields in raw format */   
     
 } timeInfo;
 

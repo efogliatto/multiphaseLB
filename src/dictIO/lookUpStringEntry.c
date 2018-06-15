@@ -1,14 +1,15 @@
+#include <lookUpStringEntry.h>
 #include <lookUpEntry.h>
 #include <string.h>
 #include <stdlib.h>
 #include <basic.h>
 
-unsigned int lookUpStringEntry( char* dname, char* ename, char** entry, const char* df ) {
+uint lookUpStringEntry( char* dname, char* ename, char** entry, const char* df ) {
 
 
     char* aux = 0;
     
-    unsigned int status = 0;
+    uint status = 0;
 
     
     status = lookUpEntry( dname, ename, &aux );

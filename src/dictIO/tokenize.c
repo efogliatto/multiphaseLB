@@ -2,16 +2,17 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include <tokenize.h>
 
-unsigned int tokenize( char* src, char ***dest, unsigned int* n ) {
+uint tokenize( char* src, char ***dest, uint* n ) {
 
     
-    unsigned int status = 0;
+    uint status = 0;
 
 
     // Count number of / ocurrences
 
-    unsigned int count = 0,
+    uint count = 0,
 	i;
 
     for( i = 0 ; i < (int)strlen(src) ; i++ ) {

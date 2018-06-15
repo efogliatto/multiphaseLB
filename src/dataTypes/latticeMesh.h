@@ -7,6 +7,8 @@
 /* #include <bdInfo.h> */
 /* #include <EOSInfo.h> */
 
+#include <dataTypes.h>
+
 #include <basicMesh.h>
 #include <mpiInfo.h>
 #include <timeInfo.h>

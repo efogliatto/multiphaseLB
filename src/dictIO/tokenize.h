@@ -16,6 +16,8 @@
  * @return Status. Correct if different from zero
  */
 
-unsigned int tokenize( char* src, char ***dest, unsigned int* n );
+#include <dataTypes.h>
+
+uint tokenize( char* src, char ***dest, uint* n );
 
 #endif // TOKENIZE_H

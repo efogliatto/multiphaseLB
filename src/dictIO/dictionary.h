@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include <dataTypes.h>
 
 /**
  * @file dictionary.h
@@ -19,7 +20,7 @@ typedef struct {
     char *content;
 
     /** File version */
-    unsigned int version;
+    uint version;
 
 } dictionary;
 

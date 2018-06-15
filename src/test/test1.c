@@ -6,7 +6,7 @@ int main() {
     char* entry = 0;
 
     if(  lookUpStringEntry("boundaries", "f/Y1/type", &entry, "sarasa")  )
-
+	
     	printf("type %s\n", entry);
 
 

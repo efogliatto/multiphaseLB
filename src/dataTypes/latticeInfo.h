@@ -16,6 +16,8 @@
  * Available lattice models. DdQq type.
  */
 
+#include <dataTypes.h>
+
 typedef enum {
     D2Q9,
     D3Q15
@@ -34,7 +36,7 @@ typedef struct {
     DdQq model;
     
     /** Sound speed */
-    double cs2;    
+    scalar cs2;    
 
     /** Dimension */
     int d;    
@@ -49,16 +51,16 @@ typedef struct {
     int* reverse;    
 
     /** DdQq model weights */
-    double* omega;    
+    scalar* omega;    
 
     /** Interaction force weights */
-    double* weights;    
+    scalar* weights;    
 
     /** MRT transformation matrix */
-    double** M;    
+    scalar** M;    
 
     /** MRT inverse of transformation matrix */
-    double** invM;    
+    scalar** invM;    
     
 }latticeInfo;
 
