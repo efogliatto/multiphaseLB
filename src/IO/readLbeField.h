@@ -15,6 +15,6 @@
  * @return Status. Correct if different from zero
  */
 
-unsigned int readLbeField( latticeMesh* mesh, lbeField* field, char* fname );
+uint readLbeField( latticeMesh* mesh, lbeField* field, char* fname );
 
 #endif // READLBEFIELD_H

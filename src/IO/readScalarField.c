@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <readScalarField.h>
 
-unsigned int readScalarField( latticeMesh* mesh, double** field, char* fname ) {
+uint readScalarField( latticeMesh* mesh, scalar** field, char* fname ) {
 
     
     unsigned int status = 0;
@@ -22,7 +22,7 @@ unsigned int readScalarField( latticeMesh* mesh, double** field, char* fname ) {
 
 
     
-    *field = (double*)malloc( mesh->mesh.nPoints * sizeof(double) );
+    *field = (scalar*)malloc( mesh->mesh.nPoints * sizeof(scalar) );
 
     
     // Read until <PointData
@@ -78,11 +78,19 @@ unsigned int readScalarField( latticeMesh* mesh, double** field, char* fname ) {
 
     	    unsigned int i;
 
-	    double value;
+	    scalar value;
 
     	    for ( i = 0 ; i < mesh->mesh.nPoints ; i++ ) {
+
+		#ifdef DP
 		
     	    	status = fscanf(file, "%lf", &value);
+
+		#elif SP
+
+    	    	status = fscanf(file, "%f", &value);
+
+		#endif
 		
 		field[0][i] = value;
 

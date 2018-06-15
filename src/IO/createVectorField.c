@@ -3,7 +3,7 @@
 #include <basic.h>
 
 
-void createVectorField( latticeMesh* mesh, scalar*** field, unsigned int vsize, char* fname, fieldOpt options ) {
+void createVectorField( latticeMesh* mesh, scalar*** field, uint vsize, char* fname, fieldOpt options ) {
 
     
     if(mesh->parallel.pid == 0) {
@@ -13,7 +13,7 @@ void createVectorField( latticeMesh* mesh, scalar*** field, unsigned int vsize, 
     }
     
 
-    unsigned int status = readVectorField( mesh, field, vsize, fname);
+    uint status = readVectorField( mesh, field, vsize, fname);
 
     
     if( status == 0 ) {

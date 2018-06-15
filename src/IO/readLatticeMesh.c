@@ -6,7 +6,7 @@
 #include <io.h>
 #include <latticeModel.h>
 
-latticeMesh readLatticeMesh( unsigned int pid ) {
+latticeMesh readLatticeMesh( uint pid ) {
 
     
     
@@ -298,15 +298,15 @@ latticeMesh readLatticeMesh( unsigned int pid ) {
 
     // Resize mpi recv buffer
 
-    mesh.parallel.rbuf = (double**)malloc( mesh.parallel.worldSize * sizeof(double*) );
+    mesh.parallel.rbuf = (scalar**)malloc( mesh.parallel.worldSize * sizeof(scalar*) );
 
-    mesh.parallel.vrbuf = (double**)malloc( mesh.parallel.worldSize * sizeof(double*) );
+    mesh.parallel.vrbuf = (scalar**)malloc( mesh.parallel.worldSize * sizeof(scalar*) );
     
     for( i = 0 ; i < mesh.parallel.worldSize ; i++ ) {
 
-    	mesh.parallel.rbuf[i] = (double*)malloc( mesh.parallel.nrg[i] * mesh.mesh.Q * sizeof(double) );
+    	mesh.parallel.rbuf[i] = (scalar*)malloc( mesh.parallel.nrg[i] * mesh.mesh.Q * sizeof(scalar) );
 
-    	mesh.parallel.vrbuf[i] = (double*)malloc( mesh.parallel.nrg[i] * 3 * sizeof(double) );
+    	mesh.parallel.vrbuf[i] = (scalar*)malloc( mesh.parallel.nrg[i] * 3 * sizeof(scalar) );
 
     }
 
@@ -366,15 +366,15 @@ latticeMesh readLatticeMesh( unsigned int pid ) {
 
     // Resize mpi send buffer
 
-    mesh.parallel.sbuf = (double**)malloc( mesh.parallel.worldSize * sizeof(double*) );
+    mesh.parallel.sbuf = (scalar**)malloc( mesh.parallel.worldSize * sizeof(scalar*) );
 
-    mesh.parallel.vsbuf = (double**)malloc( mesh.parallel.worldSize * sizeof(double*) );
+    mesh.parallel.vsbuf = (scalar**)malloc( mesh.parallel.worldSize * sizeof(scalar*) );
     
     for( i = 0 ; i < mesh.parallel.worldSize ; i++ ) {
 
-    	mesh.parallel.sbuf[i] = (double*)malloc( mesh.parallel.nsg[i] * mesh.mesh.Q * sizeof(double) );
+    	mesh.parallel.sbuf[i] = (scalar*)malloc( mesh.parallel.nsg[i] * mesh.mesh.Q * sizeof(scalar) );
 
-    	mesh.parallel.vsbuf[i] = (double*)malloc( mesh.parallel.nsg[i] * 3 * sizeof(double) );
+    	mesh.parallel.vsbuf[i] = (scalar*)malloc( mesh.parallel.nsg[i] * 3 * sizeof(scalar) );
 
     }
 

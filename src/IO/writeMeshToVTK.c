@@ -36,7 +36,7 @@ void writeMeshToVTK( latticeMesh* mesh, vtkInfo* vtk ) {
 
     
     // Write points
-    unsigned int i;
+    uint i;
     for( i = 0 ; i < mesh->mesh.nPoints ; i++ ) {
     	fprintf(outFile, "          %.1f %.1f %.1f\n", (float)mesh->mesh.points[i][0], (float)mesh->mesh.points[i][1], (float)mesh->mesh.points[i][2]);
     }
@@ -48,7 +48,7 @@ void writeMeshToVTK( latticeMesh* mesh, vtkInfo* vtk ) {
     fprintf(outFile, "        <DataArray type=\"Int32\" Name=\"connectivity\" format=\"ascii\">\n");
 
     // Write cells
-    unsigned int j;
+    uint j;
     
     for( i = 0 ; i < mesh->mesh.ncells ; i++ ) {
 
@@ -72,7 +72,7 @@ void writeMeshToVTK( latticeMesh* mesh, vtkInfo* vtk ) {
 
 
     // Write offsets
-    unsigned int acum = 0;
+    uint acum = 0;
     for( i = 0 ; i < mesh->mesh.ncells ; i++ ) {
     	acum += mesh->mesh.cellType;
     	fprintf(outFile, "          %d\n", acum);

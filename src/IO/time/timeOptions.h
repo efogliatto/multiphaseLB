@@ -1,10 +1,12 @@
 #ifndef TIMEOPTIONS_H
 #define TIMEOPTIONS_H
 
-double elapsed ( timeInfo* info );
+#include <timeInfo.h>
 
-unsigned int writeFlag( timeInfo* info );
+scalar elapsed ( timeInfo* info );
 
-unsigned int updateTime( timeInfo* info );
+uint writeFlag( timeInfo* info );
+
+uint updateTime( timeInfo* info );
 
 #endif // TIMEOPTIONS_H

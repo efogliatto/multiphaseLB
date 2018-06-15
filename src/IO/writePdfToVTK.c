@@ -1,9 +1,9 @@
 #include <latticeMesh.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <writePdfToVTK.h>
 
-
-void writePdfToVTK( char* fname, double** field, latticeMesh* mesh ) {
+void writePdfToVTK( char* fname, scalar** field, latticeMesh* mesh ) {
 
 	    
 
@@ -24,7 +24,7 @@ void writePdfToVTK( char* fname, double** field, latticeMesh* mesh ) {
     fprintf(outFile, "        <DataArray type=\"Float32\" Name=\"%s\"  NumberOfComponents=\"%d\" format=\"ascii\">\n", fname, mesh->mesh.Q);
 
     // Print field
-    unsigned int i,j;
+    uint i,j;
     
     for( i = 0 ; i < mesh->mesh.nPoints ; i++ ) {
 	
@@ -60,7 +60,7 @@ void writePdfToVTK( char* fname, double** field, latticeMesh* mesh ) {
 
 
 	
-	unsigned int ii, jj;
+	uint ii, jj;
     
 	for( ii = 0 ; ii < mesh->mesh.nPoints ; ii++ ) {
 

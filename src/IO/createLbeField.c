@@ -13,7 +13,7 @@ void createLbeField( latticeMesh* mesh, lbeField* field, char* fname, fieldOpt o
     }
     
 
-    unsigned int status = readLbeField( mesh, field, fname);
+    uint status = readLbeField( mesh, field, fname);
 
     
     if( status == 0 ) {

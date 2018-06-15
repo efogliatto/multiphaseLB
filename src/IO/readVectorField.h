@@ -19,6 +19,6 @@
  * @return Status. Correct if different from zero
  */
 
-unsigned int readVectorField( latticeMesh* mesh, double*** field, unsigned int vsize, char* fname );
+uint readVectorField( latticeMesh* mesh, scalar*** field, uint vsize, char* fname );
 
 #endif // READVECTORFIELD_H

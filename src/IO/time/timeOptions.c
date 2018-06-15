@@ -2,22 +2,22 @@
 
 
 // Elapsed time
-double elapsed ( timeInfo* info ) {
+scalar elapsed ( timeInfo* info ) {
 
     struct timeval _end;
     
     gettimeofday( &_end, NULL );
 	
-    return (((double)_end.tv_sec + (double)_end.tv_usec / 1000000)  - ((double)info->stt.tv_sec + (double)info->stt.tv_usec / 1000000));
+    return (((scalar)_end.tv_sec + (scalar)_end.tv_usec / 1000000)  - ((scalar)info->stt.tv_sec + (scalar)info->stt.tv_usec / 1000000));
 
 }
 
 
     
 // Flag to enable writing
-unsigned int writeFlag( timeInfo* info ) {
+uint writeFlag( timeInfo* info ) {
 
-    unsigned int wrt = 0;
+    uint wrt = 0;
 	
     if ( info->stp == info->writeInterval ) {
 	
@@ -32,9 +32,9 @@ unsigned int writeFlag( timeInfo* info ) {
 
     
 // Update time structure
-unsigned int updateTime( timeInfo* info ) {
+uint updateTime( timeInfo* info ) {
 
-    unsigned int upd = 1;
+    uint upd = 1;
 
     
     // Update time

@@ -18,6 +18,6 @@
  * @param options Creation options: MUST_READ, NO_READ
  */
 
-void createVectorField( latticeMesh* mesh, double*** field, unsigned int vsize, char* fname, fieldOpt options );
+void createVectorField( latticeMesh* mesh, scalar*** field, uint vsize, char* fname, fieldOpt options );
 
 #endif // CREATEVECTORFIELD_H

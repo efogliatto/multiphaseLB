@@ -2,6 +2,7 @@
 #include <vtkInfo.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <writeVTKExtra.h>
 
 void writeVTKExtra( latticeMesh* mesh, vtkInfo* vtk ) {
 

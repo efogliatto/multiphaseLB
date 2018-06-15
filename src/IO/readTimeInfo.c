@@ -4,9 +4,9 @@
 void readTimeInfo( latticeMesh* mesh ) {
 
     
-    double aux;
+    scalar aux;
 
-    unsigned int status;
+    uint status;
 
     
     // Start time
@@ -15,7 +15,7 @@ void readTimeInfo( latticeMesh* mesh ) {
 
     if(status) {}
     
-    mesh->time.start = (unsigned int)aux;
+    mesh->time.start = (uint)aux;
 
     mesh->time.current = mesh->time.start;
 
@@ -29,7 +29,7 @@ void readTimeInfo( latticeMesh* mesh ) {
 
     if(status) {}
     
-    mesh->time.end = (unsigned int)aux;
+    mesh->time.end = (uint)aux;
 
 
     
@@ -39,7 +39,7 @@ void readTimeInfo( latticeMesh* mesh ) {
 
     if(status) {}
     
-    mesh->time.writeInterval = (unsigned int)aux;
+    mesh->time.writeInterval = (uint)aux;
 
 
 

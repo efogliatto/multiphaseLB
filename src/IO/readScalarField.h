@@ -18,6 +18,6 @@
  * @return Status. Correct if different from zero
  */
 
-unsigned int readScalarField( latticeMesh* mesh, double** field, char* fname );
+uint readScalarField( latticeMesh* mesh, scalar** field, char* fname );
 
 #endif // READSCALARFIELD_H

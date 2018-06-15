@@ -13,6 +13,6 @@
  * @return Lattice Mesh structure
  */
 
-latticeMesh readLatticeMesh( unsigned int pid );
+latticeMesh readLatticeMesh( uint pid );
 
 #endif // READLATTICEMESH_H

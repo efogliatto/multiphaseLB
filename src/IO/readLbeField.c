@@ -6,13 +6,13 @@
 #include <readMyMRTConstants.h>
 
 
-unsigned int readLbeField( latticeMesh* mesh, lbeField* field, char* fname ) {
+uint readLbeField( latticeMesh* mesh, lbeField* field, char* fname ) {
 
     
     
     // Read values from pvtu file
     
-    unsigned int status = readVectorField( mesh, &field->value, mesh->mesh.Q, fname );
+    uint status = readVectorField( mesh, &field->value, mesh->mesh.Q, fname );
     
     status = readVectorField( mesh, &field->swap, mesh->mesh.Q, fname );
 
@@ -70,7 +70,7 @@ unsigned int readLbeField( latticeMesh* mesh, lbeField* field, char* fname ) {
 	
     	// Allocate scalar source
 	
-    	field->scalarSource = (double*)malloc( mesh->mesh.nPoints * sizeof(double) );
+    	field->scalarSource = (scalar*)malloc( mesh->mesh.nPoints * sizeof(scalar) );
 
     	break;
 
@@ -90,7 +90,7 @@ unsigned int readLbeField( latticeMesh* mesh, lbeField* field, char* fname ) {
 
     field->boundary = (bdField*)malloc( mesh->mesh.bd.nbd * sizeof(bdField) );
     
-    unsigned int i;
+    uint i;
 
     for( i = 0 ; i < mesh->mesh.bd.nbd ; i++ ) {
 

@@ -6,7 +6,7 @@
 void createScalarField( latticeMesh* mesh, scalar** field, char* fname, fieldOpt options ) {
 
 
-    unsigned int status = 0,
+    uint status = 0,
 	i;
     
     

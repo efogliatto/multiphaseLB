@@ -4,7 +4,7 @@
 #include <readVectorField.h>
 
 
-unsigned int readVectorField( latticeMesh* mesh, double*** field, unsigned int vsize, char* fname ) {
+uint readVectorField( latticeMesh* mesh, scalar*** field, unsigned int vsize, char* fname ) {
     
     
     unsigned int status = 0;
@@ -82,13 +82,21 @@ unsigned int readVectorField( latticeMesh* mesh, double*** field, unsigned int v
 
     	    unsigned int i,j;
 
-    	    double value;
+    	    scalar value;
 
     	    for ( i = 0 ; i < mesh->mesh.nPoints ; i++ ) {
 
 		for ( j = 0 ; j < vsize ; j++ ) {
+
+		    #ifdef DP
 		
 		    status = fscanf(file, "%lf", &value);
+
+		    #elif SP
+
+		    status = fscanf(file, "%f", &value);
+
+		    #endif
 		
 		    field[0][i][j] = value;
 

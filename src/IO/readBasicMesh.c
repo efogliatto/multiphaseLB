@@ -15,7 +15,7 @@ basicMesh readBasicMesh() {
 
     uint i,j;
 
-    unsigned int status;
+    uint status;
 
     
 

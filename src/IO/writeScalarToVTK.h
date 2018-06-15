@@ -3,6 +3,6 @@
 
 #include <latticeMesh.h>
 
-void writeScalarToVTK( char* fname, double* field, latticeMesh* mesh );
+void writeScalarToVTK( char* fname, scalar* field, latticeMesh* mesh );
 
 #endif // WRITESCALARTOVTK_H

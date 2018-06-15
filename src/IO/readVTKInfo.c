@@ -8,7 +8,7 @@ vtkInfo readVTKInfo() {
 
     vtkInfo vtk;
 
-    unsigned int status = 0;
+    uint status = 0;
 
     
     status = lookUpStringList( "start/initialFields", "scalarFields", &vtk.scalarFields, &vtk.nscalar);
