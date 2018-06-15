@@ -8,7 +8,7 @@ void updateBoundaries( latticeMesh* mesh, macroFields* mfields, lbeField* field 
 
     if( field->update != 0 ) {
     
-	unsigned int bndId;
+	uint bndId;
 
     
 	// Move over boundaries and apply condition

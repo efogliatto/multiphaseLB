@@ -5,11 +5,11 @@
 void compWork( latticeMesh* mesh, macroFields* mfields ) {
 
     
-    unsigned int id;
+    uint id;
 
-    double divU;
+    scalar divU;
 
-    double phi;
+    scalar phi;
 
     
     for( id = 0 ; id < mesh->parallel.nlocal ; id++ ) {

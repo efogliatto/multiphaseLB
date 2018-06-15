@@ -19,6 +19,6 @@
  * @return Temperature at node @p id
  */
 
-double myMRTTemperature( latticeMesh* mesh, macroFields* mfields, lbeField* field, unsigned int id );
+scalar myMRTTemperature( latticeMesh* mesh, macroFields* mfields, lbeField* field, uint id );
 
 #endif // MYMRTTEMPERATURE_H

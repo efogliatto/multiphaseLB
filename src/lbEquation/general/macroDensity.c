@@ -12,7 +12,7 @@ void macroDensity( latticeMesh* mesh, macroFields* mfields, lbeField* field ) {
 	
 	// Compute density according to field.colId
     
-	unsigned int id;
+	uint id;
     
     
 	// Apply collision model

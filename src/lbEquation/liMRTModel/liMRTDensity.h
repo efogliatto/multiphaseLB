@@ -3,6 +3,6 @@
 
 #include <latticeMesh.h>
 
-double liMRTDensity( latticeMesh* mesh, double* f );
+scalar liMRTDensity( latticeMesh* mesh, scalar* f );
 
 #endif // LIDENSITY_H

@@ -15,7 +15,7 @@
 void updateBdElements( latticeMesh* mesh, macroFields* mfields, lbeField* field ) {
 
     
-    unsigned int bndId;
+    uint bndId;
 
     
     // Move over boundaries and update boundary elements
@@ -26,7 +26,7 @@ void updateBdElements( latticeMesh* mesh, macroFields* mfields, lbeField* field 
     	/* if( field->boundary[bndId].bdType != 0 ) { */
 	
 
-    	    unsigned i,j;
+    	    uint i,j;
 	
 
     	    // Apply collision model

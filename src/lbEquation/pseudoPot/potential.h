@@ -16,6 +16,6 @@
  * @return Potential @p id
  */
 
-double potential( latticeMesh* mesh, double rho, double T );
+scalar potential( latticeMesh* mesh, scalar rho, scalar T );
 
 #endif // POTENTIAL_H

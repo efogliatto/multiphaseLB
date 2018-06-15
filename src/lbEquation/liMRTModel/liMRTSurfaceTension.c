@@ -3,7 +3,7 @@
 #include <basic.h>
 
 
-void liMRTSurfaceTension( latticeMesh* mesh, macroFields* mfields, lbeField* field, double* C, unsigned int id ) {
+void liMRTSurfaceTension( latticeMesh* mesh, macroFields* mfields, lbeField* field, scalar* C, uint id ) {
 
 
     // Up to now, only Li model
@@ -13,15 +13,15 @@ void liMRTSurfaceTension( latticeMesh* mesh, macroFields* mfields, lbeField* fie
 
 	// Q tensor
 
-	double** Q;
+	scalar** Q;
 
-	double psi = potential( mesh, mfields->rho[id], mfields->T[id]);
+	scalar psi = potential( mesh, mfields->rho[id], mfields->T[id]);
 
-	double alpha;
+	scalar alpha;
 
 	int neighId;
 
-	unsigned int i,j,k, noneigh = 0;
+	uint i,j,k, noneigh = 0;
 	
 
 	

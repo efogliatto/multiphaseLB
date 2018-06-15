@@ -12,7 +12,7 @@ void macroPressure( latticeMesh* mesh, macroFields* mfields, lbeField* field ) {
 	
 	// Compute pressure according to field.model
     
-	unsigned int id;
+	uint id;
     
     
 	// Apply collision model

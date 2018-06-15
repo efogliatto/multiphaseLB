@@ -3,10 +3,10 @@
 #include <myMRTModel.h>
 
 
-double singleNodeT( latticeMesh* mesh, macroFields* mfields, lbeField* field, unsigned int id ) {
+scalar singleNodeT( latticeMesh* mesh, macroFields* mfields, lbeField* field, uint id ) {
 
 
-    double T = 0;
+    scalar T = 0;
     
     
     // Apply collision model

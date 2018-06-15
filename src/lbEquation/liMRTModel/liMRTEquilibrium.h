@@ -3,6 +3,6 @@
 
 #include <latticeInfo.h>
 
-void liMRTEquilibrium( latticeInfo* lattice, double rho, double v[3], double* f );
+void liMRTEquilibrium( latticeInfo* lattice, scalar rho, scalar v[3], scalar* f );
 
 #endif // LIMRTEQUILIBRIUM_H

@@ -19,6 +19,6 @@
  * @param id Node index
  */
 
-void myMRTSource( latticeMesh* mesh, macroFields* mfields, lbeField* field, double* Gamma, unsigned int id );
+void myMRTSource( latticeMesh* mesh, macroFields* mfields, lbeField* field, scalar* Gamma, uint id );
 
 #endif // MYMRTSOURCE_H

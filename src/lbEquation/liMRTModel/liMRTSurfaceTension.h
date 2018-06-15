@@ -5,6 +5,6 @@
 #include <lbeField.h>
 #include <latticeMesh.h>
 
-void liMRTSurfaceTension( latticeMesh* mesh, macroFields* mfields, lbeField* field, double* C, unsigned int id );
+void liMRTSurfaceTension( latticeMesh* mesh, macroFields* mfields, lbeField* field, scalar* C, uint id );
 
 #endif // LIMRTSURFACETENSION_H

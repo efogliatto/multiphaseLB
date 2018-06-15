@@ -1,16 +1,16 @@
 #include <myMRTSource.h>
 
 
-void myMRTSource( latticeMesh* mesh, macroFields* mfields, lbeField* field, double* Gamma, unsigned int id ) {
+void myMRTSource( latticeMesh* mesh, macroFields* mfields, lbeField* field, scalar* Gamma, uint id ) {
 
-    unsigned int i;
+    uint i;
 
-    /* double lambda = 1.0, */
+    /* scalar lambda = 1.0, */
     /* 	dot = 0.0, */
     /* 	divU = 0.0, */
     /* 	dpdT = 0.0; */
 
-    /* double gradT[3], */
+    /* scalar gradT[3], */
     /* 	gradRho[3]; */
     
 

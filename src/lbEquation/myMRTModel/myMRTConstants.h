@@ -8,18 +8,20 @@
  * Constants for my MRT model
  */
 
+#include <dataTypes.h>
+
 typedef struct {
 
     /** Multiple relaxation times */
-    double* Lambda;
+    scalar* Lambda;
 
     /** Thermal conductivity */
-    double lambda;
+    scalar lambda;
         
     /** Extra constants used for equilibrium distributions in moment space (myMRTModel) */
-    double alpha_1;
+    scalar alpha_1;
 
-    double alpha_2;    
+    scalar alpha_2;    
     
 
 } myMRTConstants;

@@ -5,6 +5,6 @@
 #include <macroFields.h>
 #include <lbeField.h>
 
-void liMRTVelocity( latticeMesh* mesh, macroFields* mfields, lbeField* field, double** v, unsigned int id );
+void liMRTVelocity( latticeMesh* mesh, macroFields* mfields, lbeField* field, scalar** v, uint id );
 
 #endif // LIMRTVELOCITY_H

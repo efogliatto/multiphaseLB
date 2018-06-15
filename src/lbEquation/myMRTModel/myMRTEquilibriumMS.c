@@ -1,7 +1,7 @@
 #include <myMRTEquilibriumMS.h>
 #include <basic.h>
 
-void myMRTEquilibriumMS( latticeMesh* mesh, macroFields* mfields, double* n_eq, double alpha_1, double alpha_2, unsigned int id ) {
+void myMRTEquilibriumMS( latticeMesh* mesh, macroFields* mfields, scalar* n_eq, scalar alpha_1, scalar alpha_2, uint id ) {
 
     // Up to now, only D2Q9
 

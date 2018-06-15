@@ -6,19 +6,19 @@
 
 void heatSource( latticeMesh* mesh, macroFields* mfields, lbeField* field ) {
 
-    unsigned int k, id;
+    uint k, id;
 
-    double lambda = 1.0,
+    scalar lambda = 1.0,
 	dot = 0.0,
 	divU = 0.0,
 	dpdT = 0.0;
 
-    double gradT[3],
+    scalar gradT[3],
 	gradRho[3];
 
-    /* double w = 0; */
+    /* scalar w = 0; */
 
-    /* double* n     = (double*)malloc( mesh->lattice.Q * sizeof(double) );   // m:  momentum space */
+    /* scalar* n     = (scalar*)malloc( mesh->lattice.Q * sizeof(scalar) );   // m:  momentum space */
 
 
     

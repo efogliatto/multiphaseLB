@@ -7,7 +7,7 @@ void lbstream( latticeMesh* mesh, lbeField* field ) {
     if( field->update != 0 ) {
 	
     
-	unsigned int id, k;
+	uint id, k;
 
     
 	// Copy all values to swap

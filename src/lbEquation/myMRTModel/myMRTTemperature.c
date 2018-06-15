@@ -2,18 +2,18 @@
 #include <myMRTSource.h>
 #include <stdlib.h>
 
-double myMRTTemperature( latticeMesh* mesh, macroFields* mfields, lbeField* field, unsigned int id ) {
+scalar myMRTTemperature( latticeMesh* mesh, macroFields* mfields, lbeField* field, uint id ) {
 
-    unsigned int k;
+    uint k;
 
 
     // Initialize Temperature
-    double T = 0;
+    scalar T = 0;
 
     
     // Implicit source term
     
-    double* Gamma = (double*)malloc( mesh->lattice.Q * sizeof(double) );
+    scalar* Gamma = (scalar*)malloc( mesh->lattice.Q * sizeof(scalar) );
 
     myMRTSource(mesh, mfields, field, Gamma, id);
 

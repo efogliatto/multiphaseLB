@@ -7,7 +7,7 @@
 /* #include <potential.h> */
 
 
-void liMRTForce( latticeMesh* mesh, macroFields* mfields, lbeField* field, double* S, unsigned int id ) {
+void liMRTForce( latticeMesh* mesh, macroFields* mfields, lbeField* field, scalar* S, uint id ) {
 
     
     if( mesh->lattice.Q == 9 ) {
@@ -15,9 +15,9 @@ void liMRTForce( latticeMesh* mesh, macroFields* mfields, lbeField* field, doubl
 	
 	// Total force
 	
-	double F[3];
+	scalar F[3];
 
-	unsigned int j;
+	uint j;
 
 	for( j = 0 ; j < 3 ; j++ ) {
 
@@ -28,7 +28,7 @@ void liMRTForce( latticeMesh* mesh, macroFields* mfields, lbeField* field, doubl
 
 	// Potential
 	
-	double psi = potential( mesh, mfields->rho[id], mfields->T[id]);
+	scalar psi = potential( mesh, mfields->rho[id], mfields->T[id]);
 
 	
 
@@ -62,13 +62,13 @@ void liMRTForce( latticeMesh* mesh, macroFields* mfields, lbeField* field, doubl
 
 
 
-/* void liMRTForce( struct latticeMesh* mesh, struct macroFields* mfields, struct lbeField* field, double* S, unsigned int id ) { */
+/* void liMRTForce( struct latticeMesh* mesh, struct macroFields* mfields, struct lbeField* field, scalar* S, unsigned int id ) { */
 
     
 /*     if( mesh->lattice.Q == 9 ) { */
 
-/* 	double F[3]; */
-/* 	double Fm[3]; */
+/* 	scalar F[3]; */
+/* 	scalar Fm[3]; */
 	
 /* 	// Total force */
 /* 	totalForce( mesh, F, mfields->rho, mfields->T, id); */
@@ -77,7 +77,7 @@ void liMRTForce( latticeMesh* mesh, macroFields* mfields, lbeField* field, doubl
 /* 	interactionForce( mesh, Fm, mfields->rho, mfields->T, id); */
 
 /* 	// Potential */
-/* 	double psi = potential( mesh, mfields->rho[id], mfields->T[id]); */
+/* 	scalar psi = potential( mesh, mfields->rho[id], mfields->T[id]); */
 	
 /* 	S[0] = 0; */
 /* 	S[1] =  6 * (mfields->U[id][0]*F[0] + mfields->U[id][1]*F[1]) + 12 * field->sigma * (Fm[0]*Fm[0] + Fm[1]*Fm[1]) / (psi * psi * ((1/field->Lambda[1])-0.5)); */

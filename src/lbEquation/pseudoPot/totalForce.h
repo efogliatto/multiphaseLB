@@ -18,6 +18,6 @@
  * @param id Node index
  */
 
-void totalForce( latticeMesh* mesh, double F[3], double* rho, double* T, unsigned int id );
+void totalForce( latticeMesh* mesh, scalar F[3], scalar* rho, scalar* T, uint id );
 
 #endif // TOTALFORCE_H

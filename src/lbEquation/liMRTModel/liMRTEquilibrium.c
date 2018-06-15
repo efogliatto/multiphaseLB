@@ -1,14 +1,14 @@
 #include <liMRTEquilibrium.h>
 
-void liMRTEquilibrium( latticeInfo* lattice, double rho, double v[3], double* f ) {
+void liMRTEquilibrium( latticeInfo* lattice, scalar rho, scalar v[3], scalar* f ) {
 
-    unsigned int k, j;
+    uint k, j;
 
     // Move over velocities
     
     for( k = 0 ; k < lattice->Q ; k++ ) {
 
-    	double alpha = 0,
+    	scalar alpha = 0,
     	    beta = 0;
 
     	// Dot product

@@ -9,7 +9,7 @@ void macroTemperature( latticeMesh* mesh, macroFields* mfields, lbeField* field 
     if (field->update != 0) {
 
 	
-	unsigned int id;    
+	uint id;    
     
 	switch(field->model) {
 	    

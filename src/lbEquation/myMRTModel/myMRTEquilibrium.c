@@ -2,7 +2,7 @@
 #include <basic.h>
 
 
-void myMRTEquilibrium( latticeInfo* lattice, double T, double U[3], double alpha_1, double alpha_2, double* f ) {
+void myMRTEquilibrium( latticeInfo* lattice, scalar T, scalar U[3], scalar alpha_1, scalar alpha_2, scalar* f ) {
 
 
     if( lattice->model == D2Q9 ) {
@@ -10,7 +10,7 @@ void myMRTEquilibrium( latticeInfo* lattice, double T, double U[3], double alpha
 
 	// Equilibrium in moment space
 
-	double n_eq[9];
+	scalar n_eq[9];
 
 	n_eq[0] = T;
 	

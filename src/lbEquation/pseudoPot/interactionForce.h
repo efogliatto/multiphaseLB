@@ -17,6 +17,6 @@
  * @param id Node index
  */
 
-void interactionForce( latticeMesh* mesh, double Ff[3], double* rho, double* T, unsigned int id );
+void interactionForce( latticeMesh* mesh, scalar Ff[3], scalar* rho, scalar* T, uint id );
 
 #endif // INTERACTIONFORCE_H

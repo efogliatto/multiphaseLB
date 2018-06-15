@@ -3,14 +3,14 @@
 #include <potential.h>
 #include <interactionForce.h>
 
-void interactionForce( latticeMesh* mesh, double Ff[3], double* rho, double* T, unsigned int id ) {
+void interactionForce( latticeMesh* mesh, scalar Ff[3], scalar* rho, scalar* T, uint id ) {
 
-    unsigned int i,
+    uint i,
 	k,
 	noneigh = 0;
 
 
-    double F[3] = {0.0, 0.0, 0.0};
+    scalar F[3] = {0.0, 0.0, 0.0};
     
     // Initialize force term
     for( i = 0 ; i < 3 ; i++) {
@@ -42,12 +42,12 @@ void interactionForce( latticeMesh* mesh, double Ff[3], double* rho, double* T, 
 
 	    int neighId = mesh->mesh.nb[id][ mesh->lattice.reverse[k] ];
 	    
-    	    double alpha = mesh->lattice.weights[k] * potential(mesh, rho[neighId], T[neighId]);
+    	    scalar alpha = mesh->lattice.weights[k] * potential(mesh, rho[neighId], T[neighId]);
 
 	    
     	    for( i = 0 ; i < 3 ; i++ ) {
 
-		F[i] +=  alpha * (double)mesh->lattice.vel[k][i] ;
+		F[i] +=  alpha * (scalar)mesh->lattice.vel[k][i] ;
 
     	    }
     
@@ -59,7 +59,7 @@ void interactionForce( latticeMesh* mesh, double Ff[3], double* rho, double* T, 
 	
 
     	// Extra constant
-    	double beta = -mesh->EOS.G * potential(mesh, rho[id], T[id]);
+    	scalar beta = -mesh->EOS.G * potential(mesh, rho[id], T[id]);
     
     	for( i = 0 ; i < 3 ; i++) {
 	
@@ -89,7 +89,7 @@ void interactionForce( latticeMesh* mesh, double Ff[3], double* rho, double* T, 
     /* 	// Do not use unexisting neighbour */
     /* 	if(  ( neighId != -1 )  &&  (noneigh == 0)  ) { */
 	    
-    /* 	    double alpha = mesh->lattice.weights[k] * potential(mesh, rho[neighId], T[neighId]); */
+    /* 	    scalar alpha = mesh->lattice.weights[k] * potential(mesh, rho[neighId], T[neighId]); */
 	    
     /* 	    for( i = 0 ; i < 3 ; i++ ) { */
 
@@ -107,7 +107,7 @@ void interactionForce( latticeMesh* mesh, double Ff[3], double* rho, double* T, 
     /* if(noneigh == 0) { */
 	
     /* 	// Extra constant */
-    /* 	double beta = -mesh->EOS._G * potential(mesh, rho[id], T[id]); */
+    /* 	scalar beta = -mesh->EOS._G * potential(mesh, rho[id], T[id]); */
     
     /* 	for( i = 0 ; i < 3 ; i++) { */
 	

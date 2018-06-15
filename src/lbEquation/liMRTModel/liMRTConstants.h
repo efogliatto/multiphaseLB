@@ -8,6 +8,8 @@
  * Constants for li MRT model
  */
 
+#include <dataTypes.h>
+
 typedef enum {
 
     no_st,
@@ -21,28 +23,28 @@ typedef enum {
 typedef struct {
 
     /** Multiple relaxation times */
-    double* Lambda;
+    scalar* Lambda;
 
     /** Force coefficient */
-    double sigma;
+    scalar sigma;
 
     /** Extra constants used for tau dependency */
-    double ra;
+    scalar ra;
 
     /** Extra constants used for tau dependency */
-    double rb;
+    scalar rb;
 
     /** Extra constants used for tau dependency */
-    double na;
+    scalar na;
 
     /** Extra constants used for tau dependency */
-    double nb;
+    scalar nb;
 
     /** Surface tension model */
     stModel surfaceTension;
 
     /** Surface tension constants */
-    double kappa_st;
+    scalar kappa_st;
     
 
 } liMRTConstants;

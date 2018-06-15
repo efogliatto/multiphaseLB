@@ -5,12 +5,12 @@
 void updateBdForce( latticeMesh* mesh, macroFields* mfields ) {
 
     
-    unsigned int bndId,
+    uint bndId,
 	i,
 	j,
 	k;
 
-    double F[3];
+    scalar F[3];
 
     
     // Move over boundaries

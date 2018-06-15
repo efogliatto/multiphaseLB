@@ -3,19 +3,19 @@
 #include <basic.h>
 
 
-double liMRTPressure( latticeMesh* mesh, double* rho, double* T, double sigma, unsigned int id ) {
+scalar liMRTPressure( latticeMesh* mesh, scalar* rho, scalar* T, scalar sigma, uint id ) {
 
 
 
-    double psi = potential(mesh, rho[id], T[id]);
+    scalar psi = potential(mesh, rho[id], T[id]);
 
-    double p = rho[id] * mesh->lattice.cs2    +    0.5 * mesh->EOS.G * psi * psi;
+    scalar p = rho[id] * mesh->lattice.cs2    +    0.5 * mesh->EOS.G * psi * psi;
 
 
     
     // Laplacian of potential
 
-    double lap = 0;
+    scalar lap = 0;
 
     int a;
 
@@ -140,7 +140,7 @@ double liMRTPressure( latticeMesh* mesh, double* rho, double* T, double sigma, u
 
     // Gradient of potential
 
-    double grad[3] = {0,0,0};
+    scalar grad[3] = {0,0,0};
     
     switch(mesh->lattice.model) {
 

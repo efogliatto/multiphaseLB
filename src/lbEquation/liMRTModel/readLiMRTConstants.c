@@ -10,13 +10,13 @@ liMRTConstants readLiMRTConstants( char* fname ) {
 
     char* msg;
 
-    unsigned int status;
+    uint status;
 
     
 
     // Relaxation times
 
-    unsigned int n;
+    uint n;
 
     status = vstring(&msg, "%s/Lambda", fname);
 	

@@ -3,15 +3,15 @@
 #include <stdlib.h>
 
 
-void liMRTVelocity( latticeMesh* mesh, macroFields* mfields, lbeField* field, double** v, unsigned int id ) {
+void liMRTVelocity( latticeMesh* mesh, macroFields* mfields, lbeField* field, scalar** v, uint id ) {
 
-    unsigned int j, k;
+    uint j, k;
 
     // Interaction force
-    double F[3];
+    scalar F[3];
 
     // Local velocity
-    double lv[3] = {0,0,0};
+    scalar lv[3] = {0,0,0};
 
 	
     // Compute Total force

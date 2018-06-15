@@ -10,31 +10,31 @@ void myMRTCollision( latticeMesh* mesh, macroFields* mfields, lbeField* field ) 
 
     // Indices
     
-    unsigned int id, j, k;
+    uint id, j, k;
 
 
     
     // Partial distributions
     
-    double* n     = (double*)malloc( mesh->lattice.Q * sizeof(double) );   // m:  momentum space
+    scalar* n     = (scalar*)malloc( mesh->lattice.Q * sizeof(scalar) );   // m:  momentum space
     
-    double* n_eq  = (double*)malloc( mesh->lattice.Q * sizeof(double) );   // meq: equilibrium in momentum space   
+    scalar* n_eq  = (scalar*)malloc( mesh->lattice.Q * sizeof(scalar) );   // meq: equilibrium in momentum space   
     
-    double* GammaHat = (double*)malloc( mesh->lattice.Q * sizeof(double) );   // Source in population space
+    scalar* GammaHat = (scalar*)malloc( mesh->lattice.Q * sizeof(scalar) );   // Source in population space
 
-    double* aux_1  = (double*)malloc( mesh->lattice.Q * sizeof(double) );
+    scalar* aux_1  = (scalar*)malloc( mesh->lattice.Q * sizeof(scalar) );
 
-    double* aux_2  = (double*)malloc( mesh->lattice.Q * sizeof(double) );
+    scalar* aux_2  = (scalar*)malloc( mesh->lattice.Q * sizeof(scalar) );
 
-    unsigned int** nonZero  = (unsigned int**)malloc( 2 * sizeof(unsigned int*) );
+    uint** nonZero  = (uint**)malloc( 2 * sizeof(uint*) );
     
 
     
     // Non-diagonal Q
 
-    double** Q = matrixDoubleAlloc( mesh->lattice.Q, mesh->lattice.Q, 0 );
+    scalar** Q = matrixDoubleAlloc( mesh->lattice.Q, mesh->lattice.Q, 0 );
 
-    double** Q_aux = matrixDoubleAlloc( mesh->lattice.Q, mesh->lattice.Q, 0 );  // Q_aux = I  -  0.5 * Q
+    scalar** Q_aux = matrixDoubleAlloc( mesh->lattice.Q, mesh->lattice.Q, 0 );  // Q_aux = I  -  0.5 * Q
 
     for( k = 0 ; k < mesh->lattice.Q ; k++ ) {
 
@@ -45,7 +45,7 @@ void myMRTCollision( latticeMesh* mesh, macroFields* mfields, lbeField* field ) 
 
     for( k = 0 ; k < 2 ; k++ ) {
 
-	nonZero[k] = (unsigned int*)malloc( 2 * sizeof(unsigned int) );
+	nonZero[k] = (uint*)malloc( 2 * sizeof(uint) );
 	
     }
     

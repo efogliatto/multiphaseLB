@@ -19,6 +19,6 @@
  * @return Temperature at single node @p id
  */
 
-double singleNodeT( latticeMesh* mesh, macroFields* mfields, lbeField* field, unsigned int id );
+scalar singleNodeT( latticeMesh* mesh, macroFields* mfields, lbeField* field, uint id );
 
 #endif // SINGLENODET_H

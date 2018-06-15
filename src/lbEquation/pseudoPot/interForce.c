@@ -6,9 +6,9 @@
 
 void interForce( latticeMesh* mesh, macroFields* mfields ) {
 
-    unsigned int id, j;
+    uint id, j;
 
-    double F[3];
+    scalar F[3];
     
 
     // Move over points

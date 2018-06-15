@@ -1,10 +1,10 @@
 #include <liMRTDensity.h>
 
-double liMRTDensity( latticeMesh* mesh, double* f ) {
+scalar liMRTDensity( latticeMesh* mesh, scalar* f ) {
 
-    unsigned int k;
+    uint k;
 
-    double rho = 0;
+    scalar rho = 0;
     
     // Move over velocities
 	

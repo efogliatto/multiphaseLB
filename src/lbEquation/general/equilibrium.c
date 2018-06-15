@@ -13,7 +13,7 @@ void equilibrium( latticeMesh* mesh, macroFields* mfields, lbeField* field ) {
     
 	// Apply equilibrium model
 
-	unsigned int id;
+	uint id;
     
 	switch(field->model) {
 

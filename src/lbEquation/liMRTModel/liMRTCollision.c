@@ -9,19 +9,19 @@ void liMRTCollision( latticeMesh* mesh, macroFields* mfields, lbeField* field ) 
 
     // Indices
     
-    unsigned int id, k;
+    uint id, k;
 
 
     
     // Partial distributions
     
-    double* m     = (double*)malloc( mesh->lattice.Q * sizeof(double) );   // m:  momentum space
+    scalar* m     = (scalar*)malloc( mesh->lattice.Q * sizeof(scalar) );   // m:  momentum space
     
-    double* m_eq  = (double*)malloc( mesh->lattice.Q * sizeof(double) );   // meq: equilibrium in momentum space
+    scalar* m_eq  = (scalar*)malloc( mesh->lattice.Q * sizeof(scalar) );   // meq: equilibrium in momentum space
 
-    double* S     = (double*)malloc( mesh->lattice.Q * sizeof(double) );   // MRT force
+    scalar* S     = (scalar*)malloc( mesh->lattice.Q * sizeof(scalar) );   // MRT force
 
-    double* C     = (double*)malloc( mesh->lattice.Q * sizeof(double) );   // Surface tension term
+    scalar* C     = (scalar*)malloc( mesh->lattice.Q * sizeof(scalar) );   // Surface tension term
 
 
 
@@ -30,7 +30,7 @@ void liMRTCollision( latticeMesh* mesh, macroFields* mfields, lbeField* field ) 
     // Depending on surface tension model, computes collision over all points, or only local.
     // If only local, syncs field at the end
 
-    unsigned int nodes = mesh->mesh.nPoints;
+    uint nodes = mesh->mesh.nPoints;
 
     if( field->lbparam.liMRT.surfaceTension == liSurfTen ) {
 
@@ -45,7 +45,7 @@ void liMRTCollision( latticeMesh* mesh, macroFields* mfields, lbeField* field ) 
 
 
 
-	double umag = 0;
+	scalar umag = 0;
 	
 	for( k = 0 ; k < 3 ; k++ ) {
 	
