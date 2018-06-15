@@ -4,12 +4,12 @@
 #include <stdio.h>
 #include <basic.h>
 
-void uniformScalarField( latticeMesh* mesh, double** field, char* fname ) {
+void uniformScalarField( latticeMesh* mesh, scalar** field, char* fname ) {
 
 
     // Allocate memory
     
-    *field = (double*)malloc( mesh->mesh.nPoints * sizeof(double) );
+    *field = (scalar*)malloc( mesh->mesh.nPoints * sizeof(scalar) );
 
 
     
@@ -18,9 +18,9 @@ void uniformScalarField( latticeMesh* mesh, double** field, char* fname ) {
 
     char* aux;
 
-    double fval = 0;    
+    scalar fval = 0;    
 
-    unsigned int status = 0;
+    uint status = 0;
 
     if( vstring(&aux, "%s/internalField/value", fname)  ) {
 	
@@ -47,18 +47,18 @@ void uniformScalarField( latticeMesh* mesh, double** field, char* fname ) {
 
     /* char bd[100]; */
     
-    /* unsigned int bid; */
+    /* uint bid; */
 
-    /* double bdval = fval; */
+    /* scalar bdval = fval; */
 
     /* for( bid = 0 ; bid < mesh->mesh.bd.nbd ; bid++ ) { */
 
     /* 	sprintf(bd, "%s/boundaryField/%s", fname, mesh->mesh.bd.bdNames[bid]); */
 
-    /* 	status = lookUpDouble("start/initialFields", bd, &bdval, fval); */
+    /* 	status = lookUpScalar("start/initialFields", bd, &bdval, fval); */
 
 
-    /* 	unsigned int j; */
+    /* 	uint j; */
 
     /* 	for( j = 0 ; j < mesh->mesh.bd.nbdelem[bid] ; j++ ) { */
 
@@ -78,7 +78,7 @@ void uniformScalarField( latticeMesh* mesh, double** field, char* fname ) {
 
 
 
-/* field = (double*)malloc( mesh.mesh.nPoints * sizeof(double) ); */
+/* field = (scalar*)malloc( mesh.mesh.nPoints * sizeof(scalar) ); */
 		
 		
 /* sprintf(fname, "%s/internalField/value", vtk.scalarFields[fid] ); */

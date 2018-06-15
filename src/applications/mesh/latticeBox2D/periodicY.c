@@ -2,10 +2,8 @@
 #include <stdlib.h>
 #include <basicMesh.h>
 
-typedef unsigned int uint;
 
-
-void periodicY( basicMesh* mesh, unsigned int nx, unsigned int ny ) {
+void periodicY( basicMesh* mesh, uint nx, uint ny ) {
 
 
     mesh->bd.nbd = 4;

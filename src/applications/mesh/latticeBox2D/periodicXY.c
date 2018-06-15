@@ -2,10 +2,8 @@
 #include <stdlib.h>
 #include <basicMesh.h>
 
-typedef unsigned int uint;
 
-
-void periodicXY( basicMesh* mesh, unsigned int nx, unsigned int ny ) {
+void periodicXY( basicMesh* mesh, uint nx, uint ny ) {
 
 
     mesh->bd.nbd = 0;
@@ -68,7 +66,7 @@ void periodicXY( basicMesh* mesh, unsigned int nx, unsigned int ny ) {
 
     // Resolve for corners
 
-    unsigned int i;
+    uint i;
     
     int cid[4];
     cid[0] = 0;

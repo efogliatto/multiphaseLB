@@ -2,10 +2,8 @@
 #include <stdlib.h>
 #include <basicMesh.h>
 
-typedef unsigned int uint;
 
-
-void periodicX( basicMesh* mesh, unsigned int nx, unsigned int ny ) {
+void periodicX( basicMesh* mesh, uint nx, uint ny ) {
 
 
     mesh->bd.nbd = 4;
@@ -78,7 +76,7 @@ void periodicX( basicMesh* mesh, unsigned int nx, unsigned int ny ) {
 
 
 
-/* void periodicX( struct basicMesh* mesh, unsigned int nx, unsigned int ny ) { */
+/* void periodicX( struct basicMesh* mesh, uint nx, uint ny ) { */
 
 
 /*     mesh->bd.nbd = 4; */

@@ -6,12 +6,12 @@
 #include <basic.h>
 
 
-void sphereBoundedScalarField( latticeMesh* mesh, double** field, char* fname ) {
+void sphereBoundedScalarField( latticeMesh* mesh, scalar** field, char* fname ) {
 
 
     // Allocate memory
     
-    *field = (double*)malloc( mesh->mesh.nPoints * sizeof(double) );
+    *field = (scalar*)malloc( mesh->mesh.nPoints * sizeof(scalar) );
 
 
     
@@ -19,14 +19,14 @@ void sphereBoundedScalarField( latticeMesh* mesh, double** field, char* fname ) 
 
     char* aux;
 
-    double in = 0,
+    scalar in = 0,
 	out = 0;
 
-    double* centre;
+    scalar* centre;
 
-    double radius;
+    scalar radius;
 
-    unsigned int status,
+    uint status,
 	n;
 
     
@@ -66,7 +66,7 @@ void sphereBoundedScalarField( latticeMesh* mesh, double** field, char* fname ) 
 
     for( ii = 0 ; ii < mesh->mesh.nPoints ; ii++ ) {
 
-	double r = ( mesh->mesh.points[ii][0] - centre[0] )  *  ( mesh->mesh.points[ii][0] - centre[0] ) +
+	scalar r = ( mesh->mesh.points[ii][0] - centre[0] )  *  ( mesh->mesh.points[ii][0] - centre[0] ) +
 	    ( mesh->mesh.points[ii][1] - centre[1] )  *  ( mesh->mesh.points[ii][1] - centre[1] ) + 
 	    ( mesh->mesh.points[ii][2] - centre[2] )  *  ( mesh->mesh.points[ii][2] - centre[2] );
 

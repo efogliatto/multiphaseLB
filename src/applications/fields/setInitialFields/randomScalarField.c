@@ -5,12 +5,12 @@
 #include <basic.h>
 
 
-void randomScalarField( latticeMesh* mesh, double** field, char* fname ) {
+void randomScalarField( latticeMesh* mesh, scalar** field, char* fname ) {
 
 
     // Allocate memory
     
-    *field = (double*)malloc( mesh->mesh.nPoints * sizeof(double) );
+    *field = (scalar*)malloc( mesh->mesh.nPoints * sizeof(scalar) );
 
 
     
@@ -18,9 +18,9 @@ void randomScalarField( latticeMesh* mesh, double** field, char* fname ) {
 
     char* aux;
 
-    double fval = 0;
+    scalar fval = 0;
 
-    unsigned int status;
+    uint status;
     
     
     if(  vstring(&aux, "%s/internalField/value", fname)  )
@@ -30,7 +30,7 @@ void randomScalarField( latticeMesh* mesh, double** field, char* fname ) {
 
 
 
-    double pert = 0;
+    scalar pert = 0;
 
     if(  vstring(&aux, "%s/internalField/perturbation", fname )  )
 	status = lookUpScalarEntry("start/initialFields", aux, 1, &pert);
@@ -46,7 +46,7 @@ void randomScalarField( latticeMesh* mesh, double** field, char* fname ) {
 	
 	// Random number between 0 and 1
 
-	double r = (double)rand() / (double)RAND_MAX;
+	scalar r = (scalar)rand() / (scalar)RAND_MAX;
 
 	r = (1.0 - pert/100) + r * ( (1.0 + pert/100) - (1.0 - pert/100) );
 			
@@ -64,14 +64,14 @@ void randomScalarField( latticeMesh* mesh, double** field, char* fname ) {
 
 
 
-/* field = (double*)malloc( mesh.mesh.nPoints * sizeof(double) ); */
+/* field = (scalar*)malloc( mesh.mesh.nPoints * sizeof(scalar) ); */
 
 /* sprintf(fname, "%s/internalField/value", vtk.scalarFields[fid] ); */
 
 /* status = lookUpDouble("start/initialFields", fname, &fval, 0); */
 		    
 
-/* double pert; */
+/* scalar pert; */
 
 /* sprintf(fname, "%s/internalField/perturbation", vtk.scalarFields[fid] ); */
 
@@ -89,7 +89,7 @@ void randomScalarField( latticeMesh* mesh, double** field, char* fname ) {
 
 /*     // Random number between 0 and 1 */
 
-/*     double r = (double)rand() / (double)RAND_MAX; */
+/*     scalar r = (scalar)rand() / (scalar)RAND_MAX; */
 
 /*     r = (1.0 - pert/100) + r * ( (1.0 + pert/100) - (1.0 - pert/100) ); */
 			

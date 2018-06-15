@@ -15,10 +15,10 @@
 
 
 // Standard decomposition
-void standardDecomp( unsigned int* owner, basicMesh* mesh, unsigned int np );
+void standardDecomp( uint* owner, basicMesh* mesh, uint np );
 
 // kmetis decomposition
-void kmetisDecomp( unsigned int* owner, basicMesh* mesh, unsigned int np );
+void kmetisDecomp( uint* owner, basicMesh* mesh, uint np );
 
 // Local Indexing
 void localIndexing ( basicMesh* mesh, int** local, int** nGhosts, uint* owner, uint np );
@@ -33,7 +33,7 @@ int main(int argc, char** argv) {
  
     printf("\n  MESH PARTITIONING\n\n");
 
-    unsigned int status;
+    uint status;
 
 
     // Read full mesh
@@ -43,9 +43,9 @@ int main(int argc, char** argv) {
 
     // Total number of processes
 
-    unsigned int np = 1;
+    uint np = 1;
 
-    double dn = 4;
+    scalar dn = 4;
     
     if( lookUpScalarEntry("properties/parallel","numProc",4, &dn) )
 	np = (uint)dn;

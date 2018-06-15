@@ -4,12 +4,12 @@
 #include <stdio.h>
 #include <basic.h>
 
-void fixedGradientScalarField( latticeMesh* mesh, double** field, char* fname ) {
+void fixedGradientScalarField( latticeMesh* mesh, scalar** field, char* fname ) {
 
 
     // Allocate memory
     
-    *field = (double*)malloc( mesh->mesh.nPoints * sizeof(double) );
+    *field = (scalar*)malloc( mesh->mesh.nPoints * sizeof(scalar) );
 
 
     
@@ -17,11 +17,11 @@ void fixedGradientScalarField( latticeMesh* mesh, double** field, char* fname ) 
 
     char* aux;
 
-    double b = 0;
+    scalar b = 0;
 
-    double* a;
+    scalar* a;
 
-    unsigned int status,
+    uint status,
 	n;
 
 

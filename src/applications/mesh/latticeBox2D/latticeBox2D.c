@@ -11,13 +11,11 @@
 #include <latticeModel.h>
 #include <basic.h>
 
-typedef unsigned int uint;
 
-
-void periodicX( basicMesh* mesh, unsigned int nx, unsigned int ny );
-void periodicY( basicMesh* mesh, unsigned int nx, unsigned int ny );
-void periodicXY( basicMesh* mesh, unsigned int nx, unsigned int ny );
-void genericBoundary( basicMesh* mesh, unsigned int nx, unsigned int ny );
+void periodicX( basicMesh* mesh, uint nx, uint ny );
+void periodicY( basicMesh* mesh, uint nx, uint ny );
+void periodicXY( basicMesh* mesh, uint nx, uint ny );
+void genericBoundary( basicMesh* mesh, uint nx, uint ny );
 
 int main(int argc, char** argv) {
 
@@ -30,12 +28,12 @@ int main(int argc, char** argv) {
 
     basicMesh mesh;
 
-    unsigned int status;
+    uint status;
     
 
     // Lattice size
 
-    double dn;
+    scalar dn;
 
     uint nx = 0,
 	ny = 0;    

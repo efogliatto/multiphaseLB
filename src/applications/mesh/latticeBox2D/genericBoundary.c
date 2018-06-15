@@ -2,10 +2,8 @@
 #include <stdlib.h>
 #include <basicMesh.h>
 
-typedef unsigned int uint;
 
-
-void genericBoundary( basicMesh* mesh, unsigned int nx, unsigned int ny ) {
+void genericBoundary( basicMesh* mesh, uint nx, uint ny ) {
 
     mesh->bd.nbd = 4;
     

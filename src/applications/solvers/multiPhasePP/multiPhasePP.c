@@ -20,9 +20,9 @@ int main( int argc, char **argv ) {
 
 
     // Check for arguments
-    unsigned int ht = 1, frozen = 1;
+    uint ht = 1, frozen = 1;
     {
-	unsigned int arg;
+	uint arg;
 	for( arg = 0 ; arg < argc ; arg++) {
 
 	    if ( strcmp("--nht", argv[arg]) == 0 ) {
@@ -319,7 +319,7 @@ int main( int argc, char **argv ) {
 
     /* { */
 
-    /* 	unsigned int ii; */
+    /* 	uint ii; */
 
     /* 	for( ii = 1 ; ii < mesh.parallel.nlocal ; ii+=3 ) { */
 

@@ -5,7 +5,7 @@
 #ifdef USE_METIS
 
 
-void kmetisDecomp( unsigned int* owner, basicMesh* mesh, unsigned int np )  {
+void kmetisDecomp( uint* owner, basicMesh* mesh, uint np )  {
 
 
     if( np > 1 ) {
@@ -15,9 +15,9 @@ void kmetisDecomp( unsigned int* owner, basicMesh* mesh, unsigned int np )  {
     
 	// Count total number of edges (counted twice)
 
-	unsigned int nedges = 0;
+	uint nedges = 0;
 
-	unsigned int i, k;
+	uint i, k;
 
 	for( i = 0 ; i < mesh->nPoints ; i++ ) {
 
@@ -75,7 +75,7 @@ void kmetisDecomp( unsigned int* owner, basicMesh* mesh, unsigned int np )  {
 
 	sprintf(cmd,"gpmetis lattice/lattice.graph %d > log.gpmetis",np);
 
-	unsigned int status = system( cmd );
+	uint status = system( cmd );
 
 
 	if (!status) {
@@ -120,7 +120,7 @@ void kmetisDecomp( unsigned int* owner, basicMesh* mesh, unsigned int np )  {
 
     else {
 
-	unsigned int i;
+	uint i;
 
 	for ( i = 0 ; i < mesh->nPoints ; i++ ) {
 
@@ -141,7 +141,7 @@ void kmetisDecomp( unsigned int* owner, basicMesh* mesh, unsigned int np )  {
 
 #ifndef USE_METIS
 
-void kmetisDecomp( unsigned int* owner, basicMesh* mesh, unsigned int np )  {
+void kmetisDecomp( uint* owner, basicMesh* mesh, uint np )  {
 
     printf("\n   [ERROR]  METIS library not included\n\n");
 

@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include <basicMesh.h>
 
-void standardDecomp( unsigned int* owner, basicMesh* mesh, unsigned int np )  {
+void standardDecomp( uint* owner, basicMesh* mesh, uint np )  {
 
     
     uint* procBegin = (uint*)malloc( np * sizeof(uint) );

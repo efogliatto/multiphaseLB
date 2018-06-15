@@ -5,12 +5,12 @@
 #include <basic.h>
 
 
-void boxBoundedScalarField( latticeMesh* mesh, double** field, char* fname ) {
+void boxBoundedScalarField( latticeMesh* mesh, scalar** field, char* fname ) {
 
 
     // Allocate memory
     
-    *field = (double*)malloc( mesh->mesh.nPoints * sizeof(double) );
+    *field = (scalar*)malloc( mesh->mesh.nPoints * sizeof(scalar) );
 
 
     
@@ -18,20 +18,20 @@ void boxBoundedScalarField( latticeMesh* mesh, double** field, char* fname ) {
 
     char* aux;
 
-    double in = 0,
+    scalar in = 0,
 	out = 0;
 
-    double* min;
+    scalar* min;
 
-    double* max;
+    scalar* max;
 
-    unsigned int status = 0;
+    uint status = 0;
 
     
 
     // Min corner
 
-    unsigned int n;
+    uint n;
     
     if(  vstring(&aux, "%s/internalField/minPoint", fname)  )
 	status = lookUpVectorEntry("start/initialFields", aux, &min, &n);    

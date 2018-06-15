@@ -13,15 +13,15 @@
 #include <basic.h>
 
 
-void uniformScalarField( latticeMesh* mesh, double** field, char* fname );
+void uniformScalarField( latticeMesh* mesh, scalar** field, char* fname );
 
-void randomScalarField( latticeMesh* mesh, double** field, char* fname );
+void randomScalarField( latticeMesh* mesh, scalar** field, char* fname );
 
-void boxBoundedScalarField( latticeMesh* mesh, double** field, char* fname );
+void boxBoundedScalarField( latticeMesh* mesh, scalar** field, char* fname );
 
-void sphereBoundedScalarField( latticeMesh* mesh, double** field, char* fname );
+void sphereBoundedScalarField( latticeMesh* mesh, scalar** field, char* fname );
 
-void fixedGradientScalarField( latticeMesh* mesh, double** field, char* fname );
+void fixedGradientScalarField( latticeMesh* mesh, scalar** field, char* fname );
     
 
 int main(int argc, char** argv) {
@@ -35,9 +35,9 @@ int main(int argc, char** argv) {
     
     // Total number of processes
 
-    double dn = 4;
+    scalar dn = 4;
 
-    unsigned int np = 4;
+    uint np = 4;
     
     if(  lookUpScalarEntry("properties/parallel","numProc", 4, &dn)  )
     	np = (uint)dn;
@@ -50,7 +50,7 @@ int main(int argc, char** argv) {
 
     vtkInfo vtk = readVTKInfo();
 
-    unsigned int status = 0;
+    uint status = 0;
 
 
     
@@ -97,7 +97,7 @@ int main(int argc, char** argv) {
     	for( fid = 0 ; fid < vtk.nscalar ; fid++ ) {
 
 	    
-    	    double* field;
+    	    scalar* field;
 
     	    char* entry;
 
@@ -215,15 +215,15 @@ int main(int argc, char** argv) {
     	for( fid = 0 ; fid < vtk.nvector ; fid++ ) {
 
 
-    	    double** field = matrixDoubleAlloc(  mesh.mesh.nPoints, 3, 0);
+    	    scalar** field = matrixDoubleAlloc(  mesh.mesh.nPoints, 3, 0);
 
-    	    double* fval;
+    	    scalar* fval;
 
     	    char* itype;
 
     	    char* entry;
 
-    	    unsigned int nn;
+    	    uint nn;
 	    
 	    
     	    // Internal field type
@@ -297,15 +297,15 @@ int main(int argc, char** argv) {
     	for( fid = 0 ; fid < vtk.npdf ; fid++ ) {
 
 
-    	    double** field = matrixDoubleAlloc(  mesh.mesh.nPoints, mesh.mesh.Q, 0 );
+    	    scalar** field = matrixDoubleAlloc(  mesh.mesh.nPoints, mesh.mesh.Q, 0 );
 
-    	    double* fval;
+    	    scalar* fval;
 
     	    char* itype;
 
     	    char* entry;
 
-    	    unsigned int nn;
+    	    uint nn;
 
 		
     	    // Internal field type
