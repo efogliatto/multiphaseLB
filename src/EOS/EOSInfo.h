@@ -9,6 +9,9 @@
  */
 
 
+#include <dataTypes.h>
+
+
 /** EOS identifier */
 
 typedef enum {
@@ -33,29 +36,29 @@ typedef enum {
 
 typedef struct {
 
-    double a;
+    scalar a;
 
-    double b;
+    scalar b;
 	    
 } VdWp;
 
 
 typedef struct {
 
-    double a;
+    scalar a;
 
-    double b;
+    scalar b;
 	    
 } CarStarp;
 
 
 typedef struct {
 
-    double a;
+    scalar a;
 
-    double b;
+    scalar b;
 
-    double omega;
+    scalar omega;
 	    
 } PengRobp;
 
@@ -81,17 +84,17 @@ typedef struct {
 
     eosParam eParam;
 
-    double R;    /**< Gas constant */
+    scalar R;    /**< Gas constant */
 
-    double G;    /**< Interaction strength */
+    scalar G;    /**< Interaction strength */
 
-    double M;    /**< Molar mass */
+    scalar M;    /**< Molar mass */
 
-    double Cv;    /**< Constant specific heat */
+    scalar Cv;    /**< Constant specific heat */
     
-    double* g;   /**< Gravity vector */
+    scalar* g;   /**< Gravity vector */
     
-    double rho_0;  /**< Reference density (buoyant force) */
+    scalar rho_0;  /**< Reference density (buoyant force) */
     
     
 } EOSInfo;

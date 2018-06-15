@@ -16,6 +16,6 @@
  * @return Vector divergence at node
  */
 
-double vectorDivergence( double** field, latticeMesh* mesh, unsigned int id );
+scalar vectorDivergence( scalar** field, latticeMesh* mesh, uint id );
 
 #endif // VECTORDIVERGENCE_H

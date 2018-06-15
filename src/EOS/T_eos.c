@@ -3,9 +3,9 @@
 #include <stdlib.h>
 #include <math.h>
 
-double T_eos( struct EOSInfo* info, double rho, double p ) {
+scalar T_eos( struct EOSInfo* info, scalar rho, scalar p ) {
 
-    double T = 0;/* , alpha, beta; */
+    scalar T = 0;/* , alpha, beta; */
 
     switch( info->_eosIdx ) {
     

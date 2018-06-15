@@ -16,6 +16,6 @@
  * @param id Node index
  */
 
-void invScalarGradient( double* grad, double* field, latticeMesh* mesh, unsigned int id );
+void invScalarGradient( scalar* grad, scalar* field, latticeMesh* mesh, uint id );
 
 #endif // INVSCALARGRADIENT_H

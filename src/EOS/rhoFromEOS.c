@@ -2,10 +2,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
+#include <rhoFromEOS.h>
 
-double rhoFromEOS( struct EOSInfo* info, double rho, double T, double p ) {
+scalar rhoFromEOS( struct EOSInfo* info, scalar rho, scalar T, scalar p ) {
 
-    double r;
+    scalar r;
 
     switch( info->_eosIdx ) {
    

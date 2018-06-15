@@ -3,6 +3,6 @@
 
 #include <EOSInfo.h>
 
-double T_eos( EOSInfo* info, double rho, double p );
+scalar T_eos( EOSInfo* info, scalar rho, scalar p );
 
 #endif // T_EOS_H

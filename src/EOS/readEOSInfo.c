@@ -4,13 +4,15 @@
 #include <stdlib.h>
 #include <dictIO.h>
 #include <basic.h>
+#include <readEOSInfo.h>
+
 
 EOSInfo readEOSInfo() {
 
 
     EOSInfo info;
 
-    unsigned int status = 0;
+    uint status = 0;
 
     char* eosType;
     
@@ -94,7 +96,7 @@ EOSInfo readEOSInfo() {
     status = lookUpScalarEntry("properties/macroProperties", "EOS/rho_0", 0, &info.rho_0);
 
 
-    unsigned int n;
+    uint n;
     
     status = lookUpVectorEntry("properties/macroProperties", "EOS/g", &info.g, &n);
 

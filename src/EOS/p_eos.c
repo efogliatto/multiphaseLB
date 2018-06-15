@@ -4,9 +4,9 @@
 #include <math.h>
 #include <basic.h>
 
-double p_eos( EOSInfo* info, double rho, double T ) {
+scalar p_eos( EOSInfo* info, scalar rho, scalar T ) {
 
-    double p = 0, alpha, beta;
+    scalar p = 0, alpha, beta;
 
     switch( info->etype ) {
     

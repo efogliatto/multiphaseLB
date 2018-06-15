@@ -2,14 +2,14 @@
 #include <basic.h>
 
 
-double vectorDivergence( double** field, latticeMesh* mesh, unsigned int id ) {
+scalar vectorDivergence( scalar** field, latticeMesh* mesh, uint id ) {
 
 
     // Neighbours
     int a;
     int b;
 
-    double div = 0;
+    scalar div = 0;
   
 
     // D2Q9 model

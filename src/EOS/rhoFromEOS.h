@@ -3,6 +3,6 @@
 
 #include <EOSInfo.h>
 
-double rhoFromEOS( EOSInfo* info, double rho, double T, double p );
+scalar rhoFromEOS( EOSInfo* info, scalar rho, scalar T, scalar p );
 
 #endif // RHOFROMEOS_H
