@@ -2,9 +2,9 @@
 #include <stdlib.h>
 #include <latticeWeights.h>
 
-double* latticeWeights( DdQq model ) {
+scalar* latticeWeights( DdQq model ) {
 
-    double* omega = NULL;
+    scalar* omega = NULL;
 
 
     switch( model ) {

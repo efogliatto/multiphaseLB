@@ -17,6 +17,6 @@
  * @return Array of weights \f$ w_i \f$
  */
 
-double* ppWeights( DdQq model );
+scalar* ppWeights( DdQq model );
 
 #endif // PPWEIGHTS_H

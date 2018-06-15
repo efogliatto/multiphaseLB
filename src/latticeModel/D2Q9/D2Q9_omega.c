@@ -1,13 +1,13 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include <D2Q9_omega.h>
 
+scalar* D2Q9_omega() {
 
-double* D2Q9_omega() {
-
-    double* omega;
+    scalar* omega;
     
-    omega = (double*)malloc( 9 * sizeof(double));
+    omega = (scalar*)malloc( 9 * sizeof(scalar));
 
     omega[0] = 4.0 / 9.0;
     omega[1] = 1.0 / 9.0;

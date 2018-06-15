@@ -3,9 +3,9 @@
 #include <MRTMatrix.h>
 
 
-double** MRTMatrix( DdQq model ) {
+scalar** MRTMatrix( DdQq model ) {
 
-    double** M = NULL;
+    scalar** M = NULL;
 
 
     switch( model ) {

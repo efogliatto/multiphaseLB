@@ -3,9 +3,9 @@
 #include <stdlib.h>
 #include <cs2.h>
 
-double cs2( DdQq model ) {
+scalar cs2( DdQq model ) {
 
-    double cs2 = 1;
+    scalar cs2 = 1;
 
     
     switch( model ) {

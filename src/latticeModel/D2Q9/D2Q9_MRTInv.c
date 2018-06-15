@@ -1,23 +1,23 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include <D2Q9_MRTInv.h>
 
+scalar** D2Q9_MRTInv() {
 
-double** D2Q9_MRTInv() {
-
-    double** invM;
+    scalar** invM;
     
-    invM = (double**)malloc( 9 * sizeof(double*));
+    invM = (scalar**)malloc( 9 * sizeof(scalar*));
 
     uint i;
     for( i = 0 ; i < 9 ; i++) {
 
-    	invM[i] = (double*)malloc( 9 * sizeof(double));
+    	invM[i] = (scalar*)malloc( 9 * sizeof(scalar));
 	
     }
 
 
-    double c1 = 1.0 / 9.0,
+    scalar c1 = 1.0 / 9.0,
 	   c2 = 1.0 / 6.0,
 	   c3 = 1.0 / 4.0;    
     

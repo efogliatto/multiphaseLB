@@ -3,9 +3,9 @@
 #include <ppWeights.h>
 
 
-double* ppWeights( DdQq model ) {
+scalar* ppWeights( DdQq model ) {
 
-    double* w = NULL;
+    scalar* w = NULL;
 
 
     switch( model ) {

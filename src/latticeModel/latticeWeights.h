@@ -17,6 +17,6 @@
  * @return Array of lattice weights \f$ \omega_i \f$
  */
 
-double* latticeWeights( DdQq model );
+scalar* latticeWeights( DdQq model );
 
 #endif // LATTICEWEIGHTS_H

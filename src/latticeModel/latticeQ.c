@@ -2,9 +2,9 @@
 #include <string.h>
 #include <latticeQ.h>
 
-unsigned int latticeQ( DdQq model ) {
+uint latticeQ( DdQq model ) {
 
-    unsigned int Q;
+    uint Q;
 
     
     switch( model ) {

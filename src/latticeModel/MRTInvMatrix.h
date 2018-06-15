@@ -17,6 +17,6 @@
  * @return \f$ \mathbf{M}^{-1} \f$
  */
 
-double** MRTInvMatrix( DdQq model );
+scalar** MRTInvMatrix( DdQq model );
 
 #endif // MRTINVMATRIX_H

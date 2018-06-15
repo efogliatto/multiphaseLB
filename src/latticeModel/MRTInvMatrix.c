@@ -3,9 +3,9 @@
 #include <MRTInvMatrix.h>
 
 
-double** MRTInvMatrix( DdQq model ) {
+scalar** MRTInvMatrix( DdQq model ) {
 
-    double** invM = NULL;
+    scalar** invM = NULL;
 
 
     switch( model ) {

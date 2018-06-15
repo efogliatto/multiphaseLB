@@ -18,6 +18,6 @@
  * @return Dimension (d from DdQq)
  */
 
-unsigned int latticeD( DdQq model );
+uint latticeD( DdQq model );
 
 #endif // LATTICED_H

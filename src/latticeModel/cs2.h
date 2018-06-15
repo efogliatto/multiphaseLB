@@ -15,6 +15,6 @@
  * Squared sound speed
  */
 
-double cs2( DdQq model );
+scalar cs2( DdQq model );
 
 #endif // CS2_H

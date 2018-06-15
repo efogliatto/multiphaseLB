@@ -17,6 +17,6 @@
  * @return M
  */
 
-double** MRTMatrix( DdQq model );
+scalar** MRTMatrix( DdQq model );
 
 #endif // MRTMATRIX_H

@@ -2,10 +2,10 @@
 #include <stdio.h>
 #include <string.h>
 
-unsigned int latticeD( DdQq model ) {
+uint latticeD( DdQq model ) {
 
     
-    unsigned int D = 1;
+    uint D = 1;
     
 
     switch( model ) {

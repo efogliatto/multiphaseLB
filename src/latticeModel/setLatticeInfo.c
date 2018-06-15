@@ -17,7 +17,7 @@ latticeInfo setLatticeInfo( ) {
 
 
     
-    unsigned int status;
+    uint status;
 
     char* modelName;
 

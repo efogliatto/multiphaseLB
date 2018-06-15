@@ -1,18 +1,19 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include <dataTypes.h>
 
 
-double** D2Q9_MRT() {
+scalar** D2Q9_MRT() {
 
-    double** M;
+    scalar** M;
     
-    M = (double**)malloc( 9 * sizeof(double*));
+    M = (scalar**)malloc( 9 * sizeof(scalar*));
 
     uint i;
     for( i = 0 ; i < 9 ; i++) {
 
-    	M[i] = (double*)malloc( 9 * sizeof(double));
+    	M[i] = (scalar*)malloc( 9 * sizeof(scalar));
 	
     }
 

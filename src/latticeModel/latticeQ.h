@@ -18,6 +18,6 @@
  * @return Total number of lattice velocities (q from DdQq)
  */
 
-unsigned int latticeQ( DdQq model );
+uint latticeQ( DdQq model );
 
 #endif // LATTICEQ_H
