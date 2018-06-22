@@ -9,6 +9,9 @@ typedef enum {
     /** Fixed Temperature */
     ft,
 
+    /** Fixed random Temperature */
+    frdt,
+    
     /** Fixed Velocity */    
     fu,
 

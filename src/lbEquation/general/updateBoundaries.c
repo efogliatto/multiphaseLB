@@ -52,7 +52,13 @@ void updateBoundaries( latticeMesh* mesh, macroFields* mfields, lbeField* field 
 	    case uhf:
 		/* uniformHeatFlux( mesh, mfields, field, bndId ); */
 		break;
-	    
+
+		// fixedRandomT
+	    case frdt:
+		fixedRandomT( mesh, mfields, field->value, bndId, field->model, &(field->boundary[bndId].param), &(field->lbparam) );
+		break;
+
+		
 	    default:
 		
 		errorMsg("Unrecognized boundary condition");

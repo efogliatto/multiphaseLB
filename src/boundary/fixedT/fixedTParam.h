@@ -15,15 +15,6 @@ typedef struct {
     /** Fixed temperature value at boundary */
     scalar T;
 
-    /** Temperature perturbation */
-    scalar p;
-
-    /** Perturbation length (time steps) */
-    int psteps;
-
-    /** Perturbation local time step */
-    int localTStep;
-
 } fixedTParam;
 
 #endif // FIXEDTPARAM_H

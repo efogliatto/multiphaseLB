@@ -115,11 +115,13 @@ uint readLbeField( latticeMesh* mesh, lbeField* field, char* fname ) {
 
     	    }
 
+	    
     	    if( strcmp(str, "periodic") == 0 ) {
 
     		field->boundary[i].type = periodic;
 
     	    }
+
 	    
     	    if( strcmp(str, "fixedT") == 0 ) {
 
@@ -129,6 +131,15 @@ uint readLbeField( latticeMesh* mesh, lbeField* field, char* fname ) {
 
     	    }
 
+	    
+    	    if( strcmp(str, "fixedRandomT") == 0 ) {
+
+    		field->boundary[i].type = frdt;
+
+    		field->boundary[i].param.frdt = readFixedRandomTParam(fname, mesh->mesh.bd.bdNames[i]);
+
+    	    }
+	    
 	    
     	    if( strcmp(str, "fixedU") == 0 ) {
 

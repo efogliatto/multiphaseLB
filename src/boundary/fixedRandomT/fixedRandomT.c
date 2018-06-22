@@ -7,11 +7,11 @@
 #include <myMRTEquilibrium.h>
 #include <singleNodeT.h>
 #include <lbeModel.h>
-#include <fixedT.h>
+#include <fixedRandomT.h>
 #include <time.h>
 
 
-void fixedT( latticeMesh* mesh, macroFields* mfields, scalar** field, unsigned int bid, lbeModel model, bdParam* bp, lbParameters* lp ) {
+void fixedRandomT( latticeMesh* mesh, macroFields* mfields, scalar** field, unsigned int bid, lbeModel model, bdParam* bp, lbParameters* lp ) {
 
 
 
@@ -27,6 +27,18 @@ void fixedT( latticeMesh* mesh, macroFields* mfields, scalar** field, unsigned i
 	scalar eq_bnd = 0;
 	
 	scalar eq_nb = 0;
+
+
+
+	// Perturbation conditions
+
+	srand(0);
+
+	scalar minT = bp->frdt.T * (100.0-bp->frdt.p) / 100.0;
+
+	scalar maxT = bp->frdt.T * (100.0+bp->frdt.p) / 100.0;
+
+	scalar r = 1;
 		
     
 	// Move over boundary elements
@@ -62,7 +74,21 @@ void fixedT( latticeMesh* mesh, macroFields* mfields, scalar** field, unsigned i
 
 			// Equilibrium at boundary node
 
-			myMRTEquilibrium( &mesh->lattice, bp->ft.T, mfields->U[nbid], lp->myMRT.alpha_1, lp->myMRT.alpha_2, f_eq_nb );
+			if(bp->frdt.localTStep < bp->frdt.psteps) {
+
+			    r = (scalar)rand() / RAND_MAX;
+
+			    scalar Tb = minT + (maxT-minT)*r;
+
+			    myMRTEquilibrium( &mesh->lattice, Tb, mfields->U[nbid], lp->myMRT.alpha_1, lp->myMRT.alpha_2, f_eq_nb );
+
+			}
+
+			else {
+
+			    myMRTEquilibrium( &mesh->lattice, bp->frdt.T, mfields->U[nbid], lp->myMRT.alpha_1, lp->myMRT.alpha_2, f_eq_nb );
+
+			}
 			    
 			eq_bnd = f_eq_nb[k];
 			    
@@ -86,6 +112,7 @@ void fixedT( latticeMesh* mesh, macroFields* mfields, scalar** field, unsigned i
 
 	free(f_eq_nb);
 
+	bp->frdt.localTStep++;
 
     }
     

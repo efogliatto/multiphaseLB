@@ -5,6 +5,8 @@
 
 #include <fixedT.h>
 
+#include <fixedRandomT.h>
+
 #include <fixedU.h>
 
 #include <uniformHeatFlux.h>
@@ -18,6 +20,8 @@
 #include <bdParam.h>
 
 #include <readFixedTParam.h>
+
+#include <readFixedRandomTParam.h>
 
 #include <readFixedUParam.h>
 
