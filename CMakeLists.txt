@@ -63,6 +63,20 @@ endif()
 
 
 
+# Optional: CUDA
+option(WITH_CUDA "Compile with CUDA" OFF)
+
+if(WITH_CUDA)
+  
+  find_package(CUDA QUIET REQUIRED)
+
+  add_definitions(-DUSE_CUDA)
+  
+endif()
+
+
+
+
 
 # Directorio con fuentes
 add_subdirectory (src)
