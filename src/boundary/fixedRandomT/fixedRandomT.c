@@ -32,7 +32,7 @@ void fixedRandomT( latticeMesh* mesh, macroFields* mfields, scalar** field, unsi
 
 	// Perturbation conditions
 
-	srand(time(NULL));
+	srand( mesh->time.stt.tv_sec );
 
 	scalar minT = bp->frdt.T * (100.0-bp->frdt.p) / 100.0;
 
