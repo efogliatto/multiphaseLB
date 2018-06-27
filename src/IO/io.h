@@ -25,7 +25,7 @@
 
 #include <writeVTKExtra.h>
 
-#include <writeMainPvd.h>
+/* #include <writeMainPvd.h> */
 
 #include <readTimeInfo.h>
 
@@ -46,5 +46,9 @@
 #include <createVectorField.h>
 
 #include <createLbeField.h>
+
+#include <asciiRaw.h>
+
+#include <pvtu.h>
 
 #endif // IO_H

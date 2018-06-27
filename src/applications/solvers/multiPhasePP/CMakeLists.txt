@@ -13,6 +13,8 @@ set ( PROJECT_LINK_LIBS
   libboundary.so
   libeos.so
   libfinitedifference.so
+  libpvtu.so
+  libasciiraw.so
   ${MPI_LIBRARIES})
 
 # link_directories( ~/multiphaseLB/lib )

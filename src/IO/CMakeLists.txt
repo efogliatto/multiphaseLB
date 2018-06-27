@@ -12,7 +12,7 @@ add_library(io SHARED
   writePdfToVTK.c
   readVTKInfo.c
   writeVTKExtra.c
-  writeMainPvd.c
+  # writeMainPvd.c
   readTimeInfo.c
   readScalarField.c
   readVectorField.c
@@ -26,3 +26,7 @@ add_library(io SHARED
 
 # Ascii raw format
 add_subdirectory (asciiRaw)
+
+
+# Pvtu raw format
+add_subdirectory (pvtu)
