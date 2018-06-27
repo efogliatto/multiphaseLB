@@ -22,3 +22,7 @@ add_library(io SHARED
   createLbeField.c 
   time/timeOptions.c
   )
+
+
+# Ascii raw format
+add_subdirectory (asciiRaw)
