@@ -2,6 +2,7 @@
 /* #include <stdlib.h> */
 #include <readScalarField.h>
 #include <asciiRaw.h>
+#include <binaryRaw.h>
 #include <pvtu.h>
 
 uint readScalarField( latticeMesh* mesh, scalar** field, char* fname ) {
@@ -19,6 +20,13 @@ uint readScalarField( latticeMesh* mesh, scalar** field, char* fname ) {
 
 	break;
 
+	
+    case binaryRaw:
+
+	status = readScalarFromBinaryRaw( mesh, field, fname);
+
+	break;
+	
 
     case pvtu:
 

@@ -98,7 +98,17 @@ void readTimeInfo( latticeMesh* mesh ) {
 
 	else {
 
-	    errorMsg("Data format not recognized");
+	    if( strcmp(fmt,"binaryRaw") == 0 ) {
+    
+		mesh->time.data = binaryRaw;
+
+	    }
+
+	    else {
+	    
+		errorMsg("Data format not recognized");
+
+	    }
 
 	}
 

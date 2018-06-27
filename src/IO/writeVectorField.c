@@ -4,6 +4,7 @@
 #include <writeVectorField.h>
 #include <basic.h>
 #include <asciiRaw.h>
+#include <binaryRaw.h>
 #include <pvtu.h>
 
 void writeVectorField( char* fname, scalar** field, latticeMesh* mesh, const uint vsize ) {
@@ -19,6 +20,13 @@ void writeVectorField( char* fname, scalar** field, latticeMesh* mesh, const uin
 	break;
 
 
+    case binaryRaw:
+
+	writeArrayToBinaryRaw( fname, field, mesh, vsize );
+
+	break;
+	
+	
     case pvtu:
 
 	writeArrayToPvtu( fname, field, mesh, vsize );

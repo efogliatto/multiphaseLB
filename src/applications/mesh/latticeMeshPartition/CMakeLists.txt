@@ -13,6 +13,7 @@ set ( PROJECT_LINK_LIBS
   libboundary.so
   libeos.so
   libasciiraw.so
+  libbinaryraw.so
   libpvtu.so  
   # libfinitedifference.so
   m

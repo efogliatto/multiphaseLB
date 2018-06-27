@@ -43,6 +43,8 @@
 
 #include <asciiRaw.h>
 
+#include <binaryRaw.h>
+
 #include <pvtu.h>
 
 #endif // IO_H

@@ -27,3 +27,7 @@ add_subdirectory (asciiRaw)
 
 # Pvtu raw format
 add_subdirectory (pvtu)
+
+
+# Binary raw format
+add_subdirectory (binaryRaw)

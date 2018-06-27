@@ -78,7 +78,17 @@ int main(int argc, char** argv) {
 
 	else {
 
-	    errorMsg("Data format not recognized");
+	    if( strcmp(fmt,"binaryRaw") == 0 ) {
+    
+		tinfo = binaryRaw;
+
+	    }
+
+	    else {
+
+		errorMsg("Data format not recognized");
+
+	    }
 
 	}
 

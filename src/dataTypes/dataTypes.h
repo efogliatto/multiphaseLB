@@ -44,6 +44,8 @@ typedef enum {
 
     asciiRaw,
 
+    binaryRaw,
+
     pvtu
 
 } dataFormat;

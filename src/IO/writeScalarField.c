@@ -3,6 +3,7 @@
 /* #include <stdlib.h> */
 #include <writeScalarField.h>
 #include <asciiRaw.h>
+#include <binaryRaw.h>
 #include <pvtu.h>
 
 
@@ -18,6 +19,13 @@ void writeScalarField( char* fname, scalar* field, latticeMesh* mesh ) {
 
 	break;
 
+	
+    case binaryRaw:
+
+	writeScalarToBinaryRaw( fname, field, mesh );
+
+	break;
+	
 
     case pvtu:
 
