@@ -12,6 +12,8 @@ set ( PROJECT_LINK_LIBS
   libboundary.so
   libeos.so
   libfinitedifference.so
+  libasciiraw.so
+  libpvtu.so
   m
   ${MPI_LIBRARIES})
 

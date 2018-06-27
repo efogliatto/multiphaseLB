@@ -4,7 +4,7 @@
 #include <latticeMesh.h>
 #include <vtkInfo.h>
 
-void writePVTUExtra( latticeMesh* mesh, vtkInfo* vtk );
+void writePvtuExtra( latticeMesh* mesh, vtkInfo* vtk );
 
 
 #endif // WRITEPVTUEXTRA_H

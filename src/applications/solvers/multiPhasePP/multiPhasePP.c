@@ -288,25 +288,34 @@ int main( int argc, char **argv ) {
 
 
 	    
-    	    // VTK files
+    	    // Write 
+
+	    if(mesh.time.data == pvtu) {
 	    
-    	    writeMeshToVTK( &mesh, &vtk );
+		writeMeshToVTK( &mesh, &vtk );
 
-    	    writeScalarToVTK( "rho", mfields.rho, &mesh );
+	    }
 
-    	    writeScalarToVTK( "T", mfields.T, &mesh );
+    	    writeScalarField( "rho", mfields.rho, &mesh );
 
-    	    writeScalarToVTK( "p", mfields.p, &mesh );	    
+    	    writeScalarField( "T", mfields.T, &mesh );
 
-    	    writeVectorToVTK( "U", mfields.U, &mesh );
+    	    writeScalarField( "p", mfields.p, &mesh );	    
 
-    	    writePdfToVTK( "f", f.value, &mesh );
+    	    writeVectorField( "U", mfields.U, &mesh, 3 );
 
-    	    writePdfToVTK( "g", g.value, &mesh );
-    
-    	    writeVTKExtra( &mesh, &vtk );
+    	    writeVectorField( "f", f.value, &mesh, mesh.lattice.Q );
 
-    	    writeMainPvd();
+    	    writeVectorField( "g", g.value, &mesh, mesh.lattice.Q );
+
+
+	    if(mesh.time.data == pvtu) {
+	    
+		writePvtuExtra( &mesh, &vtk );
+
+		writeMainPvd();
+
+	    }
 
 
 	    

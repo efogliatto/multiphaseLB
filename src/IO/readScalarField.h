@@ -11,7 +11,7 @@
  */
 
 /**
- * @brief Read vector field from pvtu file and updates @p field
+ * @brief Read scalar field from and update @p field
  * @param mesh Pointer to lattice mesh
  * @param field Pointer to field array
  * @param fname Field name

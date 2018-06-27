@@ -19,6 +19,7 @@
 
 #include <dataTypes.h>
 
+
 typedef struct {
 
     uint start;   /**< Start time */
@@ -35,7 +36,13 @@ typedef struct {
 
     uint stp;   /**< Time step inside write intrval */
 
-    uint debug;   /**< Debug flag. If true, write fields in raw format */   
+    /* uint debug;   /\**< Debug flag. If true, write fields in raw format *\/ */
+
+
+    /** Data format */
+
+    dataFormat data;
+    
     
 } timeInfo;
 

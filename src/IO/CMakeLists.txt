@@ -7,12 +7,9 @@ add_library(io SHARED
   readLatticeMesh.c
   writeLatticeMesh.c
   writeMeshToVTK.c
-  writeScalarToVTK.c
-  writeVectorToVTK.c
-  writePdfToVTK.c
+  writeScalarField.c
+  writeVectorField.c
   readVTKInfo.c
-  writeVTKExtra.c
-  # writeMainPvd.c
   readTimeInfo.c
   readScalarField.c
   readVectorField.c

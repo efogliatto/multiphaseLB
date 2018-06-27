@@ -28,6 +28,6 @@ link_directories( ${CMAKE_SOURCE_DIR}/lib )
 add_executable(test1 "test1.c")
 target_link_libraries(test1 ${PROJECT_LINK_LIBS})
 
-# Test 2. Performance
-add_executable(test2 "test2.c")
-target_link_libraries(test2 ${PROJECT_LINK_LIBS})
+# # Test 2. Performance
+# add_executable(test2 "test2.c")
+# target_link_libraries(test2 ${PROJECT_LINK_LIBS})

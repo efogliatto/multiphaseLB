@@ -1,5 +1,6 @@
 #include <readTimeInfo.h>
 #include <dictIO.h>
+#include <basic.h>
 
 void readTimeInfo( latticeMesh* mesh ) {
 
@@ -51,23 +52,59 @@ void readTimeInfo( latticeMesh* mesh ) {
 
 
 
-    // Debug flag
+    /* // Debug flag */
 
-    char* debug;
+    /* char* debug; */
 
-    mesh->time.debug = 0;
+    /* mesh->time.debug = 0; */
     
-    status = lookUpStringEntry("properties/simulation","writeDebug", &debug, "no");
+    /* status = lookUpStringEntry("properties/simulation","writeDebug", &debug, "no"); */
+
+    /* if(status) {} */
+
+    /* if( strcmp(debug,"yes") == 0 ) { */
+    
+    /* 	mesh->time.debug = 1; */
+
+    /* } */
+
+    /* free(debug); */
+
+
+
+
+
+    // Data Format
+    
+    char* fmt;
+    
+    status = lookUpStringEntry("properties/simulation","dataFormat", &fmt, "asciiRaw");
 
     if(status) {}
 
-    if( strcmp(debug,"yes") == 0 ) {
+    if( strcmp(fmt,"asciiRaw") == 0 ) {
     
-    	mesh->time.debug = 1;
+    	mesh->time.data = asciiRaw;
 
     }
 
-    free(debug);
-    
+    else {
 
+	if( strcmp(fmt,"pvtu") == 0 ) {
+    
+	    mesh->time.data = pvtu;
+
+	}
+
+	else {
+
+	    errorMsg("Data format not recognized");
+
+	}
+
+    }
+
+    free(fmt);
+
+    
 }

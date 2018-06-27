@@ -38,4 +38,15 @@ typedef enum {
 } fieldOpt;
 
 
+/** Data format */
+
+typedef enum {
+
+    asciiRaw,
+
+    pvtu
+
+} dataFormat;
+
+
 #endif // DATATYPES_H

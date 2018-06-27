@@ -53,6 +53,41 @@ int main(int argc, char** argv) {
     uint status = 0;
 
 
+
+    // Time info
+
+    dataFormat tinfo = asciiRaw;
+    
+    char* fmt;
+    
+    status = lookUpStringEntry("properties/simulation","dataFormat", &fmt, "asciiRaw");
+
+    if( strcmp(fmt,"asciiRaw") == 0 ) {
+    
+    	tinfo = asciiRaw;
+
+    }
+
+    else {
+
+	if( strcmp(fmt,"pvtu") == 0 ) {
+    
+	    tinfo = pvtu;
+
+	}
+
+	else {
+
+	    errorMsg("Data format not recognized");
+
+	}
+
+    }
+
+    free(fmt);
+
+
+    
     
 
     
@@ -83,8 +118,12 @@ int main(int argc, char** argv) {
 	
 
     	// Write mesh in VTK file
+
+	if(tinfo == pvtu) {
 	
-    	writeMeshToVTK( &mesh, &vtk );
+	    writeMeshToVTK( &mesh, &vtk );
+
+	}
 	
 
 	
@@ -193,7 +232,8 @@ int main(int argc, char** argv) {
 		
 		
     	    // Write field
-    	    writeScalarToVTK( vtk.scalarFields[fid], field, &mesh );
+	    
+    	    writeScalarField( vtk.scalarFields[fid], field, &mesh );
 
 
     	    free(field);
@@ -259,7 +299,8 @@ int main(int argc, char** argv) {
 
 
     	    // Write field
-    	    writeVectorToVTK( vtk.vectorFields[fid], field, &mesh );
+
+    	    writeVectorField( vtk.vectorFields[fid], field, &mesh, 3 );
 
 
     	    // Deallocate memory
@@ -341,7 +382,7 @@ int main(int argc, char** argv) {
 	    
 
     	    // Write field
-    	    writePdfToVTK( vtk.pdfFields[fid], field, &mesh );
+    	    writeVectorField( vtk.pdfFields[fid], field, &mesh, mesh.lattice.Q );
 
 
     	    /* // Deallocate memory */
@@ -377,8 +418,12 @@ int main(int argc, char** argv) {
 	
 
     	// Write extra terms to vtk file
-    	writeVTKExtra( &mesh, &vtk );
-	
+
+	if(tinfo == pvtu) {
+	    
+	    writePvtuExtra( &mesh, &vtk );
+
+	}
 	
 
     }
@@ -386,8 +431,12 @@ int main(int argc, char** argv) {
 
 
     // Write Main pvd
-    writeMainPvd();
 
+    if(tinfo == pvtu) {
+		
+    	writeMainPvd();
+
+    }
     
     
     return 0;

@@ -247,20 +247,23 @@ int main( int argc, char **argv ) {
 	    
     	    writeMeshToVTK( &mesh, &vtk );
 
-    	    writeScalarToVTK( "rho", mfields.rho, &mesh );
+    	    writeScalarField( "rho", mfields.rho, &mesh );
 
-    	    writeScalarToVTK( "T", mfields.T, &mesh );
+    	    writeScalarField( "T", mfields.T, &mesh );
 
     	    writeVectorToVTK( "U", mfields.U, &mesh );
 
     	    writePdfToVTK( "f", f.value, &mesh );
 
     	    /* writePdfToVTK( "g", g.value, &mesh ); */
-    
-    	    writeVTKExtra( &mesh, &vtk );
 
-    	    writeMainPvd();
+	    if(mesh.time.data == pvtu) {
+	    
+		writePvtuExtra( &mesh, &vtk );
 
+		writeMainPvd();
+
+	    }
 
 	    
 	    

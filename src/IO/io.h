@@ -17,15 +17,9 @@
 
 #include <writeMeshToVTK.h>
 
-#include <writeScalarToVTK.h>
+#include <writeScalarField.h>
 
-#include <writeVectorToVTK.h>
-
-#include <writePdfToVTK.h>
-
-#include <writeVTKExtra.h>
-
-/* #include <writeMainPvd.h> */
+#include <writeVectorField.h>
 
 #include <readTimeInfo.h>
 

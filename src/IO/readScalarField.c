@@ -1,6 +1,8 @@
-#include <io.h>
-#include <stdlib.h>
+/* #include <io.h> */
+/* #include <stdlib.h> */
 #include <readScalarField.h>
+#include <asciiRaw.h>
+#include <pvtu.h>
 
 uint readScalarField( latticeMesh* mesh, scalar** field, char* fname ) {
 
@@ -8,105 +10,24 @@ uint readScalarField( latticeMesh* mesh, scalar** field, char* fname ) {
     unsigned int status = 0;
     
 
-    // Open file
+    switch( mesh->time.data ) {
 
-    char name[200];
+	
+    case asciiRaw:
 
-    sprintf(name, "processor%d/%d/fields.vtu", mesh->parallel.pid, mesh->time.current);
+	status = readScalarFromAsciiRaw( mesh, field, fname);
 
-    FILE* file = fopen( name, "r" );
-
-    rewind(file);
-
-    
+	break;
 
 
-    
-    *field = (scalar*)malloc( mesh->mesh.nPoints * sizeof(scalar) );
+    case pvtu:
 
-    
-    // Read until <PointData
+	status = readScalarFromPvtu( mesh, field, fname);
 
-    char aux[100];
-    
-    while( strcmp(aux, "<PointData") != 0 ) {
+	break;	
 
-    	status = fscanf(file, "%s", aux);
-
+	
     }
-
-
-
-    uint find = 0;
-
-
-    while( find == 0 ) {
-    
-    
-    	// Read until next <DataArray
-	
-    	while( strcmp(aux, "<DataArray") != 0 ) {
-
-    	    status = fscanf(file, "%s", aux);
-
-    	}
-
-
-    
-    	// Read Name=""
-    
-    	status = fscanf(file, "%s", aux);
-
-    	status = fscanf(file, "%s", aux);
-
-
-	
-    	// Find and extract " " delimited name
-
-    	char auxName[20];
-
-    	sprintf(auxName,"Name=\"%s\"",fname);
-
-
-	
-    	// Read if name matches
-    
-    	if ( strcmp(auxName, aux) == 0 ) {
-
-
-    	    status = fscanf(file, "%s", aux);
-
-    	    unsigned int i;
-
-	    scalar value;
-
-    	    for ( i = 0 ; i < mesh->mesh.nPoints ; i++ ) {
-
-		#ifdef DP
-		
-    	    	status = fscanf(file, "%lf", &value);
-
-		#elif SP
-
-    	    	status = fscanf(file, "%f", &value);
-
-		#endif
-		
-		field[0][i] = value;
-
-    	    }
-
-    	    find = 1;
-
-    	    status = 1;
-
-    	}
-
-
-    }
-    
-    
-    fclose( file );
 
     
     return status;
