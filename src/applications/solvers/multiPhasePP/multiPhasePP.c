@@ -332,7 +332,7 @@ int main( int argc, char **argv ) {
 
     /* 	for( ii = 1 ; ii < mesh.parallel.nlocal ; ii+=3 ) { */
 
-    /* 	    printf(  "%d %g %g %g\n", mesh.mesh.points[ii][1], potential( &mesh, mfields.rho[ii], mfields.T[ii] ), mfields.rho[ii], mfields.Fi[ii][1]  ); */
+    /* 	    printf(  "%d %g %g %g\n", mesh.mesh.points[ii][1], mfields.Fi[ii][1], p_eos(&mesh.EOS, mfields.rho[ii], mfields.T[ii]), potential( &mesh, mfields.rho[ii], mfields.T[ii] )); */
     /* 	    /\* printf("%g\n", mfields.Fi[ii][1] ); *\/ */
 
     /* 	} */
