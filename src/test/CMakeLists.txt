@@ -15,6 +15,7 @@ set ( PROJECT_LINK_LIBS
   libfinitedifference.so
   libpvtu.so
   libasciiraw.so
+  libbinaryraw.so
   m
   ${MPI_LIBRARIES}
   )
