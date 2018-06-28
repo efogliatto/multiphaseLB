@@ -69,6 +69,9 @@ dictionary openDict( char* name ) {
 
 
 
+    dict.version = 1;
+
+
     return dict;
 
     

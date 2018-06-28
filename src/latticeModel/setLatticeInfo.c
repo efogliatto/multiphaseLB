@@ -23,6 +23,8 @@ latticeInfo setLatticeInfo( ) {
 
     latticeInfo info;
 
+    info.model = D2Q9;
+
 
     
     // Read model name. Use D2Q9 as default

@@ -11,6 +11,12 @@ fixedUParam readFixedUParam( char* fname, char* bdname ) {
 
     fixedUParam param;
 
+    param.U[0] = 0;
+
+    param.U[1] = 0;
+
+    param.U[2] = 0;
+
     scalar* u;
 
     unsigned int n;
