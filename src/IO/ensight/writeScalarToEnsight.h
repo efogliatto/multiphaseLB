@@ -1,8 +1,8 @@
-#ifndef WRITESCALARTOASCIIRAW_H
-#define WRITESCALARTOASCIIRAW_H
+#ifndef WRITESCALARTOENSIGHT_H
+#define WRITESCALARTOENSIGHT_H
 
 #include <latticeMesh.h>
 
-void writeScalarToAsciiRaw( char* fname, scalar* field, latticeMesh* mesh );
+void writeScalarToEnsight( char* fname, scalar* field, latticeMesh* mesh );
 
-#endif // WRITESCALARTOASCIIRAW_H
+#endif // WRITESCALARTOENSIGHT_H

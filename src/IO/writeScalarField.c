@@ -1,10 +1,8 @@
-/* #include <latticeMesh.h> */
-/* #include <stdio.h> */
-/* #include <stdlib.h> */
 #include <writeScalarField.h>
 #include <asciiRaw.h>
 #include <binaryRaw.h>
 #include <pvtu.h>
+#include <ensight.h>
 
 
 void writeScalarField( char* fname, scalar* field, latticeMesh* mesh ) {
@@ -31,7 +29,12 @@ void writeScalarField( char* fname, scalar* field, latticeMesh* mesh ) {
 
 	writeScalarToPvtu( fname, field, mesh );
 
-	break;	
+	break;
+
+
+    case ensight:
+
+	writeScalarToEnsight( fname, field, mesh );
 
 	
     }

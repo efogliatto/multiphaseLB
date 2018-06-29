@@ -1,55 +1,87 @@
 #include <latticeMesh.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <writeScalarToAsciiRaw.h>
+#include <writeScalarToEnsight.h>
 #include <basic.h>
+#include <dirent.h>
+#include <string.h>
 
-void writeScalarToAsciiRaw( char* fname, scalar* field, latticeMesh* mesh ) {
+void writeScalarToEnsight( char* fname, scalar* field, latticeMesh* mesh ) {
 
+
+    // Count file ocurrences
+
+    DIR *dir;
+    
+    struct dirent *ent;
+
+    uint fcount = 0;
+
+    char name[256];
+
+    sprintf(name,"lattice.%s",fname);
+
+
+    if ((dir = opendir (".")) != NULL) {
+
+    	while ((ent = readdir (dir)) != NULL) {
+	    
+    	    if(strstr(ent->d_name, name) != NULL) {
+
+    		fcount++;
+
+    	    }
+	    
+    	}
+	
+    	closedir (dir);
+	
+    }
+
+
+
+
+    // Write field
+    
     FILE *outFile;
 
     char fileName[100];
+      
 
+    if( mesh->parallel.pid == 0 ) {
 
-    // Create folder
-
-    sprintf(fileName, "mkdir -p processor%d/%d", mesh->parallel.pid, mesh->time.current);
-    
-    unsigned int status = system(fileName);
-
-
-    
-    // Write field
-
-    if ( status == 0 ) {
-
-    
-	sprintf(fileName, "processor%d/%d/%s", mesh->parallel.pid, mesh->time.current, fname);
-
+	sprintf(fileName, "lattice.%s%d", fname, fcount);
+	
 	outFile = fopen(fileName, "w");
-    
-	
-	uint ii;
-    
-	for( ii = 0 ; ii < mesh->mesh.nPoints ; ii++ ) {
-	
-	    fprintf(outFile, "%g\n", field[ii]);
-	
-	}
 
+	fprintf(outFile, "%s\n", fname);
 
 	fclose(outFile);
 
+	fcount++;
 
     }
 
 
+    sprintf(fileName, "lattice.%s%d", fname, fcount-1);
 
-    else {
+    outFile = fopen(fileName, "a");
 
-	errorMsg("Unable to create time folder");
-
+    fprintf(outFile,"part\n");
+    fprintf(outFile,"%10d\n",mesh->parallel.pid+1);
+    fprintf(outFile,"coordinates\n");
+	
+    uint ii;
+    
+    for( ii = 0 ; ii < mesh->mesh.nPoints ; ii++ ) {
+	
+    	fprintf(outFile, "%12.5e\n", field[ii]);
+	
     }
+
+
+    fclose(outFile);
+
 
 
 }

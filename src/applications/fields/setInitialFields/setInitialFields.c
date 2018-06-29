@@ -56,45 +56,8 @@ int main(int argc, char** argv) {
 
     // Time info
 
-    dataFormat tinfo = asciiRaw;
+    dataFormat tinfo = readDataFormat();
     
-    char* fmt;
-    
-    status = lookUpStringEntry("properties/simulation","dataFormat", &fmt, "asciiRaw");
-
-    if( strcmp(fmt,"asciiRaw") == 0 ) {
-    
-    	tinfo = asciiRaw;
-
-    }
-
-    else {
-
-	if( strcmp(fmt,"pvtu") == 0 ) {
-    
-	    tinfo = pvtu;
-
-	}
-
-	else {
-
-	    if( strcmp(fmt,"binaryRaw") == 0 ) {
-    
-		tinfo = binaryRaw;
-
-	    }
-
-	    else {
-
-		errorMsg("Data format not recognized");
-
-	    }
-
-	}
-
-    }
-
-    free(fmt);
 
 
     

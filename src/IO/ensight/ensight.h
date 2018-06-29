@@ -1,14 +1,14 @@
-#ifndef ASCIIRAW_H
-#define ASCIIRAW_H
+#ifndef ENSIGHT_H
+#define ENSIGHT_H
 
-#include <writeScalarToAsciiRaw.h>
+#include <writeScalarToEnsight.h>
 
-#include <writeArrayToAsciiRaw.h>
+#include <writeArrayToEnsight.h>
 
-#include <readScalarFromAsciiRaw.h>
+#include <readScalarFromEnsight.h>
 
-#include <readArrayFromAsciiRaw.h>
+#include <readArrayFromEnsight.h>
 
 #include <writeMeshToEnsight.h>
 
-#endif // ASCIIRAW_H
+#endif // ENSIGHT_H
