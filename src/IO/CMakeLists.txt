@@ -18,6 +18,7 @@ add_library(io SHARED
   createVectorField.c
   createLbeField.c 
   time/timeOptions.c
+  time/readDataFormat.c
   )
 
 
@@ -31,3 +32,7 @@ add_subdirectory (pvtu)
 
 # Binary raw format
 add_subdirectory (binaryRaw)
+
+
+# Ensight Gold format
+add_subdirectory (ensight)

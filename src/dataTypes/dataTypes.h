@@ -46,7 +46,9 @@ typedef enum {
 
     binaryRaw,
 
-    pvtu
+    pvtu,
+
+    ensight
 
 } dataFormat;
 

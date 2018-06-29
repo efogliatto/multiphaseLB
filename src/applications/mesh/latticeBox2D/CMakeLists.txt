@@ -15,6 +15,7 @@ set ( PROJECT_LINK_LIBS
   libasciiraw.so
   libbinaryraw.so
   libpvtu.so
+  libensight.so
   m
   ${MPI_LIBRARIES})
 

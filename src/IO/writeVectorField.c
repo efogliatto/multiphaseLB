@@ -33,11 +33,6 @@ void writeVectorField( char* fname, scalar** field, latticeMesh* mesh, const uin
 
 	break;
 
-
-    default:
-
-	errorMsg("Data format not recognized");
-
 	
     }
 

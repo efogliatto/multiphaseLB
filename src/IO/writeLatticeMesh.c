@@ -5,10 +5,24 @@
 #include <basic.h>
 #include <io.h>
 #include <latticeModel.h>
+#include <writeMeshToEnsight.h>
+#include <readDataFormat.h>
 
 
 void writeLatticeMesh( latticeMesh* mesh ) {
 
+
+    // Data format
+
+    dataFormat data = readDataFormat();
+    
+    if( data == ensight ) {
+
+	writeMeshToEnsight( mesh );
+
+    }
+
+    
 
     uint i,j;
 

@@ -16,6 +16,7 @@ set ( PROJECT_LINK_LIBS
   libpvtu.so
   libasciiraw.so
   libbinaryraw.so
+  libensight.so
   ${MPI_LIBRARIES})
 
 # link_directories( ~/multiphaseLB/lib )
