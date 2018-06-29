@@ -1,10 +1,10 @@
-#ifndef READSCALARFROMASCIIRAW_H
-#define READSCALARFROMASCIIRAW_H
+#ifndef READSCALARFROMENSIGHT_H
+#define READSCALARFROMENSIGHT_H
 
 #include <latticeMesh.h>
 
 /**
- * @file readScalarFromAsciiRaw.h
+ * @file readScalarFromEnsight.h
  * @author Ezequiel O. Fogliatto
  * @date 27 Jun 2018
  *
@@ -16,6 +16,6 @@
  * @return Status. Correct if different from zero
  */
 
-uint readScalarFromAsciiRaw( latticeMesh* mesh, scalar** field, char* fname );
+uint readScalarFromEnsight( latticeMesh* mesh, scalar** field, char* fname );
 
-#endif // READSCALARFROMASCIIRAW_H
+#endif // READSCALARFROMENSIGHT_H

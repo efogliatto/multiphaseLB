@@ -13,4 +13,6 @@
 
 #include <writeLbeFieldToEnsight.h>
 
+#include <timeToIndex.h>
+
 #endif // ENSIGHT_H

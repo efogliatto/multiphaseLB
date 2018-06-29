@@ -1,9 +1,8 @@
-/* #include <io.h> */
-/* #include <stdlib.h> */
 #include <readScalarField.h>
 #include <asciiRaw.h>
 #include <binaryRaw.h>
 #include <pvtu.h>
+#include <ensight.h>
 
 uint readScalarField( latticeMesh* mesh, scalar** field, char* fname ) {
 
@@ -34,6 +33,12 @@ uint readScalarField( latticeMesh* mesh, scalar** field, char* fname ) {
 
 	break;	
 
+
+    case ensight:
+
+	status = readScalarFromEnsight( mesh, field, fname);
+
+	break;		
 	
     }
 
