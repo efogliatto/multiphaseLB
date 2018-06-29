@@ -10,4 +10,5 @@ add_library(ensight SHARED
   timeToIndex.c
   readVectorFromEnsight.c
   readLbeFieldFromEnsight.c
+  updateCaseFile.c
   )

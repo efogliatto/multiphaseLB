@@ -317,6 +317,12 @@ int main( int argc, char **argv ) {
 
 	    }
 
+	    if(mesh.time.data == ensight) {
+
+		updateCaseFile(&mesh);
+
+	    }
+
 
 	    
 	    

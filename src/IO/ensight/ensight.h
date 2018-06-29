@@ -17,4 +17,6 @@
 
 #include <timeToIndex.h>
 
+#include <updateCaseFile.h>
+
 #endif // ENSIGHT_H
