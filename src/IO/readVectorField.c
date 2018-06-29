@@ -36,7 +36,17 @@ uint readVectorField( latticeMesh* mesh, scalar*** field, unsigned int vsize, ch
 
     case ensight:
 
-	status = readVectorFromEnsight( mesh, field, fname );
+	if( vsize == 3 ) {
+	
+	    status = readVectorFromEnsight( mesh, field, fname );
+
+	}
+
+	else {
+
+	    status = readLbeFieldFromEnsight( mesh, field, fname );
+
+	}
 
 	break;	
 

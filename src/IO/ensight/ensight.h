@@ -7,6 +7,8 @@
 
 #include <readScalarFromEnsight.h>
 
+#include <readLbeFieldFromEnsight.h>
+
 #include <readVectorFromEnsight.h>
 
 #include <writeMeshToEnsight.h>
