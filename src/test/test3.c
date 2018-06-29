@@ -88,26 +88,26 @@ int main( int argc, char **argv ) {
 
     createScalarField( &mesh, &mfields.rho, "rho", MUST_READ);
 
-    /* mesh.EOS.rho_0 = averageScalarField(&mesh, mfields.rho); */
+    mesh.EOS.rho_0 = averageScalarField(&mesh, mfields.rho);
 
 
     
     
-    /* // Velocity */
+    // Velocity
 
-    /* createVectorField( &mesh, &mfields.U, 3, "U", MUST_READ); */
+    createVectorField( &mesh, &mfields.U, 3, "U", MUST_READ);
     
 
     
-    /* // Temperature */
+    // Temperature
 
-    /* createScalarField( &mesh, &mfields.T, "T", MUST_READ); */
+    createScalarField( &mesh, &mfields.T, "T", MUST_READ);
 
 
 
-    /* // Pressure */
+    // Pressure
 
-    /* createScalarField( &mesh, &mfields.p, "p", MUST_READ); */
+    createScalarField( &mesh, &mfields.p, "p", MUST_READ);
     
     
 
@@ -298,11 +298,11 @@ int main( int argc, char **argv ) {
 
     	    writeScalarField( "rho", mfields.rho, &mesh );
 
-    	    /* writeScalarField( "T", mfields.T, &mesh ); */
+    	    writeScalarField( "T", mfields.T, &mesh );
 
-    	    /* writeScalarField( "p", mfields.p, &mesh );	     */
+    	    writeScalarField( "p", mfields.p, &mesh );
 
-    	    /* writeVectorField( "U", mfields.U, &mesh, 3 ); */
+    	    writeVectorField( "U", mfields.U, &mesh, 3 );
 
     	    /* writeVectorField( "f", f.value, &mesh, mesh.lattice.Q ); */
 

@@ -8,5 +8,5 @@ add_library(ensight SHARED
   writeLbeFieldToEnsight.c
   readScalarFromEnsight.c
   timeToIndex.c
-  # readVectorFromEnsight.c
+  readVectorFromEnsight.c
   )

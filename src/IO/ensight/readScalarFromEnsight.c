@@ -26,6 +26,8 @@ uint readScalarFromEnsight( latticeMesh* mesh, scalar** field, char* fname ) {
 
     // Find "part" definition
 
+    rewind(file);
+    
     uint find = 0;
 
     char word[100];    

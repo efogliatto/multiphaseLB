@@ -1,10 +1,8 @@
-/* #include <dictIO.h> */
-/* #include <io.h> */
-/* #include <basic.h> */
 #include <readVectorField.h>
 #include <asciiRaw.h>
 #include <binaryRaw.h>
 #include <pvtu.h>
+#include <ensight.h>
 
 uint readVectorField( latticeMesh* mesh, scalar*** field, unsigned int vsize, char* fname ) {
     
@@ -32,6 +30,13 @@ uint readVectorField( latticeMesh* mesh, scalar*** field, unsigned int vsize, ch
     case pvtu:
 
 	status = readArrayFromPvtu( mesh, field, vsize, fname);
+
+	break;
+
+
+    case ensight:
+
+	status = readVectorFromEnsight( mesh, field, fname );
 
 	break;	
 
