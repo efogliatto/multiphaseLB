@@ -37,7 +37,24 @@ void writeVectorField( char* fname, scalar** field, latticeMesh* mesh, const uin
 
     case ensight:
 
-	writeVectorToEnsight( fname, field, mesh );
+	if( vsize == 3 ) {
+
+	    writeVectorToEnsight( fname, field, mesh );
+
+	}
+
+	else {
+
+	    /* for( k = 0 ; k < mesh->lattice.Q ; k++ ) { */
+
+	    /* 	status = vstring(&name, "%s%d", fname, k); */
+
+	    /* 	if(status) */
+	    /* 	    writeScalarToEnsight( name, field, mesh ); */
+
+	    /* } */
+
+	}
 
 	break;	
 	

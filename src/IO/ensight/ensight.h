@@ -11,4 +11,6 @@
 
 #include <writeMeshToEnsight.h>
 
+#include <writeLbeFieldToEnsight.h>
+
 #endif // ENSIGHT_H
