@@ -3,11 +3,11 @@
 
 #include <writeScalarToEnsight.h>
 
-#include <writeArrayToEnsight.h>
+#include <writeVectorToEnsight.h>
 
 #include <readScalarFromEnsight.h>
 
-#include <readArrayFromEnsight.h>
+#include <readVectorFromEnsight.h>
 
 #include <writeMeshToEnsight.h>
 

@@ -6,6 +6,7 @@
 #include <asciiRaw.h>
 #include <binaryRaw.h>
 #include <pvtu.h>
+#include <ensight.h>
 
 void writeVectorField( char* fname, scalar** field, latticeMesh* mesh, const uint vsize ) {
 
@@ -33,6 +34,12 @@ void writeVectorField( char* fname, scalar** field, latticeMesh* mesh, const uin
 
 	break;
 
+
+    case ensight:
+
+	writeVectorToEnsight( fname, field, mesh );
+
+	break;	
 	
     }
 

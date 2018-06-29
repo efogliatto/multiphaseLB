@@ -92,11 +92,11 @@ void writeMeshToEnsight( latticeMesh* mesh ) {
 	    
 	/* }	 */
 	
-    	/* for( fid = 0 ; fid < vtk.nvector ; fid++ ) { */
+    	for( fid = 0 ; fid < vtk.nvector ; fid++ ) {
 
-	/*     fprintf(outFile,"vector per node:           %s lattice.%s*\n",vtk.vectorFields[fid],vtk.vectorFields[fid]); */
+	    fprintf(outFile,"vector per node:           %s lattice.%s*\n",vtk.vectorFields[fid],vtk.vectorFields[fid]);
 	    
-	/* }	 */
+	}
 
 
 	
