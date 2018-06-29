@@ -1,6 +1,3 @@
-/* #include <latticeMesh.h> */
-/* #include <stdio.h> */
-/* #include <stdlib.h> */
 #include <writeVectorField.h>
 #include <basic.h>
 #include <asciiRaw.h>
@@ -45,14 +42,7 @@ void writeVectorField( char* fname, scalar** field, latticeMesh* mesh, const uin
 
 	else {
 
-	    /* for( k = 0 ; k < mesh->lattice.Q ; k++ ) { */
-
-	    /* 	status = vstring(&name, "%s%d", fname, k); */
-
-	    /* 	if(status) */
-	    /* 	    writeScalarToEnsight( name, field, mesh ); */
-
-	    /* } */
+	    writeLbeFieldToEnsight( fname, field, mesh );
 
 	}
 

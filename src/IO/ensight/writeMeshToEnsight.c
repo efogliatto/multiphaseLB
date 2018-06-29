@@ -80,17 +80,17 @@ void writeMeshToEnsight( latticeMesh* mesh ) {
 	    
 	}
 
-    	/* for( fid = 0 ; fid < vtk.npdf ; fid++ ) { */
+    	for( fid = 0 ; fid < vtk.npdf ; fid++ ) {
 
-	/*     uint k; */
+	    uint k;
 
-	/*     for( k = 0 ; k < mesh->lattice.Q ; k++ ) { */
+	    for( k = 0 ; k < mesh->lattice.Q ; k++ ) {
 	    
-	/* 	fprintf(outFile,"scalar per node:           %s%d lattice.%s%d*\n",vtk.pdfFields[fid],k,vtk.pdfFields[fid],k); */
+		fprintf(outFile,"scalar per node:           %s%d lattice.%s%d*\n",vtk.pdfFields[fid],k,vtk.pdfFields[fid],k);
 
-	/*     } */
+	    }
 	    
-	/* }	 */
+	}
 	
     	for( fid = 0 ; fid < vtk.nvector ; fid++ ) {
 

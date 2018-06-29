@@ -5,6 +5,7 @@ add_library(ensight SHARED
   writeMeshToEnsight.c
   writeScalarToEnsight.c
   writeVectorToEnsight.c
+  writeLbeFieldToEnsight.c
   # readScalarFromEnsight.c
   # readVectorFromEnsight.c
   )
