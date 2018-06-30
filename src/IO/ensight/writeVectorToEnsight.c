@@ -8,7 +8,19 @@
 
 void writeVectorToEnsight( char* fname, scalar** field, latticeMesh* mesh ) {
 
+    
+    // Receive flag from "previous" processor
 
+    int flag;
+    
+    if(   ( mesh->parallel.pid != 0 )   &&  ( mesh->parallel.worldSize > 1 )   ) {
+    
+    	MPI_Recv(&flag, 1, MPI_INT, mesh->parallel.pid-1, mesh->parallel.pid-1, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+
+    }
+    
+
+    
     // Count file ocurrences
 
     DIR *dir;
@@ -87,5 +99,13 @@ void writeVectorToEnsight( char* fname, scalar** field, latticeMesh* mesh ) {
     fclose(outFile);
 
 
+    
+    // Send flag to "next" processor
+
+    if(    ( mesh->parallel.worldSize > 1 )     &&    ( mesh->parallel.pid != mesh->parallel.worldSize - 1 )  ){
+    
+    	MPI_Send(&flag, 1, MPI_INT, mesh->parallel.pid+1, mesh->parallel.pid, MPI_COMM_WORLD);
+
+    }
 
 }

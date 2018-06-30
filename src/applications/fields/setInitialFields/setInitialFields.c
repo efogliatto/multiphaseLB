@@ -103,6 +103,9 @@ int main(int argc, char** argv) {
     	// Move over scalar fields
 
     	uint fid;
+
+
+	mesh.parallel.worldSize = 1;
 	
 	
 

@@ -38,11 +38,13 @@ uint readVectorFromEnsight( latticeMesh* mesh, scalar*** field, char* fname ) {
 
     while(  find == 0  ) {
 
-    	if( fscanf(file,"%s",word) != EOF ) {
+	status = fscanf(file,"%s",word);
+	
+    	if( status != EOF ) {
 	
     	    if( strcmp(word, "part") == 0 ) {
 
-    	    	fscanf(file,"%s",word);
+    	    	status = fscanf(file,"%s",word);
 
     	    	if( atoi(word) == mesh->parallel.pid + 1 ) {
 
@@ -65,7 +67,7 @@ uint readVectorFromEnsight( latticeMesh* mesh, scalar*** field, char* fname ) {
 
     // "coordinates"
     
-    fscanf(file,"%s",word);
+    status = fscanf(file,"%s",word);
 
     
 
