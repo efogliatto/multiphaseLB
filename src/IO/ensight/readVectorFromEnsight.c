@@ -15,7 +15,7 @@ uint readVectorFromEnsight( latticeMesh* mesh, scalar*** field, char* fname ) {
 
     char name[200];
 
-    sprintf(name, "lattice.%s%d", fname, timeToIndex(mesh->time.current));
+    sprintf(name, "lattice.%s_%d", fname, timeToIndex(mesh->time.current));
 
     FILE* file = fopen( name, "r" );
 

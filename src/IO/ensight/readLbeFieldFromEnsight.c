@@ -24,7 +24,7 @@ uint readLbeFieldFromEnsight( latticeMesh* mesh, scalar*** field, char* fname ) 
 
 	char name[200];
 
-	sprintf(name, "lattice.%s%d%d", fname, k, timeToIndex(mesh->time.current));
+	sprintf(name, "lattice.%s%d_%d", fname, k, timeToIndex(mesh->time.current));
 
 	FILE* file = fopen( name, "r" );
 

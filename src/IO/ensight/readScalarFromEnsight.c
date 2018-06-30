@@ -1,6 +1,7 @@
 #include <io.h>
 #include <stdlib.h>
 #include <readScalarFromEnsight.h>
+#include <timeToIndex.h>
 
 uint readScalarFromEnsight( latticeMesh* mesh, scalar** field, char* fname ) {
 
@@ -12,7 +13,7 @@ uint readScalarFromEnsight( latticeMesh* mesh, scalar** field, char* fname ) {
 
     char name[200];
 
-    sprintf(name, "lattice.%s%d", fname, timeToIndex(mesh->time.current));
+    sprintf(name, "lattice.%s_%d", fname, timeToIndex(mesh->time.current));
 
     FILE* file = fopen( name, "r" );
 

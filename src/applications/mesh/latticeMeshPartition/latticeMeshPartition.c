@@ -287,6 +287,8 @@ int main(int argc, char** argv) {
 
     	    localMesh[rpid].mesh.Q = mesh.Q;
 
+	    localMesh[rpid].lattice.Q = mesh.Q;
+
     	    for( i = 0 ; i < mesh.nPoints ; i++ ) {
 
     		int lid = local[i][rpid];

@@ -296,6 +296,12 @@ int main( int argc, char **argv ) {
 
 	    }
 
+	    if(mesh.time.data == ensight) {
+
+		updateCaseFile(&mesh);
+
+	    }	    
+
     	    writeScalarField( "rho", mfields.rho, &mesh );
 
     	    writeScalarField( "T", mfields.T, &mesh );

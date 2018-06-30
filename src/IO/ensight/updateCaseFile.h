@@ -3,6 +3,6 @@
 
 #include <latticeMesh.h>
 
-void updateCaseFile( const latticeMesh* mesh );
+void updateCaseFile( latticeMesh* mesh );
 
 #endif // UPDATECASEFILE_H
