@@ -29,7 +29,9 @@ void writeMeshToEnsight( latticeMesh* mesh ) {
 	// Open File
 	    
 	outFile = fopen(fileName, "w");
-    
+
+	testFile(outFile, fileName);
+	
 	
 	// Headers
 
@@ -58,6 +60,8 @@ void writeMeshToEnsight( latticeMesh* mesh ) {
     // Points coordinates
 
     outFile = fopen(fileName, "a");
+
+    testFile(outFile, fileName);
 
     fprintf(outFile,"part\n");
 

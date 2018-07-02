@@ -19,6 +19,8 @@ uint readVectorFromEnsight( latticeMesh* mesh, scalar*** field, char* fname ) {
 
     FILE* file = fopen( name, "r" );
 
+    testFile(file, name);
+
 
     
     // Allocate space

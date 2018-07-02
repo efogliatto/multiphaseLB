@@ -27,4 +27,6 @@
 
 #include <sparseMatVecMult.h>
 
+#include <testFile.h>
+
 #endif // BASIC_H

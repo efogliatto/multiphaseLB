@@ -1,4 +1,5 @@
 #include <openDict.h>
+#include <basic.h>
 
 dictionary openDict( char* name ) {
 
@@ -9,13 +10,15 @@ dictionary openDict( char* name ) {
 
     fp = fopen(name, "r");
 
-    if(fp == NULL) {
+    testFile(fp, name);
+    
+    /* if(fp == NULL) { */
 
-    	printf("\n [ERROR]   Unable to open file %s\n\n", name);
+    /* 	printf("\n [ERROR]   Unable to open file %s\n\n", name); */
 
-    	exit(1);
+    /* 	exit(1); */
 
-    }
+    /* } */
 
 
 

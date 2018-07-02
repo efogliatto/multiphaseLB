@@ -70,6 +70,8 @@ void writeScalarToEnsight( char* fname, scalar* field, latticeMesh* mesh ) {
 	
 	outFile = fopen(fileName, "w");
 
+	testFile(outFile, fileName);
+
 	fprintf(outFile, "%s\n", fname);
 
 	fclose(outFile);
@@ -78,6 +80,8 @@ void writeScalarToEnsight( char* fname, scalar* field, latticeMesh* mesh ) {
 
 
     outFile = fopen(fileName, "a");
+
+    testFile(outFile, fileName);
 
     fprintf(outFile,"part\n");
 

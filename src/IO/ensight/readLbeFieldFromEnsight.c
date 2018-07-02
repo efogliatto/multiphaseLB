@@ -28,6 +28,8 @@ uint readLbeFieldFromEnsight( latticeMesh* mesh, scalar*** field, char* fname ) 
 
 	FILE* file = fopen( name, "r" );
 
+	testFile(file, name);
+
 
 
 	// Find "part" definition

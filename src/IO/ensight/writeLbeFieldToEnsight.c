@@ -84,6 +84,8 @@ void writeLbeFieldToEnsight( char* fname, scalar** field, latticeMesh* mesh ) {
 	
 	    outFile = fopen(fileName, "w");
 
+	    testFile(outFile, fileName);
+
 	    fprintf(outFile, "%s\n", cname);
 
 	    fclose(outFile);
@@ -92,6 +94,8 @@ void writeLbeFieldToEnsight( char* fname, scalar** field, latticeMesh* mesh ) {
 
 
 	outFile = fopen(fileName, "a");
+
+	testFile(outFile, fileName);
 
 	fprintf(outFile,"part\n");
 
