@@ -60,11 +60,17 @@ void writeMeshToEnsight( latticeMesh* mesh ) {
     outFile = fopen(fileName, "a");
 
     fprintf(outFile,"part\n");
+
     fprintf(outFile,"%10d\n",mesh->parallel.pid+1);
+
     fprintf(outFile,"Point field\n");
+
     fprintf(outFile,"coordinates\n");
+
     fprintf(outFile,"%10d\n",mesh->mesh.nPoints);
 
+
+    
     uint i,j;
 
     for( j = 0 ; j < 3 ; j++ ) {

@@ -71,6 +71,8 @@ dictionary openDict( char* name ) {
 
     dict.version = 1;
 
+    fclose(fp);
+
 
     return dict;
 

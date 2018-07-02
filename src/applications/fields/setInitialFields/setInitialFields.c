@@ -87,7 +87,7 @@ int main(int argc, char** argv) {
     	mesh.time.current = 0;
 
 
-    	writeLatticeMesh( &mesh );
+    	/* writeLatticeMesh( &mesh ); */
 	
 
     	// Write mesh in VTK file
@@ -247,7 +247,7 @@ int main(int argc, char** argv) {
     	    if(  vstring(&entry, "%s/internalField/type", vtk.vectorFields[fid] )  )
     		status = lookUpStringEntry("start/initialFields", entry, &itype, "");
     
-	   		    
+
 
     	    // Uniform distribution
 	    
