@@ -34,7 +34,6 @@ void writeMeshToEnsight( latticeMesh* mesh ) {
 	testFile(outFile, fileName);
 	
 	
-	
 	// Headers
 
 	char* msg = (char*)malloc( 80*sizeof(char) );

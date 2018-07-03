@@ -56,7 +56,6 @@ void writeVectorToEnsight( char* fname, scalar** field, latticeMesh* mesh ) {
 
 	testFile(outFile, fileName);
 
-
 	char* msg = (char*)malloc( 80*sizeof(char) );
 
 	memset(msg,'\0', 80);

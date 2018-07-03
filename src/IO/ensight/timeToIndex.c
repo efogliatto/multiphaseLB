@@ -94,7 +94,9 @@ uint timeToIndex( uint current ) {
 
 	}
 	    
-	    
+
+
+	fclose(outFile);
 
     }
 
