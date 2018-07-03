@@ -380,6 +380,44 @@ latticeMesh readLatticeMesh( uint pid ) {
 
     
 
+
+
+
+
+
+    // Total number of elements per patch
+
+    mesh.parallel.nodesPerPatch = (uint*)malloc( mesh.parallel.worldSize * sizeof(uint) );
+
+    for( i = 0 ; i < mesh.parallel.worldSize ; i++ ) {
+
+	uint npp = 0;
+	
+	sprintf(command,"processor%d/lattice/points", i);
+
+	inFile = fopen( command, "r" );
+
+	fscanf(inFile, "%d", &npp);
+
+	fclose(inFile);
+
+	mesh.parallel.nodesPerPatch[i] = npp;
+
+	
+
+	sprintf(command,"processor%d/lattice/ghosts", i);
+
+	inFile = fopen( command, "r" );
+
+	fscanf(inFile, "%d", &npp);
+
+	fclose(inFile);
+
+	mesh.parallel.nodesPerPatch[i] += npp;
+	
+
+    }
+
     
     
 

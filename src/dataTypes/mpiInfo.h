@@ -1,7 +1,8 @@
 #ifndef MPIINFO_H
 #define MPIINFO_H
 
-#define MPI_BUFF_SIZE 500  /**< MPI buffer size */
+/**< MPI buffer size */
+#define MPI_BUFF_SIZE 500  
 
 /**
  * @file mpiInfo.h
@@ -19,39 +20,74 @@
 #include <dataTypes.h>
 
 typedef struct {
+
     
-    uint pid;   /**< Process id */
+    /**< Process id */
     
-    uint worldSize;   /**< Total number of processes */
+    uint pid;   
+
+
+    /**< Total number of processes */
     
-    uint nghosts;   /**< Total number of ghosts */
+    uint worldSize;   
+
+
+    /**< Total number of ghosts */
     
-    uint nlocal;   /**< Number of local elements */
+    uint nghosts;   
+
+
+    /**< Number of local elements */
     
-    uint** recvGhosts;   /**< Receive ghosts indices*/
+    uint nlocal;   
+
+
+    /**< Receive ghosts indices*/
     
-    uint** sendGhosts;   /**< Send ghosts indices*/        
+    uint** recvGhosts;   
+
+
+    /**< Send ghosts indices*/
     
-    uint* nrg;   /**< Number of receive ghosts */
+    uint** sendGhosts;           
+
+
+    /**< Number of receive ghosts */
     
-    uint* nsg;   /**< Number of send ghosts */
+    uint* nrg;   
+
+
+    /**< Number of send ghosts */
+    
+    uint* nsg;
+
+
+    /** Total number of elements per patch (useful for reading/writing) */
+
+    uint* nodesPerPatch;
     
 
+    
     // Buffers
 
-    /* // Scalars */
-    /* double* scalarSendBuff; */
-    /* double* scalarRecvBuff; */
-    /* int* sendScalarBlocks; */
-    /* int* recvScalarBlocks; */
-
-    scalar** sbuf;   /**< Scalar send buffer */
+    /**< Scalar send buffer */
     
-    scalar** rbuf;   /**< Scalar receive buffer */
+    scalar** sbuf;   
 
-    scalar** vsbuf;   /**< Vector send buffer */
+
+    /**< Scalar receive buffer */
     
-    scalar** vrbuf;   /**< Vector receive buffer */
+    scalar** rbuf;   
+
+    
+    /**< Vector send buffer */
+    
+    scalar** vsbuf;   
+
+    
+    /**< Vector receive buffer */
+    
+    scalar** vrbuf;   
     
     
 } mpiInfo;

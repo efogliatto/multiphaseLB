@@ -93,76 +93,76 @@ int main( int argc, char **argv ) {
 
     
     
-    // Velocity
+    /* // Velocity */
 
-    createVectorField( &mesh, &mfields.U, 3, "U", MUST_READ);
+    /* createVectorField( &mesh, &mfields.U, 3, "U", MUST_READ); */
     
 
     
-    // Temperature
+    /* // Temperature */
 
-    createScalarField( &mesh, &mfields.T, "T", MUST_READ);
+    /* createScalarField( &mesh, &mfields.T, "T", MUST_READ); */
 
 
 
-    // Pressure
+    /* // Pressure */
 
-    createScalarField( &mesh, &mfields.p, "p", MUST_READ);
+    /* createScalarField( &mesh, &mfields.p, "p", MUST_READ); */
     
     
 
 
-    // LBE fields
+    /* // LBE fields */
 
-    // Navier-Stokes field
+    /* // Navier-Stokes field */
 
-    lbeField f;
+    /* lbeField f; */
     
-    createLbeField( &mesh, &f, "f", MUST_READ);
+    /* createLbeField( &mesh, &f, "f", MUST_READ); */
 
-    if(frozen == 0) { f.update = 0; }
+    /* if(frozen == 0) { f.update = 0; } */
 
 
     
-    // Energy field
+    /* // Energy field */
 
-    lbeField g;
+    /* lbeField g; */
     
-    createLbeField( &mesh, &g, "g", MUST_READ);
+    /* createLbeField( &mesh, &g, "g", MUST_READ); */
 
-    if(ht == 0) { g.update = 0; }
+    /* if(ht == 0) { g.update = 0; } */
     
     
 
-    /* // Initial equilibrium distribution */
+    /* /\* // Initial equilibrium distribution *\/ */
    
-    /* equilibrium(&mesh, &mfields, &f); */
+    /* /\* equilibrium(&mesh, &mfields, &f); *\/ */
     
-    /* equilibrium(&mesh, &mfields, &g); */
+    /* /\* equilibrium(&mesh, &mfields, &g); *\/ */
 
 
 
 
 
-    /* // Update macroscopic interaction force */
+    /* /\* // Update macroscopic interaction force *\/ */
 
-    /* mfields.Fi = matrixDoubleAlloc( mesh.mesh.nPoints, 3, -1 ); */
+    /* /\* mfields.Fi = matrixDoubleAlloc( mesh.mesh.nPoints, 3, -1 ); *\/ */
     
-    /* interForce( &mesh, &mfields ); */
+    /* /\* interForce( &mesh, &mfields ); *\/ */
     
-    /* syncVectorField( &mesh, mfields.Fi ); */
+    /* /\* syncVectorField( &mesh, mfields.Fi ); *\/ */
 
 
     
 
-    /* // Heat source */
+    /* /\* // Heat source *\/ */
 
-    /* heatSource( &mesh, &mfields, &g ); */
+    /* /\* heatSource( &mesh, &mfields, &g ); *\/ */
 
-    /* syncScalarField( &mesh, g.scalarSource ); */
+    /* /\* syncScalarField( &mesh, g.scalarSource ); *\/ */
     
    
-    if(pid == 0){printf("\n\n");}
+    /* if(pid == 0){printf("\n\n");} */
 
 
 
@@ -172,173 +172,173 @@ int main( int argc, char **argv ) {
 
 
     
-    // Advance in time. Collide, stream, update and write
+    /* // Advance in time. Collide, stream, update and write */
     
-    while( updateTime(&mesh.time) ) {
+    /* while( updateTime(&mesh.time) ) { */
 
 
 	
-    	/* // Collide f (Navier-Stokes) */
+    /* 	/\* // Collide f (Navier-Stokes) *\/ */
 	
-    	/* collision( &mesh, &mfields, &f ); */
+    /* 	/\* collision( &mesh, &mfields, &f ); *\/ */
 
 
 		
-    	/* // Collide g (Temperature) */
+    /* 	/\* // Collide g (Temperature) *\/ */
 
-    	/* collision( &mesh, &mfields, &g ); */
+    /* 	/\* collision( &mesh, &mfields, &g ); *\/ */
 	
 	
 	
-    	/* // Stream f */
+    /* 	/\* // Stream f *\/ */
 	
-    	/* lbstream( &mesh, &f ); */
-
-	
-	
-    	/* // Stream g */
-	
-    	/* lbstream( &mesh, &g ); */
-
-
-	
-
-    	/* // Apply boundary conditions */
-	
-    	/* updateBoundaries( &mesh, &mfields, &f ); */
-	
-    	/* updateBoundaries( &mesh, &mfields, &g ); */
-
+    /* 	/\* lbstream( &mesh, &f ); *\/ */
 
 	
 	
-    	/* // Sync fields */
+    /* 	/\* // Stream g *\/ */
+	
+    /* 	/\* lbstream( &mesh, &g ); *\/ */
 
-    	/* if( frozen != 0 ) {  syncPdfField( &mesh, f.value );  } */
 
-    	/* if( ht != 0 ) {  syncPdfField( &mesh, g.value );  } */
+	
+
+    /* 	/\* // Apply boundary conditions *\/ */
+	
+    /* 	/\* updateBoundaries( &mesh, &mfields, &f ); *\/ */
+	
+    /* 	/\* updateBoundaries( &mesh, &mfields, &g ); *\/ */
+
+
+	
+	
+    /* 	/\* // Sync fields *\/ */
+
+    /* 	/\* if( frozen != 0 ) {  syncPdfField( &mesh, f.value );  } *\/ */
+
+    /* 	/\* if( ht != 0 ) {  syncPdfField( &mesh, g.value );  } *\/ */
 
 	
 		
 
 
-    	/* // Update macroscopic density */
+    /* 	/\* // Update macroscopic density *\/ */
 	
-    	/* macroDensity( &mesh, &mfields, &f ); */
-
-
-	
-	
-	
-    	/* // Update macroscopic temperature */
-	
-    	/* if( ht != 0 )     { */
-
-    	/*     heatSource( &mesh, &mfields, &g ); */
-
-    	/*     syncScalarField( &mesh, g.scalarSource ); */
-
-    	/* } */
-
-    	/* macroTemperature( &mesh, &mfields, &g ); */
+    /* 	/\* macroDensity( &mesh, &mfields, &f ); *\/ */
 
 
 	
 	
-    	/* // Update macroscopic velocity */
 	
-    	/* if( frozen != 0 ) { */
+    /* 	/\* // Update macroscopic temperature *\/ */
+	
+    /* 	/\* if( ht != 0 )     { *\/ */
 
-    	/*     interForce( &mesh, &mfields ); */
+    /* 	/\*     heatSource( &mesh, &mfields, &g ); *\/ */
 
-    	/*     syncVectorField( &mesh, mfields.Fi ); */
+    /* 	/\*     syncScalarField( &mesh, g.scalarSource ); *\/ */
 
-    	/* } */
+    /* 	/\* } *\/ */
 
-    	/* macroVelocity( &mesh, &mfields, &f ); */
+    /* 	/\* macroTemperature( &mesh, &mfields, &g ); *\/ */
 
 
 	
 	
-    	// Write fields
+    /* 	/\* // Update macroscopic velocity *\/ */
 	
-    	if( writeFlag(&mesh.time) ) {
+    /* 	/\* if( frozen != 0 ) { *\/ */
+
+    /* 	/\*     interForce( &mesh, &mfields ); *\/ */
+
+    /* 	/\*     syncVectorField( &mesh, mfields.Fi ); *\/ */
+
+    /* 	/\* } *\/ */
+
+    /* 	/\* macroVelocity( &mesh, &mfields, &f ); *\/ */
+
+
+	
+	
+    /* 	// Write fields */
+	
+    /* 	if( writeFlag(&mesh.time) ) { */
 
 	    
-    	    if(pid == 0) {
+    /* 	    if(pid == 0) { */
 		
-    		printf( "Time = %d\n", mesh.time.current );
+    /* 		printf( "Time = %d\n", mesh.time.current ); */
 		
-    		printf("Elapsed time = %.2f seconds\n\n", elapsed(&mesh.time) );
+    /* 		printf("Elapsed time = %.2f seconds\n\n", elapsed(&mesh.time) ); */
 		
-    	    }
+    /* 	    } */
 
 
 	    
-	    /* // Update pressure */
+    /* 	    /\* // Update pressure *\/ */
 
-	    /* macroPressure( &mesh, &mfields, &f ); */
+    /* 	    /\* macroPressure( &mesh, &mfields, &f ); *\/ */
 
-	    /* syncScalarField( &mesh, mfields.p ); */
+    /* 	    /\* syncScalarField( &mesh, mfields.p ); *\/ */
 
 
-	    /* // Update average density */
+    /* 	    /\* // Update average density *\/ */
 	    
-	    /* mesh.EOS.rho_0 = averageScalarField(&mesh, mfields.rho); */
-
-
-	    
-    	    // Write 
-
-	    if(mesh.time.data == pvtu) {
-	    
-		writeMeshToVTK( &mesh, &vtk );
-
-	    }
-
-	    if(mesh.time.data == ensight) {
-
-		updateCaseFile(&mesh);
-
-	    }	    
-
-    	    writeScalarField( "rho", mfields.rho, &mesh );
-
-    	    writeScalarField( "T", mfields.T, &mesh );
-
-    	    writeScalarField( "p", mfields.p, &mesh );
-
-    	    writeVectorField( "U", mfields.U, &mesh, 3 );
-
-    	    writeVectorField( "f", f.value, &mesh, mesh.lattice.Q );
-
-    	    writeVectorField( "g", g.value, &mesh, mesh.lattice.Q );
-
-
-	    if(mesh.time.data == pvtu) {
-	    
-		writePvtuExtra( &mesh, &vtk );
-
-		writeMainPvd();
-
-	    }
+    /* 	    /\* mesh.EOS.rho_0 = averageScalarField(&mesh, mfields.rho); *\/ */
 
 
 	    
+    /* 	    // Write  */
+
+    /* 	    if(mesh.time.data == pvtu) { */
 	    
-    	}
+    /* 		writeMeshToVTK( &mesh, &vtk ); */
+
+    /* 	    } */
+
+    /* 	    if(mesh.time.data == ensight) { */
+
+    /* 		updateCaseFile(&mesh); */
+
+    /* 	    }	     */
+
+    /* 	    writeScalarField( "rho", mfields.rho, &mesh ); */
+
+    /* 	    writeScalarField( "T", mfields.T, &mesh ); */
+
+    /* 	    writeScalarField( "p", mfields.p, &mesh ); */
+
+    /* 	    writeVectorField( "U", mfields.U, &mesh, 3 ); */
+
+    /* 	    writeVectorField( "f", f.value, &mesh, mesh.lattice.Q ); */
+
+    /* 	    writeVectorField( "g", g.value, &mesh, mesh.lattice.Q ); */
+
+
+    /* 	    if(mesh.time.data == pvtu) { */
+	    
+    /* 		writePvtuExtra( &mesh, &vtk ); */
+
+    /* 		writeMainPvd(); */
+
+    /* 	    } */
+
+
+	    
+	    
+    /* 	} */
 	
 
-    }
+    /* } */
 
 
     
-    // Print info
-    if(pid == 0) {
+    /* // Print info */
+    /* if(pid == 0) { */
 	
-    	printf("\n  Finished in %.2f seconds \n\n", elapsed(&mesh.time) );
+    /* 	printf("\n  Finished in %.2f seconds \n\n", elapsed(&mesh.time) ); */
 	
-    }
+    /* } */
 
 
     
