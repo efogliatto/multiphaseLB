@@ -201,7 +201,17 @@ void writeScalarToEnsight( char* fname, scalar* field, latticeMesh* mesh ) {
 	
 	// Write Array
 
-	MPI_File_write(file, field, mesh->mesh.nPoints, MPI_FLOAT, MPI_STATUS_IGNORE);	
+	float *auxField = (float*)malloc( mesh->mesh.nPoints * sizeof(float) );
+
+	for( i = 0 ; i < mesh->mesh.nPoints ; i++ ) {
+
+	    auxField[i] = (float)field[i];
+
+	}
+	
+	MPI_File_write(file, auxField, mesh->mesh.nPoints, MPI_FLOAT, MPI_STATUS_IGNORE);
+
+	free(auxField);
 
 
 
