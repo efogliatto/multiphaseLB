@@ -93,9 +93,9 @@ int main( int argc, char **argv ) {
 
     
     
-    /* // Velocity */
+    // Velocity
 
-    /* createVectorField( &mesh, &mfields.U, 3, "U", MUST_READ); */
+    createVectorField( &mesh, &mfields.U, 3, "U", MUST_READ);
     
 
     
@@ -188,7 +188,7 @@ int main( int argc, char **argv ) {
 
     	    writeScalarField( "p", mfields.p, &mesh );
 
-    	    /* writeVectorField( "U", mfields.U, &mesh, 3 ); */
+    	    writeVectorField( "U", mfields.U, &mesh, 3 );
 
     	    /* writeVectorField( "f", f.value, &mesh, mesh.lattice.Q ); */
 
