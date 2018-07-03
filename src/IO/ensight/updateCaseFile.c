@@ -106,6 +106,9 @@ void updateCaseFile( latticeMesh* mesh ) {
 		tsteps[ns-1] = mesh->time.current;
 
 	    }
+
+
+	    fclose(outFile);
 	    
 	    
 
@@ -120,15 +123,6 @@ void updateCaseFile( latticeMesh* mesh ) {
 	    tsteps[0] = 0;
 
 	}    
-
-
-
-
-
-
-	
-
-
 
 
 
