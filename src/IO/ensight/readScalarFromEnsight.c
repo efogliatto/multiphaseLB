@@ -32,7 +32,7 @@ uint readScalarFromEnsight( latticeMesh* mesh, scalar** field, char* fname ) {
 
     // Set Offset
 
-    uint offset = 160*sizeof(char) + sizeof(int);
+    MPI_Offset offset = 240*sizeof(char) + sizeof(int);
 
     uint i;
 
@@ -40,7 +40,7 @@ uint readScalarFromEnsight( latticeMesh* mesh, scalar** field, char* fname ) {
 
 	offset += mesh->parallel.nodesPerPatch[i] * sizeof(float);
 
-	offset += 80*sizeof(char) + sizeof(int);
+	offset += 160*sizeof(char) + sizeof(int);
 
     }
 
