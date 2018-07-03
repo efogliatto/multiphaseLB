@@ -44,7 +44,7 @@ void writeMeshToEnsight( latticeMesh* mesh ) {
 
 	sprintf(msg, "C Binary");
 
-	fwrite( msg, 80*sizeof(char), 1, outFile );
+	fwrite( msg, sizeof(char), 80, outFile );
 
 	
 
@@ -52,7 +52,7 @@ void writeMeshToEnsight( latticeMesh* mesh ) {
 
 	sprintf(msg, "EnSight Model Geometry File");
 
-	fwrite( msg, 80*sizeof(char), 1, outFile );
+	fwrite( msg, sizeof(char), 80, outFile );
 
 	
 	
@@ -60,7 +60,7 @@ void writeMeshToEnsight( latticeMesh* mesh ) {
 	
 	sprintf(msg, "EnSight 7.4.1");
 
-	fwrite( msg, 80*sizeof(char), 1, outFile );
+	fwrite( msg, sizeof(char), 80, outFile );
 
 
 	
@@ -68,7 +68,7 @@ void writeMeshToEnsight( latticeMesh* mesh ) {
 
 	sprintf(msg, "node id assign");
 
-	fwrite( msg, 80*sizeof(char), 1, outFile );
+	fwrite( msg, sizeof(char), 80, outFile );
 	
 
 	
@@ -76,19 +76,22 @@ void writeMeshToEnsight( latticeMesh* mesh ) {
 	
 	sprintf(msg, "element id assign");
 
-	fwrite( msg, 80*sizeof(char), 1, outFile );
+	fwrite( msg, sizeof(char), 80, outFile );
 	
 	
 
+	// Memory release
+	
 	fclose(outFile);
-
+	
+	free(msg);
 	
 
+	
 	// Create .case file
 	
 	updateCaseFile( mesh );
 
-	free(msg);
 
     }
 
@@ -109,7 +112,7 @@ void writeMeshToEnsight( latticeMesh* mesh ) {
 
     sprintf(msg, "part");
 
-    fwrite( msg, 80*sizeof(char), 1, outFile );
+    fwrite( msg, sizeof(char), 80, outFile );
 
 
     int pp = mesh->parallel.pid+1;
@@ -120,54 +123,84 @@ void writeMeshToEnsight( latticeMesh* mesh ) {
 
 
 
-    /* fprintf(outFile,"%10d\n",mesh->parallel.pid+1); */
+    memset(msg,'\0', 80);	
 
-    /* fprintf(outFile,"Point field\n"); */
+    sprintf(msg, "Point field");
 
-    /* fprintf(outFile,"coordinates\n"); */
-
-    /* fprintf(outFile,"%10d\n",mesh->mesh.nPoints); */
+    fwrite( msg, sizeof(char), 80, outFile );
 
 
+
+
+    memset(msg,'\0', 80);	
+
+    sprintf(msg, "coordinates");
+
+    fwrite( msg, sizeof(char), 80, outFile );
+
+
+    fwrite( &mesh->mesh.nPoints, sizeof(int), 1, outFile );
     
-    /* uint i,j; */
 
-    /* for( j = 0 ; j < 3 ; j++ ) { */
+
+    // Write mesh points
+    
+    uint i,j;
+
+    for( j = 0 ; j < 3 ; j++ ) {
 	
-    /* 	for( i = 0 ; i < mesh->mesh.nPoints ; i++) { */
+    	for( i = 0 ; i < mesh->mesh.nPoints ; i++) {
 
-    /* 	    fprintf(outFile,"%12.5e\n",(scalar)mesh->mesh.points[i][j]);     */
-
-    /* 	} */
-
-    /* } */
-
-
-
-    /* // Lattice elements */
-	
-    /* if( mesh->lattice.model == D2Q9 ) { */
-
-    /* 	fprintf(outFile,"quad4\n"); */
-
-    /* 	fprintf(outFile,"%10d\n", mesh->mesh.ncells); */
-
-    /* 	for( i = 0 ; i < mesh->mesh.ncells ; i++) { */
+	    float value = (float)mesh->mesh.points[i][j];
 	    
-    /* 	    fprintf(outFile,"%10d ",mesh->mesh.vtkCells[i][0]+1); */
+	    fwrite( &value, sizeof(float), 1, outFile );
 
-    /* 	    fprintf(outFile,"%10d ",mesh->mesh.vtkCells[i][1]+1); */
+    	}
 
-    /* 	    fprintf(outFile,"%10d ",mesh->mesh.vtkCells[i][3]+1); */
+    }
 
-    /* 	    fprintf(outFile,"%10d\n",mesh->mesh.vtkCells[i][2]+1);	     */
 
-    /* 	} */
 
-    /* } */
+    // Lattice elements
+	
+    if( mesh->lattice.model == D2Q9 ) {
+
+	memset(msg,'\0', 80);	
+
+	sprintf(msg, "quad4");
+
+	fwrite( msg, sizeof(char), 80, outFile );
+		
+        fwrite( &mesh->mesh.ncells, sizeof(int), 1, outFile ); 
+
+    	
+
+    	for( i = 0 ; i < mesh->mesh.ncells ; i++) {
+
+	    int id = mesh->mesh.vtkCells[i][0]+1;
+		
+	    fwrite( &id, sizeof(int), 1, outFile );	       
+
+	    id = mesh->mesh.vtkCells[i][1]+1;
+
+	    fwrite( &id, sizeof(int), 1, outFile );
+
+	    id = mesh->mesh.vtkCells[i][3]+1;
+	    
+	    fwrite( &id, sizeof(int), 1, outFile );
+
+	    id = mesh->mesh.vtkCells[i][2]+1;
+
+	    fwrite( &id, sizeof(int), 1, outFile );	    
+
+    	}
+
+    }
 
 
     fclose(outFile);
+
+    free(msg);
 
 
 }
