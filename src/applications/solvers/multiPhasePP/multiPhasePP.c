@@ -300,6 +300,8 @@ int main( int argc, char **argv ) {
 
 		updateCaseFile(&mesh);
 
+		MPI_Barrier(MPI_COMM_WORLD);
+
 	    }	    
 
     	    writeScalarField( "rho", mfields.rho, &mesh );
