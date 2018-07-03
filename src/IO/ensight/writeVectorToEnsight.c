@@ -10,108 +10,186 @@
 void writeVectorToEnsight( char* fname, scalar** field, latticeMesh* mesh ) {
 
     
-    // Receive flag from "previous" processor
 
-    int flag;
-    
-    if(   ( mesh->parallel.pid != 0 )   &&  ( mesh->parallel.worldSize > 1 )   ) {
-    
-    	MPI_Recv(&flag, 1, MPI_INT, mesh->parallel.pid-1, mesh->parallel.pid-1, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+    // Non paralel but distributed
 
-    }
-    
+    if( mesh->parallel.worldSize == 1 ) {
 
-    
-    /* // Count file ocurrences */
-
-    /* DIR *dir; */
-    
-    /* struct dirent *ent; */
-
-    /* uint fcount = 0; */
-
-    /* char name[256]; */
-
-    /* sprintf(name,"lattice.%s",fname); */
-
-
-    /* if ((dir = opendir (".")) != NULL) { */
-
-    /* 	while ((ent = readdir (dir)) != NULL) { */
-	    
-    /* 	    if(strstr(ent->d_name, name) != NULL) { */
-
-    /* 		fcount++; */
-
-    /* 	    } */
-	    
-    /* 	} */
 	
-    /* 	closedir (dir); */
-	
-    /* } */
-
-
-
-
-    // Write field
+	// Write field
     
-    FILE *outFile;
+	FILE *outFile;
 
-    char fileName[100];
+	char fileName[100];
 
-    uint fcount = timeToIndex(mesh->time.current);
+	uint fcount = timeToIndex(mesh->time.current);
 
-    sprintf(fileName, "lattice.%s_%d", fname, fcount);
+	sprintf(fileName, "lattice.%s_%d", fname, fcount);
     
 
-    if( mesh->parallel.pid == 0 ) {
+	// Header
 	
-	outFile = fopen(fileName, "w");
-
-	testFile(outFile, fileName);	
-
-	fprintf(outFile, "%s\n", fname);
-
-	fclose(outFile);
+	if( mesh->parallel.pid == 0 ) {
 	
-    }
+	    outFile = fopen(fileName, "wb");
 
+	    testFile(outFile, fileName);
 
+	    char* msg = (char*)malloc( 80*sizeof(char) );
 
-    outFile = fopen(fileName, "a");
+	    memset(msg,'\0', 80);	
 
-    testFile(outFile, fileName);
+	    sprintf(msg, "%s", fname);
 
-    fprintf(outFile,"part\n");
+	    fwrite( msg, sizeof(char), 80, outFile );	  
 
-    fprintf(outFile,"%10d\n",mesh->parallel.pid+1);
+	    fclose(outFile);
 
-    fprintf(outFile,"coordinates\n");
-	
-    uint i,j;
+	    free(msg);
 
-    for( j = 0 ; j < 3 ; j++ ) {
-    
-	for( i = 0 ; i < mesh->mesh.nPoints ; i++ ) {
-	
-	    fprintf(outFile, "%12.5e\n", field[i][j]);
-	
 	}
 
-    }
+
+	// Part description
+
+	outFile = fopen(fileName, "ab");
+
+	testFile(outFile, fileName);
 
 
-    fclose(outFile);
+	char* msg = (char*)malloc( 80*sizeof(char) );
+
+	memset(msg,'\0', 80);	
+
+	sprintf(msg, "part");
+	
+	fwrite( msg, sizeof(char), 80, outFile );
+
+
+	
+	uint pid = mesh->parallel.pid+1;
+
+	fwrite( &pid, sizeof(int), 1, outFile );
+
+
+
+	memset(msg,'\0', 80);	
+
+	sprintf(msg, "coordinates");
+	
+	fwrite( msg, sizeof(char), 80, outFile );
+	
 
 
     
-    // Send flag to "next" processor
+	uint i,j;
 
-    if(    ( mesh->parallel.worldSize > 1 )     &&    ( mesh->parallel.pid != mesh->parallel.worldSize - 1 )  ){
+	float value;
+
+	for( j = 0 ; j < 3 ; j++ ) {
+	
+	    for( i = 0 ; i < mesh->mesh.nPoints ; i++ ) {
+
+		value = (float)field[i][j];
+	    
+		fwrite( &value, sizeof(float), 1, outFile );
+	
+	    }
+
+	}
+
+
+	fclose(outFile);
+
+	free(msg);
+	
+
+    }  
+
     
-    	MPI_Send(&flag, 1, MPI_INT, mesh->parallel.pid+1, mesh->parallel.pid, MPI_COMM_WORLD);
 
-    }
 
 }
+
+
+
+
+
+/* // ASCII Version */
+
+/* void writeVectorToEnsight( char* fname, scalar** field, latticeMesh* mesh ) { */
+
+    
+/*     // Receive flag from "previous" processor */
+
+/*     int flag; */
+    
+/*     if(   ( mesh->parallel.pid != 0 )   &&  ( mesh->parallel.worldSize > 1 )   ) { */
+    
+/*     	MPI_Recv(&flag, 1, MPI_INT, mesh->parallel.pid-1, mesh->parallel.pid-1, MPI_COMM_WORLD, MPI_STATUS_IGNORE); */
+
+/*     } */
+    
+
+
+/*     // Write field */
+    
+/*     FILE *outFile; */
+
+/*     char fileName[100]; */
+
+/*     uint fcount = timeToIndex(mesh->time.current); */
+
+/*     sprintf(fileName, "lattice.%s_%d", fname, fcount); */
+    
+
+/*     if( mesh->parallel.pid == 0 ) { */
+	
+/* 	outFile = fopen(fileName, "w"); */
+
+/* 	testFile(outFile, fileName);	 */
+
+/* 	fprintf(outFile, "%s\n", fname); */
+
+/* 	fclose(outFile); */
+	
+/*     } */
+
+
+
+/*     outFile = fopen(fileName, "a"); */
+
+/*     testFile(outFile, fileName); */
+
+/*     fprintf(outFile,"part\n"); */
+
+/*     fprintf(outFile,"%10d\n",mesh->parallel.pid+1); */
+
+/*     fprintf(outFile,"coordinates\n"); */
+	
+/*     uint i,j; */
+
+/*     for( j = 0 ; j < 3 ; j++ ) { */
+    
+/* 	for( i = 0 ; i < mesh->mesh.nPoints ; i++ ) { */
+	
+/* 	    fprintf(outFile, "%12.5e\n", field[i][j]); */
+	
+/* 	} */
+
+/*     } */
+
+
+/*     fclose(outFile); */
+
+
+    
+/*     // Send flag to "next" processor */
+
+/*     if(    ( mesh->parallel.worldSize > 1 )     &&    ( mesh->parallel.pid != mesh->parallel.worldSize - 1 )  ){ */
+    
+/*     	MPI_Send(&flag, 1, MPI_INT, mesh->parallel.pid+1, mesh->parallel.pid, MPI_COMM_WORLD); */
+
+/*     } */
+
+/* } */
