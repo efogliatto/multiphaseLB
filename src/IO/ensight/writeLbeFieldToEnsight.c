@@ -122,6 +122,134 @@ void writeLbeFieldToEnsight( char* fname, scalar** field, latticeMesh* mesh ) {
 
     }
 
+
+
+
+
+    // Parallel version
+
+    else {
+
+    
+	uint k;
+
+	float *auxField = (float*)malloc( mesh->mesh.nPoints * sizeof(float) );
+	
+
+	for( k = 0 ; k < mesh->lattice.Q ; k++ ) {
+
+		
+	    MPI_Barrier(MPI_COMM_WORLD);
+	    	
+
+	    // Open File	
+    
+	    char fileName[100];
+
+	    sprintf(fileName, "lattice.%s%d_%d", fname, k, timeToIndex(mesh->time.current));
+	    
+
+
+	    MPI_File file;
+
+	    MPI_File_open( MPI_COMM_WORLD, fileName, MPI_MODE_CREATE|MPI_MODE_WRONLY, MPI_INFO_NULL, &file );	
+
+	
+
+	    // Header
+	
+	    if( mesh->parallel.pid == 0 ) {
+
+		char* msg = (char*)malloc( 80*sizeof(char) );
+
+		memset(msg,'\0', 80);	
+
+		sprintf(msg, "%s", fname);
+
+		MPI_File_write(file, msg, 80, MPI_CHAR, MPI_STATUS_IGNORE); 	    	    
+
+		free(msg);
+
+	    }
+
+
+	    MPI_Barrier(MPI_COMM_WORLD);
+
+
+
+       
+
+
+
+	    // Set Offset
+
+	    uint offset = 80*sizeof(char);
+
+	    uint i;
+
+	    for(i = 0 ; i < mesh->parallel.pid ; i++ ) {
+
+		offset += mesh->parallel.nodesPerPatch[i] * sizeof(float);
+
+		offset += 160*sizeof(char) + sizeof(int);
+
+	    }	
+
+	    MPI_File_seek(file, offset, MPI_SEEK_SET);
+
+
+
+	    // Write "part" description
+
+	    char* msg = (char*)malloc( 80*sizeof(char) );
+
+	    memset(msg,'\0', 80);	
+
+	    sprintf(msg, "part");
+
+	    MPI_File_write(file, msg, 80, MPI_CHAR, MPI_STATUS_IGNORE);
+	
+	
+	    uint pid = mesh->parallel.pid+1;
+
+	    MPI_File_write(file, &pid, 1, MPI_INT, MPI_STATUS_IGNORE);
+
+
+	
+	    memset(msg,'\0', 80);	
+
+	    sprintf(msg, "coordinates");
+
+	    MPI_File_write(file, msg, 80, MPI_CHAR, MPI_STATUS_IGNORE);
+
+	    free(msg);
+	
+
+	
+	    // Write Array
+
+	    for( i = 0 ; i < mesh->mesh.nPoints ; i++ ) {
+
+		auxField[i] = (float)field[i][k];
+
+	    }
+	    	    
+	    MPI_File_write(file, auxField, mesh->mesh.nPoints, MPI_FLOAT, MPI_STATUS_IGNORE);	
+
+
+
+	    // Close file
+
+	    MPI_File_close(&file);
+
+
+	}
+
+
+	free(auxField);
+
+    }
+
     
   
 

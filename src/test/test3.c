@@ -112,25 +112,25 @@ int main( int argc, char **argv ) {
     
 
 
-    /* // LBE fields */
+    // LBE fields
 
-    /* // Navier-Stokes field */
+    // Navier-Stokes field
 
-    /* lbeField f; */
+    lbeField f;
     
-    /* createLbeField( &mesh, &f, "f", MUST_READ); */
+    createLbeField( &mesh, &f, "f", MUST_READ);
 
-    /* if(frozen == 0) { f.update = 0; } */
+    if(frozen == 0) { f.update = 0; }
 
 
     
-    /* // Energy field */
+    // Energy field
 
-    /* lbeField g; */
+    lbeField g;
     
-    /* createLbeField( &mesh, &g, "g", MUST_READ); */
+    createLbeField( &mesh, &g, "g", MUST_READ);
 
-    /* if(ht == 0) { g.update = 0; } */
+    if(ht == 0) { g.update = 0; }
     
     
 
@@ -190,9 +190,9 @@ int main( int argc, char **argv ) {
 
     	    writeVectorField( "U", mfields.U, &mesh, 3 );
 
-    	    /* writeVectorField( "f", f.value, &mesh, mesh.lattice.Q ); */
+    	    writeVectorField( "f", f.value, &mesh, mesh.lattice.Q );
 
-    	    /* writeVectorField( "g", g.value, &mesh, mesh.lattice.Q ); */
+    	    writeVectorField( "g", g.value, &mesh, mesh.lattice.Q );
 
 
     	    if(mesh.time.data == pvtu) {
