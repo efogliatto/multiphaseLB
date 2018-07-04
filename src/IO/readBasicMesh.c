@@ -208,7 +208,7 @@ basicMesh readBasicMesh() {
     }
     
 
-
+    fclose(inFile);
 
     if (status) {}
     
