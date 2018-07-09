@@ -1,8 +1,8 @@
-#ifndef D2Q9_MRTINV_H
-#define D2Q9_MRTINV_H
+#ifndef D3Q15_MRTINV_H
+#define D3Q15_MRTINV_H
 
 #include <dataTypes.h>
 
-scalar** D2Q9_MRTInv();
+scalar** D3Q15_MRTInv();
 
-#endif // D2Q9_MRTINV_H
+#endif // D3Q15_MRTINV_H

@@ -1,6 +1,6 @@
-#ifndef D2Q9_REVERSE_H
-#define D2Q9_REVERSE_H
+#ifndef D3Q15_REVERSE_H
+#define D3Q15_REVERSE_H
 
-int* D2Q9_Reverse();
+int* D3Q15_Reverse();
 
-#endif // D2Q9_REVERSE_H
+#endif // D3Q15_REVERSE_H
