@@ -17,6 +17,8 @@ set ( PROJECT_LINK_LIBS
   libasciiraw.so
   libbinaryraw.so
   libensight.so
+  libd2q9.so
+  libd3q15.so
   ${MPI_LIBRARIES})
 
 # link_directories( ~/multiphaseLB/lib )

@@ -1,7 +1,8 @@
 #ifndef LATTICEVELOCITIES_H
 #define LATTICEVELOCITIES_H
 
-#include <D2Q9_Vel.h>
+#include <D2Q9.h>
+#include <D3Q15.h>
 #include <latticeInfo.h>
 
 /**

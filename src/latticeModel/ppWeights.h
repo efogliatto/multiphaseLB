@@ -1,7 +1,8 @@
 #ifndef PPWEIGHTS_H
 #define PPWEIGHTS_H
 
-#include <D2Q9_ppw.h>
+#include <D2Q9.h>
+#include <D3Q15.h>
 #include <latticeInfo.h>
 
 /**

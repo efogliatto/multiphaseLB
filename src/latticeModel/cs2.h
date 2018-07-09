@@ -1,7 +1,8 @@
 #ifndef CS2_H
 #define CS2_H
 
-#include <D2Q9_cs2.h>
+#include <D2Q9.h>
+#include <D3Q15.h>
 #include <latticeInfo.h>
 
 /**

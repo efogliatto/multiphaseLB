@@ -1,7 +1,8 @@
 #ifndef MRTMATRIX_H
 #define MRTMATRIX_H
 
-#include <D2Q9_MRT.h>
+#include <D2Q9.h>
+#include <D3Q15.h>
 #include <latticeInfo.h>
 
 /**

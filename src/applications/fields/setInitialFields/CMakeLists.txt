@@ -16,6 +16,8 @@ set ( PROJECT_LINK_LIBS
   libasciiraw.so
   libbinaryraw.so
   libensight.so
+  libd2q9.so
+  libd3q15.so
   # libfinitedifference.so
   m
   ${MPI_LIBRARIES})

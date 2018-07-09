@@ -20,6 +20,8 @@ scalar* ppWeights( DdQq model ) {
 	
     case D3Q15:
 
+	w = D3Q15_ppw();
+
 	break;
 
 	

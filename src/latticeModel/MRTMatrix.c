@@ -20,6 +20,8 @@ scalar** MRTMatrix( DdQq model ) {
 	
     case D3Q15:
 
+	M = D3Q15_MRT();
+
 	break;
 
 	

@@ -19,7 +19,7 @@ scalar* latticeWeights( DdQq model ) {
 	
     case D3Q15:
 
-	omega = NULL;
+	omega = D3Q15_omega();
 
 	break;
 

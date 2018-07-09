@@ -1,7 +1,8 @@
 #ifndef MRTINVMATRIX_H
 #define MRTINVMATRIX_H
 
-#include <D2Q9_MRTInv.h>
+#include <D2Q9.h>
+#include <D3Q15.h>
 #include <latticeInfo.h>
 
 /**

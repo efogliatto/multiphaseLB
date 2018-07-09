@@ -1,7 +1,8 @@
 #ifndef LATTICEWEIGHTS_H
 #define LATTICEWEIGHTS_H
 
-#include <D2Q9_omega.h>
+#include <D2Q9.h>
+#include <D3Q15.h>
 #include <latticeInfo.h>
 
 /**

@@ -19,7 +19,7 @@ int** latticeVelocities( DdQq model ) {
 	
     case D3Q15:
 
-	vel = NULL;
+	vel = D3Q15_Vel();
 
 	break;
 

@@ -20,7 +20,7 @@ scalar cs2( DdQq model ) {
 	
     case D3Q15:
 
-	cs2 = 1.0 / 3.0;
+	cs2 = D3Q15_cs2();
 
 	break;
 

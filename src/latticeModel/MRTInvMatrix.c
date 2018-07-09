@@ -20,6 +20,8 @@ scalar** MRTInvMatrix( DdQq model ) {
 	
     case D3Q15:
 
+	invM = D3Q15_MRTInv();
+
 	break;
 
 	

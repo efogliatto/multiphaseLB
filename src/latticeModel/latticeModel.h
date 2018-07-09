@@ -22,5 +22,9 @@
 
 #include <latticeQ.h>
 
+#include <D2Q9.h>
+
+#include <D3Q15.h>
+
 
 #endif // LATTICEMODEL_H
