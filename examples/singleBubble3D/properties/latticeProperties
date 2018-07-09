@@ -1,8 +1,8 @@
-Nx 101;
+Nx 3;
 
-Ny 101;
+Ny 3;
 
-Nz 101;
+Nz 3;
 
 LBModel D3Q15;
 

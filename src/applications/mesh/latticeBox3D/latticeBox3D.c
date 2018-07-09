@@ -155,7 +155,7 @@ int main(int argc, char** argv) {
     
     mesh.Q = latticeQ( lattice.model );
 
-    mesh.nb = matrixIntAlloc(mesh.nPoints, mesh.Q,-1);
+    mesh.nb = matrixIntAlloc(mesh.nPoints, mesh.Q, -1);
     
 
     
@@ -196,29 +196,35 @@ int main(int argc, char** argv) {
 
     // For boundary nodes, check neighbouring using distance to point
 
-    // Y-nodes
+    int newId;
 
     for( k = 0 ; k < nz ; k++ ) {
 
-	for( j = 0 ; j < ny ; j+=(ny-1)) {
+	for( j = 0 ; j < ny ; j++) {
 	
 	    for( i = 0 ; i < nx ; i++) {
 
-		idx = i + j*nx + k*nx*ny;
+		if( (i == 0)  ||  (i == nx-1)   ||   (j == 0)  ||  (j == ny-1)   ||   (k == 0)  ||  (k == nz-1) ) {
+		
 
-		// Iterate on velocities
+		    idx = i + j*nx + k*nx*ny;
+		    
 
-		for( vid = 0 ; vid < mesh.Q ; vid++ ) {
+		    // Iterate on velocities
 
-		    int newId = idx   +   velocities[ rev[vid] ][0]   +   velocities[ rev[vid] ][1] * nx   +   velocities[ rev[vid] ][2] * nx * ny;
+		    for( vid = 0 ; vid < mesh.Q ; vid++ ) {
 
-		    if( newId >= 0   &&   newId <= nx*ny*nz-1 ) {
+			newId = idx   +   velocities[ rev[vid] ][0]   +   velocities[ rev[vid] ][1] * nx   +   velocities[ rev[vid] ][2] * nx * ny;
 
-			if (      (  abs( mesh.points[idx][0] - mesh.points[newId][0] ) <= 1  )
-			     &&   (  abs( mesh.points[idx][1] - mesh.points[newId][1] ) <= 1  )
-			     &&   (  abs( mesh.points[idx][2] - mesh.points[newId][2] ) <= 1  )  ) {
+			if( newId >= 0   &&   newId <= nx*ny*nz-1 ) {
+
+			    if (      (  abs( mesh.points[idx][0] - mesh.points[newId][0] ) <= 1  )
+				      &&   (  abs( mesh.points[idx][1] - mesh.points[newId][1] ) <= 1  )
+				      &&   (  abs( mesh.points[idx][2] - mesh.points[newId][2] ) <= 1  )  ) {
 	    
-			    mesh.nb[idx][vid] = newId;
+				mesh.nb[idx][vid] = newId;
+
+			    }
 
 			}
 
@@ -234,79 +240,122 @@ int main(int argc, char** argv) {
 
 
 
-    // X-nodes
 
-    for( k = 0 ; k < nz ; k++ ) {    
 
-	for( j = 1 ; j < ny-1 ; j++ ) {
+    
+    /* // Y-nodes */
+
+    /* int newId; */
+
+    /* for( k = 0 ; k < nz ; k++ ) { */
+
+    /* 	for( j = 0 ; j < ny ; j+=(ny-1)) { */
 	
-	    for( i = 0 ; i < nx ; i+=(nx-1)) {
+    /* 	    for( i = 0 ; i < nx ; i++) { */
 
-		idx = i + j*nx + k*nx*ny;
+    /* 		idx = i + j*nx + k*nx*ny; */
 
-		// Iterate on velocities
+    /* 		// Iterate on velocities */
 
-		for( vid = 0 ; vid < mesh.Q ; vid++ ) {
+    /* 		for( vid = 0 ; vid < mesh.Q ; vid++ ) { */
 
-		    int newId = idx   +   velocities[ rev[vid] ][0]   +   velocities[ rev[vid] ][1] * nx   +   velocities[ rev[vid] ][2] * nx * ny;
+    /* 		    newId = idx   +   velocities[ rev[vid] ][0]   +   velocities[ rev[vid] ][1] * nx   +   velocities[ rev[vid] ][2] * nx * ny; */
 
-		    if( newId >= 0   &&   newId <= nx*ny*nz-1 ) {
+    /* 		    if( newId >= 0   &&   newId <= nx*ny*nz-1 ) { */
 
-			if (      (  abs( mesh.points[idx][0] - mesh.points[newId][0] ) <= 1  )
-			     &&   (  abs( mesh.points[idx][1] - mesh.points[newId][1] ) <= 1  )
-			     &&   (  abs( mesh.points[idx][2] - mesh.points[newId][2] ) <= 1  )) {
+    /* 			if (      (  abs( mesh.points[idx][0] - mesh.points[newId][0] ) <= 1  ) */
+    /* 			     &&   (  abs( mesh.points[idx][1] - mesh.points[newId][1] ) <= 1  ) */
+    /* 			     &&   (  abs( mesh.points[idx][2] - mesh.points[newId][2] ) <= 1  )  ) { */
 	    
-			    mesh.nb[idx][vid] = newId;
+    /* 			    mesh.nb[idx][vid] = newId; */
 
-			}
+    /* 			} */
 
-		    }
+    /* 		    } */
 
-		}
+    /* 		} */
 	    
-	    }
+    /* 	    } */
 
-	}
+    /* 	} */
 
-    }
+    /* } */
 
 
 
-    // Z-nodes
+    /* // X-nodes */
 
-    for( k = 0 ; k < nz ; k+=(nz-1) ) {    
+    /* for( k = 0 ; k < nz ; k++ ) {     */
 
-	for( j = 0 ; j < ny ; j++ ) {
+    /* 	for( j = 1 ; j < ny-1 ; j++ ) { */
 	
-	    for( i = 0 ; i < nx ; i++ ) {
+    /* 	    for( i = 0 ; i < nx ; i+=(nx-1)) { */
 
-		idx = i + j*nx + k*nx*ny;
+    /* 		idx = i + j*nx + k*nx*ny; */
 
-		// Iterate on velocities
+    /* 		// Iterate on velocities */
 
-		for( vid = 0 ; vid < mesh.Q ; vid++ ) {
+    /* 		for( vid = 0 ; vid < mesh.Q ; vid++ ) { */
 
-		    int newId = idx   +   velocities[ rev[vid] ][0]   +   velocities[ rev[vid] ][1] * nx   +   velocities[ rev[vid] ][2] * nx * ny;
+    /* 		    newId = idx   +   velocities[ rev[vid] ][0]   +   velocities[ rev[vid] ][1] * nx   +   velocities[ rev[vid] ][2] * nx * ny; */
 
-		    if( newId >= 0   &&   newId <= nx*ny*nz-1 ) {
+    /* 		    if( newId >= 0   &&   newId <= nx*ny*nz-1 ) { */
 
-			if (      (  abs( mesh.points[idx][0] - mesh.points[newId][0] ) <= 1  )
-			     &&   (  abs( mesh.points[idx][1] - mesh.points[newId][1] ) <= 1  )
-			     &&   (  abs( mesh.points[idx][2] - mesh.points[newId][2] ) <= 1  )) {
+    /* 			if (      (  abs( mesh.points[idx][0] - mesh.points[newId][0] ) <= 1  ) */
+    /* 			     &&   (  abs( mesh.points[idx][1] - mesh.points[newId][1] ) <= 1  ) */
+    /* 			     &&   (  abs( mesh.points[idx][2] - mesh.points[newId][2] ) <= 1  )) { */
 	    
-			    mesh.nb[idx][vid] = newId;
+    /* 			    mesh.nb[idx][vid] = newId; */
 
-			}
+    /* 			} */
 
-		    }
+    /* 		    } */
 
-		}
+    /* 		} */
 	    
-	    }
+    /* 	    } */
 
-	}
+    /* 	} */
 
-    }    
+    /* } */
+
+
+
+    /* // Z-nodes */
+
+    /* for( k = 0 ; k < nz ; k+=(nz-1) ) {     */
+
+    /* 	for( j = 0 ; j < ny ; j++ ) { */
+	
+    /* 	    for( i = 0 ; i < nx ; i++ ) { */
+
+    /* 		idx = i + j*nx + k*nx*ny; */
+
+    /* 		// Iterate on velocities */
+
+    /* 		for( vid = 0 ; vid < mesh.Q ; vid++ ) { */
+
+    /* 		    newId = idx   +   velocities[ rev[vid] ][0]   +   velocities[ rev[vid] ][1] * nx   +   velocities[ rev[vid] ][2] * nx * ny; */
+
+    /* 		    if( newId >= 0   &&   newId <= nx*ny*nz-1 ) { */
+
+    /* 			if (      (  abs( mesh.points[idx][0] - mesh.points[newId][0] ) <= 1  ) */
+    /* 			     &&   (  abs( mesh.points[idx][1] - mesh.points[newId][1] ) <= 1  ) */
+    /* 			     &&   (  abs( mesh.points[idx][2] - mesh.points[newId][2] ) <= 1  )) { */
+	    
+    /* 			    mesh.nb[idx][vid] = newId; */
+
+    /* 			} */
+
+    /* 		    } */
+
+    /* 		} */
+	    
+    /* 	    } */
+
+    /* 	} */
+
+    /* }     */
 
 
     	
