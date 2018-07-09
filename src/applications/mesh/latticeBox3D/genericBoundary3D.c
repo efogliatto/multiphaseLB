@@ -3,22 +3,27 @@
 #include <basicMesh.h>
 
 
-void genericBoundary( basicMesh* mesh, uint nx, uint ny ) {
+void genericBoundary3D( basicMesh* mesh, uint nx, uint ny, uint nz ) {
 
-    mesh->bd.nbd = 4;
+    mesh->bd.nbd = 6;
     
-    mesh->bd.nbdelem = (uint*)malloc( 4 * sizeof(uint) );
-    mesh->bd.bdPoints = (uint**)malloc( 4 * sizeof(uint*) );
+    mesh->bd.nbdelem = (uint*)malloc( 6 * sizeof(uint) );
+    mesh->bd.bdPoints = (uint**)malloc( 6 * sizeof(uint*) );
 
-    mesh->bd.nbdelem[0] = ny;
-    mesh->bd.nbdelem[1] = ny;
-    mesh->bd.nbdelem[2] = (nx-2);
-    mesh->bd.nbdelem[3] = (nx-2);
+    mesh->bd.nbdelem[0] = ny*nz;
+    mesh->bd.nbdelem[1] = ny*nz;
+    mesh->bd.nbdelem[2] = (nx-2)*nz;
+    mesh->bd.nbdelem[3] = (nx-2)*nz;
+    mesh->bd.nbdelem[4] = (nx-2)*(ny-2);
+    mesh->bd.nbdelem[5] = (nx-2)*(ny-2);
 
+    
     mesh->bd.bdPoints[0] = (uint*)malloc( mesh->bd.nbdelem[0] * sizeof(uint) );
     mesh->bd.bdPoints[1] = (uint*)malloc( mesh->bd.nbdelem[1] * sizeof(uint) );
     mesh->bd.bdPoints[2] = (uint*)malloc( mesh->bd.nbdelem[2] * sizeof(uint) );
     mesh->bd.bdPoints[3] = (uint*)malloc( mesh->bd.nbdelem[3] * sizeof(uint) );   
+    mesh->bd.bdPoints[4] = (uint*)malloc( mesh->bd.nbdelem[4] * sizeof(uint) );
+    mesh->bd.bdPoints[5] = (uint*)malloc( mesh->bd.nbdelem[5] * sizeof(uint) );   
 
 
     

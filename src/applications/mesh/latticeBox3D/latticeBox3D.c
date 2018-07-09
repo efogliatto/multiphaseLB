@@ -13,9 +13,14 @@
 
 
 void periodicX( basicMesh* mesh, uint nx, uint ny );
+
 void periodicY( basicMesh* mesh, uint nx, uint ny );
+
 void periodicXY( basicMesh* mesh, uint nx, uint ny );
-void genericBoundary( basicMesh* mesh, uint nx, uint ny );
+
+void genericBoundary3D( basicMesh* mesh, uint nx, uint ny, uint nz );
+
+
 
 int main(int argc, char** argv) {
 
@@ -67,29 +72,19 @@ int main(int argc, char** argv) {
 
     if(status) {}
 
-    if( strcmp(modelName, "D2Q9") == 0 ) {
+    if( strcmp(modelName, "D3Q15") == 0 ) {
 
-    	lattice.model = D2Q9;
+    	lattice.model = D3Q15;
 
     }
 
     else {
 
-    	if( strcmp(modelName, "D3Q15") == 0 ) {
+	char msg[100];
 
-    	    lattice.model = D3Q15;
-
-    	}
-
-    	else {
-
-    	    char msg[100];
-
-    	    sprintf(msg, "Unrecognized model %s", modelName);
+	sprintf(msg, "Unrecognized model %s", modelName);
 	    
-    	    errorMsg( msg );
-
-    	}
+	errorMsg( msg );
 
     }
     
@@ -113,17 +108,21 @@ int main(int argc, char** argv) {
         
     // Move over indices
 
-    int i, j, k;
+    int i, j, k, idx;
 
     for( k = 0 ; k < nz ; k++) {
     
 	for( j = 0 ; j < ny ; j++) {
 	
 	    for( i = 0 ; i < nx ; i++) {
+
+		idx = i + j*nx + k*nx*ny;
 			    
-		mesh.points[i+j*nx][0] = i;
+		mesh.points[idx][0] = i;
 		
-		mesh.points[i+j*nx][1] = j;
+		mesh.points[idx][1] = j;
+
+		mesh.points[idx][1] = k;
 		
 	    }
 	}
@@ -163,28 +162,33 @@ int main(int argc, char** argv) {
 
     // Check for neighbouring
     // There is no need to iterate over all points to look for a neighbour. Given a lattice velocity vector (x,y,z), the neighbour of a point
-    // p with index pointId is at most at pointId + x + (y*Nx).
+    // p with index pointId is at most at pointId + x + (y*Nx) + (z*Nx*Ny).
 
     
     // Internal points first
 
-    int pointId, velId;
+    int vid;
+
+    for( k = 1 ; k < (nz-1) ; k++ ) {
     
-    for( j = 1 ; j < (ny-1) ; j++) {
+	for( j = 1 ; j < (ny-1) ; j++ ) {
 	
-    	for( i = 1 ; i < (nx-1) ; i++) {
+	    for( i = 1 ; i < (nx-1) ; i++ ) {
 
-    	    pointId = i+j*nx;
+		idx = i + j*nx + k*nx*ny;
 
 
-    	    // Iterate on velocities
-    	    for( velId = 0 ; velId < mesh.Q ; velId++ ) {
+		// Iterate on velocities
+		
+		for( vid = 0 ; vid < mesh.Q ; vid++ ) {
 
-    		mesh.nb[pointId][velId] = pointId   +   velocities[ rev[velId] ][0]   +   velocities[ rev[velId] ][1] * nx;
+		    mesh.nb[idx][vid] = idx   +   velocities[ rev[vid] ][0]   +   velocities[ rev[vid] ][1] * nx    +    velocities[ rev[vid] ][2] * nx * ny;
 
-    	    }
+		}
 	    
-    	}
+	    }
+
+	}
 
     }
 
@@ -192,61 +196,117 @@ int main(int argc, char** argv) {
 
     // For boundary nodes, check neighbouring using distance to point
 
-    for( j = 0 ; j < ny ; j+=(ny-1)) {
+    // Y-nodes
+
+    for( k = 0 ; k < nz ; k++ ) {
+
+	for( j = 0 ; j < ny ; j+=(ny-1)) {
 	
-    	for( i = 0 ; i < nx ; i++) {
+	    for( i = 0 ; i < nx ; i++) {
 
-    	    pointId = i+j*nx;
+		idx = i + j*nx + k*nx*ny;
 
-    	    // Iterate on velocities
-    	    for( velId = 0 ; velId < mesh.Q ; velId++ ) {
+		// Iterate on velocities
 
-    		int newId = pointId   +   velocities[ rev[velId] ][0]   +   velocities[ rev[velId] ][1] * nx;
+		for( vid = 0 ; vid < mesh.Q ; vid++ ) {
 
-    		if( newId >= 0   &&   newId <= nx*ny-1 ) {
+		    int newId = idx   +   velocities[ rev[vid] ][0]   +   velocities[ rev[vid] ][1] * nx   +   velocities[ rev[vid] ][2] * nx * ny;
 
-    		    if ( (  abs( mesh.points[pointId][0] - mesh.points[newId][0] ) <= 1  )   &&   (  abs( mesh.points[pointId][1] - mesh.points[newId][1] ) <= 1  )  ) {
+		    if( newId >= 0   &&   newId <= nx*ny*nz-1 ) {
+
+			if (      (  abs( mesh.points[idx][0] - mesh.points[newId][0] ) <= 1  )
+			     &&   (  abs( mesh.points[idx][1] - mesh.points[newId][1] ) <= 1  )
+			     &&   (  abs( mesh.points[idx][2] - mesh.points[newId][2] ) <= 1  )  ) {
 	    
-    			mesh.nb[pointId][velId] = newId;
+			    mesh.nb[idx][vid] = newId;
 
-    		    }
+			}
 
-    		}
+		    }
 
-    	    }
+		}
 	    
-    	}
+	    }
+
+	}
 
     }
 
 
-    for( j = 1 ; j < ny-1 ; j++ ) {
+
+    // X-nodes
+
+    for( k = 0 ; k < nz ; k++ ) {    
+
+	for( j = 1 ; j < ny-1 ; j++ ) {
 	
-    	for( i = 0 ; i < nx ; i+=(nx-1)) {
+	    for( i = 0 ; i < nx ; i+=(nx-1)) {
 
-    	    pointId = i+j*nx;
+		idx = i + j*nx + k*nx*ny;
 
-    	    // Iterate on velocities
-    	    for( velId = 0 ; velId < mesh.Q ; velId++ ) {
+		// Iterate on velocities
 
-    		int newId = pointId   +   velocities[ rev[velId] ][0]   +   velocities[ rev[velId] ][1] * nx;
+		for( vid = 0 ; vid < mesh.Q ; vid++ ) {
 
-    		if( newId >= 0   &&   newId <= nx*ny-1 ) {
+		    int newId = idx   +   velocities[ rev[vid] ][0]   +   velocities[ rev[vid] ][1] * nx   +   velocities[ rev[vid] ][2] * nx * ny;
 
-    		    if ( (  abs( mesh.points[pointId][0] - mesh.points[newId][0] ) <= 1  )   &&   (  abs( mesh.points[pointId][1] - mesh.points[newId][1] ) <= 1  )  ) {
+		    if( newId >= 0   &&   newId <= nx*ny*nz-1 ) {
+
+			if (      (  abs( mesh.points[idx][0] - mesh.points[newId][0] ) <= 1  )
+			     &&   (  abs( mesh.points[idx][1] - mesh.points[newId][1] ) <= 1  )
+			     &&   (  abs( mesh.points[idx][2] - mesh.points[newId][2] ) <= 1  )) {
 	    
-    			mesh.nb[pointId][velId] = newId;
+			    mesh.nb[idx][vid] = newId;
 
-    		    }
+			}
 
-    		}
+		    }
 
-    	    }
+		}
 	    
-    	}
+	    }
+
+	}
 
     }
-    
+
+
+
+    // Z-nodes
+
+    for( k = 0 ; k < nz ; k+=(nx-1) ) {    
+
+	for( j = 0 ; j < ny ; j++ ) {
+	
+	    for( i = 0 ; i < nx ; i++ ) {
+
+		idx = i + j*nx + k*nx*ny;
+
+		// Iterate on velocities
+
+		for( vid = 0 ; vid < mesh.Q ; vid++ ) {
+
+		    int newId = idx   +   velocities[ rev[vid] ][0]   +   velocities[ rev[vid] ][1] * nx   +   velocities[ rev[vid] ][2] * nx * ny;
+
+		    if( newId >= 0   &&   newId <= nx*ny*nz-1 ) {
+
+			if (      (  abs( mesh.points[idx][0] - mesh.points[newId][0] ) <= 1  )
+			     &&   (  abs( mesh.points[idx][1] - mesh.points[newId][1] ) <= 1  )
+			     &&   (  abs( mesh.points[idx][2] - mesh.points[newId][2] ) <= 1  )) {
+	    
+			    mesh.nb[idx][vid] = newId;
+
+			}
+
+		    }
+
+		}
+	    
+	    }
+
+	}
+
+    }    
 
 
     	
@@ -268,6 +328,8 @@ int main(int argc, char** argv) {
     sprintf(mesh.bd.bdNames[1],"X1");
     sprintf(mesh.bd.bdNames[2],"Y0");
     sprintf(mesh.bd.bdNames[3],"Y1");
+    sprintf(mesh.bd.bdNames[4],"Z0");
+    sprintf(mesh.bd.bdNames[5],"Z1");
 
     
     // Boundary type
@@ -282,7 +344,7 @@ int main(int argc, char** argv) {
     // Generic
     if( strcmp(bdt,"generic") == 0) {
 
-    	genericBoundary( &mesh, nx, ny );
+    	genericBoundary3D( &mesh, nx, ny, nz );
 
     }
 
@@ -292,7 +354,7 @@ int main(int argc, char** argv) {
 
     	if( strcmp(bdt,"periodicX")  == 0 ) {
 
-    	    periodicX( &mesh, nx, ny );
+    	    /* periodicX( &mesh, nx, ny ); */
 
     	}
 
@@ -302,7 +364,7 @@ int main(int argc, char** argv) {
 
     	    if( strcmp(bdt,"periodicY")  == 0 ) {
 
-    		periodicY( &mesh, nx, ny );
+    		/* periodicY( &mesh, nx, ny ); */
 
     	    }
 
@@ -312,7 +374,7 @@ int main(int argc, char** argv) {
 
     		if( strcmp(bdt,"periodicXY")  == 0 ) {
 
-    		    periodicXY( &mesh, nx, ny );
+    		    /* periodicXY( &mesh, nx, ny ); */
 
     		}
 
@@ -339,31 +401,31 @@ int main(int argc, char** argv) {
     
 
 
-    // ******************************************************************** //
-    //                             VTK Cells                                //
-    // ******************************************************************** //
+    /* // ******************************************************************** // */
+    /* //                             VTK Cells                                // */
+    /* // ******************************************************************** // */
 
-    printf("Creating VTK Cells\n\n");
+    /* printf("Creating VTK Cells\n\n"); */
     
-    mesh.vtkCells = matrixIntAlloc((nx-1)*(ny-1),4,0);
+    /* mesh.vtkCells = matrixIntAlloc((nx-1)*(ny-1),4,0); */
 
-    mesh.ncells = 0;
-    mesh.cellType = 4;
+    /* mesh.ncells = 0; */
+    /* mesh.cellType = 4; */
     
-    for( j = 0 ; j < ny-1 ; j++ ) {
+    /* for( j = 0 ; j < ny-1 ; j++ ) { */
 	
-    	for( i = 0 ; i < (nx-1) ; i++ ) {
+    /* 	for( i = 0 ; i < (nx-1) ; i++ ) { */
 
-    	    mesh.vtkCells[mesh.ncells][0] = i + j*nx;
-    	    mesh.vtkCells[mesh.ncells][1] = i + j*nx + 1;
-    	    mesh.vtkCells[mesh.ncells][2] = i + j*nx + nx;
-    	    mesh.vtkCells[mesh.ncells][3] = i + j*nx + nx + 1;
+    /* 	    mesh.vtkCells[mesh.ncells][0] = i + j*nx; */
+    /* 	    mesh.vtkCells[mesh.ncells][1] = i + j*nx + 1; */
+    /* 	    mesh.vtkCells[mesh.ncells][2] = i + j*nx + nx; */
+    /* 	    mesh.vtkCells[mesh.ncells][3] = i + j*nx + nx + 1; */
 	
-    	    mesh.ncells++;
+    /* 	    mesh.ncells++; */
 
-    	}
+    /* 	} */
 
-    }
+    /* } */
     
 
     
@@ -376,13 +438,13 @@ int main(int argc, char** argv) {
 	    
 
 
-    // ******************************************************************** //
-    //                             Writing                                  //
-    // ******************************************************************** //
+    /* // ******************************************************************** // */
+    /* //                             Writing                                  // */
+    /* // ******************************************************************** // */
     
-    printf("Writting Mesh\n\n");
+    /* printf("Writting Mesh\n\n"); */
 
-    writeBasicMesh( &mesh );
+    /* writeBasicMesh( &mesh ); */
 
 
     
