@@ -27,28 +27,67 @@ void genericBoundary3D( basicMesh* mesh, uint nx, uint ny, uint nz ) {
 
 
     
-    int j;
+    int i, j, k, id;
 
 
     // Move over X-boundary points
-    for( j = 0 ; j < ny ; j++ ) {
 
-    	mesh->bd.bdPoints[0][j] = j*nx;
+    id = 0;
+    
+    for( k = 0 ; k < nz ; k++ ) {
+
+	for( j = 0 ; j < ny ; j++ ) {
+
+	    mesh->bd.bdPoints[0][id] = j*nx + k*nx*ny;
 	
-    	mesh->bd.bdPoints[1][j] = (nx-1) + j*nx;
+	    mesh->bd.bdPoints[1][id] = (nx-1) + j*nx + k*nx*ny;
 
+	    id++;
+
+	}
+	
     }
     
+
+
     
     // Move over Y-boundary points
-    for( j = 1 ; j < (nx-1) ; j++ ) {
 
-    	mesh->bd.bdPoints[2][j-1] = j;
+    id = 0;
+    
+    for( k = 0 ; k < nz ; k++ ) {
+    
+	for( i = 1 ; i < (nx-1) ; i++ ) {
+
+	    mesh->bd.bdPoints[2][id] = i + k*nx*ny; 
 	
-    	mesh->bd.bdPoints[3][j-1] = j + (nx-1)*ny;
+	    mesh->bd.bdPoints[3][id] = i + (ny-1)*nx + k*nx*ny;
+
+	    id++;
+
+	}
 
     }
 
+    
 
+    // Move over Z-boundary points
+
+    id = 0;
+    
+    for( j = 1 ; j < (ny-1) ; j++ ) {
+    
+    	for( i = 1 ; i < (nx-1) ; i++ ) {
+
+    	    mesh->bd.bdPoints[4][id] = i + j*nx;
+	
+    	    mesh->bd.bdPoints[5][id] = i + j*nx + (nz-1)*nx*ny;
+
+	    id++;
+	    
+    	}
+
+    }
+    
     
 }

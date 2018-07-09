@@ -12,11 +12,11 @@
 #include <basic.h>
 
 
-void periodicX( basicMesh* mesh, uint nx, uint ny );
+void periodicXZ3D( basicMesh* mesh, uint nx, uint ny, uint nz );
 
-void periodicY( basicMesh* mesh, uint nx, uint ny );
+void periodicYZ3D( basicMesh* mesh, uint nx, uint ny, uint nz );
 
-void periodicXY( basicMesh* mesh, uint nx, uint ny );
+void periodicXY3D( basicMesh* mesh, uint nx, uint ny, uint nz );
 
 void genericBoundary3D( basicMesh* mesh, uint nx, uint ny, uint nz );
 
@@ -401,31 +401,47 @@ int main(int argc, char** argv) {
     
 
 
-    /* // ******************************************************************** // */
-    /* //                             VTK Cells                                // */
-    /* // ******************************************************************** // */
+    // ******************************************************************** //
+    //                             VTK Cells                                //
+    // ******************************************************************** //
 
-    /* printf("Creating VTK Cells\n\n"); */
+    printf("Creating VTK Cells\n\n");
     
-    /* mesh.vtkCells = matrixIntAlloc((nx-1)*(ny-1),4,0); */
+    mesh.vtkCells = matrixIntAlloc((nx-1)*(ny-1)*(nz-1),8,0);
 
-    /* mesh.ncells = 0; */
-    /* mesh.cellType = 4; */
+    mesh.ncells = 0;
     
-    /* for( j = 0 ; j < ny-1 ; j++ ) { */
+    mesh.cellType = 8;
+
+    for( k = 0 ; k < nz-1 ; k++ ) {
+    
+	for( j = 0 ; j < ny-1 ; j++ ) {
 	
-    /* 	for( i = 0 ; i < (nx-1) ; i++ ) { */
+	    for( i = 0 ; i < (nx-1) ; i++ ) {
 
-    /* 	    mesh.vtkCells[mesh.ncells][0] = i + j*nx; */
-    /* 	    mesh.vtkCells[mesh.ncells][1] = i + j*nx + 1; */
-    /* 	    mesh.vtkCells[mesh.ncells][2] = i + j*nx + nx; */
-    /* 	    mesh.vtkCells[mesh.ncells][3] = i + j*nx + nx + 1; */
+		mesh.vtkCells[mesh.ncells][0] = i   +   j*nx             +   k*nx*ny;
+
+		mesh.vtkCells[mesh.ncells][1] = i   +   j*nx + 1         +   k*nx*ny;
+
+		mesh.vtkCells[mesh.ncells][2] = i   +   j*nx + nx        +   k*nx*ny;
+
+		mesh.vtkCells[mesh.ncells][3] = i   +   j*nx + nx + 1    +   k*nx*ny;
+
+		mesh.vtkCells[mesh.ncells][4] = i   +   j*nx             +   (k+1)*nx*ny;
+
+		mesh.vtkCells[mesh.ncells][5] = i   +   j*nx + 1         +   (k+1)*nx*ny;
+
+		mesh.vtkCells[mesh.ncells][6] = i   +   j*nx + nx        +   (k+1)*nx*ny;
+
+		mesh.vtkCells[mesh.ncells][7] = i   +   j*nx + nx + 1    +   (k+1)*nx*ny;
 	
-    /* 	    mesh.ncells++; */
+		mesh.ncells++;
 
-    /* 	} */
+	    }
 
-    /* } */
+	}
+
+    }
     
 
     
@@ -438,13 +454,13 @@ int main(int argc, char** argv) {
 	    
 
 
-    /* // ******************************************************************** // */
-    /* //                             Writing                                  // */
-    /* // ******************************************************************** // */
+    // ******************************************************************** //
+    //                             Writing                                  //
+    // ******************************************************************** //
     
-    /* printf("Writting Mesh\n\n"); */
+    printf("Writting Mesh\n\n");
 
-    /* writeBasicMesh( &mesh ); */
+    writeBasicMesh( &mesh );
 
 
     
