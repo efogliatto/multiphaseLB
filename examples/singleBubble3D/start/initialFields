@@ -44,7 +44,7 @@ rho
 
 	inside 0.00498;
 
-        centre (50 50 0);
+        centre (50 50 50);
 
 	radius 30;
 

@@ -196,6 +196,64 @@ void writeMeshToEnsight( latticeMesh* mesh ) {
 
     }
 
+    else {
+
+	if( mesh->lattice.model == D3Q15 ) {
+
+	    memset(msg,'\0', 80);	
+
+	    sprintf(msg, "hexa8");
+
+	    fwrite( msg, sizeof(char), 80, outFile );
+		
+	    fwrite( &mesh->mesh.ncells, sizeof(int), 1, outFile ); 
+
+    	
+
+	    for( i = 0 ; i < mesh->mesh.ncells ; i++) {
+
+		int id = mesh->mesh.vtkCells[i][0]+1;
+		
+		fwrite( &id, sizeof(int), 1, outFile );	       
+
+		id = mesh->mesh.vtkCells[i][1]+1;
+
+		fwrite( &id, sizeof(int), 1, outFile );
+
+		id = mesh->mesh.vtkCells[i][3]+1;
+	    
+		fwrite( &id, sizeof(int), 1, outFile );
+
+		id = mesh->mesh.vtkCells[i][2]+1;
+
+		fwrite( &id, sizeof(int), 1, outFile );
+
+
+
+
+		id = mesh->mesh.vtkCells[i][4]+1;
+		
+		fwrite( &id, sizeof(int), 1, outFile );	       
+
+		id = mesh->mesh.vtkCells[i][5]+1;
+
+		fwrite( &id, sizeof(int), 1, outFile );
+
+		id = mesh->mesh.vtkCells[i][7]+1;
+	    
+		fwrite( &id, sizeof(int), 1, outFile );
+
+		id = mesh->mesh.vtkCells[i][6]+1;
+
+		fwrite( &id, sizeof(int), 1, outFile );
+		
+
+	    }
+
+	}
+
+    }
+    
 
     fclose(outFile);
 

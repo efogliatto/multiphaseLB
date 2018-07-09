@@ -216,6 +216,13 @@ int main(int argc, char** argv) {
 
 
 
+
+	    // Lattice model
+
+	    localMesh[rpid].lattice = setLatticeInfo();
+
+
+
     	    /* // Add sharing info and resize elements */
 	    
     	    /* localMesh[rpid].parallel.shared = (uint*)malloc( np * sizeof(uint) ); */

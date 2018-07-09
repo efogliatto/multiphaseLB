@@ -3,8 +3,8 @@
 # Compute lattice
 latticeBox3D
 
-# # Lattice partitioning
-# latticeMeshPartition
+# Lattice partitioning
+latticeMeshPartition
 
-# # Field partitioning
-# setInitialFields
+# Field partitioning
+setInitialFields

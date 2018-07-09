@@ -122,7 +122,7 @@ int main(int argc, char** argv) {
 		
 		mesh.points[idx][1] = j;
 
-		mesh.points[idx][1] = k;
+		mesh.points[idx][2] = k;
 		
 	    }
 	}
@@ -274,7 +274,7 @@ int main(int argc, char** argv) {
 
     // Z-nodes
 
-    for( k = 0 ; k < nz ; k+=(nx-1) ) {    
+    for( k = 0 ; k < nz ; k+=(nz-1) ) {    
 
 	for( j = 0 ; j < ny ; j++ ) {
 	
