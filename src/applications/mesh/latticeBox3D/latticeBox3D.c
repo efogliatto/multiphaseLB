@@ -14,6 +14,8 @@
 
 void periodicXY3D( basicMesh* mesh, uint nx, uint ny, uint nz );
 
+void periodicZ3D( basicMesh* mesh, uint nx, uint ny, uint nz );
+
 void genericBoundary3D( basicMesh* mesh, uint nx, uint ny, uint nz );
 
 
@@ -159,80 +161,69 @@ int main(int argc, char** argv) {
     // Check for neighbouring
     // There is no need to iterate over all points to look for a neighbour. Given a lattice velocity vector (x,y,z), the neighbour of a point
     // p with index pointId is at most at pointId + x + (y*Nx) + (z*Nx*Ny).
-
-    
-    // Internal points first
-
-    int vid;
-
-    for( k = 1 ; k < (nz-1) ; k++ ) {
-    
-	for( j = 1 ; j < (ny-1) ; j++ ) {
-	
-	    for( i = 1 ; i < (nx-1) ; i++ ) {
-
-		idx = i + j*nx + k*nx*ny;
-
-
-		// Iterate on velocities
-		
-		for( vid = 0 ; vid < mesh.Q ; vid++ ) {
-
-		    mesh.nb[idx][vid] = idx   +   velocities[ rev[vid] ][0]   +   velocities[ rev[vid] ][1] * nx    +    velocities[ rev[vid] ][2] * nx * ny;
-
-		}
-	    
-	    }
-
-	}
-
-    }
-
-    
-
     // For boundary nodes, check neighbouring using distance to point
+    
 
-    int newId;
+    int vid, newId;
 
     for( k = 0 ; k < nz ; k++ ) {
 
-	for( j = 0 ; j < ny ; j++) {
+    	for( j = 0 ; j < ny ; j++) {
 	
-	    for( i = 0 ; i < nx ; i++) {
+    	    for( i = 0 ; i < nx ; i++) {
 
-		if( (i == 0)  ||  (i == nx-1)   ||   (j == 0)  ||  (j == ny-1)   ||   (k == 0)  ||  (k == nz-1) ) {
+
+		idx = i + j*nx + k*nx*ny;
 		
+		
+		// Boundary nodes
+		
+    		if( (i == 0)  ||  (i == nx-1)   ||   (j == 0)  ||  (j == ny-1)   ||   (k == 0)  ||  (k == nz-1) ) {	       		    
 
-		    idx = i + j*nx + k*nx*ny;
-		    
+    		    for( vid = 0 ; vid < mesh.Q ; vid++ ) {
 
-		    // Iterate on velocities
+    			newId = idx   +   velocities[ rev[vid] ][0]   +   velocities[ rev[vid] ][1] * nx   +   velocities[ rev[vid] ][2] * nx * ny;
+
+    			if( newId >= 0   &&   newId <= nx*ny*nz-1 ) {
+
+    			    if (      (  abs( mesh.points[idx][0] - mesh.points[newId][0] ) <= 1  )
+    				      &&   (  abs( mesh.points[idx][1] - mesh.points[newId][1] ) <= 1  )
+    				      &&   (  abs( mesh.points[idx][2] - mesh.points[newId][2] ) <= 1  )  ) {
+	    
+    				mesh.nb[idx][vid] = newId;
+
+    			    }
+
+    			}
+
+    		    }
+
+    		}
+
+
+		
+		// Inner nodes
+		
+		else {
 
 		    for( vid = 0 ; vid < mesh.Q ; vid++ ) {
 
-			newId = idx   +   velocities[ rev[vid] ][0]   +   velocities[ rev[vid] ][1] * nx   +   velocities[ rev[vid] ][2] * nx * ny;
-
-			if( newId >= 0   &&   newId <= nx*ny*nz-1 ) {
-
-			    if (      (  abs( mesh.points[idx][0] - mesh.points[newId][0] ) <= 1  )
-				      &&   (  abs( mesh.points[idx][1] - mesh.points[newId][1] ) <= 1  )
-				      &&   (  abs( mesh.points[idx][2] - mesh.points[newId][2] ) <= 1  )  ) {
-	    
-				mesh.nb[idx][vid] = newId;
-
-			    }
-
-			}
+			mesh.nb[idx][vid] = idx   +   velocities[ rev[vid] ][0]   +   velocities[ rev[vid] ][1] * nx    +    velocities[ rev[vid] ][2] * nx * ny;
 
 		    }
 
 		}
-	    
-	    }
 
-	}
+		
+	    
+    	    }
+
+    	}
 
     }
+    
+    
+
        
 
 
@@ -295,7 +286,15 @@ int main(int argc, char** argv) {
 
     	    if( strcmp(bdt,"periodicZ")  == 0 ) {
 
-    		/* periodicY( &mesh, nx, ny ); */
+    		periodicZ3D( &mesh, nx, ny, nz );
+
+		sprintf(mesh.bd.bdNames[0],"X0");
+	
+		sprintf(mesh.bd.bdNames[1],"X1");
+
+		sprintf(mesh.bd.bdNames[2],"Y0");
+
+		sprintf(mesh.bd.bdNames[3],"Y1");	
 
     	    }
 

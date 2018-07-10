@@ -15,6 +15,8 @@ void periodicXY3D( basicMesh* mesh, uint nx, uint ny, uint nz ) {
     
     mesh->bd.bdPoints = (uint**)malloc( 2 * sizeof(uint*) );
 
+
+    
     
 
     // Number of elements per boundary
@@ -28,6 +30,8 @@ void periodicXY3D( basicMesh* mesh, uint nx, uint ny, uint nz ) {
     mesh->bd.bdPoints[1] = (uint*)malloc( mesh->bd.nbdelem[1] * sizeof(uint) );
 
 
+
+    
 
     // Boundary elements asignment
 
