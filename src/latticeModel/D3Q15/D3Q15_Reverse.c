@@ -15,14 +15,14 @@ int* D3Q15_Reverse() {
     vel[4] = 3;
     vel[5] = 6;
     vel[6] = 5;
-    vel[7] = 11;
-    vel[8] = 12;
-    vel[9] = 13;
-    vel[10] = 14;
-    vel[11] = 7;
-    vel[12] = 8;
-    vel[13] = 9;
-    vel[14] = 10;
+    vel[7] = 14;
+    vel[8] = 13;
+    vel[9] = 12;
+    vel[10] = 11;
+    vel[11] = 10;
+    vel[12] = 9;
+    vel[13] = 8;
+    vel[14] = 7;
     
     return vel;
 
