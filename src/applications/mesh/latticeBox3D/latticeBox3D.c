@@ -14,6 +14,8 @@
 
 void periodicXY3D( basicMesh* mesh, uint nx, uint ny, uint nz );
 
+void periodicXYZ3D( basicMesh* mesh, uint nx, uint ny, uint nz );
+
 void periodicZ3D( basicMesh* mesh, uint nx, uint ny, uint nz );
 
 void genericBoundary3D( basicMesh* mesh, uint nx, uint ny, uint nz );
@@ -298,11 +300,24 @@ int main(int argc, char** argv) {
 
     	    }
 
+
+	    // Fully periodic
+	    
 	    else {
 
-		printf("[ERROR]   Unrecognized boundary type %s\n\n", bdt);
-		exit(0);
+		if( strcmp(bdt,"periodicXYZ")  == 0 ) {
 
+		    periodicXYZ3D( &mesh, nx, ny, nz );
+		    
+		}
+
+		else {
+
+		    printf("[ERROR]   Unrecognized boundary type %s\n\n", bdt);
+		    exit(0);
+
+		}
+		
 	    }       
 	
     	}
