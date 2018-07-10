@@ -12,10 +12,6 @@
 #include <basic.h>
 
 
-void periodicXZ3D( basicMesh* mesh, uint nx, uint ny, uint nz );
-
-void periodicYZ3D( basicMesh* mesh, uint nx, uint ny, uint nz );
-
 void periodicXY3D( basicMesh* mesh, uint nx, uint ny, uint nz );
 
 void genericBoundary3D( basicMesh* mesh, uint nx, uint ny, uint nz );
@@ -237,130 +233,7 @@ int main(int argc, char** argv) {
 	}
 
     }
-
-
-
-
-
-    
-    /* // Y-nodes */
-
-    /* int newId; */
-
-    /* for( k = 0 ; k < nz ; k++ ) { */
-
-    /* 	for( j = 0 ; j < ny ; j+=(ny-1)) { */
-	
-    /* 	    for( i = 0 ; i < nx ; i++) { */
-
-    /* 		idx = i + j*nx + k*nx*ny; */
-
-    /* 		// Iterate on velocities */
-
-    /* 		for( vid = 0 ; vid < mesh.Q ; vid++ ) { */
-
-    /* 		    newId = idx   +   velocities[ rev[vid] ][0]   +   velocities[ rev[vid] ][1] * nx   +   velocities[ rev[vid] ][2] * nx * ny; */
-
-    /* 		    if( newId >= 0   &&   newId <= nx*ny*nz-1 ) { */
-
-    /* 			if (      (  abs( mesh.points[idx][0] - mesh.points[newId][0] ) <= 1  ) */
-    /* 			     &&   (  abs( mesh.points[idx][1] - mesh.points[newId][1] ) <= 1  ) */
-    /* 			     &&   (  abs( mesh.points[idx][2] - mesh.points[newId][2] ) <= 1  )  ) { */
-	    
-    /* 			    mesh.nb[idx][vid] = newId; */
-
-    /* 			} */
-
-    /* 		    } */
-
-    /* 		} */
-	    
-    /* 	    } */
-
-    /* 	} */
-
-    /* } */
-
-
-
-    /* // X-nodes */
-
-    /* for( k = 0 ; k < nz ; k++ ) {     */
-
-    /* 	for( j = 1 ; j < ny-1 ; j++ ) { */
-	
-    /* 	    for( i = 0 ; i < nx ; i+=(nx-1)) { */
-
-    /* 		idx = i + j*nx + k*nx*ny; */
-
-    /* 		// Iterate on velocities */
-
-    /* 		for( vid = 0 ; vid < mesh.Q ; vid++ ) { */
-
-    /* 		    newId = idx   +   velocities[ rev[vid] ][0]   +   velocities[ rev[vid] ][1] * nx   +   velocities[ rev[vid] ][2] * nx * ny; */
-
-    /* 		    if( newId >= 0   &&   newId <= nx*ny*nz-1 ) { */
-
-    /* 			if (      (  abs( mesh.points[idx][0] - mesh.points[newId][0] ) <= 1  ) */
-    /* 			     &&   (  abs( mesh.points[idx][1] - mesh.points[newId][1] ) <= 1  ) */
-    /* 			     &&   (  abs( mesh.points[idx][2] - mesh.points[newId][2] ) <= 1  )) { */
-	    
-    /* 			    mesh.nb[idx][vid] = newId; */
-
-    /* 			} */
-
-    /* 		    } */
-
-    /* 		} */
-	    
-    /* 	    } */
-
-    /* 	} */
-
-    /* } */
-
-
-
-    /* // Z-nodes */
-
-    /* for( k = 0 ; k < nz ; k+=(nz-1) ) {     */
-
-    /* 	for( j = 0 ; j < ny ; j++ ) { */
-	
-    /* 	    for( i = 0 ; i < nx ; i++ ) { */
-
-    /* 		idx = i + j*nx + k*nx*ny; */
-
-    /* 		// Iterate on velocities */
-
-    /* 		for( vid = 0 ; vid < mesh.Q ; vid++ ) { */
-
-    /* 		    newId = idx   +   velocities[ rev[vid] ][0]   +   velocities[ rev[vid] ][1] * nx   +   velocities[ rev[vid] ][2] * nx * ny; */
-
-    /* 		    if( newId >= 0   &&   newId <= nx*ny*nz-1 ) { */
-
-    /* 			if (      (  abs( mesh.points[idx][0] - mesh.points[newId][0] ) <= 1  ) */
-    /* 			     &&   (  abs( mesh.points[idx][1] - mesh.points[newId][1] ) <= 1  ) */
-    /* 			     &&   (  abs( mesh.points[idx][2] - mesh.points[newId][2] ) <= 1  )) { */
-	    
-    /* 			    mesh.nb[idx][vid] = newId; */
-
-    /* 			} */
-
-    /* 		    } */
-
-    /* 		} */
-	    
-    /* 	    } */
-
-    /* 	} */
-
-    /* }     */
-
-
-    	
-
-
+       
 
 
     
@@ -372,13 +245,6 @@ int main(int argc, char** argv) {
     // ******************************************************************** //
 
     printf("Computing boundary nodes\n\n");
-
-    sprintf(mesh.bd.bdNames[0],"X0");
-    sprintf(mesh.bd.bdNames[1],"X1");
-    sprintf(mesh.bd.bdNames[2],"Y0");
-    sprintf(mesh.bd.bdNames[3],"Y1");
-    sprintf(mesh.bd.bdNames[4],"Z0");
-    sprintf(mesh.bd.bdNames[5],"Z1");
 
     
     // Boundary type
@@ -395,46 +261,50 @@ int main(int argc, char** argv) {
 
     	genericBoundary3D( &mesh, nx, ny, nz );
 
+	sprintf(mesh.bd.bdNames[0],"X0");
+	
+	sprintf(mesh.bd.bdNames[1],"X1");
+
+	sprintf(mesh.bd.bdNames[2],"Y0");
+
+	sprintf(mesh.bd.bdNames[3],"Y1");
+
+	sprintf(mesh.bd.bdNames[4],"Z0");
+
+	sprintf(mesh.bd.bdNames[5],"Z1");
+
     }
 
 
-    // periodicX
+    // periodicXY
     else {
 
-    	if( strcmp(bdt,"periodicX")  == 0 ) {
+    	if( strcmp(bdt,"periodicXY")  == 0 ) {
 
-    	    /* periodicX( &mesh, nx, ny ); */
+    	    periodicXY3D( &mesh, nx, ny, nz );
+
+	    sprintf(mesh.bd.bdNames[0],"Z0");
+	
+	    sprintf(mesh.bd.bdNames[1],"Z1");  
 
     	}
 
 
-    	// periodicY
+    	// periodicZ
     	else {
 
-    	    if( strcmp(bdt,"periodicY")  == 0 ) {
+    	    if( strcmp(bdt,"periodicZ")  == 0 ) {
 
     		/* periodicY( &mesh, nx, ny ); */
 
     	    }
 
+	    else {
 
-    	    // periodicXY
-    	    else {
+		printf("[ERROR]   Unrecognized boundary type %s\n\n", bdt);
+		exit(0);
 
-    		if( strcmp(bdt,"periodicXY")  == 0 ) {
-
-    		    /* periodicXY( &mesh, nx, ny ); */
-
-    		}
-
-    		else {
-
-    		    printf("[ERROR]   Unrecognized boundary type %s\n\n", bdt);
-    		    exit(0);
-
-    		}
-	
-    	    }
+	    }       
 	
     	}
 
