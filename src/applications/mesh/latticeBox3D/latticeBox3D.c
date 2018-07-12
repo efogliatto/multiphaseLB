@@ -38,19 +38,19 @@ int main(int argc, char** argv) {
 
     // Lattice size
 
-    scalar dn;
+    int dn;
 
     uint nx = 0,
 	ny = 0,
 	nz = 0;
 
-    if(  lookUpScalarEntry("properties/latticeProperties", "Nx", -1, &dn)  )
+    if(  lookUpIntegerEntry("properties/latticeProperties", "Nx", -1, &dn)  )
 	nx = (uint)dn;
 
-    if(  lookUpScalarEntry("properties/latticeProperties", "Ny", -1, &dn)  )
+    if(  lookUpIntegerEntry("properties/latticeProperties", "Ny", -1, &dn)  )
 	ny = (uint)dn;
 
-    if(  lookUpScalarEntry("properties/latticeProperties", "Nz", -1, &dn)  )
+    if(  lookUpIntegerEntry("properties/latticeProperties", "Nz", -1, &dn)  )
 	nz = (uint)dn;    
 
 

@@ -19,6 +19,8 @@
 
 #include <lookUpScalarEntry.h>
 
+#include <lookUpIntegerEntry.h>
+
 #include <lookUpVectorEntry.h>
 
 #include <isBracedEntryDefined.h>
