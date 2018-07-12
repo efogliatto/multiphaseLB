@@ -1,12 +1,12 @@
-#include <readLiMRTConstants.h>
+#include <readXuMRTConstants.h>
 #include <dictIO.h>
 #include <basic.h>
 
 
-liMRTConstants readLiMRTConstants( char* fname ) {
+xuMRTConstants readXuMRTConstants( char* fname ) {
 
     
-    liMRTConstants param;
+    xuMRTConstants param;
 
     char* msg;
 
@@ -57,16 +57,16 @@ liMRTConstants readLiMRTConstants( char* fname ) {
 
 	if( strcmp(aux, "none") == 0 ) {
 
-	    param.surfaceTension = no_st;
+	    param.surfaceTension = noXuSurf;
 
 	}
 
 	else {
 
-	    if( strcmp(aux, "liSurfTen") == 0 ) {
+	    if( strcmp(aux, "xuSurfTen") == 0 ) {
 
 		
-		param.surfaceTension = liSurfTen;
+		param.surfaceTension = xuSurfTen;
 
 
 		// Look up kappa
@@ -90,7 +90,7 @@ liMRTConstants readLiMRTConstants( char* fname ) {
 
     else {
 
-	param.surfaceTension = no_st;
+	param.surfaceTension = noXuSurf;
 
     }
 	

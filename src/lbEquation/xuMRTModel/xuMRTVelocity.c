@@ -1,9 +1,9 @@
 #include <pseudoPot.h>
-#include <liMRTVelocity.h>
+#include <xuMRTVelocity.h>
 #include <stdlib.h>
 
 
-void liMRTVelocity( latticeMesh* mesh, macroFields* mfields, lbeField* field, scalar** v, uint id ) {
+void xuMRTVelocity( latticeMesh* mesh, macroFields* mfields, lbeField* field, scalar** v, uint id ) {
 
     uint j, k;
 

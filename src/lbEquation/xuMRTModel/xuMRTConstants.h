@@ -12,7 +12,7 @@
 
 typedef enum {
 
-    no_st,
+    noXuSurf,
 
     xuSurfTen
 

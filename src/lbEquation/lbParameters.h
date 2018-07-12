@@ -3,6 +3,7 @@
 
 #include <liMRTConstants.h>
 #include <myMRTConstants.h>
+#include <xuMRTConstants.h>
 
 /**
  * @file lbParameters.h
@@ -17,7 +18,11 @@ typedef union {
     liMRTConstants liMRT;
 
     /** My MRT Model */
-    myMRTConstants myMRT;    
+    myMRTConstants myMRT;
+
+    /** Xu MRT Model */
+    xuMRTConstants xuMRT;    
+    
 
 } lbParameters;
 

@@ -1,10 +1,10 @@
 #include <basic.h>
-#include <liMRTCollision.h>
-#include <liMRTForce.h>
-#include <liMRTSurfaceTension.h>
+#include <xuMRTCollision.h>
+#include <xuMRTForce.h>
+#include <xuMRTSurfaceTension.h>
 
 
-void liMRTCollision( latticeMesh* mesh, macroFields* mfields, lbeField* field ) {
+void xuMRTCollision( latticeMesh* mesh, macroFields* mfields, lbeField* field ) {
 
 
     // Indices
@@ -32,7 +32,7 @@ void liMRTCollision( latticeMesh* mesh, macroFields* mfields, lbeField* field ) 
 
     uint nodes = mesh->mesh.nPoints;
 
-    if( field->lbparam.liMRT.surfaceTension == liSurfTen ) {
+    if( field->lbparam.xuMRT.surfaceTension == xuSurfTen ) {
 
 	nodes = mesh->parallel.nlocal;
 
@@ -44,27 +44,46 @@ void liMRTCollision( latticeMesh* mesh, macroFields* mfields, lbeField* field ) 
 	
 
 
+	scalar U[3] = { mfields->U[id][0], mfields->U[id][1], mfields->U[id][2] };
 
-	scalar umag = 0;
+	scalar rho = mfields->rho[id];
 	
-	for( k = 0 ; k < 3 ; k++ ) {
-	
-	    umag += mfields->U[id][k] * mfields->U[id][k];
+	scalar umag = vectorMag2(U);
 
-	}
+		
 
 	
 	// Compute equilibrium in momentum space
 	
-	m_eq[0] = mfields->rho[id];
-	m_eq[1] = mfields->rho[id] * (-2 + 3*umag);
-	m_eq[2] = mfields->rho[id] * (1 - 3*umag);
-	m_eq[3] = mfields->rho[id] * mfields->U[id][0];
-	m_eq[4] = mfields->rho[id] * (-mfields->U[id][0]);
-	m_eq[5] = mfields->rho[id] * mfields->U[id][1];
-	m_eq[6] = mfields->rho[id] * (-mfields->U[id][1]);
-	m_eq[7] = mfields->rho[id] * (mfields->U[id][0]*mfields->U[id][0] - mfields->U[id][1]*mfields->U[id][1]);
-	m_eq[8] = mfields->rho[id] * mfields->U[id][0] * mfields->U[id][1];
+	m_eq[0]  = rho;
+	
+	m_eq[1]  = rho * (-1.0 + umag);
+
+	m_eq[2]  = rho * (1.0 - 5.0*umag);
+
+	m_eq[3]  = rho * U[0];
+
+	m_eq[4]  = rho * -7.0 * U[0] / 3.0;
+
+	m_eq[5]  = rho * U[1];
+
+	m_eq[6]  = rho * -7.0 * U[1] / 3.0;
+
+	m_eq[7]  = rho * U[2];
+
+	m_eq[8]  = rho * -7.0 * U[2] / 3.0;
+
+	m_eq[9]  = rho * 2.0 * U[0] * U[0]  -  U[1] * U[1]  -  U[2] * U[2];
+
+	m_eq[10] = rho * U[1] * U[1]  -  U[2] * U[2];
+
+	m_eq[11] = rho * U[0]*U[1];
+
+	m_eq[12] = rho * U[1]*U[2];
+
+	m_eq[13] = rho * U[0]*U[2];
+
+	m_eq[14] = rho * 0;
 
 	
 
@@ -72,17 +91,18 @@ void liMRTCollision( latticeMesh* mesh, macroFields* mfields, lbeField* field ) 
 	// Distribution in momentum space
 
 	matVecMult(mesh->lattice.M, field->value[id], m, mesh->lattice.Q);
+	
 
 	
 	// Total Force
 	
-	liMRTForce( mesh, mfields, field, S, id );
+	xuMRTForce( mesh, mfields, field, S, id );
 
 
 	
 	// Surface Tension term
 	
-	liMRTSurfaceTension( mesh, mfields, field, C, id );
+	xuMRTSurfaceTension( mesh, mfields, field, C, id );
 	
 
 	
@@ -90,9 +110,9 @@ void liMRTCollision( latticeMesh* mesh, macroFields* mfields, lbeField* field ) 
 	
 	for( k = 0 ; k < mesh->lattice.Q ; k++ ) {
 
-	    m[k] = m[k]  -  field->lbparam.liMRT.Lambda[k]*( m[k] - m_eq[k] )  +  ( 1 - 0.5*field->lbparam.liMRT.Lambda[k] ) * S[k];
+	    m[k] = m[k]  -  field->lbparam.xuMRT.Lambda[k]*( m[k] - m_eq[k] )  +  ( 1 - 0.5*field->lbparam.xuMRT.Lambda[k] ) * S[k];
 
-	    if(field->lbparam.liMRT.surfaceTension == liSurfTen) {
+	    if(field->lbparam.xuMRT.surfaceTension == xuSurfTen) {
 
 	    	m[k] = m[k] + C[k];
 
@@ -126,7 +146,7 @@ void liMRTCollision( latticeMesh* mesh, macroFields* mfields, lbeField* field ) 
     
     // Sync field if needed
 
-    if( field->lbparam.liMRT.surfaceTension == liSurfTen ) {
+    if( field->lbparam.xuMRT.surfaceTension == xuSurfTen ) {
 
 	syncPdfField( mesh, field->value );
 

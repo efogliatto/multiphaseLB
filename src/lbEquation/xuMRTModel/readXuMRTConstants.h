@@ -1,17 +1,17 @@
-#ifndef READLIMRTCONSTANTS_H
-#define READLIMRTCONSTANTS_H
+#ifndef READXUMRTCONSTANTS_H
+#define READXUMRTCONSTANTS_H
 
-#include <liMRTConstants.h>
+#include <xuMRTConstants.h>
 
 /**
- * @file readLiMRTConstants.h
+ * @file readXuMRTConstants.h
  * @author Ezequiel O. Fogliatto
- * @date 19 Apr 2019
- * Read constants for li MRT model from properties/macroProperties
+ * @date 12 Jul 2018
+ * Read constants for Xu-MRT model from properties/macroProperties
  * @param fname Field name
  * @return Structure with constants
  */
 
-liMRTConstants readLiMRTConstants( char* fname );
+xuMRTConstants readXuMRTConstants( char* fname );
 
-#endif // READLIMRTCONSTANTS_H
+#endif // READXUMRTCONSTANTS_H
