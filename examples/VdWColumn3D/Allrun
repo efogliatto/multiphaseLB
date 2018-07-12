@@ -1,0 +1,5 @@
+#!/bin/bash
+
+# Compute periodic box
+multiPhasePP --nht
+# mpiexec -n 4 multiPhasePP --nht

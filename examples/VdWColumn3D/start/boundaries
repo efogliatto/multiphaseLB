@@ -1,0 +1,73 @@
+f
+{
+
+    X0
+    {
+        type periodic;
+    }
+
+    X1
+    {
+        type periodic;
+    }
+
+    Y0
+    {
+        type periodic;
+    }
+
+    Y1
+    {
+        type periodic;
+    }
+
+    Z0
+    {
+        type bounceBack;
+    }
+
+    Z1
+    {
+        type bounceBack;
+    }
+
+}
+
+
+
+g
+{
+
+    X0
+    {
+        type periodic;
+    }
+
+    X1
+    {
+        type periodic;
+    }
+
+    Y0
+    {
+        type periodic;
+    }
+
+    Y1
+    {
+        type periodic;
+    }
+
+    Z0
+    {
+        type fixedT;
+	value  0.03666667;
+    }
+
+    Z1
+    {
+        type fixedT;
+	value  0.03666667;
+    }
+
+}

@@ -1,0 +1,7 @@
+[0-9]*
+processor*
+lattice
+lattice.*
+lbm.case
+case.pvd
+log.*

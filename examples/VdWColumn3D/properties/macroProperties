@@ -1,0 +1,47 @@
+
+f
+{
+  Collision xuMRT;
+
+  Lambda (1.0 1.1 1.2 1.3 1.4 1.5 1.6 1.7 1.8 1.9 1.10 1.11 1.12 1.13 1.14);
+
+  sigma 0.125;
+}
+
+
+g
+{
+  Collision myMRT;
+
+  Lambda (0.0 1.0 1.0 1.2 1.0 1.2 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0);
+
+  alpha_1 0.25;
+
+  alpha_2 0.25;
+}
+
+
+
+EOS
+{    
+
+    model vanDerWaals;
+
+    a_vdw 0.5;
+
+    b_vdw 4;
+
+    R 1;
+
+    M 1;
+
+    G -1;
+
+    g (0 -1.234567e-07 0);
+
+    rho_0 0;
+
+    // Specific heat
+    Cv 1;
+    
+}
