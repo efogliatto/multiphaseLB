@@ -5,7 +5,7 @@ add_library(xumrtmodel SHARED
   xuMRTCollision.c
   xuMRTForce.c
   xuMRTDensity.c
-  # xuMRTPressure.c
+  xuMRTPressure.c
   xuMRTVelocity.c
   xuMRTEquilibrium.c
   xuMRTSurfaceTension.c

@@ -216,7 +216,7 @@ scalar liMRTPressure( latticeMesh* mesh, scalar* rho, scalar* T, scalar sigma, u
 
     		else {
 
-    		    grad[0] = 0;
+    		    grad[1] = 0;
 
     		}
 

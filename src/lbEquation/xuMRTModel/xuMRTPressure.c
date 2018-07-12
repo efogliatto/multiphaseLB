@@ -1,9 +1,9 @@
-#include <liMRTPressure.h>
+#include <xuMRTPressure.h>
 #include <potential.h>
 #include <basic.h>
 
 
-scalar liMRTPressure( latticeMesh* mesh, scalar* rho, scalar* T, scalar sigma, uint id ) {
+scalar xuMRTPressure( latticeMesh* mesh, lbeField* field, scalar* rho, scalar* T, scalar sigma, uint id ) {
 
 
 
@@ -27,12 +27,12 @@ scalar liMRTPressure( latticeMesh* mesh, scalar* rho, scalar* T, scalar sigma, u
     switch(mesh->lattice.model) {
 
 
-    case D2Q9:
+    case D3Q15:
 
 
     	// X - derivative
 
-    	a = mesh->mesh.nb[id][3];
+    	a = mesh->mesh.nb[id][2];
 
     	b = mesh->mesh.nb[id][1];
 
@@ -57,7 +57,7 @@ scalar liMRTPressure( latticeMesh* mesh, scalar* rho, scalar* T, scalar sigma, u
 
     		if(  (a != -1)  &&  (b == -1)  ) {
     
-		    c = mesh->mesh.nb[a][3];
+		    c = mesh->mesh.nb[a][2];
 		
 		    lap = potential(mesh, rho[c], T[c])  -   2 * potential(mesh, rho[a], T[a])  +  potential(mesh, rho[id], T[id]);    
 
@@ -80,7 +80,7 @@ scalar liMRTPressure( latticeMesh* mesh, scalar* rho, scalar* T, scalar sigma, u
 
     	a = mesh->mesh.nb[id][4];
 
-    	b = mesh->mesh.nb[id][2];
+    	b = mesh->mesh.nb[id][3];
 
 	
     	if(  (a != -1)  &&  (b != -1)  ) {
@@ -93,7 +93,7 @@ scalar liMRTPressure( latticeMesh* mesh, scalar* rho, scalar* T, scalar sigma, u
 
     	    if(  (a == -1)  &&  (b != -1)  ) {
     
-		c = mesh->mesh.nb[b][2];
+		c = mesh->mesh.nb[b][3];
 		
 		lap = lap + potential(mesh, rho[c], T[c])  -   2 * potential(mesh, rho[b], T[b])  +  potential(mesh, rho[id], T[id]);
 
@@ -116,7 +116,57 @@ scalar liMRTPressure( latticeMesh* mesh, scalar* rho, scalar* T, scalar sigma, u
 
     	    }
 
-    	}   
+    	}
+
+
+
+
+
+
+    	// Z - derivative
+
+    	a = mesh->mesh.nb[id][6];
+
+    	b = mesh->mesh.nb[id][5];
+
+	
+    	if(  (a != -1)  &&  (b != -1)  ) {
+    
+	    lap = lap + potential(mesh, rho[a], T[a])  +  potential(mesh, rho[b], T[b])  -  2 * potential(mesh, rho[id], T[id]);
+
+    	}
+
+    	else {
+
+    	    if(  (a == -1)  &&  (b != -1)  ) {
+    
+		c = mesh->mesh.nb[b][5];
+		
+		lap = lap + potential(mesh, rho[c], T[c])  -   2 * potential(mesh, rho[b], T[b])  +  potential(mesh, rho[id], T[id]);
+
+    	    }
+
+    	    else {
+
+    		if(  (a != -1)  &&  (b == -1)  ) {
+    
+		    c = mesh->mesh.nb[a][6];
+		
+		    lap = lap + potential(mesh, rho[c], T[c])  -   2 * potential(mesh, rho[a], T[a])  +  potential(mesh, rho[id], T[id]);    
+
+    		}
+
+    		else {
+
+
+    		}
+
+    	    }
+
+    	}
+
+
+	
 	
 	
 	break;
@@ -131,7 +181,16 @@ scalar liMRTPressure( latticeMesh* mesh, scalar* rho, scalar* T, scalar sigma, u
     }
 
 
-    p = p   +   mesh->EOS.G * psi * lap / 12;
+    scalar kappa = 0;
+
+    if( field->lbparam.xuMRT.surfaceTension == xuSurfTen ) {
+
+	kappa = field->lbparam.xuMRT.kappa_st;
+
+    }
+
+    
+    p = p   +   mesh->EOS.G * psi * lap * (1 + 2*kappa)/ 12;
 
 
 
@@ -144,12 +203,12 @@ scalar liMRTPressure( latticeMesh* mesh, scalar* rho, scalar* T, scalar sigma, u
     
     switch(mesh->lattice.model) {
 
-    case D2Q9:
+    case D3Q15:
     
 
     	// X - derivative
 
-    	a = mesh->mesh.nb[id][3];
+    	a = mesh->mesh.nb[id][2];
     	b = mesh->mesh.nb[id][1];
     
     	if(  (a != -1)  &&  (b != -1)  ) {
@@ -190,7 +249,7 @@ scalar liMRTPressure( latticeMesh* mesh, scalar* rho, scalar* T, scalar sigma, u
     	// Y - derivative
 
     	a = mesh->mesh.nb[id][4];
-    	b = mesh->mesh.nb[id][2];
+    	b = mesh->mesh.nb[id][3];
     
     	if(  (a != -1)  &&  (b != -1)  ) {
     
@@ -216,16 +275,57 @@ scalar liMRTPressure( latticeMesh* mesh, scalar* rho, scalar* T, scalar sigma, u
 
     		else {
 
-    		    grad[0] = 0;
+    		    grad[1] = 0;
 
     		}
 
     	    }
 
     	}
-    
 
-    	grad[2] = 0.0;
+
+
+
+
+
+
+    	// Z - derivative
+
+    	a = mesh->mesh.nb[id][6];
+    	b = mesh->mesh.nb[id][5];
+    
+    	if(  (a != -1)  &&  (b != -1)  ) {
+    
+    	    grad[2] = 0.5 * (potential(mesh, rho[a], T[a]) - potential(mesh, rho[b], T[b]));
+
+    	}
+
+    	else {
+
+    	    if(  (a == -1)  &&  (b != -1)  ) {
+    
+    		grad[2] = (potential(mesh, rho[id], T[id]) - potential(mesh, rho[b], T[b]));
+
+    	    }
+
+    	    else {
+
+    		if(  (a != -1)  &&  (b == -1)  ) {
+    
+    		    grad[2] = (potential(mesh, rho[a], T[a]) - potential(mesh, rho[id], T[id]));
+
+    		}
+
+    		else {
+
+    		    grad[2] = 0;
+
+    		}
+
+    	    }
+
+    	}
+
 
 	break;
 

@@ -1,8 +1,9 @@
-#ifndef LIMRTPRESSURE_H
-#define LIMRTPRESSURE_H
+#ifndef XUMRTPRESSURE_H
+#define XUMRTPRESSURE_H
 
 #include <latticeMesh.h>
+#include <lbeField.h>
 
-scalar liMRTPressure( latticeMesh* mesh, scalar* rho, scalar* T, scalar sigma, uint id );
+scalar xuMRTPressure( latticeMesh* mesh, lbeField* field, scalar* rho, scalar* T, scalar sigma, uint id );
 
-#endif // LIMRTPRESSURE_H
+#endif // XUMRTPRESSURE_H
