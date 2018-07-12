@@ -45,6 +45,26 @@ void bounceBack( latticeMesh* mesh, macroFields* mfields, scalar** field, uint b
 
 		    }
 
+
+
+		    else {
+
+			if( (mesh->lattice.Q == 15) ) {
+
+			    if( ( k == 1 )  ||  ( k == 2 )  ||  ( k == 3 )  ||  ( k == 4 )   ||  ( k == 5 )   ||  ( k == 6 ) ) {
+
+				field[id][k] = 0.5 * field[id][k]  +  0.5 * field[id][mesh->lattice.reverse[k]];
+		
+				field[id][mesh->lattice.reverse[k]] = field[id][k];
+
+			    }
+
+			}
+
+		    }
+
+		    
+
 		}
 
 	    }
