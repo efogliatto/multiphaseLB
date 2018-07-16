@@ -8,6 +8,7 @@ add_library(xumrtmodel SHARED
   xuMRTPressure.c
   xuMRTVelocity.c
   xuMRTEquilibrium.c
+  xuMRTEquilibriumMS.c
   xuMRTSurfaceTension.c
   readXuMRTConstants.c
   )

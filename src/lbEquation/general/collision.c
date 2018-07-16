@@ -1,7 +1,6 @@
 #include <collision.h>
 #include <basic.h>
-#include <liMRTModel.h>
-#include <myMRTModel.h>
+#include <lbEquation.h>
 
 
 void collision( latticeMesh* mesh, macroFields* mfields, lbeField* field ) {
@@ -14,7 +13,7 @@ void collision( latticeMesh* mesh, macroFields* mfields, lbeField* field ) {
 	switch(field->model) {
 	    
 
-	    // Li MRT Model
+        // Li MRT Model
 	    
 	case liMRT:
 	    
@@ -24,7 +23,7 @@ void collision( latticeMesh* mesh, macroFields* mfields, lbeField* field ) {
 
 
 	    
-	    // new Temperature MRT model
+        // New Temperature MRT model
 	    
 	case myMRT:
 	    
@@ -32,6 +31,16 @@ void collision( latticeMesh* mesh, macroFields* mfields, lbeField* field ) {
 	    
 	    break;		
 
+
+	    
+        // Xu MRT Model
+	    
+	case xuMRT:
+	    
+	    xuMRTCollision( mesh, mfields, field );
+	    
+	    break;
+	    
 	
 	default:
 	    

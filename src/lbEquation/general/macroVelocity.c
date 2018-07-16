@@ -1,6 +1,6 @@
 #include <macroVelocity.h>
 #include <basic.h>
-#include <liMRTModel.h>
+#include <lbEquation.h>
 
 
 void macroVelocity( latticeMesh* mesh, macroFields* mfields, lbeField* field ) {
@@ -17,7 +17,7 @@ void macroVelocity( latticeMesh* mesh, macroFields* mfields, lbeField* field ) {
 	switch(field->model) {
 
 	
-	    // Li MRT Model
+	// Li MRT Model
 	case liMRT:
 
 	    for( id = 0 ; id < mesh->mesh.nPoints ; id++) {
@@ -35,7 +35,20 @@ void macroVelocity( latticeMesh* mesh, macroFields* mfields, lbeField* field ) {
 	    errorMsg("Velocity update not suitable for myMRTModel");
 	
 	    break;
+
+
+
+        // Xu MRT Model
+	case xuMRT:
+
+	    for( id = 0 ; id < mesh->mesh.nPoints ; id++) {
+	    
+		xuMRTVelocity( mesh, mfields, field, mfields->U, id );
+	    
+	    }
 	
+	    break;
+	    
 
 	
 	default:

@@ -13,6 +13,8 @@
 
 #include <xuMRTEquilibrium.h>
 
+#include <xuMRTEquilibriumMS.h>
+
 #include <xuMRTSurfaceTension.h>
 
 #endif // XUMRTMODEL_H

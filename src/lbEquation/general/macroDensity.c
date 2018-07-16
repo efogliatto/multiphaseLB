@@ -1,6 +1,6 @@
 #include <macroDensity.h>
 #include <basic.h>
-#include <liMRTModel.h>
+#include <lbEquation.h>
 
 
 
@@ -19,7 +19,7 @@ void macroDensity( latticeMesh* mesh, macroFields* mfields, lbeField* field ) {
 	switch(field->model) {
 
 	
-	    // Li MRT Model
+	// Li MRT Model
 	case liMRT:
 
 	    for( id = 0 ; id < mesh->mesh.nPoints ; id++) {
@@ -31,14 +31,28 @@ void macroDensity( latticeMesh* mesh, macroFields* mfields, lbeField* field ) {
 	    break;
 
 
-	    // Li SRT Model
+	// My MRT Model
 	case myMRT:
 
 	    errorMsg("Density update not suitable for myMRTModel");
 	
 	    break;
 	
+
+
+	// xU MRT Model
+	case xuMRT:
+
+	    for( id = 0 ; id < mesh->mesh.nPoints ; id++) {
+	    
+		mfields->rho[id] = xuMRTDensity( mesh, field->value[id] );
+	    
+	    }
 	
+	    break;
+
+
+	    
 	
 	default:
 

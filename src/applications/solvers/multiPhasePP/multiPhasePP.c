@@ -190,72 +190,72 @@ int main( int argc, char **argv ) {
 	
 	
 	
-    	/* // Stream f */
+    	// Stream f
 	
-    	/* lbstream( &mesh, &f ); */
+    	lbstream( &mesh, &f );
 
 	
 	
-    	/* // Stream g */
+    	// Stream g
 	
-    	/* lbstream( &mesh, &g ); */
-
-
-	
-
-    	/* // Apply boundary conditions */
-	
-    	/* updateBoundaries( &mesh, &mfields, &f ); */
-	
-    	/* updateBoundaries( &mesh, &mfields, &g ); */
+    	lbstream( &mesh, &g );
 
 
 	
+
+    	// Apply boundary conditions
 	
-    	/* // Sync fields */
+    	updateBoundaries( &mesh, &mfields, &f );
+	
+    	updateBoundaries( &mesh, &mfields, &g );
 
-    	/* if( frozen != 0 ) {  syncPdfField( &mesh, f.value );  } */
 
-    	/* if( ht != 0 ) {  syncPdfField( &mesh, g.value );  } */
+	
+	
+    	// Sync fields
+
+    	if( frozen != 0 ) {  syncPdfField( &mesh, f.value );  }
+
+    	if( ht != 0 ) {  syncPdfField( &mesh, g.value );  }
 
 	
 		
 
 
-    	/* // Update macroscopic density */
+    	// Update macroscopic density
 	
-    	/* macroDensity( &mesh, &mfields, &f ); */
-
-
-	
-	
-	
-    	/* // Update macroscopic temperature */
-	
-    	/* if( ht != 0 )     { */
-
-    	/*     heatSource( &mesh, &mfields, &g ); */
-
-    	/*     syncScalarField( &mesh, g.scalarSource ); */
-
-    	/* } */
-
-    	/* macroTemperature( &mesh, &mfields, &g ); */
+    	macroDensity( &mesh, &mfields, &f );
 
 
 	
 	
-    	/* // Update macroscopic velocity */
 	
-    	/* if( frozen != 0 ) { */
+    	// Update macroscopic temperature
+	
+    	if( ht != 0 )     {
 
-    	/*     interForce( &mesh, &mfields ); */
+    	    heatSource( &mesh, &mfields, &g );
 
-    	/*     syncVectorField( &mesh, mfields.Fi ); */
+    	    syncScalarField( &mesh, g.scalarSource );
 
-    	/* } */
+    	}
 
-    	/* macroVelocity( &mesh, &mfields, &f ); */
+    	macroTemperature( &mesh, &mfields, &g );
+
+
+	
+	
+    	// Update macroscopic velocity
+	
+    	if( frozen != 0 ) {
+
+    	    interForce( &mesh, &mfields );
+
+    	    syncVectorField( &mesh, mfields.Fi );
+
+    	}
+
+    	macroVelocity( &mesh, &mfields, &f );
 
 
 	
@@ -314,7 +314,7 @@ int main( int argc, char **argv ) {
 
     	    writeVectorField( "f", f.value, &mesh, mesh.lattice.Q );
 
-    	    /* writeVectorField( "g", g.value, &mesh, mesh.lattice.Q ); */
+    	    writeVectorField( "g", g.value, &mesh, mesh.lattice.Q );
 
 
 	    if(mesh.time.data == pvtu) {
