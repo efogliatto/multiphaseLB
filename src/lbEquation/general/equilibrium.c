@@ -2,6 +2,7 @@
 #include <basic.h>
 #include <liMRTModel.h>
 #include <myMRTModel.h>
+#include <xuMRTModel.h>
 
 
 void equilibrium( latticeMesh* mesh, macroFields* mfields, lbeField* field ) {
@@ -18,7 +19,7 @@ void equilibrium( latticeMesh* mesh, macroFields* mfields, lbeField* field ) {
 	switch(field->model) {
 
 	
-	    // Li model. MRT version
+	// Li model. MRT version
 	
 	case liMRT:
 	
@@ -45,12 +46,26 @@ void equilibrium( latticeMesh* mesh, macroFields* mfields, lbeField* field ) {
 
 	
 	    break;
+
+
+
+	// Xu model. MRT version
+	
+	case xuMRT:
+	
+	    for( id = 0 ; id < mesh->mesh.nPoints ; id++) {
+
+		xuMRTEquilibrium( &mesh->lattice, mfields->rho[id], mfields->U[id], field->value[id] );
+
+	    }
+	
+	    break;
 	
 
 	    
 	default:
 
-	    errorMsg("Unrecognized collision model");       
+	    errorMsg("Unrecognized collision model in equilibrium distribution");
 
 	    break;
 

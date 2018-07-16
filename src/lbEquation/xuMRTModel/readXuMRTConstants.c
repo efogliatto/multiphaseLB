@@ -55,36 +55,36 @@ xuMRTConstants readXuMRTConstants( char* fname ) {
 
     if( lookUpStringEntry("properties/macroProperties", msg, &aux, "none") ) {
 
-	if( strcmp(aux, "none") == 0 ) {
+    	if( strcmp(aux, "none") == 0 ) {
 
-	    param.surfaceTension = noXuSurf;
+    	    param.surfaceTension = noXuSurf;
 
-	}
+    	}
 
-	else {
+    	else {
 
-	    if( strcmp(aux, "xuSurfTen") == 0 ) {
+    	    if( strcmp(aux, "xuSurfTen") == 0 ) {
 
 		
-		param.surfaceTension = xuSurfTen;
+    		param.surfaceTension = xuSurfTen;
 
 
-		// Look up kappa
+    		// Look up kappa
 
-		status = vstring(&msg, "%s/kappa_st", fname);
+    		status = vstring(&msg, "%s/kappa_st", fname);
 
-		if( !lookUpScalarEntry("properties/macroProperties", msg, -1, &param.kappa_st) ) {
+    		if( !lookUpScalarEntry("properties/macroProperties", msg, -1, &param.kappa_st) ) {
 
-		    status = vstring(&msg, "Unable to find %s/kappa_st", fname);
+    		    status = vstring(&msg, "Unable to find %s/kappa_st", fname);
 
-		    errorMsg( msg );
+    		    errorMsg( msg );
 
-		}
+    		}
 		
 		
-	    }
+    	    }
 
-	}
+    	}
 
     }
 

@@ -1,18 +1,18 @@
-#ifndef LIMRTMODEL_H
-#define LIMRTMODEL_H
+#ifndef XUMRTMODEL_H
+#define XUMRTMODEL_H
 
-#include <liMRTCollision.h>
+#include <xuMRTCollision.h>
 
-#include <liMRTDensity.h>
+#include <xuMRTDensity.h>
 
-#include <liMRTVelocity.h>
+#include <xuMRTVelocity.h>
 
-#include <liMRTPressure.h>
+#include <xuMRTPressure.h>
 
-#include <liMRTForce.h>
+#include <xuMRTForce.h>
 
-#include <liMRTEquilibrium.h>
+#include <xuMRTEquilibrium.h>
 
-#include <liMRTSurfaceTension.h>
+#include <xuMRTSurfaceTension.h>
 
-#endif // LIMRTMODEL_H
+#endif // XUMRTMODEL_H

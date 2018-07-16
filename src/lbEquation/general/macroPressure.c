@@ -1,6 +1,7 @@
 #include <macroPressure.h>
 #include <basic.h>
 #include <liMRTModel.h>
+#include <xuMRTModel.h>
 
 
 
@@ -38,7 +39,22 @@ void macroPressure( latticeMesh* mesh, macroFields* mfields, lbeField* field ) {
 	
 	    break;
 	
+
+
+	// Xu MRT Model
+	case xuMRT:
+
+	    for( id = 0 ; id < mesh->parallel.nlocal ; id++) {
+	    
+		mfields->p[id] = xuMRTPressure( mesh, field, mfields->rho, mfields->T, field->lbparam.liMRT.sigma, id );
+	    
+	    }
 	
+	    break;
+
+
+
+	    
 	
 	default:
 
