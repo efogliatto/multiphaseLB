@@ -1,11 +1,13 @@
 
 f
 {
-  Collision liMRT;
+  Collision xuMRT;
 
-  Lambda (1.0 0.8 1.1 1.0 1.1 1.0 1.1 0.8 0.8);
+  Lambda (1.0 1.1 1.1 1.0 1.1 1.0 1.1 1.0 1.1 1.0 1.0 1.0 1.0 1.0 1.2);
 
-  sigma 0.125;
+  sigma 1.2;
+
+  SurfaceTension none;
 }
 
 
@@ -13,7 +15,7 @@ g
 {
   Collision myMRT;
 
-  Lambda (0.0 1.0 1.0 1.2 1.0 1.2 1.0 1.0 1.0);
+  Lambda (0.0 1.0 1.0 1.2 1.0 1.2 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0);
 
   alpha_1 0.25;
 

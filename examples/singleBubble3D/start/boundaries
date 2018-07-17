@@ -21,6 +21,16 @@ f
         type periodic;
     }
 
+    Z0
+    {
+        type periodic;
+    }
+    
+    Z1
+    {
+        type periodic;
+    }
+
 }
 
 
@@ -44,6 +54,16 @@ g
     }
     
     Y1
+    {
+        type periodic;
+    }
+
+    Z0
+    {
+        type periodic;
+    }
+    
+    Z1
     {
         type periodic;
     }

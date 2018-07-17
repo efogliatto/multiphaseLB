@@ -1,3 +1,3 @@
 method kmetis;
 
-numProc 1;
+numProc 4;

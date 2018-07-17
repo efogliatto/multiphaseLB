@@ -25,7 +25,7 @@ T
 
         type uniform;
 
-	value 0.0222222;
+	value 0.0366666;
 
     }
 
@@ -40,13 +40,13 @@ rho
 
         type sphere;
 
-        outside 0.193;
+        outside 0.1;
 
-	inside 0.00498;
+	inside 0.067;
 
         centre (50 50 50);
 
-	radius 30;
+	radius 25;
 
 
     }
