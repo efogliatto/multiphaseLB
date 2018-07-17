@@ -24,7 +24,7 @@ void xuMRTCollision( latticeMesh* mesh, macroFields* mfields, lbeField* field ) 
 
     scalar* C     = (scalar*)malloc( mesh->lattice.Q * sizeof(scalar) );   // Surface tension term
 
-
+    
 
 
 

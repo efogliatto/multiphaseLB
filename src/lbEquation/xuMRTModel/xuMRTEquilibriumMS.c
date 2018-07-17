@@ -38,9 +38,9 @@ void xuMRTEquilibriumMS( latticeMesh* mesh, macroFields* mfields, scalar* m_eq, 
 
 	m_eq[8]  = rho * -7.0 * U[2] / 3.0;
 
-	m_eq[9]  = rho * 2.0 * U[0] * U[0]  -  U[1] * U[1]  -  U[2] * U[2];
+	m_eq[9]  = rho * ( 2.0 * U[0] * U[0]  -  U[1] * U[1]  -  U[2] * U[2] );
 
-	m_eq[10] = rho * U[1] * U[1]  -  U[2] * U[2];
+	m_eq[10] = rho * ( U[1] * U[1]  -  U[2] * U[2] );
 
 	m_eq[11] = rho * U[0]*U[1];
 
@@ -48,7 +48,7 @@ void xuMRTEquilibriumMS( latticeMesh* mesh, macroFields* mfields, scalar* m_eq, 
 
 	m_eq[13] = rho * U[0]*U[2];
 
-	m_eq[14] = rho * 0;
+	m_eq[14] = 0;
 
 	
 
