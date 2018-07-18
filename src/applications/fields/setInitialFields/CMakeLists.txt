@@ -10,6 +10,7 @@ set ( PROJECT_LINK_LIBS
   libpseudopot.so
   liblimrtmodel.so
   libmymrtmodel.so
+  libxumrtmodel.so
   libboundary.so
   libeos.so
   libpvtu.so
@@ -27,6 +28,11 @@ link_directories( ${CMAKE_SOURCE_DIR}/lib )
 
 
 # setInitialFields
-add_executable(setInitialFields "setInitialFields.c" "uniformScalarField.c" "boxBoundedScalarField.c" "randomScalarField.c" "sphereBoundedScalarField.c" "fixedGradientScalarField.c"
-  )
+add_executable(setInitialFields "setInitialFields.c"
+  "uniformScalarField.c"
+  "boxBoundedScalarField.c"
+  "randomScalarField.c"
+  "sphereBoundedScalarField.c"
+  "fixedGradientScalarField.c"  )
+
 target_link_libraries(setInitialFields ${PROJECT_LINK_LIBS} ${PROJECT_LINK_LIBS})

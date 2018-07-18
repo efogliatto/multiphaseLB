@@ -27,14 +27,16 @@ void fixedGradientScalarField( latticeMesh* mesh, scalar** field, char* fname ) 
 
     // Read b
     
-    if(  vstring(&aux, "%s/internalField/b", fname)  )    
+    if(  vstring(&aux, "%s/internalField/offset", fname)  )    
 	status = lookUpScalarEntry("start/initialFields", aux, 0, &b);
 
 
     // Read a
     
-    if(  vstring(&aux, "%s/internalField/a", fname)  )
+    if(  vstring(&aux, "%s/internalField/grad", fname)  )
 	status = lookUpVectorEntry("start/initialFields", aux, &a, &n);
+
+    
 
 
     if (status) {}
@@ -42,15 +44,19 @@ void fixedGradientScalarField( latticeMesh* mesh, scalar** field, char* fname ) 
     
     uint i, j;
 
+    scalar dot;
+
     for( i = 0 ; i < mesh->mesh.nPoints ; i++ ) {
 
-    	field[0][i] = b;
+	dot = 0;
 	
 	for ( j = 0 ; j < 3 ; j++ ) {
 
-	    field[0][i] = field[0][i] + a[j] * mesh->mesh.points[i][j];
+	    dot += a[j] * mesh->mesh.points[i][j];	   
 
 	}
+
+	field[0][i] = b + dot;
 
     }
     
