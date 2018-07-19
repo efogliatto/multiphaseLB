@@ -10,7 +10,7 @@ void myMRTCollision( latticeMesh* mesh, macroFields* mfields, lbeField* field ) 
 
     // Indices
     
-    uint id, j, k;
+    uint id, j, k, nz = 0;
 
 
     
@@ -49,11 +49,13 @@ void myMRTCollision( latticeMesh* mesh, macroFields* mfields, lbeField* field ) 
 
     if( mesh->lattice.model == D2Q9 ) {
 
-	nonZero = (uint**)malloc( 2 * sizeof(uint*) );
-	
-	for( k = 0 ; k < 2 ; k++ ) {
+	nz = 2;
 
-	    nonZero[k] = (uint*)malloc( 2 * sizeof(uint) );
+	nonZero = (uint**)malloc( nz * sizeof(uint*) );
+	
+	for( k = 0 ; k < nz ; k++ ) {
+
+	    nonZero[k] = (uint*)malloc( nz * sizeof(uint) );
 	
 	}
     
@@ -75,11 +77,13 @@ void myMRTCollision( latticeMesh* mesh, macroFields* mfields, lbeField* field ) 
 
 	if( mesh->lattice.model == D3Q15 ) {
 
-	    nonZero = (uint**)malloc( 3 * sizeof(uint*) );
-	
-	    for( k = 0 ; k < 3 ; k++ ) {
+	    nz = 3;
 
-		nonZero[k] = (uint*)malloc( 3 * sizeof(uint) );
+	    nonZero = (uint**)malloc( nz * sizeof(uint*) );
+	
+	    for( k = 0 ; k < nz ; k++ ) {
+
+		nonZero[k] = (uint*)malloc( nz * sizeof(uint) );
 	
 	    }
     
@@ -167,7 +171,7 @@ void myMRTCollision( latticeMesh* mesh, macroFields* mfields, lbeField* field ) 
 
 	/* matVecMult(Q, aux_2, aux_1, mesh->lattice.Q); */
 
-	sparseMatVecMult(Q, aux_2, aux_1, nonZero, mesh->lattice.Q, 2);
+	sparseMatVecMult(Q, aux_2, aux_1, nonZero, mesh->lattice.Q, nz);
 
 
 	
@@ -176,23 +180,8 @@ void myMRTCollision( latticeMesh* mesh, macroFields* mfields, lbeField* field ) 
 	// Second auxiliary distribution: (I  -  0.5 * Q) * GammaHat
 	
 	/* matVecMult(Q_aux, GammaHat, aux_2, mesh->lattice.Q); */
-
-	switch( mesh->lattice.model ) {
-
-	case D2Q9:
-
-	    sparseMatVecMult(Q_aux, GammaHat, aux_2, nonZero, mesh->lattice.Q, 2);
-
-	    break;
-
-
-	case D3Q15:
-
-	    sparseMatVecMult(Q_aux, GammaHat, aux_2, nonZero, mesh->lattice.Q, 3);
-
-	    break;	    
-
-	}
+	
+	sparseMatVecMult(Q_aux, GammaHat, aux_2, nonZero, mesh->lattice.Q, nz);
 	
 	
 	
@@ -246,17 +235,12 @@ void myMRTCollision( latticeMesh* mesh, macroFields* mfields, lbeField* field ) 
 
 
     
-    for( k = 0 ; k < 2 ; k++ ) {
+    for( k = 0 ; k < nz ; k++ ) {
 
 	free( nonZero[k] );
 
     }
 
-    if(mesh->lattice.model == D3Q15) {
-
-	free( nonZero[2] );
-
-    }
 
     free(nonZero);
     
