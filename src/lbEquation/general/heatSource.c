@@ -20,10 +20,6 @@ void heatSource( latticeMesh* mesh, macroFields* mfields, lbeField* field ) {
 	scalar gradT[3],
 	    gradRho[3];
 
-	/* scalar w = 0; */
-
-	/* scalar* n     = (scalar*)malloc( mesh->lattice.Q * sizeof(scalar) );   // m:  momentum space */
-
 
     
 
@@ -31,42 +27,34 @@ void heatSource( latticeMesh* mesh, macroFields* mfields, lbeField* field ) {
 
 	case myMRT:
 
-	    /* w = 6.0 / (4.0 + 3.0 * field->lbparam.myMRT.alpha_1 + 2.0 * field->lbparam.myMRT.alpha_2 ); */
-
 	
 	    for( id = 0 ; id < mesh->parallel.nlocal ; id++ ) {
 
-	    
-		lambda = mfields->rho[id] * mesh->EOS.Cv * (1/field->lbparam.myMRT.Lambda[3] - 0.5) * (4.0 + 3.0 * field->lbparam.myMRT.alpha_1 + 2.0 * field->lbparam.myMRT.alpha_2) / 6.0;
-    
+
+		// Thermal conductivity
+
+		switch( mesh->lattice.model ) {
+
+		case D2Q9:
+		    
+		    lambda = mfields->rho[id] * mesh->EOS.Cv * (1/field->lbparam.myMRT.Lambda[3] - 0.5) * (4.0 + 3.0 * field->lbparam.myMRT.alpha_1
+													   + 2.0 * field->lbparam.myMRT.alpha_2) / 6.0;
+
+		    break;
+
+		case D3Q15:
+
+		    lambda = mfields->rho[id] * mesh->EOS.Cv * (1/field->lbparam.myMRT.Lambda[3] - 0.5) * (6.0 + 11.0 * field->lbparam.myMRT.alpha_1
+													   + field->lbparam.myMRT.alpha_2) / 9.0;		    
+		    
+		    break;
+
+		}
+		
 
 		// Temperature gradient
     
-		scalarGradient( gradT, mfields->T, mesh, id );
-
-
-		///////////////////////////////////////////////////////////////////
-		//                        Version de prueba                      //
-		///////////////////////////////////////////////////////////////////
-
-	    
-		/* // Equilibrium distribution */
-
-		/* matVecMult(mesh->lattice.M, field->value[id], n, mesh->lattice.Q); */
-
-
-		/* // Temperature gradient */
-	    
-		/* gradT[0] = -w * ( field->lbparam.myMRT.Lambda[3] * (n[3] - mfields->T[id]*mfields->U[id][0])    +   0.5 * field->lbparam.myMRT.Lambda[3] * field->lbparam.myMRT.Lambda[4] * (n[4] + mfields->T[id]*mfields->U[id][0])); */
-
-		/* gradT[1] = -w * ( field->lbparam.myMRT.Lambda[5] * (n[5] - mfields->T[id]*mfields->U[id][1])    +   0.5 * field->lbparam.myMRT.Lambda[5] * field->lbparam.myMRT.Lambda[6] * (n[4] + mfields->T[id]*mfields->U[id][1])); */
-
-		/* gradT[2] = 0; */
-	    
-
-		///////////////////////////////////////////////////////////////////	    
-
-	    
+		scalarGradient( gradT, mfields->T, mesh, id );    
 
 
 		// 1/rho gradient
@@ -101,7 +89,11 @@ void heatSource( latticeMesh* mesh, macroFields* mfields, lbeField* field ) {
 	    break;
 
 
-	    // Li SRT Model
+
+	    
+
+	// Li SRT Model
+
 	case liMRT:
 
 	    errorMsg("Heat source not defined for liMRTModel");

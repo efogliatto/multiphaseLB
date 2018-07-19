@@ -26,7 +26,7 @@ void myMRTCollision( latticeMesh* mesh, macroFields* mfields, lbeField* field ) 
 
     scalar* aux_2  = (scalar*)malloc( mesh->lattice.Q * sizeof(scalar) );
 
-    uint** nonZero  = (uint**)malloc( 2 * sizeof(uint*) );
+    uint** nonZero;
     
 
     
@@ -43,28 +43,68 @@ void myMRTCollision( latticeMesh* mesh, macroFields* mfields, lbeField* field ) 
     }
 
 
-    for( k = 0 ; k < 2 ; k++ ) {
 
-	nonZero[k] = (uint*)malloc( 2 * sizeof(uint) );
+    // Non-zero off diagonal elements from Q
+
+
+    if( mesh->lattice.model == D2Q9 ) {
+
+	nonZero = (uint**)malloc( 2 * sizeof(uint*) );
 	
-    }
+	for( k = 0 ; k < 2 ; k++ ) {
+
+	    nonZero[k] = (uint*)malloc( 2 * sizeof(uint) );
+	
+	}
     
 
-    nonZero[0][0] = 3;
-    nonZero[0][1] = 4;
-    nonZero[1][0] = 5;
-    nonZero[1][1] = 6;
+	nonZero[0][0] = 3;
+	nonZero[0][1] = 4;
+	nonZero[1][0] = 5;
+	nonZero[1][1] = 6;
 
-    
-
-    if( mesh->lattice.Q == 9 ) {
 
     	Q[3][4] = Q[4][4]  *  ( Q[3][3]/2.0  - 1.0 );
 
-    	Q[5][6] = Q[6][6]  *  ( Q[5][5]/2.0  - 1.0 );
+    	Q[5][6] = Q[6][6]  *  ( Q[5][5]/2.0  - 1.0 );	
 
     }
 
+
+    else {
+
+	if( mesh->lattice.model == D3Q15 ) {
+
+	    nonZero = (uint**)malloc( 3 * sizeof(uint*) );
+	
+	    for( k = 0 ; k < 3 ; k++ ) {
+
+		nonZero[k] = (uint*)malloc( 3 * sizeof(uint) );
+	
+	    }
+    
+
+	    nonZero[0][0] = 3;
+	    nonZero[0][1] = 4;
+	    nonZero[1][0] = 5;
+	    nonZero[1][1] = 6;
+	    nonZero[2][0] = 7;
+	    nonZero[2][1] = 8;
+
+	    Q[3][4] = Q[4][4]  *  ( Q[3][3]/2.0  - 1.0 );
+
+	    Q[5][6] = Q[6][6]  *  ( Q[5][5]/2.0  - 1.0 );
+
+	    Q[7][8] = Q[8][8]  *  ( Q[7][7]/2.0  - 1.0 );
+
+	}
+
+    }
+
+    
+
+
+    // Q_aux = I  -  0.5 * Q
 
     for( j = 0 ; j < mesh->lattice.Q ; j++ ) {
 
@@ -93,31 +133,6 @@ void myMRTCollision( latticeMesh* mesh, macroFields* mfields, lbeField* field ) 
     for( id = 0 ; id < mesh->mesh.nPoints ; id++ ) {
     /* for( id = 0 ; id < mesh->parallel.nlocal ; id++ ) { */
 
-
-
-	/* // Constant Lambda */
-	
-	/* if( field->tauModel == 2 ) { */
-	    
-	/*     Q[3][3] = 1 / ( 6.0 * field->lbParam.myMRT.lambda / (mfields->rho[id] * mesh->EOS.Cv * (4.0 + 3.0 * field->lbParam.myMRT.alpha_1 + 2.0 * field->lbParam.myMRT.alpha_2))  +  0.5); */
-
-	/*     Q[5][5] = Q[3][3]; */
-
-	/*     Q[3][4] = Q[4][4]  *  ( Q[3][3]/2.0  - 1.0 ); */
-
-	/*     Q[5][6] = Q[6][6]  *  ( Q[5][5]/2.0  - 1.0 ); */
-
-
-	/*     Q_aux[3][3] = 1.0 - 0.5 * Q[3][3]; */
-
-	/*     Q_aux[5][5] = 1.0 - 0.5 * Q[5][5]; */
-
-	/*     Q_aux[3][4] = -0.5 * Q[3][4]; */
-
-	/*     Q_aux[5][6] = -0.5 * Q[5][6]; */
-
-	/* } */
-	
 	
 
 	// Equilibrium distribution in moment space
@@ -162,7 +177,22 @@ void myMRTCollision( latticeMesh* mesh, macroFields* mfields, lbeField* field ) 
 	
 	/* matVecMult(Q_aux, GammaHat, aux_2, mesh->lattice.Q); */
 
-	sparseMatVecMult(Q_aux, GammaHat, aux_2, nonZero, mesh->lattice.Q, 2);
+	switch( mesh->lattice.model ) {
+
+	case D2Q9:
+
+	    sparseMatVecMult(Q_aux, GammaHat, aux_2, nonZero, mesh->lattice.Q, 2);
+
+	    break;
+
+
+	case D3Q15:
+
+	    sparseMatVecMult(Q_aux, GammaHat, aux_2, nonZero, mesh->lattice.Q, 3);
+
+	    break;	    
+
+	}
 	
 	
 	
@@ -212,9 +242,19 @@ void myMRTCollision( latticeMesh* mesh, macroFields* mfields, lbeField* field ) 
     free(Q_aux);
 
 
+
+
+
+    
     for( k = 0 ; k < 2 ; k++ ) {
 
 	free( nonZero[k] );
+
+    }
+
+    if(mesh->lattice.model == D3Q15) {
+
+	free( nonZero[2] );
 
     }
 
