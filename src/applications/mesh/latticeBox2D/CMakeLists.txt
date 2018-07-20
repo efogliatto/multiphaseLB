@@ -18,6 +18,7 @@ set ( PROJECT_LINK_LIBS
   libensight.so
   libd2q9.so
   libd3q15.so
+  libxumrtmodel.so
   m
   ${MPI_LIBRARIES})
 

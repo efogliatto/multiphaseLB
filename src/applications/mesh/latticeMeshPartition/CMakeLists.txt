@@ -10,6 +10,7 @@ set ( PROJECT_LINK_LIBS
   libpseudopot.so
   liblimrtmodel.so
   libmymrtmodel.so
+  libxumrtmodel.so
   libboundary.so
   libeos.so
   libasciiraw.so
