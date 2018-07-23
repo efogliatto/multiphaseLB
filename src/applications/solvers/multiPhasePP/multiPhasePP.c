@@ -214,7 +214,7 @@ int main( int argc, char **argv ) {
 	
     	// Sync fields
 
-    	/* if( frozen != 0 ) {  syncPdfField( &mesh, f.value );  } */
+    	if( frozen != 0 ) {  syncPdfField( &mesh, f.value );  }
 
     	if( ht != 0 ) {  syncPdfField( &mesh, g.value );  }
 
@@ -222,7 +222,7 @@ int main( int argc, char **argv ) {
 		
 
 
-    	// Update macroscopic density and sync f
+    	// Update macroscopic density
 	
     	macroDensity( &mesh, &mfields, &f );
 
