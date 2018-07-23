@@ -5,7 +5,7 @@ f
 
   Lambda (1.0 1.1 1.1 1.0 1.1 1.0 1.1 1.0 1.1 1.0 1.0 1.0 1.0 1.0 1.2);
 
-  sigma 1.2;
+  sigma 0.125;
 
   SurfaceTension none;
 }
