@@ -21,7 +21,7 @@ scalar p_eos( EOSInfo* info, scalar rho, scalar T ) {
     // Carnahan - Starling
     case CarStar:
 	
-	alpha = info->eParam.csp.b * rho / 4;
+	alpha = info->eParam.csp.b * rho / 4.0;
 
 	beta  = 1 - alpha;
 
