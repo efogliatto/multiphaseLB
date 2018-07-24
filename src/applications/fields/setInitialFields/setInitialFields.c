@@ -15,6 +15,8 @@
 
 void uniformScalarField( latticeMesh* mesh, scalar** field, char* fname );
 
+void tgProfileScalarField( latticeMesh* mesh, scalar** field, char* fname );
+
 void randomScalarField( latticeMesh* mesh, scalar** field, char* fname );
 
 void boxBoundedScalarField( latticeMesh* mesh, scalar** field, char* fname );
@@ -189,7 +191,20 @@ int main(int argc, char** argv) {
 			    
     			    else {
 
-    				errorMsg("Unrecognized type");
+				// Tangential profile
+		
+				if( strcmp(itype,"tgProfile") == 0 ) {
+
+				    tgProfileScalarField( &mesh, &field, vtk.scalarFields[fid] );
+
+				}
+			    
+				else {
+
+				    errorMsg("Unrecognized type");
+
+				}
+    				
 
     			    }
 
