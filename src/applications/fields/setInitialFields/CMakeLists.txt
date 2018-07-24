@@ -33,6 +33,7 @@ add_executable(setInitialFields "setInitialFields.c"
   "boxBoundedScalarField.c"
   "randomScalarField.c"
   "sphereBoundedScalarField.c"
-  "fixedGradientScalarField.c"  )
+  "fixedGradientScalarField.c"
+  "tgProfileScalarField.c"  )
 
 target_link_libraries(setInitialFields ${PROJECT_LINK_LIBS} ${PROJECT_LINK_LIBS})
