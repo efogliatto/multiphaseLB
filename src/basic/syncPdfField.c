@@ -4,6 +4,7 @@
 #include <math.h>
 
 
+
 void syncPdfField( latticeMesh* mesh, scalar** fld ) {
 
 
@@ -137,10 +138,10 @@ void syncPdfField( latticeMesh* mesh, scalar** fld ) {
 
 		}
 
-	    }		
+	    }
 
 	    
-	}	
+	}
 	
 	
 
@@ -151,56 +152,3 @@ void syncPdfField( latticeMesh* mesh, scalar** fld ) {
     }
 	
 }
-
-
-
-
-
-
-
-
-
-
-/* // Blocking - comm */
-
-
-/* // Send information */
-    	
-/* MPI_Status status; */
-
-	
-/* // Move over send ghosts. Send data */
-
-/* for( pid = 0 ; pid < mesh->parallel.worldSize ; pid++ ) { */
-
-/*     if( mesh->parallel.shared[pid] > 0 ) { */
-	    
-/* 	MPI_Send (&mesh->parallel.sbuf[pid][0], mesh->parallel.shared[pid] * mesh->mesh.Q, MPI_DOUBLE, pid, mesh->parallel.pid, MPI_COMM_WORLD); */
-
-/*     } */
-/* } */
-
-
-
-/* // Wait for everyone */
-	
-/* MPI_Barrier(MPI_COMM_WORLD); */
-
-	
-/* // Move over recv ghosts. Receive data */
-
-/* for( pid = 0 ; pid < mesh->parallel.worldSize ; pid++ ) { */
-
-/*     if( mesh->parallel.shared[pid] > 0 ) { */
-	    
-/* 	MPI_Recv (mesh->parallel.rbuf[pid], mesh->parallel.shared[pid] * mesh->mesh.Q, MPI_DOUBLE, pid, pid, MPI_COMM_WORLD, &status); */
-
-/*     } */
-/* } */
-
-
-/* // Wait for everyone */
-	
-/* MPI_Barrier(MPI_COMM_WORLD); */
-
-	
