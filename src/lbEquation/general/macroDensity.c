@@ -4,7 +4,7 @@
 
 
 
-void macroDensity( latticeMesh* mesh, macroFields* mfields, lbeField* field ) {
+void macroDensity( latticeMesh* mesh, macroFields* mfields, lbeField* field, uint start, uint end ) {
 
 
     if (field->update != 0) {
@@ -22,7 +22,7 @@ void macroDensity( latticeMesh* mesh, macroFields* mfields, lbeField* field ) {
 	// Li MRT Model
 	case liMRT:
 
-	    for( id = 0 ; id < mesh->mesh.nPoints ; id++) {
+	    for( id = start ; id < end ; id++) {
 	    
 		mfields->rho[id] = liMRTDensity( mesh, field->value[id] );
 	    
@@ -43,7 +43,7 @@ void macroDensity( latticeMesh* mesh, macroFields* mfields, lbeField* field ) {
 	// xU MRT Model
 	case xuMRT:
 
-	    for( id = 0 ; id < mesh->mesh.nPoints ; id++) {
+	    for( id = start ; id < end ; id++) {
 	    
 		mfields->rho[id] = xuMRTDensity( mesh, field->value[id] );
 	    

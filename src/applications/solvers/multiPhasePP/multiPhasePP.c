@@ -11,7 +11,7 @@
 #include <mpi.h>
 #include <generalLbe.h>
 #include <pseudoPot.h>
-
+#include <omp.h>
 
 
 
@@ -166,39 +166,48 @@ int main( int argc, char **argv ) {
 
 
 
-
-
-
-
-
     
     // Advance in time. Collide, stream, update and write
     
     while( updateTime(&mesh.time) ) {
 
 
-	
-    	// Collide f (Navier-Stokes)
-	
-    	collision( &mesh, &mfields, &f );
+        #pragma omp parallel num_threads(2)
+	{
+
+	    int tid = omp_get_thread_num();
 
 
-		
-    	// Collide g (Temperature)
+	    // Collide f (Navier-Stokes)
+	    
+	    if(tid == 0) {	   
+	
+		collision( &mesh, &mfields, &f );
 
-    	collision( &mesh, &mfields, &g );
+	    }
+
+
+	    // Collide g (Temperature)
+	    
+	    else {				
+
+		collision( &mesh, &mfields, &g );		
+
+	    }
+	    
+	}
 	
-	
+
 	
     	// Stream f
 	
-    	lbstream( &mesh, &f );
+	lbstream( &mesh, &f );
 
 	
 	
     	// Stream g
 	
-    	lbstream( &mesh, &g );
+	lbstream( &mesh, &g );
 
 
 	
@@ -210,24 +219,60 @@ int main( int argc, char **argv ) {
     	updateBoundaries( &mesh, &mfields, &g );
 
 
-	
-	
-    	// Sync fields
 
-    	if( frozen != 0 ) {  syncPdfField( &mesh, f.value );  }
 
-    	if( ht != 0 ) {  syncPdfField( &mesh, g.value );  }
 
+        /* #pragma omp parallel num_threads(2) */
+	/* { */
+
+	/*     int tid = omp_get_thread_num(); */
 	
+	    
+	
+	/*     // Sync fields */
+
+	/*     if(tid == 0) { */
 		
+	/* 	if( frozen != 0 ) {  syncPdfField( &mesh, f.value );  } */
+
+	/* 	if( ht != 0 ) {  syncPdfField( &mesh, g.value );  } */
+
+	/*     } */
+
+	    	      
+
+	/*     // Update macroscopic density */
+
+	/*     else { */
+		
+	/* 	macroDensity( &mesh, &mfields, &f, 0, mesh.parallel.nlocal ); */
+
+	/*     } */
 
 
-    	// Update macroscopic density
+	/* } */
+
+
+	/*  // Ghost nodes */
 	
-    	macroDensity( &mesh, &mfields, &f );
+	/* macroDensity( &mesh, &mfields, &f, mesh.parallel.nlocal, mesh.mesh.nPoints ); */
 
+
+
+	// Sync fields
+		
+	if( frozen != 0 ) {  syncPdfField( &mesh, f.value );  }
+
+	if( ht != 0 ) {  syncPdfField( &mesh, g.value );  }
 
 	
+
+
+	// Update macroscopic density
+
+	macroDensity( &mesh, &mfields, &f, 0, mesh.mesh.nPoints );
+	
+
 	
 	
     	// Update macroscopic temperature

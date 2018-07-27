@@ -15,8 +15,10 @@
  * @param mesh Lattice mesh
  * @param mfields Macroscopic fields structure
  * @param field lbField with population distribution
+ * @param start Node start local index
+ * @param start Node end local index
  */
 
-void macroDensity( latticeMesh* mesh, macroFields* mfields, lbeField* field );
+void macroDensity( latticeMesh* mesh, macroFields* mfields, lbeField* field, uint start, uint end );
 
 #endif // MACRODENSITY_H

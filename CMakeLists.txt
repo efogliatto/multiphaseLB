@@ -19,7 +19,7 @@ include_directories(include ${MPI_INCLUDE_PATH})
 
 # Compiler options for C
 # SET( CMAKE_C_FLAGS  "${CMAKE_C_FLAGS} -Wall -lm -g" )
-SET( CMAKE_C_FLAGS  "${CMAKE_C_FLAGS} -Wall -lm" )
+SET( CMAKE_C_FLAGS  "${CMAKE_C_FLAGS} -Wall -lm -fopenmp" )
 
 # # Linker options
 # SET( CMAKE_EXE_LINKER_FLAGS  "${CMAKE_EXE_LINKER_FLAGS} -lm")
