@@ -17,6 +17,6 @@
  * @param field lbField with population distribution
  */
 
-void macroVelocity( latticeMesh* mesh, macroFields* mfields, lbeField* field );
+void macroVelocity( latticeMesh* mesh, macroFields* mfields, lbeField* field, uint start, uint end );
 
 #endif // MACROVELOCITY_H

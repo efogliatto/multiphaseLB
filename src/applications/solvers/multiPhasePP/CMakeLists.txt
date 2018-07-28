@@ -26,5 +26,5 @@ set ( PROJECT_LINK_LIBS
 link_directories( ${CMAKE_SOURCE_DIR}/lib )
 
 # multiPhasePP
-add_executable( multiPhasePP "multiPhasePP.c" )
+add_executable( multiPhasePP "multiPhasePP.c" "checkMpArgs.c" )
 target_link_libraries(multiPhasePP ${PROJECT_LINK_LIBS} ${PROJECT_LINK_LIBS} ${MPI_LIBRARIES} -lm)

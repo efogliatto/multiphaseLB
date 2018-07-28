@@ -17,6 +17,6 @@
  * @param field lbField with population distribution
  */
 
-void macroTemperature( latticeMesh* mesh, macroFields* mfields, lbeField* field );
+void macroTemperature( latticeMesh* mesh, macroFields* mfields, lbeField* field, uint start, uint end );
 
 #endif // MACROTEMPERATURE_H

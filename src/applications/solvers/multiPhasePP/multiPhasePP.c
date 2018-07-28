@@ -12,6 +12,7 @@
 #include <generalLbe.h>
 #include <pseudoPot.h>
 #include <omp.h>
+#include <checkMpArgs.h>
 
 
 
@@ -20,25 +21,28 @@ int main( int argc, char **argv ) {
 
 
     // Check for arguments
-    uint ht = 1, frozen = 1;
-    {
-	uint arg;
-	for( arg = 0 ; arg < argc ; arg++) {
 
-	    if ( strcmp("--nht", argv[arg]) == 0 ) {
-		ht = 0;
-	    }
+    mpOptions mp = checkMpArgs( argc, argv );
+    
+    /* uint ht = 1, frozen = 1; */
+    /* { */
+    /* 	uint arg; */
+    /* 	for( arg = 0 ; arg < argc ; arg++) { */
 
-	    else {
+    /* 	    if ( strcmp("--nht", argv[arg]) == 0 ) { */
+    /* 		ht = 0; */
+    /* 	    } */
 
-		if ( strcmp("--frozen", argv[arg]) == 0 ) {
-		    frozen = 0;
-		}
+    /* 	    else { */
+
+    /* 		if ( strcmp("--frozen", argv[arg]) == 0 ) { */
+    /* 		    frozen = 0; */
+    /* 		} */
 		
-	    }
+    /* 	    } */
 	    
-	}
-    }
+    /* 	} */
+    /* } */
 
 
     
@@ -120,7 +124,7 @@ int main( int argc, char **argv ) {
     
     createLbeField( &mesh, &f, "f", MUST_READ);
 
-    if(frozen == 0) { f.update = 0; }
+    if(mp.frozen == 0) { f.update = 0; }
 
 
     
@@ -130,7 +134,7 @@ int main( int argc, char **argv ) {
     
     createLbeField( &mesh, &g, "g", MUST_READ);
 
-    if(ht == 0) { g.update = 0; }
+    if(mp.ht == 0) { g.update = 0; }
     
     
 
@@ -172,137 +176,280 @@ int main( int argc, char **argv ) {
     while( updateTime(&mesh.time) ) {
 
 
-        #pragma omp parallel num_threads(2)
-	{
+	// Standard version
 
-	    int tid = omp_get_thread_num();
+	if( mp.mthread == 0 ) {
 
 
+	    
 	    // Collide f (Navier-Stokes)
-	    
-	    if(tid == 0) {	   
 	
-		collision( &mesh, &mfields, &f );
+	    collision( &mesh, &mfields, &f );
 
-	    }
-
-
+	    
+	    
 	    // Collide g (Temperature)
-	    
-	    else {				
 
-		collision( &mesh, &mfields, &g );		
+	    collision( &mesh, &mfields, &g );		
+       
+
+	
+	    // Stream f
+	
+	    lbstream( &mesh, &f );
+
+	
+	
+	    // Stream g
+	
+	    lbstream( &mesh, &g );
+
+
+	
+
+	    // Apply boundary conditions
+	
+	    updateBoundaries( &mesh, &mfields, &f );
+	
+	    updateBoundaries( &mesh, &mfields, &g );
+
+	
+
+
+	    // Sync fields
+		
+	    if( mp.frozen != 0 ) {  syncPdfField( &mesh, f.value );  }
+
+	    if( mp.ht != 0 ) {  syncPdfField( &mesh, g.value );  }
+
+	
+
+
+	    // Update macroscopic density
+
+	    macroDensity( &mesh, &mfields, &f, 0, mesh.mesh.nPoints );
+	
+
+	
+	
+	    // Update macroscopic temperature
+	
+	    if( mp.ht != 0 )     {
+
+		heatSource( &mesh, &mfields, &g );
+
+		syncScalarField( &mesh, g.scalarSource );
 
 	    }
-	    
+
+	    macroTemperature( &mesh, &mfields, &g, 0, mesh.mesh.nPoints );
+
+
+
+	
+	
+	    // Update macroscopic velocity
+	
+	    if( mp.frozen != 0 ) {
+
+		interForce( &mesh, &mfields );
+
+		syncVectorField( &mesh, mfields.Fi );
+
+	    }
+
+	    macroVelocity( &mesh, &mfields, &f, 0, mesh.mesh.nPoints );
+
+
 	}
-	
-
-	
-    	// Stream f
-	
-	lbstream( &mesh, &f );
-
-	
-	
-    	// Stream g
-	
-	lbstream( &mesh, &g );
-
-
-	
-
-    	// Apply boundary conditions
-	
-    	updateBoundaries( &mesh, &mfields, &f );
-	
-    	updateBoundaries( &mesh, &mfields, &g );
 
 
 
 
+	// Multithreaded version
 
-        /* #pragma omp parallel num_threads(2) */
-	/* { */
+	else {
 
-	/*     int tid = omp_get_thread_num(); */
-	
+
+            #pragma omp parallel num_threads(2)
+	    {
+
+		int tid = omp_get_thread_num();
+
+
+		// Collide f (Navier-Stokes)
 	    
+		if(tid == 0) {	   
 	
-	/*     // Sync fields */
+		    collision( &mesh, &mfields, &f );
 
-	/*     if(tid == 0) { */
-		
-	/* 	if( frozen != 0 ) {  syncPdfField( &mesh, f.value );  } */
-
-	/* 	if( ht != 0 ) {  syncPdfField( &mesh, g.value );  } */
-
-	/*     } */
-
-	    	      
-
-	/*     // Update macroscopic density */
-
-	/*     else { */
-		
-	/* 	macroDensity( &mesh, &mfields, &f, 0, mesh.parallel.nlocal ); */
-
-	/*     } */
+		}
 
 
-	/* } */
+		// Collide g (Temperature)
+	    
+		else {				
 
+		    collision( &mesh, &mfields, &g );		
 
-	/*  // Ghost nodes */
-	
-	/* macroDensity( &mesh, &mfields, &f, mesh.parallel.nlocal, mesh.mesh.nPoints ); */
-
-
-
-	// Sync fields
-		
-	if( frozen != 0 ) {  syncPdfField( &mesh, f.value );  }
-
-	if( ht != 0 ) {  syncPdfField( &mesh, g.value );  }
-
-	
-
-
-	// Update macroscopic density
-
-	macroDensity( &mesh, &mfields, &f, 0, mesh.mesh.nPoints );
+		}
+	    
+	    }
 	
 
 	
+	    // Stream f
 	
-    	// Update macroscopic temperature
-	
-    	if( ht != 0 )     {
-
-    	    heatSource( &mesh, &mfields, &g );
-
-    	    syncScalarField( &mesh, g.scalarSource );
-
-    	}
-
-    	macroTemperature( &mesh, &mfields, &g );
-
+	    lbstream( &mesh, &f );
 
 	
 	
-    	// Update macroscopic velocity
+	    // Stream g
 	
-    	if( frozen != 0 ) {
-
-    	    interForce( &mesh, &mfields );
-
-    	    syncVectorField( &mesh, mfields.Fi );
-
-    	}
-
-    	macroVelocity( &mesh, &mfields, &f );
+	    lbstream( &mesh, &g );
 
 
+	
+
+	    // Apply boundary conditions
+	
+	    updateBoundaries( &mesh, &mfields, &f );
+	
+	    updateBoundaries( &mesh, &mfields, &g );
+
+
+
+
+            #pragma omp parallel num_threads(2)
+	    {
+
+
+		switch( omp_get_thread_num() )   {
+
+
+	        // Sync fields
+	    
+		case 0:	   
+	
+		    if( mp.frozen != 0 ) {  syncPdfField( &mesh, f.value );  }
+
+		    if( mp.ht != 0 ) {  syncPdfField( &mesh, g.value );  }
+
+		    break;
+
+
+		// Update macroscopic density on local nodes only
+	    
+		default:
+
+		    macroDensity( &mesh, &mfields, &f, 0, mesh.parallel.nlocal );
+
+		    break;
+
+		}
+
+	    
+	    }
+
+	
+
+
+	    // Update macroscopic density on ghost nodes only
+
+	    macroDensity( &mesh, &mfields, &f, mesh.parallel.nlocal, mesh.mesh.nPoints );
+	
+	
+	
+	    // Update macroscopic heat source
+	
+	    if( mp.ht != 0 ) {  heatSource( &mesh, &mfields, &g );  }
+
+	    
+
+
+            #pragma omp parallel num_threads(2)
+	    {
+
+		switch( omp_get_thread_num() )   {
+
+
+	        // Sync fields
+	    
+		case 0:	   
+	
+		    if( mp.ht != 0 )  {  syncScalarField( &mesh, g.scalarSource );  }
+
+		    break;
+
+
+		// Update macroscopic temperature on local nodes only
+	    
+		default:
+
+		    macroTemperature( &mesh, &mfields, &g, 0, mesh.parallel.nlocal );
+
+		    break;
+
+		}
+	    
+	    }
+
+
+	    // Update macroscopic temperature on ghost nodes only
+	    
+	    macroTemperature( &mesh, &mfields, &g, mesh.parallel.nlocal, mesh.mesh.nPoints );
+
+
+
+	
+	
+	    // Update macroscopic velocity
+	
+	    if( mp.frozen != 0 ) {  interForce( &mesh, &mfields );  }
+
+
+            #pragma omp parallel num_threads(2)
+	    {
+
+		switch( omp_get_thread_num() )   {
+
+
+	        // Sync fields
+	    
+		case 0:	   
+	
+		    if( mp.frozen != 0 )  {  syncVectorField( &mesh, mfields.Fi );  }
+
+		    break;
+
+
+		// Update macroscopic velocity on local nodes only
+	    
+		default:
+
+		    macroVelocity( &mesh, &mfields, &f, 0, mesh.parallel.nlocal );
+
+		    break;
+
+		}
+	    
+	    }
+
+
+
+	    // Update macroscopic velocity on ghost nodes only
+	    
+	    macroVelocity( &mesh, &mfields, &f, mesh.parallel.nlocal, mesh.mesh.nPoints );
+
+	    
+
+	}
+
+
+
+
+
+	
 	
 	
     	// Write fields

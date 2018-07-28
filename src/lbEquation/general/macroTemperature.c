@@ -3,7 +3,7 @@
 #include <myMRTModel.h>
 
 
-void macroTemperature( latticeMesh* mesh, macroFields* mfields, lbeField* field ) {
+void macroTemperature( latticeMesh* mesh, macroFields* mfields, lbeField* field, uint start, uint end ) {
 
 
     if (field->update != 0) {
@@ -18,7 +18,7 @@ void macroTemperature( latticeMesh* mesh, macroFields* mfields, lbeField* field 
 	    
 	case myMRT:
 
-	    for( id = 0 ; id < mesh->mesh.nPoints ; id++) {
+	    for( id = start ; id < end ; id++) {
 
 		mfields->T[id] = myMRTTemperature( mesh, mfields, field, id );
 

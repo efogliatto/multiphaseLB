@@ -3,7 +3,7 @@
 #include <lbEquation.h>
 
 
-void macroVelocity( latticeMesh* mesh, macroFields* mfields, lbeField* field ) {
+void macroVelocity( latticeMesh* mesh, macroFields* mfields, lbeField* field, uint start, uint end ) {
 
 
     if (field->update != 0) {
@@ -20,7 +20,7 @@ void macroVelocity( latticeMesh* mesh, macroFields* mfields, lbeField* field ) {
 	// Li MRT Model
 	case liMRT:
 
-	    for( id = 0 ; id < mesh->mesh.nPoints ; id++) {
+	    for( id = start ; id < end ; id++) {
 	    
 		liMRTVelocity( mesh, mfields, field, mfields->U, id );
 	    
@@ -41,7 +41,7 @@ void macroVelocity( latticeMesh* mesh, macroFields* mfields, lbeField* field ) {
         // Xu MRT Model
 	case xuMRT:
 
-	    for( id = 0 ; id < mesh->mesh.nPoints ; id++) {
+	    for( id = start ; id < end ; id++) {
 	    
 		xuMRTVelocity( mesh, mfields, field, mfields->U, id );
 	    
