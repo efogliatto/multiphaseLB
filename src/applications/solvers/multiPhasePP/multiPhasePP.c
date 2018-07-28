@@ -186,13 +186,13 @@ int main( int argc, char **argv ) {
 	
 	    collision( &mesh, &mfields, &f );
 
-	    
-	    
+
+		
 	    // Collide g (Temperature)
 
-	    collision( &mesh, &mfields, &g );		
-       
-
+	    collision( &mesh, &mfields, &g );
+	
+	
 	
 	    // Stream f
 	
@@ -213,23 +213,25 @@ int main( int argc, char **argv ) {
 	
 	    updateBoundaries( &mesh, &mfields, &g );
 
+
 	
-
-
+	
 	    // Sync fields
-		
+
 	    if( mp.frozen != 0 ) {  syncPdfField( &mesh, f.value );  }
 
 	    if( mp.ht != 0 ) {  syncPdfField( &mesh, g.value );  }
 
 	
+		
 
 
 	    // Update macroscopic density
-
-	    macroDensity( &mesh, &mfields, &f, 0, mesh.mesh.nPoints );
 	
+	    macroDensity( &mesh, &mfields, &f, 0, mesh.mesh.nPoints );
 
+
+	
 	
 	
 	    // Update macroscopic temperature
@@ -245,7 +247,6 @@ int main( int argc, char **argv ) {
 	    macroTemperature( &mesh, &mfields, &g, 0, mesh.mesh.nPoints );
 
 
-
 	
 	
 	    // Update macroscopic velocity
@@ -259,6 +260,7 @@ int main( int argc, char **argv ) {
 	    }
 
 	    macroVelocity( &mesh, &mfields, &f, 0, mesh.mesh.nPoints );
+	    
 
 
 	}
@@ -274,25 +276,29 @@ int main( int argc, char **argv ) {
             #pragma omp parallel num_threads(2)
 	    {
 
-		int tid = omp_get_thread_num();
+
+		switch( omp_get_thread_num() )   {
 
 
 		// Collide f (Navier-Stokes)
 	    
-		if(tid == 0) {	   
+		case 0:	   
 	
 		    collision( &mesh, &mfields, &f );
 
-		}
+		    break;
 
 
 		// Collide g (Temperature)
 	    
-		else {				
+		default:
 
-		    collision( &mesh, &mfields, &g );		
+		    collision( &mesh, &mfields, &g );		    
+
+		    break;
 
 		}
+		
 	    
 	    }
 	
