@@ -18,7 +18,7 @@ find_package(MPI REQUIRED)
 include_directories(include ${MPI_INCLUDE_PATH})
 
 # Compiler options for C
-# SET( CMAKE_C_FLAGS  "${CMAKE_C_FLAGS} -Wall -lm -g" )
+# SET( CMAKE_C_FLAGS  "${CMAKE_C_FLAGS} -Wall -lm -fopenmp -Wall -ggdb3" )
 SET( CMAKE_C_FLAGS  "${CMAKE_C_FLAGS} -Wall -lm -fopenmp" )
 
 # # Linker options

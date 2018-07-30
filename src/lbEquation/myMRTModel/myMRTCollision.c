@@ -26,7 +26,7 @@ void myMRTCollision( latticeMesh* mesh, macroFields* mfields, lbeField* field ) 
 
     scalar* aux_2  = (scalar*)malloc( mesh->lattice.Q * sizeof(scalar) );
 
-    uint** nonZero;
+    uint** nonZero = NULL;
     
 
     

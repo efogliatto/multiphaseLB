@@ -208,6 +208,8 @@ void updateCaseFile( latticeMesh* mesh ) {
 
 
 
+	free(tsteps);
+
 
     }
     
