@@ -29,6 +29,6 @@ link_directories( ${CMAKE_SOURCE_DIR}/lib )
 
 # latticeBox3D
 
-add_executable(latticeBox3D "latticeBox3D.c" "genericBoundary3D.c" "periodicXY3D.c" "periodicZ3D.c" "periodicXYZ3D.c" )
+add_executable(latticeBox3D "latticeBox3D.c" "genericBoundary3D.c" "periodicXY3D.c" "periodicXY3DSpot.c" "periodicZ3D.c" "periodicXYZ3D.c" )
 
 target_link_libraries(latticeBox3D ${PROJECT_LINK_LIBS} ${PROJECT_LINK_LIBS})

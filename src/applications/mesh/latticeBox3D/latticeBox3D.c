@@ -14,6 +14,8 @@
 
 void periodicXY3D( basicMesh* mesh, uint nx, uint ny, uint nz );
 
+void periodicXY3DSpot( basicMesh* mesh, uint nx, uint ny, uint nz );
+
 void periodicXYZ3D( basicMesh* mesh, uint nx, uint ny, uint nz );
 
 void periodicZ3D( basicMesh* mesh, uint nx, uint ny, uint nz );
@@ -313,8 +315,25 @@ int main(int argc, char** argv) {
 
 		else {
 
-		    printf("[ERROR]   Unrecognized boundary type %s\n\n", bdt);
-		    exit(0);
+
+		    if( strcmp(bdt,"periodicXYSpot")  == 0 ) {
+
+			periodicXY3DSpot( &mesh, nx, ny, nz );
+
+			sprintf(mesh.bd.bdNames[0],"Z0");
+	
+			sprintf(mesh.bd.bdNames[1],"Z1");
+
+			sprintf(mesh.bd.bdNames[2],"Spot");
+
+		    }
+
+		    else {
+		    
+			printf("[ERROR]   Unrecognized boundary type %s\n\n", bdt);
+			exit(0);
+
+		    }
 
 		}
 		
