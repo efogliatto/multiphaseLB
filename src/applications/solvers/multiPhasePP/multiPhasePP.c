@@ -24,27 +24,6 @@ int main( int argc, char **argv ) {
 
     mpOptions mp = checkMpArgs( argc, argv );
     
-    /* uint ht = 1, frozen = 1; */
-    /* { */
-    /* 	uint arg; */
-    /* 	for( arg = 0 ; arg < argc ; arg++) { */
-
-    /* 	    if ( strcmp("--nht", argv[arg]) == 0 ) { */
-    /* 		ht = 0; */
-    /* 	    } */
-
-    /* 	    else { */
-
-    /* 		if ( strcmp("--frozen", argv[arg]) == 0 ) { */
-    /* 		    frozen = 0; */
-    /* 		} */
-		
-    /* 	    } */
-	    
-    /* 	} */
-    /* } */
-
-
     
 
     int pid, world;
