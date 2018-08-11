@@ -10,7 +10,7 @@ void syncVectorField( latticeMesh* mesh, scalar** fld ) {
     if( mesh->parallel.worldSize > 1 ) {
 
 	
-    	MPI_Barrier(MPI_COMM_WORLD);
+    	/* MPI_Barrier(MPI_COMM_WORLD); */
 
 	
 
@@ -143,9 +143,9 @@ void syncVectorField( latticeMesh* mesh, scalar** fld ) {
 	
 	
 
-	// Wait for everyone
+	/* // Wait for everyone */
 	
-	MPI_Barrier(MPI_COMM_WORLD);
+	/* MPI_Barrier(MPI_COMM_WORLD); */
 
     }
 	
