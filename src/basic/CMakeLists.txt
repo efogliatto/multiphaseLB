@@ -6,6 +6,8 @@ add_library(basic SHARED
   matrixIntAlloc.c
   matVecMult.c
   syncPdfField.c
+  sendPdfField.c
+  recvPdfField.c
   syncVectorField.c
   syncScalarField.c
   vectorMag2.c

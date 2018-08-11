@@ -9,6 +9,7 @@
 #include <boundary.h>
 #include <bdType.h>
 #include <bdParam.h>
+#include <mpi.h>
 
 
 
@@ -71,6 +72,37 @@ typedef struct {
     
     /** Boundary info. Related to basicBoundary in basicMesh */
     bdField* boundary;
+
+
+
+    /** MPI info */
+
+    
+    /** Send buffer */
+
+    scalar** sbuf;
+
+
+    /** Recv buffer */
+
+    scalar** rbuf;
+
+
+    /** Comm status **/
+
+    MPI_Status status[100];
+
+
+    /** Comm request **/
+    
+    MPI_Request request[100];
+
+
+    /** Comm request number **/
+    
+    int nreq;
+    
+    
 
     
 } lbeField;

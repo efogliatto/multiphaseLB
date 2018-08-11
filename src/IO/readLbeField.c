@@ -188,6 +188,30 @@ uint readLbeField( latticeMesh* mesh, lbeField* field, char* fname ) {
 
     free(str);
 
+
+
+
+
+
+
+    // Allocate mpi buffers
+
+    field->rbuf = (scalar**)malloc( mesh->parallel.worldSize * sizeof(scalar*) );
+    
+    for( i = 0 ; i < mesh->parallel.worldSize ; i++ )
+    	field->rbuf[i] = (scalar*)malloc( mesh->parallel.nrg[i] * mesh->mesh.Q * sizeof(scalar) );
+
+
+
+    field->sbuf = (scalar**)malloc( mesh->parallel.worldSize * sizeof(scalar*) );
+    
+    for( i = 0 ; i < mesh->parallel.worldSize ; i++ )
+    	field->sbuf[i] = (scalar*)malloc( mesh->parallel.nsg[i] * mesh->mesh.Q * sizeof(scalar) );
+
+    
+
+
+
     
     
     return status;

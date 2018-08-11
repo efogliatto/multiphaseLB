@@ -13,7 +13,7 @@
 #include <pseudoPot.h>
 #include <omp.h>
 #include <checkMpArgs.h>
-#include <lbEquation.h>
+
 
 
 int main( int argc, char **argv ) {
@@ -157,14 +157,14 @@ int main( int argc, char **argv ) {
 
 	    
 	// Collide f (Navier-Stokes)
-
-	xuMRTCollision( &mesh, &mfields, &f );
+	
+	collision( &mesh, &mfields, &f );
 
 
 		
 	// Collide g (Temperature)
 
-	myMRTCollision( &mesh, &mfields, &g );
+	collision( &mesh, &mfields, &g );
 	
 	
 	
@@ -192,60 +192,64 @@ int main( int argc, char **argv ) {
 	
 	// Sync fields
 
-	if( mp.frozen != 0 ) {  syncPdfField( &mesh, f.value );  }
+	/* if( mp.frozen != 0 ) {  syncPdfField( &mesh, f.value );  } */
 
-	if( mp.ht != 0 ) {  syncPdfField( &mesh, g.value );  }
+	/* if( mp.ht != 0 ) {  syncPdfField( &mesh, g.value );  } */
+
+	if( mp.frozen != 0 ) {  sendPdfField( &mesh, &f );  }
+
+	if( mp.ht != 0 ) {  sendPdfField( &mesh, &g );  }
 
 	
 		
 
 
 	// Update macroscopic density
+	
+	/* macroDensity( &mesh, &mfields, &f, 0, mesh.mesh.nPoints ); */
 
-	uint id;
+	macroDensity( &mesh, &mfields, &f, 0, mesh.parallel.nlocal );
 
-	for( id = 0 ; id < mesh.mesh.nPoints ; id++) {
-	    
-	    mfields.rho[id] = xuMRTDensity( &mesh, f.value[id] );
-	    
+
+
+	// Receive buffer and finish macro update
+	
+	if( mp.frozen != 0 ) {  recvPdfField( &mesh, &f );  }
+
+	if( mp.ht != 0 ) {  recvPdfField( &mesh, &g );  }	
+
+	macroDensity( &mesh, &mfields, &f, mesh.parallel.nlocal, mesh.mesh.nPoints );
+
+	
+	
+	
+	// Update macroscopic temperature
+	
+	if( mp.ht != 0 )     {
+
+	    heatSource( &mesh, &mfields, &g );
+
+	    syncScalarField( &mesh, g.scalarSource );
+
 	}
-	       
 
-
-	
-	
-	
-	// Update macroscopic temperature       
-
-	heatSource( &mesh, &mfields, &g );
-
-	syncScalarField( &mesh, g.scalarSource );
-
-	for( id = 0 ; id < mesh.mesh.nPoints ; id++) {
-
-	    mfields.T[id] = myMRTTemperature( &mesh, &mfields, &g, id );
-
-	}
-
+	macroTemperature( &mesh, &mfields, &g, 0, mesh.mesh.nPoints );
 
 
 	
 	
 	// Update macroscopic velocity
 	
-	interForce( &mesh, &mfields );
+	if( mp.frozen != 0 ) {
 
-	syncVectorField( &mesh, mfields.Fi );
+	    interForce( &mesh, &mfields );
 
-	for( id = 0 ; id < mesh.mesh.nPoints ; id++) {
-	    
-	    xuMRTVelocity( &mesh, &mfields, &f, mfields.U, id );
-	    
+	    syncVectorField( &mesh, mfields.Fi );
+
 	}
 
-
-
-
+	macroVelocity( &mesh, &mfields, &f, 0, mesh.mesh.nPoints );
+	    
 	
 	
 	
@@ -323,21 +327,6 @@ int main( int argc, char **argv ) {
     }
 
 
-    /* { */
-
-    /* 	uint ii; */
-
-    /* 	for( ii = 1 ; ii < mesh.parallel.nlocal ; ii+=3 ) { */
-
-    /* 	    printf(  "%d %g %g %g %g\n", mesh.mesh.points[ii][1], */
-    /* 		     mfields.Fi[ii][1], */
-    /* 		     p_eos(&mesh.EOS, mfields.rho[ii], mfields.T[ii]), */
-    /* 		     mfields.rho[ii], */
-    /* 		     potential( &mesh, mfields.rho[ii], mfields.T[ii] )); */
-
-    /* 	} */
-
-    /* } */
 
     
     // Print info

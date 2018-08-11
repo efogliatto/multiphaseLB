@@ -11,6 +11,10 @@
 
 #include <syncPdfField.h>
 
+#include <sendPdfField.h>
+
+#include <recvPdfField.h>
+
 #include <syncVectorField.h>
 
 #include <syncScalarField.h>
