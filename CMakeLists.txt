@@ -70,7 +70,7 @@ if(WITH_CUDA)
   
   find_package(CUDA QUIET REQUIRED)
 
-  add_definitions(-DUSE_CUDA)
+  set(CUDA_NVCC_FLAGS "${CUDA_NVCC_FLAGS} -arch=sm_30")
   
 endif()
 
