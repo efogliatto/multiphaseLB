@@ -149,12 +149,23 @@ int main( int argc, char **argv ) {
 
 
 
+
+    // Execution time
+
+    double ctime[20] = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
+
+    double start,end;
+
+    
+
     
     // Advance in time. Collide, stream, update and write
     
     while( updateTime(&mesh.time) ) {
 
 
+	start = MPI_Wtime();
+	
 	    
 	// Collide f (Navier-Stokes)
 	
@@ -167,6 +178,12 @@ int main( int argc, char **argv ) {
 	collision( &mesh, &mfields, &g );
 	
 	
+
+	end = MPI_Wtime();
+
+	ctime[0] += end-start;
+	
+
 	
 	// Stream f
 	
@@ -180,6 +197,11 @@ int main( int argc, char **argv ) {
 
 
 	
+	start = MPI_Wtime();
+
+	ctime[1] += start - end;
+
+	
 
 	// Apply boundary conditions
 	
@@ -188,6 +210,11 @@ int main( int argc, char **argv ) {
 	updateBoundaries( &mesh, &mfields, &g );
 
 
+
+
+	end = MPI_Wtime();
+
+	ctime[2] += end - start;
 	
 	
 	// Sync fields
@@ -201,14 +228,26 @@ int main( int argc, char **argv ) {
 	if( mp.ht != 0 ) {  sendPdfField( &mesh, &g );  }
 
 	
-		
+	
+	start = MPI_Wtime();
+
+	ctime[3] += start - end;
+	
+
 
 
 	// Update macroscopic density
 	
 	/* macroDensity( &mesh, &mfields, &f, 0, mesh.mesh.nPoints ); */
 
-	macroDensity( &mesh, &mfields, &f, 0, mesh.parallel.nlocal );
+	macroDensity( &mesh, &mfields, &f, 0, mesh.parallel.nlocal );              
+	
+
+
+	end = MPI_Wtime();
+
+	ctime[4] += end - start;
+
 
 
 
@@ -218,7 +257,21 @@ int main( int argc, char **argv ) {
 
 	if( mp.ht != 0 ) {  recvPdfField( &mesh, &g );  }	
 
+       
+	
+	start = MPI_Wtime();
+
+	ctime[5] += start - end;
+
+
+	
+	
 	macroDensity( &mesh, &mfields, &f, mesh.parallel.nlocal, mesh.mesh.nPoints );
+
+	end = MPI_Wtime();
+
+	ctime[6] += end - start;
+
 
 	
 	
@@ -236,7 +289,12 @@ int main( int argc, char **argv ) {
 	macroTemperature( &mesh, &mfields, &g, 0, mesh.mesh.nPoints );
 
 
+
+	start = MPI_Wtime();
+
+	ctime[7] += start - end;
 	
+
 	
 	// Update macroscopic velocity
 	
@@ -250,6 +308,11 @@ int main( int argc, char **argv ) {
 
 	macroVelocity( &mesh, &mfields, &f, 0, mesh.mesh.nPoints );
 	    
+
+
+	end = MPI_Wtime();
+
+	ctime[8] += end - start;
 	
 	
 	
@@ -334,6 +397,27 @@ int main( int argc, char **argv ) {
 	
     	printf("\n  Finished in %.2f seconds \n\n", elapsed(&mesh.time) );
 	
+    }
+
+
+    {
+
+	double commTime[10];
+	
+	uint i;
+
+	for( i = 0 ; i < 10 ; i++) {
+	    
+	    MPI_Allreduce(&ctime[i], &commTime[i], 1, MPI_DOUBLE, MPI_SUM, MPI_COMM_WORLD);
+
+	    if(pid == 0) {
+	
+		printf("Comm %i: %.2f\n", i, commTime[i]/world );
+	
+	    }
+	    
+	}
+
     }
 
 
