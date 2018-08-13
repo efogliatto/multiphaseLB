@@ -70,24 +70,30 @@ typedef struct {
     
     // Buffers
 
-    /**< Scalar send buffer */
+    /** Scalar send buffer */
     
     scalar** sbuf;   
 
 
-    /**< Scalar receive buffer */
+    /** Scalar receive buffer */
     
     scalar** rbuf;   
 
     
-    /**< Vector send buffer */
+    /** Vector send buffer */
     
     scalar** vsbuf;   
 
     
-    /**< Vector receive buffer */
+    /** Vector receive buffer */
     
-    scalar** vrbuf;   
+    scalar** vrbuf;
+
+
+
+    /** Grid node level */
+
+    uint* level;
     
     
 } mpiInfo;

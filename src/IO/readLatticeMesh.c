@@ -419,6 +419,101 @@ latticeMesh readLatticeMesh( uint pid ) {
     }
 
     
+
+
+
+
+
+
+    /* // Nodes level */
+
+    /* mesh.parallel.level = (uint*)malloc( mesh.mesh.nPoints * sizeof(uint) ); */
+
+    
+    /* // Level 4 */
+    
+    /* for( i = 0 ; i < mesh.parallel.nlocal ; i++ ) */
+    /* 	mesh.parallel.level[i] = 4; */
+
+    
+    /* // Level 0 */
+    
+    /* for( i = mesh.parallel.nlocal ; i < mesh.mesh.nPoints ; i++ ) */
+    /* 	mesh.parallel.level[i] = 0; */
+
+
+    /* // Level 1 */
+    
+    /* for( i = 0 ; i < mesh.parallel.nlocal ; i++ ) { */
+
+    /* 	for( j = 1 ; j < mesh.mesh.Q ; j++ ) { */
+
+    /* 	    int nb = mesh.mesh.nb[i][j]; */
+
+    /* 	    if( nb != -1 ) { */
+	    
+    /* 		if( mesh.parallel.level[nb] == 0 ) { */
+
+    /* 		    mesh.parallel.level[i] = 1; */
+
+    /* 		} */
+
+    /* 	    } */
+
+    /* 	} */
+
+    /* } */
+
+
+
+
+    /* // Level 2 */
+    
+    /* for( i = 0 ; i < mesh.parallel.nlocal ; i++ ) { */
+	
+    /* 	for( j = 1 ; j < mesh.mesh.Q ; j++ ) { */
+
+    /* 	    int nb = mesh.mesh.nb[i][j]; */
+
+    /* 	    if( nb != -1 ) { */
+	    
+    /* 		if(  ( mesh.parallel.level[nb] == 1 )   &&   ( mesh.parallel.level[i] == 4 )  ){ */
+
+    /* 		    mesh.parallel.level[i] = 2; */
+
+    /* 		} */
+
+    /* 	    } */
+
+    /* 	} */
+
+    /* } */
+    
+
+
+
+    /* // Level 3 */
+    
+    /* for( i = 0 ; i < mesh.parallel.nlocal ; i++ ) { */
+	
+    /* 	for( j = 1 ; j < mesh.mesh.Q ; j++ ) { */
+
+    /* 	    int nb = mesh.mesh.nb[i][j]; */
+
+    /* 	    if( nb != -1 ) { */
+	    
+    /* 		if(  ( mesh.parallel.level[nb] == 2 )   &&   ( mesh.parallel.level[i] == 4 )  ){ */
+
+    /* 		    mesh.parallel.level[i] = 3; */
+
+    /* 		} */
+
+    /* 	    } */
+
+    /* 	} */
+
+    /* } */
+    
     
 
     if (status) {}
