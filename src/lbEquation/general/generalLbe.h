@@ -21,8 +21,14 @@
 
 #include <updateBdForce.h>
 
-//#include <compWork.h>
-
 #include <heatSource.h>
+
+#include <macroDensityInLevel.h>
+
+#include <macroVelocityInLevel.h>
+
+#include <macroTemperatureInLevel.h>
+
+#include <heatSourceInLevel.h>
 
 #endif // GENERALLBE_H

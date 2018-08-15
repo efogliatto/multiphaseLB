@@ -38,7 +38,7 @@ int main( int argc, char **argv ) {
     	printf("     o-----o-----o  \n");
     	printf("     | -   |   - |  \n");
     	printf("     |   - | -   |  \n");
-    	printf("     o<----o---->o       Two Phases - Lattice-Boltzmann solver with heat transfer. Fixed pseudopotential model\n");
+    	printf("     o<----o---->o       Two Phases - Lattice-Boltzmann solver with heat transfer. Pseudopotential model\n");
     	printf("     |   - | -   |  \n");
     	printf("     | -   |   - |  \n");
     	printf("     o-----o-----o  \n");
@@ -149,23 +149,12 @@ int main( int argc, char **argv ) {
 
 
 
-
-    // Execution time
-
-    double ctime[20] = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
-
-    double start,end;
-
-    
-
     
     // Advance in time. Collide, stream, update and write
     
     while( updateTime(&mesh.time) ) {
 
 
-	start = MPI_Wtime();
-	
 	    
 	// Collide f (Navier-Stokes)
 	
@@ -178,12 +167,6 @@ int main( int argc, char **argv ) {
 	collision( &mesh, &mfields, &g );
 	
 	
-
-	end = MPI_Wtime();
-
-	ctime[0] += end-start;
-	
-
 	
 	// Stream f
 	
@@ -197,11 +180,6 @@ int main( int argc, char **argv ) {
 
 
 	
-	start = MPI_Wtime();
-
-	ctime[1] += start - end;
-
-	
 
 	// Apply boundary conditions
 	
@@ -211,109 +189,208 @@ int main( int argc, char **argv ) {
 
 
 
+	// Only rho
 
-	end = MPI_Wtime();
+	{
 
-	ctime[2] += end - start;
+	    // Send pdf fields
+
+	    if( mp.frozen != 0 ) {  sendPdfField( &mesh, &f );  }
+
+	    if( mp.ht != 0 ) {  sendPdfField( &mesh, &g );  }
+
+	    
+	    
+	    // Update macroscopic density
+	
+	    macroDensity( &mesh, &mfields, &f, 0, mesh.parallel.nlocal );
+
+
+
+	    if( mp.frozen != 0 ) {  recvPdfField( &mesh, &f );  }
+
+	    if( mp.ht != 0 ) {  recvPdfField( &mesh, &g );  }
+
+	    
+	    
+	    // Update macroscopic density
+	
+	    macroDensity( &mesh, &mfields, &f, mesh.parallel.nlocal, mesh.mesh.nPoints );
+
+	    
+	    
 	
 	
-	// Sync fields
-
-	/* if( mp.frozen != 0 ) {  syncPdfField( &mesh, f.value );  } */
-
-	/* if( mp.ht != 0 ) {  syncPdfField( &mesh, g.value );  } */
-
-	if( mp.frozen != 0 ) {  sendPdfField( &mesh, &f );  }
-
-	if( mp.ht != 0 ) {  sendPdfField( &mesh, &g );  }
-
+	    // Update macroscopic temperature
 	
-	
-	start = MPI_Wtime();
+	    if( mp.ht != 0 )     {
 
-	ctime[3] += start - end;
-	
+		heatSource( &mesh, &mfields, &g );
 
+		syncScalarField( &mesh, g.scalarSource );
 
+	    }
 
-	// Update macroscopic density
-	
-	/* macroDensity( &mesh, &mfields, &f, 0, mesh.mesh.nPoints ); */
-
-	macroDensity( &mesh, &mfields, &f, 0, mesh.parallel.nlocal );              
-	
-
-
-	end = MPI_Wtime();
-
-	ctime[4] += end - start;
-
-
-
-
-	// Receive buffer and finish macro update
-	
-	if( mp.frozen != 0 ) {  recvPdfField( &mesh, &f );  }
-
-	if( mp.ht != 0 ) {  recvPdfField( &mesh, &g );  }	
-
-       
-	
-	start = MPI_Wtime();
-
-	ctime[5] += start - end;
+	    macroTemperature( &mesh, &mfields, &g, 0, mesh.mesh.nPoints );
 
 
 	
 	
-	macroDensity( &mesh, &mfields, &f, mesh.parallel.nlocal, mesh.mesh.nPoints );
-
-	end = MPI_Wtime();
-
-	ctime[6] += end - start;
-
-
+	    // Update macroscopic velocity
 	
-	
-	
-	// Update macroscopic temperature
-	
-	if( mp.ht != 0 )     {
+	    if( mp.frozen != 0 ) {
 
-	    heatSource( &mesh, &mfields, &g );
+		interForce( &mesh, &mfields );
 
-	    syncScalarField( &mesh, g.scalarSource );
+		syncVectorField( &mesh, mfields.Fi );
 
-	}
+	    }
 
-	macroTemperature( &mesh, &mfields, &g, 0, mesh.mesh.nPoints );
-
-
-
-	start = MPI_Wtime();
-
-	ctime[7] += start - end;
-	
-
-	
-	// Update macroscopic velocity
-	
-	if( mp.frozen != 0 ) {
-
-	    interForce( &mesh, &mfields );
-
-	    syncVectorField( &mesh, mfields.Fi );
-
-	}
-
-	macroVelocity( &mesh, &mfields, &f, 0, mesh.mesh.nPoints );
+	    macroVelocity( &mesh, &mfields, &f, 0, mesh.mesh.nPoints );
+	    
 	    
 
+	}
 
-	end = MPI_Wtime();
 
-	ctime[8] += end - start;
+
+
+
+
 	
+
+	/* // Levels */
+
+	/* { */
+	
+	/*     // Send pdf fields */
+
+	/*     if( mp.frozen != 0 ) {  sendPdfField( &mesh, &f );  } */
+
+	/*     if( mp.ht != 0 ) {  sendPdfField( &mesh, &g );  } */
+
+	
+		
+
+
+	/*     // Update macroscopic density. Level 1-4 */
+
+	/*     uint lv; */
+
+	/*     for( lv = 1 ; lv <= 4 ; lv++ )	{ */
+	    
+	/* 	macroDensityInLevel( &mesh, &mfields, &f, lv ); */
+
+	/*     } */
+
+	
+
+	/*     // Update macroscopic heat source and temperature. Level 2-4 */
+
+	/*     for( lv = 2 ; lv <= 4 ; lv++ )	{ */
+
+	/* 	if( mp.ht != 0 ) { heatSourceInLevel( &mesh, &mfields, &g, lv ); } */
+
+	/* 	macroTemperatureInLevel( &mesh, &mfields, &g, lv ); */
+
+	/*     } */
+
+
+
+
+	/*     // Update macroscopic interaction force and velocity. Level 3-4 */
+
+	/*     for( lv = 3 ; lv <= 4 ; lv++ )	{ */
+
+	/* 	if( mp.frozen != 0 ) { interForceInLevel( &mesh, &mfields, lv ); } */
+
+	/* 	macroVelocityInLevel( &mesh, &mfields, &f, lv ); */
+
+
+	/*     } */
+	
+	
+
+
+	/*     // Finish f and g sync. */
+
+	/*     if( mp.frozen != 0 ) {  recvPdfField( &mesh, &f );  } */
+
+	/*     if( mp.ht != 0 ) {  recvPdfField( &mesh, &g );  } */
+
+
+
+
+	/*     // Update macroscopic density. Level 0 */
+
+	/*     macroDensityInLevel( &mesh, &mfields, &f, 0 ); */
+
+
+	
+
+	/*     // Update macroscopic heat source. Level 1 */
+
+	/*     if( mp.ht != 0 ) { */
+
+	/* 	heatSourceInLevel( &mesh, &mfields, &g, 1 ); */
+
+	/* 	syncScalarField( &mesh, g.scalarSource ); */
+
+	/*     } */
+
+
+
+	/*     // Update macroscopic temperature. Level 0-1 */
+
+	/*     for( lv = 0 ; lv <= 1 ; lv++ )	{ */
+
+	/* 	macroTemperatureInLevel( &mesh, &mfields, &g, lv ); */
+
+	/*     } */
+	
+
+	
+
+	/*     // Update macroscopic interaction force and velocity. Level 1-2 */
+
+	/*     for( lv = 1 ; lv <= 2 ; lv++ )	{ */
+
+	/* 	if( mp.frozen != 0 ) { interForceInLevel( &mesh, &mfields, lv ); } */
+
+	/* 	syncVectorField( &mesh, mfields.Fi ); */
+
+	/*     } */
+	
+
+	
+	/*     // Update macroscopic velocity. Level 0-2 */
+
+	/*     for( lv = 0 ; lv <= 2 ; lv++ )	{ */
+
+	/* 	macroVelocityInLevel( &mesh, &mfields, &f, lv ); */
+
+	/*     } */
+
+
+	/* } */
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 	
 	
     	// Write fields
@@ -390,6 +467,21 @@ int main( int argc, char **argv ) {
     }
 
 
+    /* { */
+
+    /* 	uint ii; */
+
+    /* 	for( ii = 1 ; ii < mesh.parallel.nlocal ; ii+=3 ) { */
+
+    /* 	    printf(  "%d %g %g %g %g\n", mesh.mesh.points[ii][1], */
+    /* 		     mfields.Fi[ii][1], */
+    /* 		     p_eos(&mesh.EOS, mfields.rho[ii], mfields.T[ii]), */
+    /* 		     mfields.rho[ii], */
+    /* 		     potential( &mesh, mfields.rho[ii], mfields.T[ii] )); */
+
+    /* 	} */
+
+    /* } */
 
     
     // Print info
@@ -397,27 +489,6 @@ int main( int argc, char **argv ) {
 	
     	printf("\n  Finished in %.2f seconds \n\n", elapsed(&mesh.time) );
 	
-    }
-
-
-    {
-
-	double commTime[10];
-	
-	uint i;
-
-	for( i = 0 ; i < 10 ; i++) {
-	    
-	    MPI_Allreduce(&ctime[i], &commTime[i], 1, MPI_DOUBLE, MPI_SUM, MPI_COMM_WORLD);
-
-	    if(pid == 0) {
-	
-		printf("Comm %i: %.2f\n", i, commTime[i]/world );
-	
-	    }
-	    
-	}
-
     }
 
 

@@ -432,7 +432,7 @@ latticeMesh readLatticeMesh( uint pid ) {
     
     // Level 4
     
-    for( i = 0 ; i < mesh.parallel.nlocal ; i++ )
+    for( i = 0 ; i < mesh.mesh.nPoints ; i++ )
     	mesh.parallel.level[i] = 4;
 
     
