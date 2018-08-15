@@ -10,8 +10,10 @@ add_library(generallbe SHARED
   macroVelocity.c
   macroTemperature.c
   updateBoundaries.c
-  # updateBdElements.c
-  # updateBdForce.c
+  macroDensityInLevel.c
+  macroVelocityInLevel.c
+  macroTemperatureInLevel.c
   singleNodeT.c
   heatSource.c
+  heatSourceInLevel.c  
   )

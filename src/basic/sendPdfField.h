@@ -15,7 +15,7 @@
 
 
 /**
- * Synchronization of ghost nodes betwenn patches
+ * Synchronization of ghost nodes between patches
  * @brief Synchronization of pdf field
  * @param mesh Pointer to lattice mesh
  * @param fld Pointer to send field

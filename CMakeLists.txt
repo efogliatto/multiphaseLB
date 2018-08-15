@@ -27,7 +27,8 @@ SET( CMAKE_C_FLAGS  "${CMAKE_C_FLAGS} -Wall -lm -fopenmp" )
 
 
 # Optional: Metis decomposition
-option(WITH_METIS "Compile with METIS" OFF)
+
+option(WITH_METIS "Compile with METIS" ON)
 
 if(WITH_METIS)
   add_definitions(-DUSE_METIS)
@@ -64,6 +65,7 @@ endif()
 
 
 # Optional: CUDA
+
 option(WITH_CUDA "Compile with CUDA" OFF)
 
 if(WITH_CUDA)
@@ -79,12 +81,13 @@ endif()
 
 
 # Directorio con fuentes
+
 add_subdirectory (src)
 
 
 
-
 # Optional docs
+
 option(WITH_DOCS "Create documentation" OFF)
 
 if(WITH_DOCS)
