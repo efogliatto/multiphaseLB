@@ -156,55 +156,55 @@ int main( int argc, char **argv ) {
 
 
 	    
-	// Collide f (Navier-Stokes)
+	// Collide, stream and update boundaries: f (Navier-Stokes)
 	
 	collision( &mesh, &mfields, &f );
-
-
-		
-	// Collide g (Temperature)
-
-	collision( &mesh, &mfields, &g );
-	
-	
-	
-	// Stream f
 	
 	lbstream( &mesh, &f );
 
+	updateBoundaries( &mesh, &mfields, &f );
+
+	if( mp.frozen != 0 ) {  sendPdfField( &mesh, &f );  }
+
 	
 	
-	// Stream g
+		
+	// Collide, stream and update boundaries: g (Temperature)
+
+	collision( &mesh, &mfields, &g );
 	
 	lbstream( &mesh, &g );
 
-
-	
-
-	// Apply boundary conditions
-	
-	updateBoundaries( &mesh, &mfields, &f );
-	
 	updateBoundaries( &mesh, &mfields, &g );
 
+	if( mp.ht != 0 ) {  sendPdfField( &mesh, &g );  }
 
 	
+
+
+	// Update macroscopic density on local nodes only
 	
-	// Sync fields
+	macroDensity( &mesh, &mfields, &f, 0, mesh.parallel.nlocal );
 
-	if( mp.frozen != 0 ) {  syncPdfField( &mesh, f.value );  }
-
-	if( mp.ht != 0 ) {  syncPdfField( &mesh, g.value );  }
 
 	
-		
+	// Complete f sync
+
+	if( mp.frozen != 0 ) {  recvPdfField( &mesh, &f );  }
 
 
-	// Update macroscopic density
 	
-	macroDensity( &mesh, &mfields, &f, 0, mesh.mesh.nPoints );
+	// Update macroscopic density on ghost nodes only
+	
+	macroDensity( &mesh, &mfields, &f, mesh.parallel.nlocal, mesh.mesh.nPoints );
 
 
+
+	// Complete g sync
+	    
+	if( mp.ht != 0 ) {  recvPdfField( &mesh, &g );  }
+
+	
 	
 	
 	

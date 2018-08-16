@@ -161,32 +161,38 @@ int main( int argc, char **argv ) {
 	collision( &mesh, &mfields, &f );
 
 
-		
-	// Collide g (Temperature)
-
-	collision( &mesh, &mfields, &g );
-	
-	
-	
 	// Stream f
 	
 	lbstream( &mesh, &f );
 
+
+	updateBoundaries( &mesh, &mfields, &f );
+
+
+	if( mp.frozen != 0 ) {  sendPdfField( &mesh, &f );  }
+
 	
+
+	
+		
+	// Collide g (Temperature)
+
+	collision( &mesh, &mfields, &g );
+	              	
 	
 	// Stream g
 	
 	lbstream( &mesh, &g );
-
-
 	
 
-	// Apply boundary conditions
-	
-	updateBoundaries( &mesh, &mfields, &f );
+	// Apply boundary conditions       
 	
 	updateBoundaries( &mesh, &mfields, &g );
 
+
+	if( mp.ht != 0 ) {  sendPdfField( &mesh, &g );  }
+
+	
 
 
 	// Only rho
@@ -194,12 +200,7 @@ int main( int argc, char **argv ) {
 	{
 
 	    // Send pdf fields
-
-	    if( mp.frozen != 0 ) {  sendPdfField( &mesh, &f );  }
-
-	    if( mp.ht != 0 ) {  sendPdfField( &mesh, &g );  }
-
-	    
+           
 	    
 	    // Update macroscopic density
 	
@@ -209,8 +210,6 @@ int main( int argc, char **argv ) {
 
 	    if( mp.frozen != 0 ) {  recvPdfField( &mesh, &f );  }
 
-	    if( mp.ht != 0 ) {  recvPdfField( &mesh, &g );  }
-
 	    
 	    
 	    // Update macroscopic density
@@ -218,6 +217,7 @@ int main( int argc, char **argv ) {
 	    macroDensity( &mesh, &mfields, &f, mesh.parallel.nlocal, mesh.mesh.nPoints );
 
 	    
+	    if( mp.ht != 0 ) {  recvPdfField( &mesh, &g );  }
 	    
 	
 	
