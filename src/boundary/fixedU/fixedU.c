@@ -49,9 +49,75 @@ void fixedU( latticeMesh* mesh, macroFields* mfields, scalar** field, uint bid, 
 
 		    if( nbid != -1 ) {
 
-			liMRTEquilibrium( &mesh->lattice, mfields->rho[nbid], mfields->U[nbid], f_eq_nb );
 
-			liMRTEquilibrium( &mesh->lattice, mfields->rho[nbid], Uw, f_eq_bnd );
+			// Compute local velocity at t+dt (macro fields are not updated yet)
+
+			// Local velocity
+			scalar lv[3] = {0,0,0};
+
+			// Local density
+			scalar nbrho = 0;
+
+			scalar lrho = 0;
+			
+	    
+			{
+
+			    uint jj, kk;
+
+			    // Interaction force
+			    scalar F[3];
+
+	
+			    // Compute Total force
+	
+			    for( jj = 0 ; jj < 3 ; jj++ ) {
+
+				F[jj] = mfields->Fi[nbid][jj]  +   (mfields->rho[bid] - mesh->EOS.rho_0) * mesh->EOS.g[jj];
+
+			    }          
+
+
+			    // Move over velocity components
+			    for( jj = 0 ; jj < 3 ; jj++ ) {
+
+				// Move over model velocities
+				for(kk = 0 ; kk < mesh->mesh.Q ; kk++) {
+
+				    lv[jj] += mesh->lattice.vel[kk][jj] * field[nbid][kk];
+		    
+				}
+	    
+			    }
+
+
+			    for(kk = 0 ; kk < mesh->mesh.Q ; kk++) {
+
+				nbrho += field[nbid][kk];
+
+				lrho += field[id][kk];
+
+			    }
+		
+
+			    // Add interaction force and divide by density
+			    for( jj = 0 ; jj < 3 ; jj++ ) {
+
+				lv[jj] = ( lv[jj]   +   F[jj] * 0.5  ) / nbrho;
+	
+			    }
+
+			}
+
+			
+			
+
+			/* liMRTEquilibrium( &mesh->lattice, mfields->rho[nbid], mfields->U[nbid], f_eq_nb ); */
+			liMRTEquilibrium( &mesh->lattice, nbrho, lv, f_eq_nb );
+
+			liMRTEquilibrium( &mesh->lattice, nbrho, Uw, f_eq_bnd );
+
+			
 		    
 
 			// Update distribution
@@ -66,6 +132,11 @@ void fixedU( latticeMesh* mesh, macroFields* mfields, scalar** field, uint bid, 
 	    }
 
 	}
+
+
+	free(f_eq_nb);
+
+	free(f_eq_bnd);
 	
 
     }
