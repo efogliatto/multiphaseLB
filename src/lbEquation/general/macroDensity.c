@@ -37,7 +37,15 @@ void macroDensity( latticeMesh* mesh, macroFields* mfields, lbeField* field, uin
 	    errorMsg("Density update not suitable for myMRTModel");
 	
 	    break;
+
+
+	// Li Temp MRT Model
+	case liTempMRT:
+
+	    errorMsg("Density update not suitable for liTempMRTModel");
 	
+	    break;
+	    
 
 
 	// xU MRT Model

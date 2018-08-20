@@ -90,6 +90,87 @@ void heatSource( latticeMesh* mesh, macroFields* mfields, lbeField* field ) {
 
 
 
+	case liTempMRT:
+
+	
+	    for( id = 0 ; id < mesh->parallel.nlocal ; id++ ) {
+
+
+		// Thermal conductivity
+
+		switch( mesh->lattice.model ) {
+
+		case D2Q9:
+		    
+		    lambda = mfields->rho[id] * mesh->EOS.Cv * (1/field->lbparam.myMRT.Lambda[3] - 0.5);
+		    /* lambda = (1/field->lbparam.myMRT.Lambda[3] - 0.5);		     */
+
+		    break;
+
+		case D3Q15:
+
+		    lambda = mfields->rho[id] * mesh->EOS.Cv * (1/field->lbparam.myMRT.Lambda[3] - 0.5);
+		    
+		    break;
+
+		}
+		
+
+		// Temperature gradient
+    
+		scalarGradient( gradT, mfields->T, mesh, id );    
+
+
+		// 1/rho gradient
+    
+		invScalarGradient( gradRho, mfields->rho, mesh, id );
+
+
+		// Velocity divergence
+
+		divU = vectorDivergence( mfields->U, mesh, id );
+
+
+
+		dot = 0;
+	    
+		for( k = 0 ; k < 3 ; k++ ) {
+
+		    dot += gradT[k] * gradRho[k];
+	
+		}
+
+
+		dpdT = p_eos(&mesh->EOS, mfields->rho[id], 1.1*mfields->T[id]) - p_eos(&mesh->EOS, mfields->rho[id], 0.9*mfields->T[id]);
+
+		dpdT = dpdT / (0.2*mfields->T[id]);
+		
+
+		scalar oldss;
+
+		if(mesh->time.current == 0) {
+
+		    oldss = 0;
+		    
+		}
+
+		else {
+
+		    oldss = field->scalarSource[id];
+
+		}
+		
+		field->scalarSource[id] = -lambda * dot / mesh->EOS.Cv   +   divU * mfields->T[id]*( 1.0 - dpdT/(mfields->rho[id]*mesh->EOS.Cv) );
+
+		field->scalarSource[id] = field->scalarSource[id] + 0.5*(field->scalarSource[id] - oldss);
+
+
+	    }
+	
+	    break;
+
+	    
+
 	    
 
 	// Li SRT Model

@@ -1,8 +1,6 @@
 #include <equilibrium.h>
 #include <basic.h>
-#include <liMRTModel.h>
-#include <myMRTModel.h>
-#include <xuMRTModel.h>
+#include <lbEquation.h>
 
 
 void equilibrium( latticeMesh* mesh, macroFields* mfields, lbeField* field ) {
@@ -44,6 +42,17 @@ void equilibrium( latticeMesh* mesh, macroFields* mfields, lbeField* field ) {
 	    
 	    }
 
+	    
+
+	case liTempMRT:
+	
+	    for( id = 0 ; id < mesh->mesh.nPoints ; id++) {
+
+		liTempMRTEquilibrium( &mesh->lattice, mfields->T[id], mfields->U[id], field->value[id] );
+	    
+	    }
+
+	    
 	
 	    break;
 

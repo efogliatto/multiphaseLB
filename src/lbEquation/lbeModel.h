@@ -14,7 +14,10 @@ typedef enum {
 
 
     /** Xu et al. MRT pseudopotential model for two-phase Navier Stokes in D3Q15 grids*/
-    xuMRT    
+    xuMRT,
+
+
+    liTempMRT
     
 } lbeModel;
 

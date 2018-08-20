@@ -3,6 +3,8 @@
 
 #include <liMRTModel.h>
 
+#include <liTempMRTModel.h>
+
 #include <myMRTModel.h>
 
 #include <xuMRTModel.h>

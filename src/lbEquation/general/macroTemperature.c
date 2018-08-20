@@ -1,6 +1,7 @@
 #include <basic.h>
 #include <macroTemperature.h>
 #include <myMRTModel.h>
+#include <liTempMRTModel.h>
 
 
 void macroTemperature( latticeMesh* mesh, macroFields* mfields, lbeField* field, uint start, uint end ) {
@@ -27,6 +28,20 @@ void macroTemperature( latticeMesh* mesh, macroFields* mfields, lbeField* field,
 	    break;	
 
 
+
+	// myMRTModel
+	    
+	case liTempMRT:
+
+	    for( id = start ; id < end ; id++) {
+
+		mfields->T[id] = liTempMRTTemperature( mesh, mfields, field, id );
+
+	    }
+	
+	    break;	
+
+	    
 	    
       	// Li SRT Model
 	case liMRT:

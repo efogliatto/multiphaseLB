@@ -10,14 +10,8 @@ add_subdirectory (liMRTModel)
 # Xu MRT Model
 add_subdirectory (xuMRTModel)
 
-# # Li SRT Model
-# add_subdirectory (liSRTModel)
-
-# # Li Temperature Model
-# add_subdirectory (liTempModel)
-
-# # # new Temperature Model
-# # add_subdirectory (newTempModel)
+# Li Temperature Model
+add_subdirectory (liTempMRTModel)
 
 # new MRT Temperature model
 add_subdirectory (myMRTModel)

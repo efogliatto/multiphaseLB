@@ -23,6 +23,17 @@ void collision( latticeMesh* mesh, macroFields* mfields, lbeField* field ) {
 
 
 	    
+        // Li Temp MRT Model
+	    
+	case liTempMRT:
+	    
+	    liTempMRTCollision( mesh, mfields, field );
+	    
+	    break;
+
+	    
+
+	    
         // New Temperature MRT model
 	    
 	case myMRT:

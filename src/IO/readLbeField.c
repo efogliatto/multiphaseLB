@@ -3,6 +3,7 @@
 #include <readVectorField.h>
 #include <readLbeField.h>
 #include <readLiMRTConstants.h>
+#include <readLiTempMRTConstants.h>
 #include <readMyMRTConstants.h>
 #include <readXuMRTConstants.h>
 
@@ -56,6 +57,17 @@ uint readLbeField( latticeMesh* mesh, lbeField* field, char* fname ) {
 
 	    }
 
+	    else {
+
+		if( strcmp(str,"liTempMRT") == 0 ) {
+
+		    field->model = liTempMRT;
+
+		}
+
+	    }
+	    
+
 	}
 
     }
@@ -67,12 +79,14 @@ uint readLbeField( latticeMesh* mesh, lbeField* field, char* fname ) {
     // Read basic properties
 
     switch( field->model ) {
+	
 
     case liMRT:
 
     	field->lbparam.liMRT = readLiMRTConstants( fname );
 
     	break;
+	
 
     case myMRT:
 
@@ -84,10 +98,24 @@ uint readLbeField( latticeMesh* mesh, lbeField* field, char* fname ) {
     	field->scalarSource = (scalar*)malloc( mesh->mesh.nPoints * sizeof(scalar) );
 
     	break;
+	
 
     case xuMRT:
 
     	field->lbparam.xuMRT = readXuMRTConstants( fname );
+
+    	break;
+
+	
+
+    case liTempMRT:
+
+    	field->lbparam.liTempMRT = readLiTempMRTConstants( fname );
+
+	
+    	// Allocate scalar source
+	
+    	field->scalarSource = (scalar*)malloc( mesh->mesh.nPoints * sizeof(scalar) );
 
     	break;
 	

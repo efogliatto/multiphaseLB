@@ -11,4 +11,6 @@
 
 #include <myMRTSource.h>
 
+#include <readMyMRTConstants.h>
+
 #endif // MYMRTMODEL_H

@@ -26,6 +26,33 @@ SET( CMAKE_C_FLAGS  "${CMAKE_C_FLAGS} -Wall -lm -fopenmp" )
 
 
 
+set ( PROJECT_LINK_LIBS
+  libio.so
+  libdictio.so
+  libbasic.so
+  liblatticemodel.so
+  libgenerallbe.so
+  libpseudopot.so
+  libpseudopot.so
+  liblimrtmodel.so
+  liblitempmrtmodel.so
+  libmymrtmodel.so
+  libxumrtmodel.so
+  libboundary.so
+  libeos.so
+  libfinitedifference.so
+  libpvtu.so
+  libasciiraw.so
+  libbinaryraw.so
+  libensight.so
+  libd2q9.so
+  libd3q15.so
+  m
+  ${MPI_LIBRARIES}
+  )
+
+
+
 # Optional: Metis decomposition
 
 option(WITH_METIS "Compile with METIS" ON)

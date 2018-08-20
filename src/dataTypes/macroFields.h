@@ -45,7 +45,9 @@ typedef struct {
     
     /** Macroscopic scalar source term */
     
-    scalar* scalarSource; 
+    /* scalar* scalarSource; */
+
+    /* scalar* oldss; */
     
     /* // Constants */
 
