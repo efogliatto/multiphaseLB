@@ -68,9 +68,13 @@ void liTempMRTCollision( latticeMesh* mesh, macroFields* mfields, lbeField* fiel
 
 	// Explicit element correction
 
-	n[3] = n[3] + (1 - field->lbparam.liTempMRT.Lambda[3]/2) * field->lbparam.liTempMRT.Lambda[4] * (n4 - n_eq[4]);
+	/* n[3] = n[3] + (1 - field->lbparam.liTempMRT.Lambda[3]/2) * field->lbparam.liTempMRT.Lambda[4] * (n4 - n_eq[4]); */
 
-	n[5] = n[5] + (1 - field->lbparam.liTempMRT.Lambda[5]/2) * field->lbparam.liTempMRT.Lambda[6] * (n6 - n_eq[6]);
+	/* n[5] = n[5] + (1 - field->lbparam.liTempMRT.Lambda[5]/2) * field->lbparam.liTempMRT.Lambda[6] * (n6 - n_eq[6]); */
+
+	n[3] = n[3] + (1 - field->lbparam.liTempMRT.Lambda[3]/2) * field->lbparam.liTempMRT.Lambda[4] * n4;
+
+	n[5] = n[5] + (1 - field->lbparam.liTempMRT.Lambda[5]/2) * field->lbparam.liTempMRT.Lambda[6] * n6;	
 	
 
 	
