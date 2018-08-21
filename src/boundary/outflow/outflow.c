@@ -5,6 +5,9 @@
 #include <macroFields.h>
 #include <outflow.h>
 #include <lbEquation.h>
+#include <math.h>
+#include <basic.h>
+
 
 void outflow( latticeMesh* mesh, macroFields* mfields, scalar** field, uint bid ) {
 
@@ -27,33 +30,50 @@ void outflow( latticeMesh* mesh, macroFields* mfields, scalar** field, uint bid 
 
 	// Check which is the normal direction, using unknown neighbours
 
-	int normal[3] = {0,1,0};
+	float normal[3] = {0,0,0};
 
-	/* for( k = 0 ; k < mesh->mesh.Q ; k++ ) { */
+	for( k = 0 ; k < mesh->mesh.Q ; k++ ) {
 
-	/*     if( mesh->mesh.nb[id][ mesh->lattice.reverse[k] ] == -1 ) { */
+	    if( mesh->mesh.nb[id][ mesh->lattice.reverse[k] ] == -1 ) {
 
-	/* 	for( j = 0 ; j < 3 ; j++ ) { */
+		for( j = 0 ; j < 3 ; j++ ) {
 
-	/* 	    normal[j] += mesh->lattice.vel[k][j]; */
+		    normal[j] += mesh->lattice.vel[k][j];
 
-	/* 	} */
+		}
 
-	/*     } */
+	    }
 
-	/* } */
+	}
 
-	/* for( j = 0 ; j < 3 ; j++ ) { */
+	float nmag = 0;
 
-	/*     if( normal[j] != 0 ) { */
+	for( j = 0 ; j < 3 ; j++ ) {
 
-	/* 	normal[j] = normal[j] / abs(normal[j]); */
+	    nmag += normal[j] * normal[j];
+	    
+	}
 
-	/*     } */
 
-	/* } */
+	if( nmag!=0 ) {
 
-	/* printf("%d %d %d\n",normal[0],normal[1],normal[2]); */
+	    nmag = sqrt(nmag);
+
+	    for( j = 0 ; j < 3 ; j++ ) {
+
+		normal[j] = normal[j] / nmag;
+
+	    }
+	    
+	}
+
+	else {
+
+	    errorMsg("Unable to detect normal in outflow boundary");
+
+	}
+
+       
 	
 
 
@@ -63,7 +83,9 @@ void outflow( latticeMesh* mesh, macroFields* mfields, scalar** field, uint bid 
 
 	for( k = 0 ; k < mesh->mesh.Q ; k++ ) {
 	    
-	    if(  (mesh->lattice.vel[k][0] == normal[0])  &&  (mesh->lattice.vel[k][1] == normal[1])  &&  (mesh->lattice.vel[k][2] == normal[2])  ) {
+	    if(      (mesh->lattice.vel[k][0] == (int)normal[0])
+		 &&  (mesh->lattice.vel[k][1] == (int)normal[1])
+		 &&  (mesh->lattice.vel[k][2] == (int)normal[2])  ) {
 		
 	    	ln = k;
 
@@ -71,6 +93,8 @@ void outflow( latticeMesh* mesh, macroFields* mfields, scalar** field, uint bid 
 
 	}
 	
+
+
 	
 
 	// Interpolate missing components from neighbour in normal direction
@@ -85,7 +109,7 @@ void outflow( latticeMesh* mesh, macroFields* mfields, scalar** field, uint bid 
 	    // Compute local velocity at t+dt (macro fields are not updated yet)
 
 	    // Local velocity
-	    scalar lv[3] = {0,0,0};
+	    scalar nbv[3] = {0,0,0};
 
 	    // Local density
 	    scalar nbrho = 0;
@@ -117,7 +141,7 @@ void outflow( latticeMesh* mesh, macroFields* mfields, scalar** field, uint bid 
 		    // Move over model velocities
 		    for(kk = 0 ; kk < mesh->mesh.Q ; kk++) {
 
-			lv[jj] += mesh->lattice.vel[kk][jj] * field[neigh][kk];
+			nbv[jj] += mesh->lattice.vel[kk][jj] * field[neigh][kk];
 		    
 		    }
 	    
@@ -136,14 +160,14 @@ void outflow( latticeMesh* mesh, macroFields* mfields, scalar** field, uint bid 
 		// Add interaction force and divide by density
 		for( jj = 0 ; jj < 3 ; jj++ ) {
 
-		    lv[jj] = ( lv[jj]   +   F[jj] * 0.5  ) / nbrho;
+		    nbv[jj] = ( nbv[jj]   +   F[jj] * 0.5  ) / nbrho;
 	
 		}
 
 
 		for( jj = 0 ; jj < 3 ; jj++ ) {
 
-		    uAdv += normal[jj] * lv[jj];
+		    uAdv += normal[jj] * nbv[jj];
 	
 		}		
 
@@ -153,22 +177,15 @@ void outflow( latticeMesh* mesh, macroFields* mfields, scalar** field, uint bid 
 
 
 
-	    
-	    /* for( j = 0 ; j < 3 ; j++ ) { */
-
-	    /* 	mfields->U[id][j] = (mfields->rho[id]*mfields->U[id][j] + uAdv*nbrho*lv[j]) / ((1+uAdv)*lrho); */
-
-	    /* } */
-
-
+	    // Update unknowun distributions for f
 	    
 	    for( k = 0 ; k < mesh->mesh.Q ; k++ ) {
 
-	    	/* if( mesh->mesh.nb[id][k] == -1 ) { */
+	    	if( mesh->mesh.nb[id][k] == -1 ) {
 		
 	    	    field[id][k] = (  field[id][k] + uAdv*field[neigh][k]  ) / (1+uAdv);
 
-	    	/* } */
+	    	}
 
 	    }
 
