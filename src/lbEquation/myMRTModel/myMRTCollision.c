@@ -68,7 +68,7 @@ void myMRTCollision( latticeMesh* mesh, macroFields* mfields, lbeField* field ) 
 
     	Q[3][4] = Q[4][4]  *  ( Q[3][3]/2.0  - 1.0 );
 
-    	Q[5][6] = Q[6][6]  *  ( Q[5][5]/2.0  - 1.0 );	
+    	Q[5][6] = Q[6][6]  *  ( Q[5][5]/2.0  - 1.0 );
 
     }
 
@@ -146,10 +146,13 @@ void myMRTCollision( latticeMesh* mesh, macroFields* mfields, lbeField* field ) 
 	
 	
     	// Distribution in momentum space
-
+	
     	matVecMult(mesh->lattice.M, field->value[id], n, mesh->lattice.Q);
 
+	/* scalar n4 = n[4], */
+	/*     n6 = n[6]; */
 
+	
 
 	// Source in momentum space (heat sink, compression work and correction terms)
 
@@ -194,6 +197,14 @@ void myMRTCollision( latticeMesh* mesh, macroFields* mfields, lbeField* field ) 
 	    
     	}
 
+
+
+	/* // Li correction */
+
+	/* n[3] = n[3] + (1 - field->lbparam.liTempMRT.Lambda[3]/2) * field->lbparam.liTempMRT.Lambda[4] * (n4 - n_eq[4]); */
+
+	/* n[5] = n[5] + (1 - field->lbparam.liTempMRT.Lambda[5]/2) * field->lbparam.liTempMRT.Lambda[6] * (n6 - n_eq[6]); */
+	
 	
 	
     	// Back to population space
