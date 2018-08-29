@@ -31,7 +31,10 @@ basicMesh readBasicMesh() {
 
     
     // Number of points
-    status = fscanf(inFile, "%d", &mesh.nPoints);
+    int iaux;    
+    /* status = fscanf(inFile, "%d", &mesh.nPoints); */
+    status = fscanf(inFile, "%d", &iaux);
+    mesh.nPoints = (uint)iaux;
 
     
     // Read Mesh points
@@ -142,9 +145,12 @@ basicMesh readBasicMesh() {
     // Open file
     inFile = fopen( "lattice/vtkCells", "r" );
 
-    // Number of cells and points per cell
-    status = fscanf(inFile, "%d", &mesh.ncells);
-    status = fscanf(inFile, "%d", &mesh.cellType);
+    // Number of cells and points per cell    
+    status = fscanf(inFile, "%d", &iaux);
+    mesh.ncells = (uint)iaux;
+    
+    status = fscanf(inFile, "%d", &iaux);
+    mesh.cellType = (uint)iaux;
     
     // Read cells
     mesh.vtkCells = matrixIntAlloc(mesh.ncells, mesh.cellType, -1);
@@ -178,8 +184,9 @@ basicMesh readBasicMesh() {
     inFile = fopen( "lattice/boundary", "r" );
     
     // Number of boundary types
-    status = fscanf(inFile, "%d\n", &mesh.bd.nbd);
-
+    status = fscanf(inFile, "%d\n", &iaux);
+    mesh.bd.nbd = (uint)iaux;
+    
     // Total number of elements per boundary type
     mesh.bd.nbdelem = (uint*)malloc(mesh.bd.nbd * sizeof(uint));
 
@@ -194,14 +201,16 @@ basicMesh readBasicMesh() {
 	status = fscanf(inFile, "%s", mesh.bd.bdNames[i]);
 
     	// Elements in boundary
-    	status = fscanf(inFile, "%d", &mesh.bd.nbdelem[i]);
+    	status = fscanf(inFile, "%d", &iaux);
+	mesh.bd.nbdelem[i] = (uint)iaux;
 
     	// Resize bdPoints
     	mesh.bd.bdPoints[i] = (uint*)malloc( mesh.bd.nbdelem[i] * sizeof(uint) );
 	
     	for( j = 0 ; j < mesh.bd.nbdelem[i] ; j++ ) {
 
-    	    status = fscanf(inFile, "%d", &mesh.bd.bdPoints[i][j]);
+    	    status = fscanf(inFile, "%d", &iaux);
+	    mesh.bd.bdPoints[i][j] = (uint)iaux;
 
     	}
 
