@@ -44,7 +44,7 @@ scalar p_eos( EOSInfo* info, scalar rho, scalar T ) {
 
     // van der Waals
     case VdW:
-	
+		
 	p = rho * info->R * T / (info->M - rho * info->eParam.vdwparam.b)  -  info->eParam.vdwparam.a * rho * rho / ( info->M * info->M );
 	
 	break;
