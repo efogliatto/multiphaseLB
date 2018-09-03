@@ -14,14 +14,25 @@ void interForce( latticeMesh* mesh, macroFields* mfields ) {
     // Move over points
 
     for( id = 0 ; id < mesh->parallel.nlocal ; id++ ) {
-	
+
+      
 	interactionForce( mesh, F, mfields->rho, mfields->T, id );
 
 	for( j = 0 ; j < 3 ; j++ ) {
-	
+
+
+            // Interaction force
+	  
 	    mfields->Fi[id][j] = F[j];
 
+
+
+	    // Total force
+
+	    mfields->Ft[id][j] = F[j]  +   (mfields->rho[id] - mesh->EOS.rho_0) * mesh->EOS.g[j]  +  mesh->EOS.fext[j];
+
 	}
+
 
     }
     

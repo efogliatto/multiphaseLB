@@ -40,7 +40,12 @@ typedef struct {
 
     /** Macroscopic interaction force field */
     
-    scalar** Fi; 
+    scalar** Fi;
+
+
+    /** Macroscopic total force field */
+    
+    scalar** Ft; 
 
     
     /** Macroscopic scalar source term */

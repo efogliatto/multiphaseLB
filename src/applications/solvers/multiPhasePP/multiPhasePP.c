@@ -130,6 +130,8 @@ int main( int argc, char **argv ) {
     // Update macroscopic interaction force
 
     mfields.Fi = matrixDoubleAlloc( mesh.mesh.nPoints, 3, -1 );
+
+    mfields.Ft = matrixDoubleAlloc( mesh.mesh.nPoints, 3, -1 );
     
     interForce( &mesh, &mfields );
     

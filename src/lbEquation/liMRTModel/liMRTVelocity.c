@@ -7,20 +7,20 @@ void liMRTVelocity( latticeMesh* mesh, macroFields* mfields, lbeField* field, sc
 
     uint j, k;
 
-    // Interaction force
-    scalar F[3];
+    // Total force
+    scalar F[3] = { mfields->Ft[id][0], mfields->Ft[id][1], mfields->Ft[id][2] };
 
     // Local velocity
     scalar lv[3] = {0,0,0};
 
 	
-    // Compute Total force
+    /* // Compute Total force */
 	
-    for( j = 0 ; j < 3 ; j++ ) {
+    /* for( j = 0 ; j < 3 ; j++ ) { */
 
-	F[j] = mfields->Fi[id][j]  +   (mfields->rho[id] - mesh->EOS.rho_0) * mesh->EOS.g[j];
+    /* 	F[j] = mfields->Fi[id][j]  +   (mfields->rho[id] - mesh->EOS.rho_0) * mesh->EOS.g[j]; */
 
-    }          
+    /* }    */       
 
 
     // Move over velocity components

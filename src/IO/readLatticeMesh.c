@@ -152,7 +152,7 @@ latticeMesh readLatticeMesh( uint pid ) {
 
     }
 
-    fclose(inFile);
+    fclose(inFile);    
 
 
 

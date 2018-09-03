@@ -15,15 +15,15 @@ void liMRTForce( latticeMesh* mesh, macroFields* mfields, lbeField* field, scala
 	
 	// Total force
 	
-	scalar F[3];
+	scalar F[3] = { mfields->Ft[id][0], mfields->Ft[id][1], mfields->Ft[id][2] };
 
-	uint j;
+	/* uint j; */
 
-	for( j = 0 ; j < 3 ; j++ ) {
+	/* for( j = 0 ; j < 3 ; j++ ) { */
 
-	    F[j] = mfields->Fi[id][j]  +   (mfields->rho[id] - mesh->EOS.rho_0) * mesh->EOS.g[j];
+	/*     F[j] = mfields->Fi[id][j]  +   (mfields->rho[id] - mesh->EOS.rho_0) * mesh->EOS.g[j]; */
 
-	}
+	/* } */
 
 
 	// Potential

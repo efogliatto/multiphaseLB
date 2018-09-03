@@ -93,6 +93,8 @@ typedef struct {
     scalar Cv;    /**< Constant specific heat */
     
     scalar* g;   /**< Gravity vector */
+
+    scalar* fext;   /**< External constant force */  
     
     scalar rho_0;  /**< Reference density (buoyant force) */
     

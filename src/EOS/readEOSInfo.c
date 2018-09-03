@@ -100,6 +100,8 @@ EOSInfo readEOSInfo() {
     
     status = lookUpVectorEntry("properties/macroProperties", "EOS/g", &info.g, &n);
 
+    status = lookUpVectorEntry("properties/macroProperties", "EOS/extForce", &info.fext, &n);
+
 
 
     
