@@ -137,6 +137,8 @@ int main( int argc, char **argv ) {
     
     syncVectorField( &mesh, mfields.Fi );
 
+    syncVectorField( &mesh, mfields.Ft );    
+
 
     
 
@@ -232,6 +234,8 @@ int main( int argc, char **argv ) {
 	    interForce( &mesh, &mfields );
 
 	    syncVectorField( &mesh, mfields.Fi );
+
+	    syncVectorField( &mesh, mfields.Ft );
 
 	}
 

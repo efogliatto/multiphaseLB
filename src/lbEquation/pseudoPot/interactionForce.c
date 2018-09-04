@@ -8,8 +8,7 @@
 void interactionForce( latticeMesh* mesh, scalar Ff[3], scalar* rho, scalar* T, uint id ) {
 
     uint i,
-	k,
-	noneigh = 0;
+	k;
 
 
 
@@ -41,20 +40,9 @@ void interactionForce( latticeMesh* mesh, scalar Ff[3], scalar* rho, scalar* T, 
 
 
 
-    // Move over neighbours and check for boundary
-    for( k = 1 ; k < mesh->lattice.Q ; k++ ) {
-
-    	if( mesh->mesh.nb[id][k] == -1 ) {
-	    
-	    noneigh++;
-	    
-    	}
-
-    }
-
 
     // Do not use unexisting neighbour
-    if( noneigh == 0 ) {
+    if( mesh->mesh.isOnBnd[id] == 0 ) {
 
 	
 	for( k = 1 ; k < mesh->lattice.Q ; k++ ) {

@@ -157,7 +157,42 @@ latticeMesh readLatticeMesh( uint pid ) {
 
 
 
+    // Check if node is on boundary
 
+    mesh.mesh.isOnBnd = (uint*)malloc( mesh.parallel.nlocal * sizeof(uint) );
+
+    for( i = 0 ; i < mesh.parallel.nlocal ; i++ ) {
+
+        uint is_bnb = 0;	
+      
+    	for( j = 0 ; j < mesh.mesh.Q ; j++ ) {
+
+	    if( mesh.mesh.nb[i][j] == -1 ) {
+
+		is_bnb++;
+
+	    }
+
+    	}
+
+
+
+	if(is_bnb == 0) {
+
+	    mesh.mesh.isOnBnd[i] = 0;
+
+	}
+
+	else {
+
+	    mesh.mesh.isOnBnd[i] = 1;
+
+	}
+
+	
+
+    }
+    
     
     
 

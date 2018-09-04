@@ -62,6 +62,11 @@ typedef struct {
     
     int** vtkCells;   /**< VTK cell indices array */
 
+
+  /** Flag to check if node is on boundary */
+  
+    uint* isOnBnd;
+
 } basicMesh;
 
 
