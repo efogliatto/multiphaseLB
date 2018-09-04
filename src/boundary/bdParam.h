@@ -3,6 +3,7 @@
 
 #include <fixedTParam.h>
 #include <fixedRandomTParam.h>
+#include <fixedGradTParam.h>
 #include <fixedUParam.h>
 #include <uHeatFluxParam.h>
 #include <fixedEOSpParam.h>
@@ -18,6 +19,8 @@ typedef union {
     uHeatFluxParam uhf;
 
     fixedEOSpParam fep;
+
+    fixedGradTParam fgt;    
 
 } bdParam;
 

@@ -6,6 +6,8 @@
 #include <readLiTempMRTConstants.h>
 #include <readMyMRTConstants.h>
 #include <readXuMRTConstants.h>
+#include <readFixedGradTParam.h>
+
 
 
 uint readLbeField( latticeMesh* mesh, lbeField* field, char* fname ) {
@@ -201,6 +203,16 @@ uint readLbeField( latticeMesh* mesh, lbeField* field, char* fname ) {
     		field->boundary[i].type = of;
 
     	    }
+
+
+
+    	    if( strcmp(str, "fixedGradT") == 0 ) {
+
+    		field->boundary[i].type = fgt;
+
+    		field->boundary[i].param.fgt = readFixedGradTParam(fname, mesh->mesh.bd.bdNames[i]);		       		
+
+    	    }	    
 	    
 
     	}

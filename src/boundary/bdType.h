@@ -11,6 +11,9 @@ typedef enum {
 
     /** Fixed random Temperature */
     frdt,
+
+    /** Fixed temperature gradient */
+    fgt,    
     
     /** Fixed Velocity */    
     fu,

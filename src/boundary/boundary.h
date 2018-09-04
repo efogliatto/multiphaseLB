@@ -7,6 +7,8 @@
 
 #include <fixedRandomT.h>
 
+#include <fixedGradT.h>
+
 #include <fixedU.h>
 
 #include <uniformHeatFlux.h>

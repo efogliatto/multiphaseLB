@@ -9,7 +9,7 @@ add_library(boundary SHARED
   fixedT/readFixedTParam.c
   fixedU/fixedU.c
   fixedU/readFixedUParam.c  
-  # uniformHeatFlux.c
-  # fixedEOSp.c
   outflow/outflow.c
+  # fixedGradT/fixedGradT.c
+  fixedGradT/readFixedGradTParam.c  
   )
