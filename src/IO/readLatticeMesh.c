@@ -142,6 +142,15 @@ latticeMesh readLatticeMesh( uint pid ) {
 
     inFile = fopen( command, "r" );
 
+    uint naux;
+
+    status = fscanf(inFile, "%d", &naux);
+
+    status = fscanf(inFile, "%d", &naux);
+
+    status = fscanf(inFile, "%d", &naux);
+
+
     for( i = 0 ; i < mesh.parallel.nlocal ; i++ ) {
 
     	for( j = 0 ; j < mesh.mesh.Q ; j++ ) {

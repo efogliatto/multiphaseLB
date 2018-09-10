@@ -80,6 +80,15 @@ void writeLatticeMesh( latticeMesh* mesh ) {
     
     outFile = fopen(command,"w");
 
+    uint dd;
+
+    if(mesh->mesh.Q == 9) {dd = 2;}
+
+    if(mesh->mesh.Q == 15) {dd = 3;}
+    
+    fprintf(outFile,"%d %d %d\n", mesh->parallel.nlocal, dd, mesh->mesh.Q);
+    
+    
     for( i = 0 ; i < mesh->parallel.nlocal ; i++ ) {
 
     	for( j = 0 ; j < mesh->mesh.Q ; j++ ) {
