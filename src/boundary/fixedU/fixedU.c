@@ -66,16 +66,16 @@ void fixedU( latticeMesh* mesh, macroFields* mfields, scalar** field, uint bid, 
 			    uint jj, kk;
 
 			    // Interaction force
-			    scalar F[3];
+			    scalar F[3];				    
 
 	
 			    // Compute Total force
 	
 			    for( jj = 0 ; jj < 3 ; jj++ ) {
 
-				F[jj] = mfields->Fi[nbid][jj]  +   (mfields->rho[bid] - mesh->EOS.rho_0) * mesh->EOS.g[jj];
+				F[jj] = mfields->Fi[nbid][jj]  +   (mfields->rho[nbid] - mesh->EOS.rho_0) * mesh->EOS.g[jj];
 
-			    }          
+			    }			    
 
 
 			    // Move over velocity components
@@ -115,14 +115,13 @@ void fixedU( latticeMesh* mesh, macroFields* mfields, scalar** field, uint bid, 
 			/* liMRTEquilibrium( &mesh->lattice, mfields->rho[nbid], mfields->U[nbid], f_eq_nb ); */
 			liMRTEquilibrium( &mesh->lattice, nbrho, lv, f_eq_nb );
 
-			liMRTEquilibrium( &mesh->lattice, nbrho, Uw, f_eq_bnd );
-
+			liMRTEquilibrium( &mesh->lattice, nbrho, Uw, f_eq_bnd );	
 			
-		    
 
 			// Update distribution
 			
 			field[id][k] = f_eq_bnd[k] + (field[nbid][k] - f_eq_nb[k] );
+	
 
 		    }
 		

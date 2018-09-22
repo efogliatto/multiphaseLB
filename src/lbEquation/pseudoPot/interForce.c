@@ -30,17 +30,19 @@ void interForce( latticeMesh* mesh, macroFields* mfields ) {
 
 	    // Total force
 
+	    mfields->Ft[id][j] = F[j]  +   (mfields->rho[id] - mesh->EOS.rho_0) * mesh->EOS.g[j];
+
 	    if( mesh->mesh.isOnBnd[id] == 0 ) {
 	    
-		mfields->Ft[id][j] = F[j]  +   (mfields->rho[id] - mesh->EOS.rho_0) * mesh->EOS.g[j]  +  mesh->EOS.fext[j];
+		mfields->Ft[id][j] += mesh->EOS.fext[j];
 
 	    }
 
-	    else {
+	    /* else { */
 
-		mfields->Ft[id][j] = 0;
+	    /* 	mfields->Ft[id][j] = 0; */
 
-	    }
+	    /* } */
 
 	}
 

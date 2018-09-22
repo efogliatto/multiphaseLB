@@ -36,6 +36,7 @@ void myMRTEquilibrium( latticeInfo* lattice, scalar T, scalar U[3], scalar alpha
 
 	matVecMult(lattice->invM, n_eq, f, lattice->Q);
 	
+	
 
     }
 

@@ -40,9 +40,12 @@ void interactionForce( latticeMesh* mesh, scalar Ff[3], scalar* rho, scalar* T, 
 
 
 
+    
+
 
     // Do not use unexisting neighbour
     if( mesh->mesh.isOnBnd[id] == 0 ) {
+
 
 	
 	for( k = 1 ; k < mesh->lattice.Q ; k++ ) {

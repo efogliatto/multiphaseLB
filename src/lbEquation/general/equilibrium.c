@@ -42,6 +42,8 @@ void equilibrium( latticeMesh* mesh, macroFields* mfields, lbeField* field ) {
 	    
 	    }
 
+	    break;
+
 	    
 
 	case liTempMRT:

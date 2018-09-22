@@ -67,11 +67,10 @@ void liMRTCollision( latticeMesh* mesh, macroFields* mfields, lbeField* field ) 
 	m_eq[8] = mfields->rho[id] * mfields->U[id][0] * mfields->U[id][1];
 
 	
-
-	
 	// Distribution in momentum space
 
 	matVecMult(mesh->lattice.M, field->value[id], m, mesh->lattice.Q);
+
 
 	
 	// Total Force

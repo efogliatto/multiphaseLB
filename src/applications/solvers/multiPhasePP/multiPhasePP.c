@@ -125,8 +125,6 @@ int main( int argc, char **argv ) {
 
 
 
-
-
     // Update macroscopic interaction force
 
     mfields.Fi = matrixDoubleAlloc( mesh.mesh.nPoints, 3, -1 );
@@ -137,7 +135,7 @@ int main( int argc, char **argv ) {
     
     syncVectorField( &mesh, mfields.Fi );
 
-    syncVectorField( &mesh, mfields.Ft );    
+    syncVectorField( &mesh, mfields.Ft );
 
 
     

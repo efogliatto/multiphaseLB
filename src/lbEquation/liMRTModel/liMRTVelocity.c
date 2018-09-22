@@ -49,7 +49,7 @@ void liMRTVelocity( latticeMesh* mesh, macroFields* mfields, lbeField* field, sc
 	
     	v[id][j] = lv[j];
 	
-    }    
+    }
 	
     
 }

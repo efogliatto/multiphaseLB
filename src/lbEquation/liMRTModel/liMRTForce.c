@@ -29,7 +29,6 @@ void liMRTForce( latticeMesh* mesh, macroFields* mfields, lbeField* field, scala
 	// Potential
 	
 	scalar psi = potential( mesh, mfields->rho[id], mfields->T[id]);
-
 	
 
 	S[0] = 0;
