@@ -799,6 +799,48 @@ int main(int argc, char** argv) {
 
     		writeLatticeMesh( &localMesh[i] );
 
+
+
+
+		// Count number of virtual nodes per patch
+
+		uint count = 0;
+
+		uint id;
+
+		for( id = 0 ; id < nvirtual ; id++ ) {
+
+		    if( local[ virtualNodes[id][0] ][ i ] != -1 )
+			count++;
+
+		}
+		
+
+		// Write virtual nodes
+
+		char fname[100];
+
+		FILE *outFile;
+
+		sprintf(fname,"processor%d/lattice/virtualNodes", i);
+    
+		outFile = fopen(fname,"w");
+
+
+		
+		fprintf(outFile,"%d\n",count);
+
+		for( id = 0 ; id < nvirtual ; id++ ) {
+
+		    if( local[ virtualNodes[id][0] ][ i ] != -1 ) 
+			fprintf(outFile,"%d %d %d %d\n", local[ virtualNodes[id][0] ][ i ], virtualNodes[id][1], local[ virtualNodes[id][2] ][ i ], local[ virtualNodes[id][3] ][ i ]);
+
+		}		
+
+		
+		fclose(outFile);
+		
+
     	    }
 
     	}
