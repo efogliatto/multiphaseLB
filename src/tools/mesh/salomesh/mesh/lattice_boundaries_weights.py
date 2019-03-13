@@ -16,9 +16,9 @@ def lattice_boundaries_weights(geompy, shape, GroupList, points, nb, bdWeights):
     
     bdDict = {}
 
-    for ft in GroupList.keys():
+    for ft in GroupList:
 
-        bdDict[ ft ] = []
+        bdDict[ ft.GetName() ] = []
         
     count = 0
 
@@ -47,13 +47,11 @@ def lattice_boundaries_weights(geompy, shape, GroupList, points, nb, bdWeights):
             
             dist = []
                     
-            for group in GroupList.keys():
+            for ft in GroupList:
 
-                for ft in GroupList[group]:
+                distAux = geompy.MinDistance( ft, points[id] )
 
-                    distAux = geompy.MinDistance( ft, points[id] )
-
-                    dist.append( (group, distAux) )
+                dist.append( (ft.GetName(), distAux) )
 
 
 
@@ -81,8 +79,6 @@ def lattice_boundaries_weights(geompy, shape, GroupList, points, nb, bdWeights):
 
 
             bdDict[ sortedDist[0][0] ].append(id)
-
-
 
 
 
