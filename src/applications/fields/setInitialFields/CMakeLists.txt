@@ -34,6 +34,7 @@ add_executable(setInitialFields "setInitialFields.c"
   "boxBoundedScalarField.c"
   "randomScalarField.c"
   "sphereBoundedScalarField.c"
+  "sphereBoundedVectorField.c"  
   "fixedGradientScalarField.c"
   "tgProfileScalarField.c"  )
 

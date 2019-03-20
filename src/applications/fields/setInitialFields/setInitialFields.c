@@ -24,7 +24,9 @@ void boxBoundedScalarField( latticeMesh* mesh, scalar** field, char* fname );
 void sphereBoundedScalarField( latticeMesh* mesh, scalar** field, char* fname );
 
 void fixedGradientScalarField( latticeMesh* mesh, scalar** field, char* fname );
-    
+
+void sphereBoundedVectorField( latticeMesh* mesh, scalar** field, char* fname );
+
 
 int main(int argc, char** argv) {
 
@@ -286,6 +288,20 @@ int main(int argc, char** argv) {
 
 
     	    }
+
+
+	    
+	    // Sphere bounded
+	    
+	    else {
+
+		if( strcmp(itype,"sphere") == 0 ) {
+
+		    sphereBoundedVectorField( &mesh, field, vtk.vectorFields[fid] );
+
+		}		
+
+	    }
 	    
 
 
