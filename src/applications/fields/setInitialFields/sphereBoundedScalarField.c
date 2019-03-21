@@ -78,17 +78,17 @@ void sphereBoundedScalarField( latticeMesh* mesh, scalar** field, char* fname ) 
 
 	else {
 
-	    if(mesh->mesh.points[ii][1] <= (centre[1] - radius)) {
+	    /* if(mesh->mesh.points[ii][1] <= (centre[1] - radius)) { */
 		
-		field[0][ii] = in;
+	    /* 	field[0][ii] = in; */
 		
-	    }
+	    /* } */
 
-	    else{
+	    /* else{ */
 
 		field[0][ii] = out;
 
-	    }
+	    /* } */
 
 	}
 
