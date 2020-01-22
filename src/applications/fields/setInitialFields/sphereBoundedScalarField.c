@@ -177,11 +177,11 @@ void sphereBoundedScalarField( latticeMesh* mesh, scalar** field, char* fname ) 
     for( ii = 0 ; ii < mesh->mesh.nPoints ; ii++ ) {
 
 	scalar r = ( mesh->mesh.points[ii][0] - centre[0] )  *  ( mesh->mesh.points[ii][0] - centre[0] ) +
-	    ( mesh->mesh.points[ii][1] - centre[1] )  *  ( mesh->mesh.points[ii][1] - centre[1] ) + 
-	    ( mesh->mesh.points[ii][2] - centre[2] )  *  ( mesh->mesh.points[ii][2] - centre[2] );
+	           ( mesh->mesh.points[ii][1] - centre[1] )  *  ( mesh->mesh.points[ii][1] - centre[1] ) + 
+	           ( mesh->mesh.points[ii][2] - centre[2] )  *  ( mesh->mesh.points[ii][2] - centre[2] );
 
 	
-	field[0][ii] = 0.5*( in + out )    +   0.5*( out - in ) * tanh( (2*sqrt(r) - R) / W )  ;
+	field[0][ii] = 0.5*( in + out )    +   0.5*( out - in ) * tanh( (2*(sqrt(r) - R)) / W )  ;
 
     }
     
